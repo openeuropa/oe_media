@@ -1,4 +1,4 @@
-# OpenEuropa Drupal module template
+# OpenEuropa Media module
 
 ## Development setup
 
