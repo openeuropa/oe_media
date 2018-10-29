@@ -1,9 +1,9 @@
 langcode: en
 status: true
 dependencies: {}
-id: images
-label: Images
-description: "Images media type"
+id: image
+label: Image
+description: "Image media type"
 source: image
 queue_thumbnail_downloads: false
 new_revision: false

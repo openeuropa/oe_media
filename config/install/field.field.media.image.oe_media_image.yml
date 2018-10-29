@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - field.storage.media.oe_media_image
-    - media.type.images
+    - media.type.image
   module:
     - image
-id: media.images.oe_media_image
+id: media.image.oe_media_image
 field_name: oe_media_image
 entity_type: media
-bundle: images
+bundle: image
 label: Image
 description: ''
 required: true

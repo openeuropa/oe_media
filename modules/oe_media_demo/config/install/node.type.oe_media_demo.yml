@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'OpenEuropa Media Demo'
+type: oe_media_demo
+description: 'A demo content type which shows available functionality of OE media module.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false
