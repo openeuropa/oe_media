@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
+    - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - node.type.oe_media_demo
   module:
     - user
@@ -26,6 +27,15 @@ content:
   field_oe_demo_image_media:
     type: entity_reference_entity_view
     weight: 102
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_oe_demo_remote_video_media:
+    type: entity_reference_entity_view
+    weight: 103
     label: above
     settings:
       view_mode: default
