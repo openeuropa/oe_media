@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 
 /**
- * Tests the display UI of OE Media Image type.
+ * Tests that we can create and use Image media entities.
  *
  * @group oe_media
  */
-class ImageMediaBasicUiTest extends WebDriverTestBase {
+class MediaImageTest extends WebDriverTestBase {
 
   /**
    * {@inheritdoc}
@@ -30,13 +32,16 @@ class ImageMediaBasicUiTest extends WebDriverTestBase {
     ]);
 
     $this->drupalLogin($editor);
-    exec('chmod -R 777 ' . $this->root . '/sites/simpletest');
+
+    // There are permission issues with the Docker container
+    // so we need to manually change the permissions to allow file uploads.
+    exec('chmod -R 777 ' . $this->publicFilesDirectory);
   }
 
   /**
    * Test the creation of Media image entity and reference on the Demo node.
    */
-  public function testCreateImageMedia() {
+  public function testCreateImageMedia(): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
@@ -45,7 +50,7 @@ class ImageMediaBasicUiTest extends WebDriverTestBase {
     $this->drupalGet("media/add/image");
     $page->fillField("name[0][value]", 'My Image 1');
     $path = drupal_get_path('module', 'oe_media');
-    $page->attachFileToField("files[oe_media_image_0]", $path . '/tests/fixtures/example_1.jpeg');
+    $page->attachFileToField("files[oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/example_1.jpeg');
     $result = $assert_session->waitForButton('Remove');
     $this->assertNotEmpty($result);
     $page->fillField("oe_media_image[0][alt]", 'Image Alt Text 1');
