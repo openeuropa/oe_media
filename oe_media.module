@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Media module.
+ */
+
+/**
+ * Alters the information provided in \Drupal\media\Annotation\MediaSource.
+ *
+ * @param array $sources
+ *   The array of media source plugin definitions, keyed by plugin ID.
+ */
+ function oe_media_media_source_info_alter(array &$sources) {
+   $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion'];
+ }
