@@ -1,0 +1,9 @@
+name: OpenEuropa Media Demo
+description: Demo module for the OpenEuropa media project.
+package: OpenEuropa
+type: module
+core: 8.x
+dependencies:
+  - drupal:media
+  - drupal:oe_media
+

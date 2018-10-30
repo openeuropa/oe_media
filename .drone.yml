@@ -11,6 +11,11 @@ services:
     image: percona/percona-server:5.6
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  selenium:
+    image: selenium/standalone-chrome:3.11
+    environment:
+      - DISPLAY=:99
+      - SE_OPTS=-debug
 
 pipeline:
   composer-install:

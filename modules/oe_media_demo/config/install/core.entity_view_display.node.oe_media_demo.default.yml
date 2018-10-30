@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.oe_media_demo.field_oe_demo_image_media
+    - node.type.oe_media_demo
+  module:
+    - user
+id: node.oe_media_demo.default
+targetEntityType: node
+bundle: oe_media_demo
+mode: default
+content:
+  field_oe_demo_image_media:
+    type: entity_reference_entity_view
+    weight: 102
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }
