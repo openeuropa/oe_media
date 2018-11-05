@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
@@ -43,7 +45,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   /**
    * Test the media entity browser.
    */
-  public function testMediaBrowser() {
+  public function testMediaBrowser(): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
@@ -54,7 +56,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
     $this->drupalGet("media/add/image");
     $page->fillField("name[0][value]", $image_name);
     $path = drupal_get_path('module', 'oe_media');
-    $page->attachFileToField("files[oe_media_image_0]", $path . '/tests/fixtures/' . $filename);
+    $page->attachFileToField("files[oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/' . $filename);
     $result = $assert_session->waitForButton('Remove');
     $this->assertNotEmpty($result);
     $page->fillField("oe_media_image[0][alt]", 'Image Alt Text 1');
