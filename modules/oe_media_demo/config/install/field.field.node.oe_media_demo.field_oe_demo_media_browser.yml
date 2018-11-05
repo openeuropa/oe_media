@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_media_test
-    - node.type.oe_media_test
-id: node.oe_media_test.field_media_test
-field_name: field_media_test
+    - field.storage.node.field_oe_demo_media_browser
+    - node.type.oe_media_demo
+id: node.oe_media_demo.field_oe_demo_media_browser
+field_name: field_oe_demo_media_browser
 entity_type: node
-bundle: oe_media_test
-label: 'Media test'
+bundle: oe_media_demo
+label: 'Media browser field'
 description: ''
 required: false
 translatable: false

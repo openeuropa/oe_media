@@ -4,8 +4,8 @@ dependencies:
   module:
     - media
     - node
-id: node.field_media_test
-field_name: field_media_test
+id: node.field_oe_demo_media_browser
+field_name: field_oe_demo_media_browser
 entity_type: node
 type: entity_reference
 settings:

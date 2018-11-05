@@ -20,7 +20,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
    */
   public static $modules = [
     'node',
-    'oe_media_test',
+    'oe_media_demo',
   ];
 
   /**
@@ -29,7 +29,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   public function setUp() {
     parent::setUp();
     $editor = $this->drupalCreateUser([
-      'create oe_media_test content',
+      'create oe_media_demo content',
       'create image media',
       'access media_entity_browser entity browser pages',
     ]);
@@ -42,27 +42,42 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   }
 
   /**
+   * Create Media Image entity programmatically.
+   */
+  public function createMediaImageEntity($name, $file_source): void {
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
+    $entityTypeManager = $this->container->get('entity_type.manager');
+    $file = $entityTypeManager->getStorage('file')->create([
+      'uri' => $file_source,
+      'uid' => $this->container->get('current_user')->id(),
+    ]);
+    $file->setPermanent();
+    $file->save();
+
+    $entityTypeManager->getStorage('media')->create([
+      'bundle' => 'image',
+      'name' => $name,
+      'oe_media_image' => [
+        'target_id' => $file->id(),
+      ],
+    ])->save();
+  }
+
+  /**
    * Test the media entity browser.
    */
   public function testMediaBrowser(): void {
     $image_name = 'My Image 1';
     $filename = 'example_1.jpeg';
-
-    // Create a media item.
-    $this->drupalGet("media/add/image");
-    $this->getSession()->getPage()->fillField("name[0][value]", $image_name);
     $path = drupal_get_path('module', 'oe_media');
-    $this->getSession()->getPage()->attachFileToField("files[oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/' . $filename);
-    $result = $this->assertSession()->waitForButton('Remove');
-    $this->assertNotEmpty($result);
-    $this->getSession()->getPage()->fillField("oe_media_image[0][alt]", 'Image Alt Text 1');
-    $this->getSession()->getPage()->pressButton('Save');
-    $this->assertSession()->addressEquals('/media/1');
+    $file_source = $this->root . '/' . $path . '/tests/fixtures/' . $filename;
+
+    $this->createMediaImageEntity($image_name, $file_source);
 
     // Select media image though entity browser.
-    $this->drupalGet('node/add/oe_media_test');
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->fillField("title[0][value]", 'My Node');
-    $this->click('#edit-field-media-test-wrapper');
+    $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
     // Go to modal window.

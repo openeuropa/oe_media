@@ -1,9 +1,0 @@
-name: 'OE Media test'
-type: module
-description: 'Test module for OpenEuropa media.'
-core: 8.x
-dependencies:
-  - drupal:media
-  - drupal:oe_media
-  - drupal:node
-
