@@ -45,15 +45,9 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
    * Create Media Image entity programmatically.
    */
   public function createMediaImageEntity($name, $file_source): void {
+    $file = file_save_data(file_get_contents($file_source), 'public://' . basename($file_source));
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
     $entityTypeManager = $this->container->get('entity_type.manager');
-    $file = $entityTypeManager->getStorage('file')->create([
-      'uri' => $file_source,
-      'uid' => $this->container->get('current_user')->id(),
-    ]);
-    $file->setPermanent();
-    $file->save();
-
     $entityTypeManager->getStorage('media')->create([
       'bundle' => 'image',
       'name' => $name,
@@ -83,13 +77,14 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
     // Go to modal window.
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->getSession()->wait(3000);
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->assertSession()->elementExists('css', '.form-item-status select');
-    $this->assertSession()->elementExists('css', '.form-item-media-type select');
-    $this->assertSession()->elementExists('css', '.form-item-name input');
-    $this->assertSession()->elementExists('css', '.form-item-langcode select');
     $iframe_page = $this->getSession()->getPage();
-    $iframe_page->checkField('entity_browser_select[media:1]');
+    $iframe_page->hasSelect('Publishing status');
+    $iframe_page->hasSelect('Media type');
+    $iframe_page->hasField('Media name');
+    $iframe_page->hasSelect('Language');
+    $iframe_page->findField('edit-entity-browser-select-media1')->click();
     $iframe_page->pressButton('Select entities');
 
     // Go back to main window.
