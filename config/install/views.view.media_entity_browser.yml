@@ -389,11 +389,11 @@ display:
           exposed: true
           expose:
             operator_id: bundle_op
-            label: Provider
+            label: Media type
             description: ''
             use_operator: false
             operator: bundle_op
-            identifier: provider
+            identifier: media_type
             required: false
             remember: false
             multiple: false
