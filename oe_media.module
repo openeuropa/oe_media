@@ -10,7 +10,8 @@ declare(strict_types = 1);
 /**
  * Implements hook_media_source_info_alter().
  *
- * Alters the information provided in \Drupal\media\Annotation\MediaSource.
+ * Adding Daily Motion to the list of providers
+ * exposed by the OEmbed video source plugin.
  */
 function oe_media_media_source_info_alter(array &$sources): void {
   $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion'];
