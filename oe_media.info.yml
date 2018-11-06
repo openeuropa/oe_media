@@ -7,4 +7,5 @@ dependencies:
   - drupal:media
   - drupal:views
   - drupal:entity_browser
+  - drupal:entity_browser_entity_form
 
