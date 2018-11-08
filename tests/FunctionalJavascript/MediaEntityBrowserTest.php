@@ -31,6 +31,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
     $editor = $this->drupalCreateUser([
       'create oe_media_demo content',
       'create image media',
+      'create remote_video media',
       'access media_entity_browser entity browser pages',
     ]);
 
@@ -38,10 +39,69 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   }
 
   /**
+   * Data provider for testMediaBrowserWithRemoteVideo().
+   */
+  public function providerRemoteVideoMedia() {
+    return [
+      'Youtube' => [
+        'https://www.youtube.com/watch?v=1-g73ty9v04',
+        'Energy, let\'s save it!',
+      ],
+      'Vimeo' => [
+        'https://vimeo.com/7073899',
+        'Drupal Rap Video - Schipulcon09',
+      ],
+      'Dailymotion' => [
+        'http://www.dailymotion.com/video/x6pa0tr',
+        'European Commission Fines Google',
+      ],
+    ];
+  }
+
+  /**
+   * Create a Media Remote video entity.
+   *
+   * @param string $video_url
+   *   The name of the video.
+   */
+  public function createMediaRemoteVideoEntity(string $video_url): void {
+    /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
+    $entityTypeManager = $this->container->get('entity_type.manager');
+    $entityTypeManager->getStorage('media')->create([
+      'bundle' => 'remote_video',
+      'oe_media_oembed_video' => $video_url,
+    ])->save();
+  }
+
+  /**
+   * Test the media entity browser with a remote video.
+   *
+   * @param string $video_url
+   *   Video URL.
+   *
+   * @dataProvider providerRemoteVideoMedia
+   */
+  public function testMediaBrowserWithRemoteVideo(string $video_url): void {
+    $this->createMediaRemoteVideoEntity($video_url);
+    $this->checkMediaBrowserMediaSelection();
+
+    // Ensure the iframe exists and that its src attribute contains a coherent
+    // URL with the query parameters we expect.
+    $iframe_url = $this->assertSession()->elementExists('css', 'iframe')->getAttribute('src');
+    $iframe_url = parse_url($iframe_url);
+    $this->assertStringEndsWith('/media/oembed', $iframe_url['path']);
+    $this->assertNotEmpty($iframe_url['query']);
+    $query = [];
+    parse_str($iframe_url['query'], $query);
+    $this->assertSame($video_url, $query['url']);
+    $this->assertNotEmpty($query['hash']);
+  }
+
+  /**
    * Create a Media Image entity.
    *
    * @param string $name
-   *   The name of the video.
+   *   The name of the image file.
    * @param string $file_source
    *   The contents of the file.
    */
@@ -58,18 +118,26 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   }
 
   /**
-   * Test the media entity browser.
+   * Test the media entity browser with the image.
    */
-  public function testMediaBrowser(): void {
+  public function testMediaBrowserWithImage(): void {
     $filename = 'example_1.jpeg';
     $path = drupal_get_path('module', 'oe_media');
     $file_source = $this->root . '/' . $path . '/tests/fixtures/' . $filename;
 
     $this->createMediaImageEntity($filename, $file_source);
+    $this->checkMediaBrowserMediaSelection();
 
+    $this->assertSession()->elementAttributeContains('css', '.field--name-oe-media-image>img', 'src', $filename);
+  }
+
+  /**
+   * Check general media entity browser functionality.
+   */
+  public function checkMediaBrowserMediaSelection() {
     // Select media image though entity browser.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", 'My Node');
+    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
@@ -89,9 +157,9 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
     $this->getSession()->switchToIFrame();
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->waitForButton('Remove');
+    // Save node.
     $this->getSession()->getPage()->pressButton('Save');
     $this->assertSession()->addressEquals('/node/1');
-    $this->assertSession()->elementAttributeContains('css', '.field--name-oe-media-image>img', 'src', $filename);
   }
 
 }
