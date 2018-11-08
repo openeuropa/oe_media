@@ -9,7 +9,7 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 /**
  * A test for the media entity browser.
  *
- * @group media_entity_browser
+ * @group oe_media
  */
 class MediaEntityBrowserTest extends WebDriverTestBase {
 
@@ -42,9 +42,14 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   }
 
   /**
-   * Create Media Image entity programmatically.
+   * Create a Media Image entity.
+   *
+   * @param string $name
+   *   The name of the video.
+   * @param string $file_source
+   *   The contents of the file.
    */
-  public function createMediaImageEntity($name, $file_source): void {
+  public function createMediaImageEntity(string $name, string $file_source): void {
     $file = file_save_data(file_get_contents($file_source), 'public://' . basename($file_source));
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
     $entityTypeManager = $this->container->get('entity_type.manager');

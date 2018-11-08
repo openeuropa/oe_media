@@ -68,7 +68,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    *
    * @dataProvider providerRemoteVideoMedia
    */
-  public function testRemoteVideoMedia($video_url, $video_name): void {
+  public function testRemoteVideoMedia(string $video_url, string $video_name): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
