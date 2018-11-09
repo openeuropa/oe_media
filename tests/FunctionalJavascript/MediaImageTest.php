@@ -29,6 +29,7 @@ class MediaImageTest extends WebDriverTestBase {
     $editor = $this->drupalCreateUser([
       'create oe_media_demo content',
       'create image media',
+      'access media_entity_browser entity browser pages',
     ]);
 
     $this->drupalLogin($editor);
@@ -68,6 +69,61 @@ class MediaImageTest extends WebDriverTestBase {
     $page->pressButton('Save');
     $assert_session->addressEquals('/node/1');
     $assert_session->elementAttributeContains('css', '.field--name-oe-media-image>img', 'src', 'example_1.jpeg');
+  }
+
+  /**
+   * Test the creation of Media Image via IEF and reuse on the Demo node.
+   */
+  public function testAddImageViaEntityBrowser(): void {
+    $image_filename = 'example_1.jpeg';
+    // Add image.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->click('#edit-field-oe-demo-media-browser-wrapper');
+    $this->getSession()->getPage()->pressButton('Select entities');
+
+    // Go to modal window.
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $iframe_page = $this->getSession()->getPage();
+    $iframe_page->clickLink('Add Image');
+    $this->getSession()->getPage()->fillField("inline_entity_form[name][0][value]", $this->randomString());
+    $path = drupal_get_path('module', 'oe_media');
+    $this->getSession()->getPage()->attachFileToField("files[inline_entity_form_oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/' . $image_filename);
+    $result = $this->assertSession()->waitForButton('Remove');
+    $this->assertNotEmpty($result);
+    $this->getSession()->getPage()->fillField("inline_entity_form[oe_media_image][0][alt]", $this->randomString());
+    $iframe_page->pressButton('Save entity');
+
+    // Go back to main window.
+    $this->getSession()->switchToIFrame();
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->waitForButton('Remove');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->elementAttributeContains('css', '.field--name-oe-media-image>img', 'src', $image_filename);
+
+    // Reuse previously added image.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->click('#edit-field-oe-demo-media-browser-wrapper');
+    $this->getSession()->getPage()->pressButton('Select entities');
+
+    // Go to modal window with library of medias.
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $iframe_page = $this->getSession()->getPage();
+    $iframe_page->clickLink('View');
+    $iframe_page->findField('edit-entity-browser-select-media1')->click();
+    $iframe_page->pressButton('Select entities');
+
+    // Go back to main window and save node.
+    $this->getSession()->switchToIFrame();
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->waitForButton('Remove');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->elementAttributeContains('css', '.field--name-oe-media-image>img', 'src', $image_filename);
   }
 
 }
