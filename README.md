@@ -1,5 +1,10 @@
 # OpenEuropa Media module
 
+## Warning
+
+Currently some autotests contain workaround for fixing file permissions issue for executing inside docker image. In this case we do not recommend execute *Functional Javascript tests* without docker (which provided docker-compose).
+For now this module is not recommended for production usage.
+
 ## Development setup
 
 You can build the test site by running the following steps.
