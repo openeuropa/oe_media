@@ -1,9 +1,18 @@
 # OpenEuropa Media module
 
-## Warning
+## Known issues
 
-Currently some autotests contain workaround for fixing file permissions issue for executing inside docker image. In this case we do not recommend execute *Functional Javascript tests* without docker (which provided docker-compose).
-For now this module is not recommended for production usage.
+Currently some of our automated tests contain a workaround for fixing a file
+permissions issue that occurs when the tests are executed inside the FPFIS
+docker image. Since this is granting full read/write/execute access on certain
+publicly accessible folders it is currently not recommended to run the
+*Functional Javascript tests* on any environment except the docker containers
+which are provided by `docker-compose`.
+
+Until this is fixed this module should not be deployed on any production
+instance.
+
+Ref. https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1340
 
 ## Development setup
 
