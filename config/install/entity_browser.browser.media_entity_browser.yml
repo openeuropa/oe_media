@@ -39,3 +39,13 @@ widgets:
     weight: 2
     label: 'Add Video'
     id: entity_form
+  7a5f044d-04b6-4dda-995c-48ac77b91817:
+    settings:
+      entity_type: media
+      bundle: image
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: 7a5f044d-04b6-4dda-995c-48ac77b91817
+    weight: 3
+    label: 'Add Image'
+    id: entity_form
