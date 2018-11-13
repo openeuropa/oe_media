@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
+    - field.field.node.oe_media_demo.field_oe_demo_media_browser
     - node.type.oe_media_demo
 id: node.oe_media_demo.default
 targetEntityType: node
@@ -43,6 +44,20 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_oe_demo_media_browser:
+    weight: 125
+    settings:
+      entity_browser: media_entity_browser
+      field_widget_display: label
+      field_widget_edit: true
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
     region: content
   promote:
     type: boolean_checkbox

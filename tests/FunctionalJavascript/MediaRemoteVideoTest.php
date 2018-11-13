@@ -52,10 +52,6 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
     ]);
 
     $this->drupalLogin($editor);
-
-    // There are permission issues with the Docker container
-    // so we need to manually change the permissions to allow file uploads.
-    exec('chmod -R 777 ' . $this->publicFilesDirectory);
   }
 
   /**
@@ -68,7 +64,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    *
    * @dataProvider providerRemoteVideoMedia
    */
-  public function testRemoteVideoMedia($video_url, $video_name): void {
+  public function testRemoteVideoMedia(string $video_url, string $video_name): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();

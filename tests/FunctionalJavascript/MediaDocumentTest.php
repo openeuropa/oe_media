@@ -35,7 +35,7 @@ class MediaDocumentTest extends WebDriverTestBase {
 
     // There are permission issues with the Docker container
     // so we need to manually change the permissions to allow file uploads.
-    exec('chmod -R 777 ' . $this->publicFilesDirectory);
+    chmod($this->root . '/' . $this->publicFilesDirectory, 0777);
   }
 
   /**

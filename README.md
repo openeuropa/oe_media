@@ -1,5 +1,19 @@
 # OpenEuropa Media module
 
+## Known issues
+
+Currently some of our automated tests contain a workaround for fixing a file
+permissions issue that occurs when the tests are executed inside the FPFIS
+docker image. Since this is granting full read/write/execute access on certain
+publicly accessible folders it is currently not recommended to run the
+*Functional Javascript tests* on any environment except the docker containers
+which are provided by `docker-compose`.
+
+Until this is fixed this module should not be deployed on any production
+instance.
+
+Ref. https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1340
+
 ## Development setup
 
 You can build the test site by running the following steps.
