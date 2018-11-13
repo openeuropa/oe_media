@@ -49,6 +49,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
     $editor = $this->drupalCreateUser([
       'create oe_media_demo content',
       'create remote_video media',
+      'access media_entity_browser entity browser pages',
     ]);
 
     $this->drupalLogin($editor);
@@ -64,7 +65,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    *
    * @dataProvider providerRemoteVideoMedia
    */
-  public function testRemoteVideoMedia(string $video_url, string $video_name): void {
+  public function testAddVideoDefault(string $video_url, string $video_name): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
@@ -86,9 +87,72 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
     $page->pressButton('Save');
     $assert_session->addressEquals('/node/1');
 
+    $this->checkNodeDetailPageVideo($video_url);
+  }
+
+  /**
+   * Test the creation of Remote video media via IEF and reuse on the Demo node.
+   *
+   * @param string $video_url
+   *   Video URL.
+   *
+   * @dataProvider providerRemoteVideoMedia
+   */
+  public function testAddVideoViaEntityBrowser(string $video_url): void {
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->click('#edit-field-oe-demo-media-browser-wrapper');
+    $this->getSession()->getPage()->pressButton('Select entities');
+
+    // Go to modal window.
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $iframe_page = $this->getSession()->getPage();
+    $iframe_page->clickLink('Add Video');
+    $iframe_page->fillField("inline_entity_form[oe_media_oembed_video][0][value]", $video_url);
+    $iframe_page->pressButton('Save entity');
+
+    // Go back to main window.
+    $this->getSession()->switchToIFrame();
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->waitForButton('Remove');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->checkNodeDetailPageVideo($video_url);
+
+    // Reuse previously added remote video.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->click('#edit-field-oe-demo-media-browser-wrapper');
+    $this->getSession()->getPage()->pressButton('Select entities');
+
+    // Go to modal window with library of media.
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $iframe_page = $this->getSession()->getPage();
+    $iframe_page->clickLink('View');
+    $iframe_page->findField('edit-entity-browser-select-media1')->click();
+    $iframe_page->pressButton('Select entities');
+
+    // Go back to main window and save node.
+    $this->getSession()->switchToIFrame();
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->waitForButton('Remove');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->checkNodeDetailPageVideo($video_url);
+  }
+
+  /**
+   * Check that the video player has been rendered correctly.
+   *
+   * @param string $video_url
+   *   Video URL.
+   */
+  protected function checkNodeDetailPageVideo(string $video_url): void {
     // Ensure the iframe exists and that its src attribute contains a coherent
     // URL with the query parameters we expect.
-    $iframe_url = $assert_session->elementExists('css', 'iframe')->getAttribute('src');
+    $iframe_url = $this->assertSession()->elementExists('css', 'iframe')->getAttribute('src');
     $iframe_url = parse_url($iframe_url);
     $this->assertStringEndsWith('/media/oembed', $iframe_url['path']);
     $this->assertNotEmpty($iframe_url['query']);

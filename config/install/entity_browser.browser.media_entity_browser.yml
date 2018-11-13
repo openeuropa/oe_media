@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.media_entity_browser
   module:
+    - entity_browser_entity_form
     - views
 name: media_entity_browser
 label: 'Media Entity Browser'
@@ -28,3 +29,13 @@ widgets:
     weight: 1
     label: View
     id: view
+  ea17ce31-43ba-427e-94ae-88fe55605e7d:
+    settings:
+      entity_type: media
+      bundle: remote_video
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: ea17ce31-43ba-427e-94ae-88fe55605e7d
+    weight: 2
+    label: 'Add Video'
+    id: entity_form
