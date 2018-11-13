@@ -6,6 +6,6 @@ core: 8.x
 dependencies:
   - drupal:media
   - drupal:views
-  - drupal:entity_browser
-  - drupal:entity_browser_entity_form
+  - entity_browser:entity_browser
+  - entity_browser_entity_form:entity_browser_entity_form
 

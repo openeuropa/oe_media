@@ -65,7 +65,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    *
    * @dataProvider providerRemoteVideoMedia
    */
-  public function testRemoteVideoMedia(string $video_url, string $video_name): void {
+  public function testAddVideoDefault(string $video_url, string $video_name): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
@@ -91,7 +91,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
   }
 
   /**
-   * Test the creation of Media Remote video via IEF and reuse on the Demo node.
+   * Test the creation of Remote video media via IEF and reuse on the Demo node.
    *
    * @param string $video_url
    *   Video URL.
@@ -99,7 +99,6 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    * @dataProvider providerRemoteVideoMedia
    */
   public function testAddVideoViaEntityBrowser(string $video_url): void {
-    // Add remote video.
     $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
@@ -145,12 +144,12 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
   }
 
   /**
-   * Check that the video player has been exposed correctly.
+   * Check that the video player has been rendered correctly.
    *
    * @param string $video_url
    *   Video URL.
    */
-  private function checkNodeDetailPageVideo(string $video_url): void {
+  protected function checkNodeDetailPageVideo(string $video_url): void {
     // Ensure the iframe exists and that its src attribute contains a coherent
     // URL with the query parameters we expect.
     $iframe_url = $this->assertSession()->elementExists('css', 'iframe')->getAttribute('src');
