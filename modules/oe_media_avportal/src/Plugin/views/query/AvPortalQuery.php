@@ -90,7 +90,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @return string
    *   The field name.
    */
-  public function addField($table, $field, $alias = '', $params = array()) {
+  public function addField($table, $field, $alias = '', $params = []) {
     return $field;
   }
 
@@ -114,7 +114,7 @@ class AVPortalQuery extends QueryPluginBase {
       $offset = intval(!empty($this->offset) ? $this->offset : 0);
       $options = [
         'index' => $offset + 1,
-        'pagesize' => $limit
+        'pagesize' => $limit,
       ];
     }
 
@@ -144,7 +144,7 @@ class AVPortalQuery extends QueryPluginBase {
       $row = [];
       $row['ref'] = $resource->getRef();
       $row['title'] = $resource->getTitle();
-      $row['thumbnail'] = $resource->getThumbnailUrl() ?? file_create_url('public://media-icons/generic/no-thumbnail.png');
+      $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
 
       $row['index'] = $index;
       $view->result[] = new ResultRow($row);
