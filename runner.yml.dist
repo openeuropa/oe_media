@@ -33,7 +33,6 @@ selenium:
 
 commands:
   drupal:site-setup:
-    - { task: "chmod", file: "${drupal.root}/sites/default", permissions: 0777, recursive: true }
     - { task: "mkdir", dir: "${drupal.root}/profiles" }
     - { task: "mkdir", dir: "${drupal.root}/themes" }
     - { task: "symlink", from: "../../..", to: "${drupal.root}/modules/custom/oe_media" }
