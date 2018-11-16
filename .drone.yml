@@ -66,8 +66,11 @@ pipeline:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
+      # Workaround for fixing problem with files permission inside docker
+      # @todo remove first 2 lines after docker image release which contain fix of this problem
+      - chmod -R 777 build/sites/default/files
+      - ./vendor/bin/drush cr
       - ./vendor/bin/behat
-
 matrix:
   COMPOSER_BOUNDARY:
     - lowest
