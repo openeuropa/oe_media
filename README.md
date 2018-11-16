@@ -1,5 +1,15 @@
 # OpenEuropa Media module
 
+The OpenEuropa Media module provides various functionality that allows using Media on your site.
+
+The following types of Media (bundles) are currently available:
+
+* Images (local)
+* Files (local)
+* Remote video (supports Youtube, Vimeo, Daily Motion)
+
+Additionally, there is a demo module inside that exposes a content type and a generic Entity Browser meant to demonstrate the usage of Media with content.
+
 **Table of contents:**
 
 - [Known issues](#known-issues)
@@ -7,19 +17,9 @@
 - [Contributing](#contributing)
 - [Versioning](#versioning)
 
-## Known issues
+## Known Issues
 
-Currently some of our automated tests contain a workaround for fixing a file
-permissions issue that occurs when the tests are executed inside the FPFIS
-docker image. Since this is granting full read/write/execute access on certain
-publicly accessible folders it is currently not recommended to run the
-*Functional Javascript tests* on any environment except the docker containers
-which are provided by `docker-compose`.
-
-Until this is fixed this module should not be deployed on any production
-instance.
-
-Ref. https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1340
+* The Daily Motion video URLs in the Remote video bundles need to have the HTTP scheme (not HTTPs).
 
 ## Development setup
 
