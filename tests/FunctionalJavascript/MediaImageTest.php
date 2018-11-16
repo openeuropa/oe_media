@@ -33,10 +33,6 @@ class MediaImageTest extends WebDriverTestBase {
     ]);
 
     $this->drupalLogin($editor);
-
-    // There are permission issues with the Docker container
-    // so we need to manually change the permissions to allow file uploads.
-    chmod($this->root . '/' . $this->publicFilesDirectory, 0777);
   }
 
   /**
