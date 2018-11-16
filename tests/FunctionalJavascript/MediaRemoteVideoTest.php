@@ -71,14 +71,14 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
     $assert_session = $this->assertSession();
 
     // Create a media item.
-    $this->drupalGet("media/add/remote_video");
-    $page->fillField("oe_media_oembed_video[0][value]", $video_url);
+    $this->drupalGet('media/add/remote_video');
+    $page->fillField('oe_media_oembed_video[0][value]', $video_url);
     $page->pressButton('Save');
     $assert_session->addressEquals('/media/1');
 
     // Create a node with attached media.
-    $this->drupalGet("node/add/oe_media_demo");
-    $page->fillField("title[0][value]", 'My Node');
+    $this->drupalGet('node/add/oe_media_demo');
+    $page->fillField('title[0][value]', 'My Node');
     $autocomplete_field = $page->findField('field_oe_demo_remote_video_media[0][target_id]');
     $autocomplete_field->setValue($video_name);
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
@@ -100,7 +100,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
    */
   public function testAddVideoViaEntityBrowser(string $video_url): void {
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('title[0][value]', $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
@@ -110,7 +110,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $iframe_page = $this->getSession()->getPage();
     $iframe_page->clickLink('Add Video');
-    $iframe_page->fillField("inline_entity_form[oe_media_oembed_video][0][value]", $video_url);
+    $iframe_page->fillField('inline_entity_form[oe_media_oembed_video][0][value]', $video_url);
     $iframe_page->pressButton('Save entity');
 
     // Go back to main window.
@@ -122,7 +122,7 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
 
     // Reuse previously added remote video.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('title[0][value]', $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
