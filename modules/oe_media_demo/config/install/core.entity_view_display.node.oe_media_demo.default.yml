@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.oe_media_demo.field_oe_demo_av_portal_video
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
@@ -14,6 +15,15 @@ targetEntityType: node
 bundle: oe_media_demo
 mode: default
 content:
+  field_oe_demo_av_portal_video:
+    type: entity_reference_entity_view
+    weight: 104
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
   field_oe_demo_document_media:
     type: entity_reference_entity_view
     weight: 103
