@@ -14,7 +14,7 @@ class DrupalContext extends RawDrupalContext {
   /**
    * Click on drupal fiedlset form element.
    *
-   * @Given I click fieldset :field
+   * @Given I click fieldset :field of entity browser widget
    */
   public function iClickFieldset(string $field): void {
     $this->getSession()->getPage()->find('named', ['link_or_button', $field])->click();
@@ -23,10 +23,10 @@ class DrupalContext extends RawDrupalContext {
   /**
    * Switching to the iframe.
    *
-   * @Given I switch to the :iframe iframe
+   * @Then I should see entity browser modal window
    */
-  public function iSwitchToIframe(string $iframe): void {
-    $this->getSession()->switchToIFrame($iframe);
+  public function iSwitchToIframe(): void {
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
   }
 
   /**
