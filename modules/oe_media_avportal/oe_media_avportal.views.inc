@@ -1,10 +1,16 @@
 <?php
 
 /**
- * Implements hook_views_data().
- *
+ * @file
+ * OpenEuropa Media AV Portal module.
  */
-function oe_media_avportal_views_data() {
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_views_data().
+ */
+function oe_media_avportal_views_data(): array {
   $data = [];
 
   $data['avportal']['table']['group'] = t('AV Portal');
@@ -23,21 +29,12 @@ function oe_media_avportal_views_data() {
     ],
   ];
 
-  $data['avportal']['entity_browser_select'] = [
-    'title' => t('Select form'),
-    'help' => t('Form element that allows using the view to select items inside an entity browser.'),
-    'field' => [
-      'id' => 'avportal_select',
-      'real field' => 'ref',
-    ],
-  ];
-
   $data['avportal']['title'] = [
     'title' => t('Title'),
     'help' => t('Title.'),
     'field' => [
       'id' => 'standard',
-    ]
+    ],
   ];
 
   $data['avportal']['thumbnail'] = [

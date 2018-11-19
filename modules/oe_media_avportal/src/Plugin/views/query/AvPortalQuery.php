@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
 use Drupal\media_avportal\AvPortalClientInterface;
@@ -36,6 +38,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @param mixed $plugin_definition
    *   Plugin definition.
    * @param \Drupal\media_avportal\AvPortalClientInterface $client
+   *   The AV Portal client.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -68,7 +71,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @return string
    *   Table alias name.
    */
-  public function ensureTable($table, $relationship = NULL) {
+  public function ensureTable(string $table, string $relationship = NULL): string {
     return '';
   }
 
@@ -90,7 +93,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @return string
    *   The field name.
    */
-  public function addField($table, $field, $alias = '', $params = []) {
+  public function addField(string $table, string $field = NULL, string $alias = NULL, array $params = []): string {
     return $field;
   }
 
@@ -103,13 +106,16 @@ class AVPortalQuery extends QueryPluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @SuppressWarnings(PHPMD.CyclomaticComplexity)
    */
   public function execute(ViewExecutable $view) {
     $options = [];
 
     // Page the query.
     if (!empty($this->limit) || !empty($this->offset)) {
-      // We can't have an offset without a limit, so provide a very large limit instead.
+      // We can't have an offset without a limit, so provide a very large limit
+      // instead.
       $limit = intval(!empty($this->limit) ? $this->limit : 999999);
       $offset = intval(!empty($this->offset) ? $this->offset : 0);
       $options = [
@@ -119,7 +125,7 @@ class AVPortalQuery extends QueryPluginBase {
     }
 
     // Filter by full text search.
-    foreach ($this->where as $where_group => $where) {
+    foreach ($this->where as $where) {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
@@ -147,7 +153,7 @@ class AVPortalQuery extends QueryPluginBase {
       $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
 
       $row['index'] = $index;
-      $view->result[] = new ResultRow($row);
+      $view->result[$resource->getRef()] = new ResultRow($row);
       $index++;
     }
   }
@@ -155,12 +161,16 @@ class AVPortalQuery extends QueryPluginBase {
   /**
    * This is called by the filter plugins to set the query conditions.
    *
-   * @param string $group
+   * @param int $group
+   *   The where group.
    * @param string $field
-   * @param mixed $value
+   *   The condition field.
+   * @param string $value
+   *   The condition value.
    * @param string $operator
+   *   The condition operator.
    */
-  public function addWhere($group, $field, $value = NULL, $operator = NULL) {
+  public function addWhere(int $group = 0, string $field = NULL, string $value = NULL, string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }

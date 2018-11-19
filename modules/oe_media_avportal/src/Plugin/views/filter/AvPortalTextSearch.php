@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_avportal\Plugin\views\filter;
 
 use Drupal\views\Plugin\views\filter\StringFilter;

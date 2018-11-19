@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_avportal\Plugin\views\field;
 
 use Drupal\views\Plugin\views\field\FieldPluginBase;
@@ -19,7 +21,8 @@ class AvPortalThumbnail extends FieldPluginBase {
     $value = $this->getValue($values);
     return [
       '#theme' => 'image',
-      '#uri' => $this->sanitizeValue($value)
+      '#uri' => $this->sanitizeValue($value),
     ];
   }
+
 }

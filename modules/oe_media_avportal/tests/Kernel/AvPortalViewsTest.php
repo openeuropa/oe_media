@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\oe_media_avportal\Plugin\views\query\AVPortalQuery;
+use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
@@ -33,17 +36,12 @@ class AvPortalViewsTest extends KernelTestBase {
   }
 
   /**
-   * Tests a View that uses the AV Portal related plugins.
+   * Tests the View that uses the AV Portal query plugin.
    */
-  public function testDefaultAvPortalViews() {
+  public function testDefaultAvPortalViews(): void {
     $view = Views::getView('av_portal');
-    $view->setDisplay();
-    $view->initQuery();
+    $this->executeView($view);
     $this->assertInstanceOf(AVPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
-
-    // Execute the view.
-    $view->preExecute();
-    $view->execute();
 
     // By default, the view should show 10 results.
     $this->assertCount(10, $view->result);
@@ -59,6 +57,39 @@ class AvPortalViewsTest extends KernelTestBase {
     $this->assertEquals('I-163308', $row->ref);
     $this->assertEquals(' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews', $row->title);
     $this->assertContains('media/images/icons/no-thumbnail.png', $row->thumbnail);
+
+    // Assert that it works correctly with the pager.
+    $view = Views::getView('av_portal');
+    $view->setCurrentPage(1);
+    $this->executeView($view);
+
+    $this->assertCount(5, $view->result);
+    $row = $view->result[0];
+    $this->assertEquals('I-163665', $row->ref);
+    $this->assertEquals(' STOCKSHOTS EP', $row->title);
+
+    // Assert that we can filter using the custom search text filter.
+    $view = Views::getView('av_portal');
+    $view->setExposedInput(['search' => 'europe']);
+    $this->executeView($view);
+
+    $this->assertCount(10, $view->result);
+    $row = $view->result[0];
+    $this->assertEquals('I-163675', $row->ref);
+    $this->assertEquals(' Start-up Europe Award Ceremony', $row->title);
+  }
+
+  /**
+   * Executes a View.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view to execute.
+   */
+  protected function executeView(ViewExecutable $view) {
+    $view->setDisplay();
+    $view->initQuery();
+    $view->preExecute();
+    $view->execute();
   }
 
 }
