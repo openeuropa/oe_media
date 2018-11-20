@@ -6,11 +6,12 @@ Feature: Media document bundle.
 
   @javascript
   Scenario: The node adding form should contain entity browser widget with possibility to add new and reuse existing files.
-    Given I am logged in as a user with the "create oe_media_demo content,create document media,access media_entity_browser entity browser pages" permission
-    And I visit "node/add/oe_media_demo"
+    Given I am logged in as a user with the "create oe_media_demo content,create document media,access media_entity_browser entity browser pages" permissions
+    
+    When I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click fieldset "Media browser field" of entity browser widget
-    When I press the "Select entities" button
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add File"
     And I fill in "Name" with "Media document"
@@ -22,7 +23,7 @@ Feature: Media document bundle.
     When I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click fieldset "Media browser field" of entity browser widget
-    When I press the "Select entities" button
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "View"
     And I select the "Media document" media entity in the entity browser modal window
