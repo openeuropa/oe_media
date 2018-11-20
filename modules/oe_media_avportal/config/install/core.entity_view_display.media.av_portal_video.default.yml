@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.av_portal_video.oe_media_oembed_video
+    - field.field.media.av_portal_video.oe_media_avportal_video
     - image.style.thumbnail
     - media.type.av_portal_video
   module:
@@ -24,7 +24,7 @@ content:
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
-  oe_media_oembed_video:
+  oe_media_avportal_video:
     weight: 6
     label: hidden
     settings:

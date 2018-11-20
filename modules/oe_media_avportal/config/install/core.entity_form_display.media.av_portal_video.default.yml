@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.av_portal_video.oe_media_oembed_video
+    - field.field.media.av_portal_video.oe_media_avportal_video
     - media.type.av_portal_video
   module:
     - media_avportal
@@ -17,7 +17,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  oe_media_oembed_video:
+  oe_media_avportal_video:
     type: avportal_textfield
     weight: 0
     settings:
