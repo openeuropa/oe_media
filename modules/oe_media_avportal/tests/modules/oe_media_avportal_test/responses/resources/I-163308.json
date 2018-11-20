@@ -1,0 +1,89 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 18,
+    "params": {
+      "pagesize": "15",
+      "ref": "I-163308",
+      "index": "1",
+      "hasmedia": "1",
+      "fl": "type,ref,doc_ref,titles_json,duration,shootstartdate,media_json,mediaorder_json,summary_json",
+      "proxy": "true",
+      "serverName": "wlpc0100",
+      "type": "VIDEO",
+      "wt": "json"
+    }
+  },
+  "response": {
+    "numFound": 1,
+    "start": 0,
+    "docs": [
+      {
+        "ref": "I-163308",
+        "duration": "4408.6",
+        "titles_json": {
+          "FR": " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews",
+          "EN": " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
+        },
+        "summary_json": {
+          "FR": "  - Welcome to the political segment by Gernot BLÜMEL, Austrian Federal Minister for the EU, Arts, Culture and Media - Keynote speech by  Frans TIMMERMANS, First Vice-President of the EC in charge of Better Regulation, Inter-Institutional Relations, the Rule of Law and the Charter of Fundamental Rights, and Chairman of the Task Force on Subsidiarity, Proportionality and \"Doing Less More Efficiently\" - Interviews Melania-Gabriela CIOT, Romania Secretary of State for European Affairs at the Ministry of Foreign Affairs Karl-Heinz LAMBERTZ, President of the Committee of the Regions Markus WALLNER, Landeshauptmann of Vorarlberg",
+          "EN": "  - Welcome to the political segment by Gernot BLÜMEL, Austrian Federal Minister for the EU, Arts, Culture and Media - Keynote speech by  Frans TIMMERMANS, First Vice-President of the EC in charge of Better Regulation, Inter-Institutional Relations, the Rule of Law and the Charter of Fundamental Rights, and Chairman of the Task Force on Subsidiarity, Proportionality and \"Doing Less More Efficiently\" - Interviews Melania-Gabriela CIOT, Romania Secretary of State for European Affairs at the Ministry of Foreign Affairs Karl-Heinz LAMBERTZ, President of the Committee of the Regions Markus WALLNER, Landeshauptmann of Vorarlberg"
+        },
+        "shootstartdate": "20181116 09:44",
+        "mediaorder_json": [
+          {
+            "INT": {
+              "SUPPORTS": "WEB",
+              "TEXT": "Original",
+              "ASPECT": {
+                "16:9": "TRUE"
+              }
+            }
+          },
+          {
+            "EN": {
+              "SUPPORTS": "WEB",
+              "TEXT": "English",
+              "ASPECT": {
+                "16:9": "TRUE"
+              }
+            }
+          },
+          {
+            "DE": {
+              "SUPPORTS": "WEB",
+              "TEXT": "Deutsch",
+              "ASPECT": {
+                "16:9": "TRUE"
+              }
+            }
+          }
+        ],
+        "media_json": {
+          "16:9": {
+            "EN": {
+              "THUMB": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_M_I163308INT1W_06.jpg?latest=0006674230",
+              "MP3": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/MP3_I163308EN1W.mp3?latest=0006674234",
+              "IMAGE": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_I163308INT1W_06.jpg?latest=0006674228",
+              "LR": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/LR_I163308EN1W.mp4?latest=0006674232"
+            },
+            "INT": {
+              "THUMB": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_M_I163308INT1W_06.jpg?latest=0006674788",
+              "HDMP4": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/HD_I163308INT1W.mp4?latest=0006674794",
+              "MP3": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/MP3_I163308INT1W.mp3?latest=0006674792",
+              "IMAGE": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_I163308INT1W_06.jpg?latest=0006674786",
+              "LR": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/LR_I163308INT1W.mp4?latest=0006674790"
+            },
+            "DE": {
+              "THUMB": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_M_I163308INT1W_06.jpg?latest=0006674220",
+              "MP3": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/MP3_I163308DE1W.mp3?latest=0006674224",
+              "IMAGE": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/THUMB_I163308INT1W_06.jpg?latest=0006674218",
+              "LR": "http:\/\/defiris.ec.streamcloud.be\/findmedia\/08\/163308\/LR_I163308DE1W.mp4?latest=0006674222"
+            }
+          }
+        },
+        "type": "VIDEO"
+      }
+    ]
+  }
+}

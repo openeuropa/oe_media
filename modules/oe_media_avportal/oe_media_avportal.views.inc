@@ -53,5 +53,14 @@ function oe_media_avportal_views_data(): array {
     ],
   ];
 
+  $data['avportal']['entity_browser_select'] = [
+    'title' => t('Entity browser select form'),
+    'help' => t('Form element that lets you use a view as a base to select entities in entity browser.'),
+    'field' => [
+      'id' => 'avportal_select',
+      'real field' => 'ref',
+    ],
+  ];
+
   return $data;
 }

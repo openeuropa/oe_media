@@ -1,0 +1,5 @@
+services:
+  oe_media_avportal_test.event_subscriber:
+    class: Drupal\oe_media_avportal_test\EventSubscriber\AvPortalMockEventSubscriber
+    tags:
+      - { name: event_subscriber }
