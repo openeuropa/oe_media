@@ -1,0 +1,9 @@
+name: OpenEuropa Media AV Portal
+description: Integrates the OpenEuropa Media module with the AV Portal service.
+package: OpenEuropa
+type: module
+core: 8.x
+dependencies:
+  - oe_media:oe_media
+  - media_avportal:media_avportal
+

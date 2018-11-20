@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.oe_media_demo.field_oe_demo_av_portal_video
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
@@ -18,6 +19,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_oe_demo_av_portal_video:
+    weight: 126
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_oe_demo_document_media:
     weight: 124
     settings:
