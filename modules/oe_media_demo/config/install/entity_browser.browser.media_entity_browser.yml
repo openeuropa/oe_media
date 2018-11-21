@@ -49,3 +49,13 @@ widgets:
     weight: 3
     label: 'Add Image'
     id: entity_form
+  e9f8e84a-9574-4de7-90de-caec7acf030d:
+    settings:
+      entity_type: media
+      bundle: document
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: e9f8e84a-9574-4de7-90de-caec7acf030d
+    weight: 4
+    label: 'Add File'
+    id: entity_form

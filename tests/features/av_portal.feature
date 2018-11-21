@@ -16,4 +16,4 @@ Feature: AV Portal.
     And I press "Save"
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
     # Cleanup of the media entity.
-    Then I remove the AV Portal media "Midday press briefing from 25/10/2018"
+    And I remove the media "Midday press briefing from 25/10/2018"

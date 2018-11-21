@@ -72,24 +72,6 @@ class AvPortalContext extends RawDrupalContext {
   }
 
   /**
-   * Step that deletes an AV Portal media entity.
-   *
-   * @param string $title
-   *   The media title.
-   *
-   * @Then I remove the AV Portal media :title
-   */
-  public function removeAvPortalMedia(string $title): void {
-    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => $title]);
-    if (!$media) {
-      throw new \Exception(sprintf('The media named "%s" does not exist', $title));
-    }
-
-    $media = reset($media);
-    $media->delete();
-  }
-
-  /**
    * Enables the test module scanning.
    *
    * The AV Portal media mock is a test module so it cannot be enabled by
