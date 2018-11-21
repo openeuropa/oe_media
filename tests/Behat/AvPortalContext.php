@@ -4,41 +4,12 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Drupal\Core\Site\Settings;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
  * Behat context for AV Portal.
  */
 class AvPortalContext extends RawDrupalContext {
-
-  /**
-   * Enables the Mock.
-   *
-   * @param \Behat\Behat\Hook\Scope\BeforeScenarioScope $scope
-   *   The scope.
-   *
-   * @beforeScenario @av_portal
-   */
-  public function enableTestModule(BeforeScenarioScope $scope): void {
-    $this->enableTestModuleScanning();
-    \Drupal::service('module_installer')->install(['media_avportal_mock']);
-  }
-
-  /**
-   * Disables the Mock.
-   *
-   * @param \Behat\Behat\Hook\Scope\AfterScenarioScope $scope
-   *   The scope.
-   *
-   * @afterScenario @av_portal
-   */
-  public function disableTestModule(AfterScenarioScope $scope): void {
-    $this->enableTestModuleScanning();
-    \Drupal::service('module_installer')->uninstall(['media_avportal_mock']);
-  }
 
   /**
    * Fills in the Demo content AV Portal reference field.
@@ -69,20 +40,6 @@ class AvPortalContext extends RawDrupalContext {
     $media = reset($media);
     $ref = $media->get('oe_media_avportal_video')->value;
     $this->assertSession()->elementAttributeContains('css', 'iframe', 'src', $ref);
-  }
-
-  /**
-   * Enables the test module scanning.
-   *
-   * The AV Portal media mock is a test module so it cannot be enabled by
-   * default as it is not being scanned. By changing the settings temporarily,
-   * we can allow that to happen.
-   */
-  protected function enableTestModuleScanning(): void {
-    $settings = Settings::getAll();
-    $settings['extension_discovery_scan_tests'] = TRUE;
-    // We just have to re-instantiate the singleton.
-    new Settings($settings);
   }
 
 }

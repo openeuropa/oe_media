@@ -4,10 +4,11 @@ Feature: Media document bundle.
   As a site editor
   I want to be able to work with File based Media entities
 
-  @javascript
-  Scenario: The entity browser should allow the selection and creation of new File Media entities
+  Background:
     Given I am logged in as a user with the "create oe_media_demo content,create document media,access media_entity_browser entity browser pages" permissions
-    
+
+  @javascript @demo
+  Scenario: The entity browser should allow the selection and creation of new File Media entities
     When I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
@@ -30,5 +31,6 @@ Feature: Media document bundle.
     And I press the "Select entities" button
     And I press the "Save" button
     Then I should see the link "sample.pdf"
-    # Cleanup of the media entity.
+
+    # @todo: Cleanup of the media entity using a tag @afterscenario
     And I remove the media "Media document"
