@@ -30,7 +30,7 @@ pipeline:
       - composer install --ansi --no-suggest --no-progress
 
   composer-update-prefer-lowest:
-    group: prepare
+    group: update
     image: fpfis/httpd-php-dev:7.1
     volumes:
       - /cache:/cache
