@@ -1,0 +1,3 @@
+views.filter.avportal_text_search:
+  type: views.filter.string
+  label: 'AV Portal Search'
