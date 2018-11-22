@@ -4,11 +4,9 @@ Feature: Media AV portal with entity browser.
   As a site editor
   I want to see the entity browser widget for adding and reusing AV Portal video media entities.
 
-  Background:
-    Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permissions
-
-  @javascript @demo
+  @javascript @av_portal
   Scenario: The node adding form should contain entity browser widget with possibility to add new and reuse existing AV Portal video.
+    Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
     And I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
@@ -30,6 +28,8 @@ Feature: Media AV portal with entity browser.
     And I press the "Select entities" button
     And I press the "Save" button
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
-
-    # @todo: Cleanup of the media entity using a tag @afterscenario
+    # Cleanup of the media entity.
     And I remove the media "Midday press briefing from 25/10/2018"
+
+
+

@@ -19,7 +19,7 @@ drupal:
     - "./vendor/bin/drush config-set system.theme admin seven -y"
     - "./vendor/bin/drush config-set node.settings use_admin_theme 1 -y"
     # Enable the modules.
-    - "./vendor/bin/drush en oe_media -y"
+    - "./vendor/bin/drush en oe_media oe_media_avportal oe_media_demo -y"
   settings:
     settings:
       file_scan_ignore_directories:
