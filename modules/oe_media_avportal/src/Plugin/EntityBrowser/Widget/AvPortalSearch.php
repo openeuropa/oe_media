@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_avportal\Plugin\EntityBrowser\Widget;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -37,7 +39,7 @@ class AVPortalSearch extends View {
       // The selected item (row) is the resource ref.
       // @see AvPortalSelectForm::getRowId().
       $ref = $this->normalizeRef($row);
-      $entities[] = $this->getMediaEntityFromRef($ref);;
+      $entities[] = $this->getMediaEntityFromRef($ref);
     }
 
     return $entities;

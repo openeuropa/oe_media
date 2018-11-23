@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_avportal\Plugin\views\field;
 
 use Drupal\entity_browser\Plugin\views\field\SelectForm;

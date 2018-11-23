@@ -23,7 +23,8 @@
         "openeuropa/drupal-core-require-dev": "^8.6",
         "drupal/drupal-extension": "^4.0.0@alpha",
         "phpunit/phpunit": "~5.5||~6.0",
-        "symfony/browser-kit": "~3.0||~4.0"
+        "symfony/browser-kit": "~3.0||~4.0",
+        "nikic/php-parser": "~3.0"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
