@@ -52,9 +52,6 @@ class MediaRemoteVideoTest extends WebDriverTestBase {
       'access media_entity_browser entity browser pages',
     ]);
 
-    // This first drupalGet() is needed.
-    $this->drupalGet('<front>');
-
     $this->drupalLogin($editor);
   }
 

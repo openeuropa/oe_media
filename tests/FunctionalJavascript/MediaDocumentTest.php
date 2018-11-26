@@ -31,9 +31,6 @@ class MediaDocumentTest extends WebDriverTestBase {
       'create document media',
     ]);
 
-    // This first drupalGet() is needed.
-    $this->drupalGet('<front>');
-
     $this->drupalLogin($editor);
   }
 
