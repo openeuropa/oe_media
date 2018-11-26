@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.av_portal_entity_browser_test
+  module:
+    - views
+name: av_portal_entity_browser_test
+label: 'AV Portal Entity Browser Test'
+display: iframe
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  551af1b6-ef86-494b-81c5-65a041b2db54:
+    settings:
+      view: av_portal_entity_browser_test
+      view_display: entity_browser_1
+      submit_text: 'Select entities'
+      auto_select: false
+    uuid: 551af1b6-ef86-494b-81c5-65a041b2db54
+    weight: 1
+    label: avportal_search
+    id: avportal_search

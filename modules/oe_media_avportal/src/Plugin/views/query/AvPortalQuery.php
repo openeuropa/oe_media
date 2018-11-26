@@ -153,7 +153,7 @@ class AVPortalQuery extends QueryPluginBase {
       $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
 
       $row['index'] = $index;
-      $view->result[$resource->getRef()] = new ResultRow($row);
+      $view->result[] = new ResultRow($row);
       $index++;
     }
   }

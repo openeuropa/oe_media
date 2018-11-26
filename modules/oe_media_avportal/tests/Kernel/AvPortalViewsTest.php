@@ -19,6 +19,7 @@ class AvPortalViewsTest extends KernelTestBase {
    */
   public static $modules = [
     'views',
+    'entity_browser',
     'system',
     'media_avportal',
     'media_avportal_mock',
@@ -32,7 +33,12 @@ class AvPortalViewsTest extends KernelTestBase {
   protected function setUp($import_test_views = TRUE) {
     parent::setUp();
 
-    $this->installConfig(['system', 'media_avportal', 'oe_media_avportal_test']);
+    $this->installConfig([
+      'system',
+      'entity_browser',
+      'media_avportal',
+      'oe_media_avportal_test',
+    ]);
   }
 
   /**
