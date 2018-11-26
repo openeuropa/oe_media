@@ -59,3 +59,13 @@ widgets:
     weight: 4
     label: 'Add File'
     id: entity_form
+  1bebeec0-27e3-4786-b948-b3493118fdaf:
+    settings:
+      entity_type: media
+      bundle: av_portal_video
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: 1bebeec0-27e3-4786-b948-b3493118fdaf
+    weight: 4
+    label: 'Add AV Portal Video'
+    id: entity_form

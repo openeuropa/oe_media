@@ -21,6 +21,7 @@ settings:
       image: image
       remote_video: remote_video
       document: document
+      av_portal_video: av_portal_video
     sort:
       field: _none
     auto_create: false
