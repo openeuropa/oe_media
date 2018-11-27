@@ -32,10 +32,6 @@ class MediaDocumentTest extends WebDriverTestBase {
     ]);
 
     $this->drupalLogin($editor);
-
-    // There are permission issues with the Docker container
-    // so we need to manually change the permissions to allow file uploads.
-    chmod($this->root . '/' . $this->publicFilesDirectory, 0777);
   }
 
   /**
@@ -47,18 +43,18 @@ class MediaDocumentTest extends WebDriverTestBase {
     $assert_session = $this->assertSession();
 
     // Create a media item.
-    $this->drupalGet("media/add/document");
-    $page->fillField("name[0][value]", 'My Document 1');
+    $this->drupalGet('media/add/document');
+    $page->fillField('name[0][value]', 'My Document 1');
     $path = drupal_get_path('module', 'oe_media');
-    $page->attachFileToField("files[oe_media_file_0]", $this->root . '/' . $path . '/tests/fixtures/sample.pdf');
+    $page->attachFileToField('files[oe_media_file_0]', $this->root . '/' . $path . '/tests/fixtures/sample.pdf');
     $result = $assert_session->waitForButton('Remove');
     $this->assertNotEmpty($result);
     $page->pressButton('Save');
     $assert_session->addressEquals('/media/1');
 
     // Create a node with attached media.
-    $this->drupalGet("node/add/oe_media_demo");
-    $page->fillField("title[0][value]", 'My Node');
+    $this->drupalGet('node/add/oe_media_demo');
+    $page->fillField('title[0][value]', 'My Node');
     $autocomplete_field = $page->findField('field_oe_demo_document_media[0][target_id]');
     $autocomplete_field->setValue('My Document 1');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');

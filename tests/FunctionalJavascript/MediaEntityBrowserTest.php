@@ -102,7 +102,7 @@ class MediaEntityBrowserTest extends WebDriverTestBase {
   protected function checkMediaBrowserMediaSelection() {
     // Select media image though entity browser.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('title[0][value]', $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 

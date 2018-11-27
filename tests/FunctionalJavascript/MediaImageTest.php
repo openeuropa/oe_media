@@ -33,10 +33,6 @@ class MediaImageTest extends WebDriverTestBase {
     ]);
 
     $this->drupalLogin($editor);
-
-    // There are permission issues with the Docker container
-    // so we need to manually change the permissions to allow file uploads.
-    chmod($this->root . '/' . $this->publicFilesDirectory, 0777);
   }
 
   /**
@@ -48,19 +44,19 @@ class MediaImageTest extends WebDriverTestBase {
     $assert_session = $this->assertSession();
 
     // Create a media item.
-    $this->drupalGet("media/add/image");
-    $page->fillField("name[0][value]", 'My Image 1');
+    $this->drupalGet('media/add/image');
+    $page->fillField('name[0][value]', 'My Image 1');
     $path = drupal_get_path('module', 'oe_media');
-    $page->attachFileToField("files[oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/example_1.jpeg');
+    $page->attachFileToField('files[oe_media_image_0]', $this->root . '/' . $path . '/tests/fixtures/example_1.jpeg');
     $result = $assert_session->waitForButton('Remove');
     $this->assertNotEmpty($result);
-    $page->fillField("oe_media_image[0][alt]", 'Image Alt Text 1');
+    $page->fillField('oe_media_image[0][alt]', 'Image Alt Text 1');
     $page->pressButton('Save');
     $assert_session->addressEquals('/media/1');
 
     // Create a node with attached media.
-    $this->drupalGet("node/add/oe_media_demo");
-    $page->fillField("title[0][value]", 'My Node');
+    $this->drupalGet('node/add/oe_media_demo');
+    $page->fillField('title[0][value]', 'My Node');
     $autocomplete_field = $page->findField('field_oe_demo_image_media[0][target_id]');
     $autocomplete_field->setValue('My Image 1');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
@@ -78,7 +74,7 @@ class MediaImageTest extends WebDriverTestBase {
     $image_filename = 'example_1.jpeg';
     // Add image.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('title[0][value]', $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
@@ -88,12 +84,12 @@ class MediaImageTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $iframe_page = $this->getSession()->getPage();
     $iframe_page->clickLink('Add Image');
-    $this->getSession()->getPage()->fillField("inline_entity_form[name][0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('inline_entity_form[name][0][value]', $this->randomString());
     $path = drupal_get_path('module', 'oe_media');
-    $this->getSession()->getPage()->attachFileToField("files[inline_entity_form_oe_media_image_0]", $this->root . '/' . $path . '/tests/fixtures/' . $image_filename);
+    $this->getSession()->getPage()->attachFileToField('files[inline_entity_form_oe_media_image_0]', $this->root . '/' . $path . '/tests/fixtures/' . $image_filename);
     $result = $this->assertSession()->waitForButton('Remove');
     $this->assertNotEmpty($result);
-    $this->getSession()->getPage()->fillField("inline_entity_form[oe_media_image][0][alt]", $this->randomString());
+    $this->getSession()->getPage()->fillField('inline_entity_form[oe_media_image][0][alt]', $this->randomString());
     $iframe_page->pressButton('Save entity');
 
     // Go back to main window.
@@ -105,7 +101,7 @@ class MediaImageTest extends WebDriverTestBase {
 
     // Reuse previously added image.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->fillField("title[0][value]", $this->randomString());
+    $this->getSession()->getPage()->fillField('title[0][value]', $this->randomString());
     $this->click('#edit-field-oe-demo-media-browser-wrapper');
     $this->getSession()->getPage()->pressButton('Select entities');
 
