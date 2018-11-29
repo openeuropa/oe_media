@@ -27,7 +27,7 @@ class AVPortalUpload extends WidgetBase {
   public function defaultConfiguration() {
     return [
       'media_type' => NULL,
-    ];
+    ] + parent::defaultConfiguration();
   }
 
   /**
