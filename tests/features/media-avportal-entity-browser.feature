@@ -31,5 +31,22 @@ Feature: Media AV portal with entity browser.
     # Cleanup of the media entity.
     And I remove the media "Midday press briefing from 25/10/2018"
 
-
+  @javascript @av_portal
+  Scenario: The node adding form should contain entity browser widget with possibility to search and add AV Portal videos.
+    Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
+    And I visit "node/add/oe_media_demo"
+    And I fill in "Title" with "Media demo"
+    And I click the fieldset "Media browser field"
+    When I press the "Select entities" button
+    Then I should see entity browser modal window
+    When I click "AV Portal Search"
+    And I fill in "Search" with "Juncker"
+    And I press the "Apply" button
+    Then I should see text matching "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
+    When I check the box "entity_browser_select[I-065409]"
+    And I press the "Select entities" button
+    And I press the "Save" button
+    Then I should see the AV Portal video "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
+    # Cleanup of the media entity.
+    And I remove the media "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
 
