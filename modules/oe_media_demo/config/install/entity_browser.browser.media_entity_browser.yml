@@ -69,10 +69,3 @@ widgets:
     weight: -7
     label: 'Add AV Portal Video'
     id: entity_form
-  3d20d762-efed-4206-bba7-829e62c79879:
-    settings:
-      media_type: null
-    uuid: 3d20d762-efed-4206-bba7-829e62c79879
-    weight: 6
-    label: 'Register AV Portal video'
-    id: avportal_upload

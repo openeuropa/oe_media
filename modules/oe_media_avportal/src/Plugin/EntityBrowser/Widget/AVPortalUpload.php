@@ -29,7 +29,7 @@ class AVPortalUpload extends WidgetBase {
       'media_type' => NULL,
     ] + parent::defaultConfiguration();
   }
-  
+
   /**
    * {@inheritdoc}
    */
