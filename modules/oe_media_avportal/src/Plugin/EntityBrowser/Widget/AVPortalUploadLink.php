@@ -10,25 +10,16 @@ use Drupal\Core\Url;
 use Drupal\entity_browser\WidgetBase;
 
 /**
- * Uses upload to create media images.
+ * Entity browser widget linkink to the AV Portal service for uploading videos.
  *
  * @EntityBrowserWidget(
- *   id = "avportal_upload",
+ *   id = "av_portal_upload_link",
  *   label = @Translation("AVPortal Upload"),
  *   description = @Translation("Upload widget that links to AVPortal."),
  *   auto_select = FALSE
  * )
  */
-class AVPortalUpload extends WidgetBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration() {
-    return [
-      'media_type' => NULL,
-    ] + parent::defaultConfiguration();
-  }
+class AVPortalUploadLink extends WidgetBase {
 
   /**
    * {@inheritdoc}
@@ -37,7 +28,7 @@ class AVPortalUpload extends WidgetBase {
 
     $form['upload'] = [
       '#type' => 'fieldset',
-      '#title' => 'External upload',
+      '#title' => $this->t('External upload'),
     ];
 
     $link = Link::fromTextAndUrl(t('external link'), Url::fromUri('https://webgate.ec.europa.eu/europa-hub/en/vplay/add', ['attributes' => ['target' => '_blank']]))->toString();
@@ -51,6 +42,11 @@ class AVPortalUpload extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Fake support to entities.
+   *
+   * We need to implement this abstract method but it's not actually used
+   * because we are not dealing with any entities.
    */
   protected function prepareEntities(array $form, FormStateInterface $form_state) {
     return [];

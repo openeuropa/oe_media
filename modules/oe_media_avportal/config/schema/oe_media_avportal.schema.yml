@@ -6,6 +6,10 @@ entity_browser.browser.widget.avportal_search:
   type: entity_browser.browser.widget.view
   label: 'AV Portal widget configuration'
 
-entity_browser.browser.widget.avportal_upload.settings.submit_text:
-  type: string
-  label: 'AVPortal Upload'
+entity_browser.browser.widget.av_portal_upload_link:
+  type: mapping
+  label: 'View widget configuration'
+  mapping:
+    submit_text:
+      type: string
+      label: 'Submit button text'

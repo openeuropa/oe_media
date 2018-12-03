@@ -29,9 +29,7 @@ widgets:
     label: avportal_search
     id: avportal_search
   3d20d762-efed-4206-bba7-829e62c79879:
-    settings:
-      media_type: null
     uuid: 3d20d762-efed-4206-bba7-829e62c79879
     weight: 6
     label: 'Register AV Portal video'
-    id: avportal_upload
+    id: av_portal_upload_link
