@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for the OpenEuropa Media AV Portal Test.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_uninstall().
+ */
+function oe_media_avportal_test_uninstall(): void {
+  $config_list = [
+    'entity_browser.browser.av_portal_entity_browser_test',
+    'views.view.av_portal_entity_browser_test',
+    'views.view.av_portal_test',
+  ];
+  foreach ($config_list as $config_name) {
+    Drupal::configFactory()->getEditable($config_name)->delete();
+  }
+}
