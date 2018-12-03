@@ -45,7 +45,7 @@ class AvPortalViewsTest extends KernelTestBase {
    * Tests the View that uses the AV Portal query plugin.
    */
   public function testDefaultAvPortalViews(): void {
-    $view = Views::getView('av_portal');
+    $view = Views::getView('av_portal_test');
     $this->executeView($view);
     $this->assertInstanceOf(AVPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
 
@@ -65,7 +65,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $this->assertContains('media/images/icons/no-thumbnail.png', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
-    $view = Views::getView('av_portal');
+    $view = Views::getView('av_portal_test');
     $view->setCurrentPage(1);
     $this->executeView($view);
 
@@ -75,7 +75,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $this->assertEquals(' STOCKSHOTS EP', $row->title);
 
     // Assert that we can filter using the custom search text filter.
-    $view = Views::getView('av_portal');
+    $view = Views::getView('av_portal_test');
     $view->setExposedInput(['search' => 'europe']);
     $this->executeView($view);
 
