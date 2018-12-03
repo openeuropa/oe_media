@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Update hooks for the OpenEuropa Media AV Portal Test.
+ * Install file for the OpenEuropa Media AV Portal Test module.
  */
 
 declare(strict_types = 1);

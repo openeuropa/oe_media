@@ -24,7 +24,7 @@ class AvPortalContext extends RawDrupalContext {
    */
   public function enableTestModule(BeforeScenarioScope $scope): void {
     $this->enableTestModuleScanning();
-    \Drupal::service('module_installer')->install(['media_avportal_mock']);
+    \Drupal::service('module_installer')->install(['media_avportal_mock', 'oe_media_avportal_test']);
   }
 
   /**
@@ -37,7 +37,7 @@ class AvPortalContext extends RawDrupalContext {
    */
   public function disableTestModule(AfterScenarioScope $scope): void {
     $this->enableTestModuleScanning();
-    \Drupal::service('module_installer')->uninstall(['media_avportal_mock']);
+    \Drupal::service('module_installer')->uninstall(['media_avportal_mock', 'oe_media_avportal_test']);
   }
 
   /**
@@ -83,6 +83,21 @@ class AvPortalContext extends RawDrupalContext {
     $settings['extension_discovery_scan_tests'] = TRUE;
     // We just have to re-instantiate the singleton.
     new Settings($settings);
+  }
+
+  /**
+   * Find a video by title and click on checkbox.
+   *
+   * @param string $title
+   *   Title of the video.
+   *
+   * @When I select the video with the title :title
+   */
+  public function iSelectVideoByTitle(string $title): void {
+    $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-col ')]";
+    $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-title ')][contains(string(.), '$title')]]";
+    $xpath .= "//input[@type='checkbox']";
+    $this->getSession()->getPage()->find('xpath', $xpath)->check();
   }
 
 }

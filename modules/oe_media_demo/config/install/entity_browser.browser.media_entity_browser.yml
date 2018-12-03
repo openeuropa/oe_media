@@ -78,5 +78,5 @@ widgets:
       auto_select: false
     uuid: 26756177-b89a-44e6-9427-c7e0be911125
     weight: -6
-    label: 'Search AV Portal Video'
+    label: 'Search in AV Portal'
     id: avportal_search

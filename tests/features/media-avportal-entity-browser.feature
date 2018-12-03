@@ -32,21 +32,19 @@ Feature: Media AV portal with entity browser.
     And I remove the media "Midday press briefing from 25/10/2018"
 
   @javascript @av_portal
-  Scenario: The node adding form should contain entity browser widget with possibility to search and add AV Portal videos.
+  Scenario: The entity browser should contain a widget that allows to search for videos in AV Portal.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
     And I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     When I press the "Select entities" button
     Then I should see entity browser modal window
-    When I click "AV Portal Search"
-    And I fill in "Search" with "Juncker"
-    And I press the "Apply" button
-    Then I should see text matching "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
-    When I check the box "entity_browser_select[I-065409]"
+    When I click "Search in AV Portal"
+    Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
+    When I select the video with the title ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
     And I press the "Select entities" button
     And I press the "Save" button
-    Then I should see the AV Portal video "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
+    Then I should see the AV Portal video ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
     # Cleanup of the media entity.
-    And I remove the media "Joint press conference by Jean-Claude Juncker, President of the Eurogroup, and Olli Rehn following the Eurogroup teleconference"
+    And I remove the media ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
 
