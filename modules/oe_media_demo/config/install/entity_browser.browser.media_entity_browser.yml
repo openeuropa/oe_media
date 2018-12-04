@@ -26,7 +26,7 @@ widgets:
       submit_text: 'Select entities'
       auto_select: false
     uuid: 6586703a-6976-4124-8a49-cbb07ceaa3b1
-    weight: 1
+    weight: -10
     label: View
     id: view
   ea17ce31-43ba-427e-94ae-88fe55605e7d:
@@ -36,7 +36,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: ea17ce31-43ba-427e-94ae-88fe55605e7d
-    weight: 2
+    weight: -9
     label: 'Add Video'
     id: entity_form
   7a5f044d-04b6-4dda-995c-48ac77b91817:
@@ -46,7 +46,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: 7a5f044d-04b6-4dda-995c-48ac77b91817
-    weight: 3
+    weight: -8
     label: 'Add Image'
     id: entity_form
   e9f8e84a-9574-4de7-90de-caec7acf030d:
@@ -56,7 +56,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: e9f8e84a-9574-4de7-90de-caec7acf030d
-    weight: 4
+    weight: -5
     label: 'Add File'
     id: entity_form
   1bebeec0-27e3-4786-b948-b3493118fdaf:
@@ -66,6 +66,11 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: 1bebeec0-27e3-4786-b948-b3493118fdaf
-    weight: 4
+    weight: -7
     label: 'Add AV Portal Video'
     id: entity_form
+  3d20d762-efed-4206-bba7-829e62c79879:
+    uuid: 3d20d762-efed-4206-bba7-829e62c79879
+    weight: 6
+    label: 'Register AV Portal video'
+    id: av_portal_upload_link

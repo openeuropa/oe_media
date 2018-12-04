@@ -5,3 +5,11 @@ views.filter.avportal_text_search:
 entity_browser.browser.widget.avportal_search:
   type: entity_browser.browser.widget.view
   label: 'AV Portal widget configuration'
+
+entity_browser.browser.widget.av_portal_upload_link:
+  type: mapping
+  label: 'Widget configuration'
+  mapping:
+    submit_text:
+      type: string
+      label: 'Submit button text'

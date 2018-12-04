@@ -1,3 +1,5 @@
 name: OpenEuropa Media AV Portal Test
 core: 8.x
 type: module
+dependencies:
+  - media_avportal:media_avportal_mock
