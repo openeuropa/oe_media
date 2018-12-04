@@ -8,7 +8,7 @@ entity_browser.browser.widget.avportal_search:
 
 entity_browser.browser.widget.av_portal_upload_link:
   type: mapping
-  label: 'View widget configuration'
+  label: 'Widget configuration'
   mapping:
     submit_text:
       type: string

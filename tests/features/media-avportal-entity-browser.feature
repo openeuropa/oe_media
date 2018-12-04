@@ -38,6 +38,3 @@ Feature: Media AV portal with entity browser.
     Then I should see entity browser modal window
     When I click "Register AV Portal video"
     Then I should see the link "external link"
-
-
-

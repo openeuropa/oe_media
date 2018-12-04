@@ -10,7 +10,7 @@ use Drupal\Core\Url;
 use Drupal\entity_browser\WidgetBase;
 
 /**
- * Entity browser widget linkink to the AV Portal service for uploading videos.
+ * Entity browser widget linking to the AV Portal service for uploading videos.
  *
  * @EntityBrowserWidget(
  *   id = "av_portal_upload_link",
@@ -28,13 +28,13 @@ class AVPortalUploadLink extends WidgetBase {
 
     $form['upload'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('External upload'),
+      '#title' => $this->t('AV Portal External upload'),
     ];
 
-    $link = Link::fromTextAndUrl(t('external link'), Url::fromUri('https://webgate.ec.europa.eu/europa-hub/en/vplay/add', ['attributes' => ['target' => '_blank']]))->toString();
+    $link = Link::fromTextAndUrl(t('external link'), Url::fromUri('https://webgate.ec.europa.eu/europa-hub/en/vplay/add', ['attributes' => ['target' => '_blank']]));
 
     $form['upload']['markup'] = [
-      '#markup' => $this->t('Media assets can be registered to AVPortal in the following %link', ['%link' => $link]),
+      '#markup' => $this->t('Videos can be uploaded to AV Portal at the following @link.', ['@link' => $link]),
     ];
 
     return $form;
