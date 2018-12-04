@@ -31,7 +31,7 @@ class AVPortalUploadLink extends WidgetBase {
       '#title' => $this->t('AV Portal External upload'),
     ];
 
-    $link = Link::fromTextAndUrl(t('external link'), Url::fromUri('https://webgate.ec.europa.eu/europa-hub/en/vplay/add', ['attributes' => ['target' => '_blank']]))->toString();
+    $link = Link::fromTextAndUrl($this->t('external link'), Url::fromUri('https://webgate.ec.europa.eu/europa-hub/en/vplay/add', ['attributes' => ['target' => '_blank']]))->toString();
 
     $form['upload']['markup'] = [
       '#markup' => $this->t('Videos can be uploaded to AV Portal at the following @link.', ['@link' => $link]),
