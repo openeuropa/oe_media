@@ -74,8 +74,8 @@ widgets:
     settings:
       view: av_portal_entity_browser
       view_display: entity_browser_1
-        submit_text: 'Select entities'
-        auto_select: false
+      submit_text: 'Select entities'
+      auto_select: false
       uuid: 26756177-b89a-44e6-9427-c7e0be911125
       weight: -6
       label: 'Search in AV Portal'
