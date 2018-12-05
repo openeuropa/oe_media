@@ -4,7 +4,7 @@ Feature: AV Portal.
   As a site editor
   I want to create and reference AV Portal media entities.
 
-  @av_portal
+  @av_portal @cleanup:media
   Scenario: Create and reference an AV Portal video
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media" permission
     And I visit "media/add/av_portal_video"
@@ -15,5 +15,3 @@ Feature: AV Portal.
     And I reference the AV Portal media "Midday press briefing from 25/10/2018"
     And I press "Save"
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
-    # Cleanup of the media entity.
-    And I remove the media "Midday press briefing from 25/10/2018"
