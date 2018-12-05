@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
+use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
@@ -63,6 +64,66 @@ class DrupalContext extends RawDrupalContext {
 
     $media = reset($media);
     $media->delete();
+  }
+
+  /**
+   * Fills the correct media reference field with a value.
+   *
+   * @param string $media_type
+   *   Which media reference field to reference.
+   * @param string $value
+   *   The value to enter in the field.
+   *
+   * @When I fill in the :media_type reference field with :value
+   */
+  public function fillMediaReferenceField(string $media_type, string $value): void {
+    $mappings = [
+      'image' => 'field_oe_demo_image_media',
+      'document' => 'field_oe_demo_document_media',
+      'remote video' => 'field_oe_demo_remote_video_media',
+    ];
+
+    if (!isset($mappings[$media_type])) {
+      throw new \Exception(sprintf('Invalid media type "%s" specified.', $media_type));
+    }
+
+    $this->getSession()->getPage()
+      ->fillField($mappings[$media_type] . '[0][target_id]', $value);
+  }
+
+  /**
+   * Checks that a given image is present in the page.
+   *
+   * @param string $filename
+   *   The image filename.
+   *
+   * @Then I (should )see the image :filename
+   */
+  public function assertImagePresent(string $filename): void {
+    // Drupal appends an underscore and a number to the filename when duplicate
+    // files are uploaded, for example when a test is run more than once.
+    // We split up the filename and extension and match for both.
+    $parts = pathinfo($filename);
+    $extension = $parts['extension'];
+    $filename = $parts['filename'];
+    $this->assertSession()->elementExists('css', "img[src$='.$extension'][src*='$filename']");
+  }
+
+  /**
+   * Checks that a OEmbed iframe for a certain url is present in the page.
+   *
+   * @param string $url
+   *   The video url.
+   *
+   * @Then I (should )see the embedded video player for :url
+   */
+  public function assertOembedIframePresent(string $url): void {
+    $partial_iframe_url = Url::fromRoute('media.oembed_iframe', [], [
+      'query' => [
+        'url' => $url,
+      ],
+    ])->toString();
+    $this->assertSession()->elementExists('css', "iframe[src*='$partial_iframe_url']");
   }
 
 }
