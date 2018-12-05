@@ -38,3 +38,20 @@ Feature: Media AV portal with entity browser.
     Then I should see entity browser modal window
     When I click "Register AV Portal video"
     Then I should see the link "external link"
+
+  @javascript @av_portal
+  Scenario: The entity browser should contain a widget that allows to search for videos in AV Portal.
+    Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
+    And I visit "node/add/oe_media_demo"
+    And I fill in "Title" with "Media demo"
+    And I click the fieldset "Media browser field"
+    When I press the "Select entities" button
+    Then I should see entity browser modal window
+    When I click "Search in AV Portal"
+    Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
+    When I select the video with the title ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
+    And I press the "Select entities" button
+    And I press the "Save" button
+    Then I should see the AV Portal video ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
+    # Cleanup of the media entity.
+    And I remove the media ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
