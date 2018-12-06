@@ -38,7 +38,7 @@ class CleanupContext extends RawDrupalContext {
 
     $entity_types = $this->getEntityTypesToCleanup($scope->getScenario());
     foreach ($entity_types as $entity_type) {
-      $this->existing[$entity_type] = $this->getAllEntityIdOfType($entity_type);
+      $this->existing[$entity_type] = $this->getAllEntityIdsOfType($entity_type);
     }
   }
 
@@ -52,7 +52,7 @@ class CleanupContext extends RawDrupalContext {
    */
   public function cleanupCreatedEntities(AfterScenarioScope $scope): void {
     foreach ($this->existing as $entity_type => $ids) {
-      $current_ids = $this->getAllEntityIdOfType($entity_type);
+      $current_ids = $this->getAllEntityIdsOfType($entity_type);
       $test_entity_ids = array_diff($current_ids, $ids);
 
       if ($test_entity_ids) {
@@ -92,7 +92,7 @@ class CleanupContext extends RawDrupalContext {
    * @return int[]
    *   An array of entity IDs.
    */
-  protected function getAllEntityIdOfType(string $entity_type): array {
+  protected function getAllEntityIdsOfType(string $entity_type): array {
     return \Drupal::entityTypeManager()->getStorage($entity_type)->getQuery()->execute();
   }
 
