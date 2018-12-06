@@ -39,11 +39,14 @@ class DrupalContext extends RawDrupalContext {
    * @param string $name
    *   The name of the media.
    *
-   * @When I select the :media_name media entity in the entity browser modal window
+   * @When I select the :media_name media (entity )in the entity browser modal window
    */
-  public function iSelectMediaInEntityBrowser(string $name): void {
+  public function selectMediaInEntityBrowser(string $name): void {
     $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-row ')]";
-    $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-name ')][contains(string(.), '$name')]]";
+    $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-name ')]";
+    $xpath .= "/div[@class and contains(concat(' ', normalize-space(@class), ' '), ' media-info ')]";
+    // The last text node contains the media name.
+    $xpath .= "[normalize-space(text()[last()]) = '$name']]";
     $xpath .= "//input[@type='checkbox']";
     $this->getSession()->getPage()->find('xpath', $xpath)->check();
   }
