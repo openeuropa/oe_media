@@ -129,4 +129,19 @@ class DrupalContext extends RawDrupalContext {
     $this->assertSession()->elementExists('css', "iframe[src*='$partial_iframe_url']");
   }
 
+  /**
+   * Check that View tab of entity browser window has all required filters.
+   *
+   * @Then I should see search existing medias by entity browser filter
+   */
+  public function assertEntityBrowserViewFilter(): void {
+    $page = $this->getSession()->getPage();
+    $page->hasSelect('Publishing status');
+    $page->hasSelect('Media type');
+    $page->hasField('Media name');
+    $page->hasSelect('Language');
+    $page->hasButton('Apply');
+    $page->hasButton('Select entities');
+  }
+
 }
