@@ -42,13 +42,13 @@ class DrupalContext extends RawDrupalContext {
    * @When I select the :media_name media (entity )in the entity browser modal window
    */
   public function selectMediaInEntityBrowser(string $name): void {
-    $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-row ')]";
-    $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-name ')]";
-    $xpath .= "/div[@class and contains(concat(' ', normalize-space(@class), ' '), ' media-info ')]";
+    $xpath = '//div[@class and contains(concat(" ", normalize-space(@class), " "), " views-row ")]';
+    $xpath .= '[.//div[@class and contains(concat(" ", normalize-space(@class), " "), " views-field-name ")]';
+    $xpath .= '/div[@class and contains(concat(" ", normalize-space(@class), " "), " media-info ")]';
     // The last text node contains the media name.
-    $xpath .= "[normalize-space(text()[last()]) = '$name']]";
-    $xpath .= "//input[@type='checkbox']";
-    $this->getSession()->getPage()->find('xpath', $xpath)->check();
+    $xpath .= '[normalize-space(text()[last()]) = "' . $name . '"]]';
+    $xpath .= '//input[@type="checkbox"]';
+    $this->assertSession()->elementExists('xpath', $xpath)->check();
   }
 
   /**
