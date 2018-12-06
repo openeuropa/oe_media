@@ -23,3 +23,44 @@ Feature: Image media entities.
     And I press "Save"
     Then I should see the heading "My Node"
     And I should see the image "example_1.jpeg"
+
+  @javascript @cleanup:node @cleanup:media
+  Scenario: Documents can be added and referenced through the entity browser modal.
+    Given I am logged in as a user with the "create oe_media_demo content, create image media, access media_entity_browser entity browser pages" permissions
+    And I go to "node/add/oe_media_demo"
+    Then I should see the heading "Create OpenEuropa Media Demo"
+    Given I fill in "Title" with "OpenEuropa at SymfonyCon Lisbon"
+    And I click the fieldset "Media browser field"
+    When I press "Select entities"
+    Then I should see entity browser modal window
+    Given I wait for AJAX to finish
+    When I click "Add Image"
+    And I wait for AJAX to finish
+    And I fill in "Name" with "OpenEuropa team members at Symfonycon Lisbon"
+    And I attach the file "example_1.jpeg" to "Image"
+    And I wait for AJAX to finish
+    And I fill in "Alternative text" with "Symfonycon Lisbon"
+    And I press "Save entity"
+    And I wait for AJAX to finish
+    Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
+    And I should see the button "Remove"
+    When I press "Save"
+    Then I should see the heading "OpenEuropa at SymfonyCon Lisbon"
+    And I should see the image "example_1.jpeg"
+
+    # Reuse the existing image media into another node.
+    When I go to "node/add/oe_media_demo"
+    Then I should see the heading "Create OpenEuropa Media Demo"
+    When I fill in "Title" with "OpenEuropa around Europe"
+    And I click the fieldset "Media browser field"
+    And I press "Select entities"
+    Then I should see entity browser modal window
+    Given I wait for AJAX to finish
+    When I select the "OpenEuropa team members at Symfonycon Lisbon" media in the entity browser modal window
+    And I press "Select entities"
+    And I wait for AJAX to finish
+    Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
+    And I should see the button "Remove"
+    When I press "Save"
+    Then I should see the heading "OpenEuropa around Europe"
+    And I should see the image "example_1.jpeg"
