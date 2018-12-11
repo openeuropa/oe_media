@@ -7,7 +7,7 @@ Feature: AV Portal video.
   @av_portal @cleanup:media
   Scenario: Create and reference an AV Portal video
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media" permission
-    And I visit "media/add/av_portal_video"
+    When I visit "media/add/av_portal_video"
     And I fill in "Media AV Portal Video" with "https://ec.europa.eu/avservices/video/player.cfm?sitelang=en&ref=I-162747"
     And I press "Save"
     And I visit "node/add/oe_media_demo"
@@ -19,10 +19,10 @@ Feature: AV Portal video.
   @javascript @av_portal @cleanup:media
   Scenario: The node adding form should contain entity browser widget with possibility to add new and reuse existing AV Portal video.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
-    And I visit "node/add/oe_media_demo"
+    When I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    When I press the "Select entities" button
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add AV Portal Video"
     And I fill in "Media AV Portal Video" with "https://ec.europa.eu/avservices/video/player.cfm?sitelang=en&ref=I-162747"
@@ -52,7 +52,7 @@ Feature: AV Portal video.
   @javascript @av_portal @cleanup:media
   Scenario: The entity browser should contain a widget that allows to search for videos in AV Portal.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
-    And I visit "node/add/oe_media_demo"
+    When I visit "node/add/oe_media_demo"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     When I press the "Select entities" button

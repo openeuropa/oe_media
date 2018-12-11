@@ -7,7 +7,7 @@ Feature: Remote video media entities.
   @cleanup:node @cleanup:media
   Scenario Outline: Remote videos can be referenced and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create remote_video media" permissions
-    And I go to "media/add/remote_video"
+    When I go to "media/add/remote_video"
     Then I should see the heading "Add Remote video"
     When I fill in "Remote video URL" with "<url>"
     And I press "Save"
@@ -30,15 +30,15 @@ Feature: Remote video media entities.
   @javascript @cleanup:node @cleanup:media
   Scenario Outline: Remote videos can be added and referenced through the entity browser modal.
     Given I am logged in as a user with the "create oe_media_demo content, create remote_video media, access media_entity_browser entity browser pages" permissions
-    And I go to "node/add/oe_media_demo"
+    When I go to "node/add/oe_media_demo"
     Then I should see the heading "Create OpenEuropa Media Demo"
 
-    Given I fill in "Title" with "Videos are awesome"
+    When I fill in "Title" with "Videos are awesome"
     And I click the fieldset "Media browser field"
-    When I press "Select entities"
+    And I press "Select entities"
     Then I should see entity browser modal window
+    And I wait for AJAX to finish
 
-    Given I wait for AJAX to finish
     When I click "Add Video"
     And I wait for AJAX to finish
     And I fill in "Remote video URL" with "<url>"
@@ -57,8 +57,8 @@ Feature: Remote video media entities.
     And I click the fieldset "Media browser field"
     And I press "Select entities"
     Then I should see entity browser modal window
-    
-    Given I wait for AJAX to finish
+    And I wait for AJAX to finish
+
     When I select the "<title>" media in the entity browser modal window
     And I press "Select entities"
     And I wait for AJAX to finish

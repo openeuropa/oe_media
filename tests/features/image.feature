@@ -7,7 +7,7 @@ Feature: Image media entities.
   @cleanup:node @cleanup:media
   Scenario: Images can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create image media" permissions
-    And I go to "media/add/image"
+    When I go to "media/add/image"
     Then I should see the heading "Add Image"
     When I fill in "Name" with "My Image 1"
     And I attach the file "example_1.jpeg" to "Image"
@@ -27,15 +27,15 @@ Feature: Image media entities.
   @javascript @cleanup:node @cleanup:media
   Scenario: Images can be added and referenced through the entity browser modal window.
     Given I am logged in as a user with the "create oe_media_demo content, create image media, access media_entity_browser entity browser pages" permissions
-    And I go to "node/add/oe_media_demo"
+    When I go to "node/add/oe_media_demo"
     Then I should see the heading "Create OpenEuropa Media Demo"
 
     Given I fill in "Title" with "OpenEuropa at SymfonyCon Lisbon"
     And I click the fieldset "Media browser field"
     When I press "Select entities"
     Then I should see entity browser modal window
+    And I wait for AJAX to finish
 
-    Given I wait for AJAX to finish
     When I click "Add Image"
     And I wait for AJAX to finish
     And I fill in "Name" with "OpenEuropa team members at Symfonycon Lisbon"
@@ -57,8 +57,8 @@ Feature: Image media entities.
     And I click the fieldset "Media browser field"
     And I press "Select entities"
     Then I should see entity browser modal window
+    And I wait for AJAX to finish
 
-    Given I wait for AJAX to finish
     When I select the "OpenEuropa team members at Symfonycon Lisbon" media in the entity browser modal window
     And I press "Select entities"
     And I wait for AJAX to finish

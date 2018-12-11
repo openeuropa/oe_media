@@ -104,7 +104,7 @@ class DrupalContext extends RawDrupalContext {
    */
   public function assertImagePresent(string $filename): void {
     // Drupal appends an underscore and a number to the filename when duplicate
-    // files are uploaded, for example when a test is run more than once.
+    // files are uploaded, for example when a test runs more then once.
     // We split up the filename and extension and match for both.
     $parts = pathinfo($filename);
     $extension = $parts['extension'];
@@ -113,7 +113,7 @@ class DrupalContext extends RawDrupalContext {
   }
 
   /**
-   * Checks that a OEmbed iframe for a certain url is present in the page.
+   * Checks that an OEmbed is present in the page for a certain url.
    *
    * @param string $url
    *   The video url.

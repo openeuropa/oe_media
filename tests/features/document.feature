@@ -7,7 +7,7 @@ Feature: Document media entities.
   @cleanup:node @cleanup:media
   Scenario: Documents can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create document media" permissions
-    And I go to "media/add/document"
+    When I go to "media/add/document"
     Then I should see the heading "Add Document"
     When I fill in "Name" with "My Document 1"
     And I attach the file "sample.pdf" to "File"
