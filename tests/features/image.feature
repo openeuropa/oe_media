@@ -7,7 +7,7 @@ Feature: Image media entities.
   @cleanup:node @cleanup:media
   Scenario: Images can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create image media" permissions
-    When I go to "media/add/image"
+    When I go to "the Add Image page"
     Then I should see the heading "Add Image"
     When I fill in "Name" with "My Image 1"
     And I attach the file "example_1.jpeg" to "Image"
@@ -16,7 +16,7 @@ Feature: Image media entities.
     And I press "Save"
     Then I should see the heading "My Image 1"
 
-    When I go to "node/add/oe_media_demo"
+    When I go to "the Add OpenEuropa Media Demo page"
     Then I should see the heading "Create OpenEuropa Media Demo"
     When I fill in "Title" with "My Node"
     And I fill in the image reference field with "My Image 1"
@@ -27,7 +27,7 @@ Feature: Image media entities.
   @javascript @cleanup:node @cleanup:media
   Scenario: Images can be added and referenced through the entity browser modal window.
     Given I am logged in as a user with the "create oe_media_demo content, create image media, access media_entity_browser entity browser pages" permissions
-    When I go to "node/add/oe_media_demo"
+    When I go to "the Add OpenEuropa Media Demo page"
     Then I should see the heading "Create OpenEuropa Media Demo"
 
     Given I fill in "Title" with "OpenEuropa at SymfonyCon Lisbon"
@@ -51,7 +51,7 @@ Feature: Image media entities.
     And I should see the image "example_1.jpeg"
 
     # Reuse the existing image media in another node.
-    When I go to "node/add/oe_media_demo"
+    When I go to "the Add OpenEuropa Media Demo page"
     Then I should see the heading "Create OpenEuropa Media Demo"
     When I fill in "Title" with "OpenEuropa around Europe"
     And I click the fieldset "Media browser field"

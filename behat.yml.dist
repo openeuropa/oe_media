@@ -9,6 +9,13 @@ default:
         - Drupal\Tests\oe_media\Behat\DrupalContext
         - Drupal\Tests\oe_media\Behat\AvPortalContext
         - Drupal\Tests\oe_media\Behat\CleanupContext
+        - OpenEuropa\Behat\TransformationContext:
+            pages:
+              Add AV Portal Video: 'media/add/av_portal_video'
+              Add OpenEuropa Media Demo: 'node/add/oe_media_demo'
+              Add Document: 'media/add/document'
+              Add Image: 'media/add/image'
+              Add Remote video: 'media/add/remote_video'
   extensions:
     Drupal\MinkExtension:
       goutte: ~
