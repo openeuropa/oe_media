@@ -25,7 +25,7 @@ Feature: Remote video media entities.
       | url                                         | title                            |
       | https://www.youtube.com/watch?v=1-g73ty9v04 | Energy, let's save it!           |
       | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
-      | http://www.dailymotion.com/video/x6pa0tr    | European Commission Fines Google |
+      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
 
   @javascript @cleanup:node @cleanup:media
   Scenario Outline: Remote videos can be added and referenced through the entity browser modal.
@@ -72,4 +72,4 @@ Feature: Remote video media entities.
       | url                                         | title                            |
       | https://www.youtube.com/watch?v=1-g73ty9v04 | Energy, let's save it!           |
       | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
-      | http://www.dailymotion.com/video/x6pa0tr    | European Commission Fines Google |
+      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
