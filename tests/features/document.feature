@@ -7,14 +7,14 @@ Feature: Document media entities.
   @cleanup:node @cleanup:media
   Scenario: Documents can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create document media" permissions
-    When I go to "media/add/document"
+    When I go to "the document creation page"
     Then I should see the heading "Add Document"
     When I fill in "Name" with "My Document 1"
     And I attach the file "sample.pdf" to "File"
     And I press "Save"
     Then I should see the heading "My Document 1"
 
-    When I go to "node/add/oe_media_demo"
+    When I go to "the demo content creation page"
     Then I should see the heading "Create OpenEuropa Media Demo"
     When I fill in "Title" with "My Node"
     And I fill in the document reference field with "My Document 1"
@@ -25,7 +25,7 @@ Feature: Document media entities.
   @javascript @cleanup:media
   Scenario: The entity browser should allow the selection and creation of new Document Media entities
     Given I am logged in as a user with the "create oe_media_demo content,create document media,access media_entity_browser entity browser pages" permissions
-    When I visit "node/add/oe_media_demo"
+    When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     And I press the "Select entities" button
@@ -37,7 +37,7 @@ Feature: Document media entities.
     And I press the "Save" button
     Then I should see the link "sample.pdf"
 
-    When I visit "node/add/oe_media_demo"
+    When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     And I press the "Select entities" button
