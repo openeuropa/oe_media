@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media_avportal
+id: av_portal_photo
+label: 'AV Portal Photo'
+description: 'Remote photo from <em>AV Portal</em> service.'
+source: media_avportal_photo
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  thumbnails_directory: 'public://media_avportal_thumbnails'
+  source_field: oe_media_avportal_photo
+field_map:
+  title: name

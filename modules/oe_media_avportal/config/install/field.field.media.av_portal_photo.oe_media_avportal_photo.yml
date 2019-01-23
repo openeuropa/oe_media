@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.oe_media_avportal_photo
+    - media.type.av_portal_photo
+id: media.av_portal_video.oe_media_avportal_photo
+field_name: oe_media_avportal_photo
+entity_type: media
+bundle: av_portal_photo
+label: 'Media AV Portal Photo'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
