@@ -73,7 +73,7 @@ pipeline:
       - chown -R www-data /tmp/html/build/sites
       - find /tmp/html/build/sites/default/files -type d -exec chmod 775 {} \;
       - find /tmp/html/build/sites/default/files -type f -exec chmod 664 {} \;
-      - su -s /bin/bash -c "./vendor/bin/behat" www-data
+      - su -s /bin/bash -c "./vendor/bin/behat --strict" www-data
 
 matrix:
   COMPOSER_BOUNDARY:
