@@ -2,13 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_oe_demo_media_browser
+    - field.storage.node.field_oe_demo_av_portal_photo
+    - media.type.av_portal_photo
     - node.type.oe_media_demo
-id: node.oe_media_demo.field_oe_demo_media_browser
-field_name: field_oe_demo_media_browser
+id: node.oe_media_demo.field_oe_demo_av_portal_photo
+field_name: field_oe_demo_av_portal_photo
 entity_type: node
 bundle: oe_media_demo
-label: 'Media browser field'
+label: 'AV Portal Photo'
 description: ''
 required: false
 translatable: false
@@ -18,10 +19,6 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      image: image
-      remote_video: remote_video
-      document: document
-      av_portal_video: av_portal_video
       av_portal_photo: av_portal_photo
     sort:
       field: _none

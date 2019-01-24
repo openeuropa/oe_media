@@ -28,6 +28,15 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_oe_demo_av_portal_photo:
+    weight: 126
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_oe_demo_document_media:
     weight: 124
     settings:
