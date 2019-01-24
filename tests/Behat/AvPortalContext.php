@@ -46,10 +46,22 @@ class AvPortalContext extends RawDrupalContext {
    * @param string $title
    *   The media title.
    *
-   * @Given I reference the AV Portal media :title
+   * @Given I reference the AV Portal video :title
    */
-  public function assertReferenceAvPortalMedia(string $title): void {
+  public function assertReferenceAvPortalVideo(string $title): void {
     $this->getSession()->getPage()->fillField('field_oe_demo_av_portal_video[0][target_id]', $title);
+  }
+
+  /**
+   * Fills in the Demo content AV Portal reference field.
+   *
+   * @param string $title
+   *   The media title.
+   *
+   * @Given I reference the AV Portal photo :title
+   */
+  public function assertReferenceAvPortalPhoto(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_av_portal_photo[0][target_id]', $title);
   }
 
   /**
@@ -69,6 +81,25 @@ class AvPortalContext extends RawDrupalContext {
     $media = reset($media);
     $ref = $media->get('oe_media_avportal_video')->value;
     $this->assertSession()->elementAttributeContains('css', 'iframe', 'src', $ref);
+  }
+
+  /**
+   * Checks that the AV Portal photo is rendered.
+   *
+   * @param string $title
+   *   The photo title.
+   * @param string $src
+   *   The final photo source.
+   *
+   * @Then I should see the AV Portal photo :title with source :src
+   */
+  public function assertAvPortalPhoto(string $title, string $src): void {
+    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => $title]);
+    if (!$media) {
+      throw new \Exception(sprintf('The media named "%s" does not exist', $title));
+    }
+
+    $this->assertSession()->elementAttributeContains('css', 'img.avportal-photo', 'src', $src);
   }
 
   /**
