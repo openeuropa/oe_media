@@ -2,7 +2,7 @@
 Feature: AV Portal video.
   In order to be able to showcase AV Portal videos
   As a site editor
-  I want to create and reference AV Portal media entities.
+  I want to create and reference AV Portal video media entities.
 
   @av_portal @cleanup:media
   Scenario: Create and reference an AV Portal video
@@ -12,7 +12,7 @@ Feature: AV Portal video.
     And I press "Save"
     And I visit "the demo content creation page"
     And I fill in "Title" with "My demo node"
-    And I reference the AV Portal media "Midday press briefing from 25/10/2018"
+    And I reference the AV Portal video "Midday press briefing from 25/10/2018"
     And I press "Save"
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
 
