@@ -12,6 +12,7 @@ default:
         - OpenEuropa\Behat\TransformationContext:
             pages:
               AV Portal video selection: 'media/add/av_portal_video'
+              AV Portal photo selection: 'media/add/av_portal_photo'
               demo content creation: 'node/add/oe_media_demo'
               document creation: 'media/add/document'
               image creation: 'media/add/image'
