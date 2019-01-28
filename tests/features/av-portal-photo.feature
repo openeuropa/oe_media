@@ -39,7 +39,7 @@ Feature: AV Portal photo.
     And I select the "Euro with miniature figurines" media entity in the entity browser modal window
     And I press the "Select entities" button
     And I press the "Save" button
-    Then I should see the AV Portal photo "Euro with miniature figurines"
+    Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
 # @TOOD: As part of OPENEUROPA-1558
 #  @javascript @av_portal @cleanup:media
