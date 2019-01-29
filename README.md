@@ -25,7 +25,7 @@ Additionally, there is a demo module inside that exposes a content type and a ge
 
 You can build the test site by running the following steps.
 
-* Install all the composer dependencies: 
+* Install all the composer dependencies:
 
 ```bash
 composer install
