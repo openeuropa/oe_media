@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\media_avportal\AvPortalClientInterface;
+use Drupal\media_avportal\AvPortalResource;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
@@ -39,10 +41,13 @@ class AVPortalQuery extends QueryPluginBase {
    *   Plugin definition.
    * @param \Drupal\media_avportal\AvPortalClientInterface $client
    *   The AV Portal client.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client, ConfigFactoryInterface $configFactory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->client = $client;
+    $this->config = $configFactory->get('media_avportal.settings');
   }
 
   /**
@@ -53,7 +58,8 @@ class AVPortalQuery extends QueryPluginBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('media_avportal.client')
+      $container->get('media_avportal.client'),
+      $container->get('config.factory')
     );
   }
 
@@ -129,8 +135,21 @@ class AVPortalQuery extends QueryPluginBase {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
-          break 2;
+          break;
         }
+
+        if ($condition['field'] == 'type') {
+
+          if ($condition['value'] == 'media_avportal_video') {
+            $options['type'] = 'VIDEO';
+          }
+          elseif ($condition['value'] == 'media_avportal_photo') {
+            $options['type'] = 'PHOTO,REPORTAGE';
+          }
+
+          break;
+        }
+
       }
     }
 
@@ -149,13 +168,61 @@ class AVPortalQuery extends QueryPluginBase {
     foreach ($results['resources'] as $resource) {
       $row = [];
       $row['ref'] = $resource->getRef();
+      $row['normalizedRef'] = $this->normalizeRef($resource);
       $row['title'] = $resource->getTitle();
+      $row['type'] = $resource->getType();
       $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
+
+      if (in_array($resource->getType(), ['PHOTO', 'REPORTAGE'])) {
+        $row['thumbnail'] = $this->config->get('photos_base_uri') . $row['thumbnail'];
+      }
 
       $row['index'] = $index;
       $view->result[] = new ResultRow($row);
       $index++;
     }
+  }
+
+  /**
+   * Normalizes a ref to the format I-0000 or P-0000.
+   *
+   * Some refs are in the format I-0000 or P-0000 so we need to keep them
+   * consistent.
+   *
+   * @todo Contribute this to the upstream media_avportal module to have a
+   * single place where the ref is normalized.
+   *
+   * @param \Drupal\media_avportal\AvPortalResource $resource
+   *   The resource.
+   *
+   * @return string
+   *   The normalised ref.
+   *
+   * @internal param string $ref The resource ref.*   The resource ref.
+   */
+  protected function normalizeRef(AvPortalResource $resource): ?string {
+    $ref = $resource->getRef();
+    $type = $resource->getType();
+
+    switch ($type) {
+      case 'VIDEO':{
+        if (stripos($ref, 'I-') === 0) {
+          return $ref;
+        }
+
+        return (string) preg_replace('/^I|^i/', 'I-', $ref);
+      }
+      case 'PHOTO':
+      case 'REPORTAGE':{
+        if (stripos($ref, 'P-')) {
+          return $ref;
+        }
+
+        return (string) preg_replace('/^P|^i/', 'P-', $ref);
+      }
+    }
+
+    return NULL;
   }
 
   /**

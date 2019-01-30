@@ -38,33 +38,10 @@ class AVPortalSearch extends View {
     foreach ($selected_rows as $row) {
       // The selected item (row) is the resource ref.
       // @see AvPortalSelectForm::getRowId().
-      $ref = $this->normalizeRef($row);
-      $entities[] = $this->getMediaEntityFromRef($ref);
+      $entities[] = $this->getMediaEntityFromRef($row);
     }
 
     return $entities;
-  }
-
-  /**
-   * Normalizes a ref to the format I-0000.
-   *
-   * Some refs are in the format I0000 so we need to keep them consistent.
-   *
-   * @todo Contribute this to the upstream media_avportal module to have a
-   * single place where the ref is normalized.
-   *
-   * @param string $ref
-   *   The resource ref.
-   *
-   * @return string
-   *   The normalised ref.
-   */
-  protected function normalizeRef(string $ref): string {
-    if (stripos($ref, 'I-') === 0) {
-      return $ref;
-    }
-
-    return (string) preg_replace('/^I|^i/', 'I-', $ref);
   }
 
   /**
@@ -77,9 +54,19 @@ class AVPortalSearch extends View {
    *   The media entity.
    */
   protected function getMediaEntityFromRef(string $ref): MediaInterface {
+
+    if (preg_match('/I\-(\d+)/', $ref)) {
+      $bundle = 'av_portal_video';
+      $field = 'oe_media_avportal_video';
+    }
+    elseif (preg_match('/P\-(\d+)\/(\d+)\-(\d+)/', $ref)) {
+      $bundle = 'av_portal_photo';
+      $field = 'oe_media_avportal_photo';
+    }
+
     $entities = $this->entityTypeManager->getStorage('media')->loadByProperties([
-      'bundle' => 'av_portal_video',
-      'oe_media_avportal_video' => $ref,
+      'bundle' => $bundle,
+      $field => $ref,
     ]);
 
     if ($entities) {
@@ -88,8 +75,8 @@ class AVPortalSearch extends View {
 
     /** @var \Drupal\media\MediaInterface $entity */
     $entity = $this->entityTypeManager->getStorage('media')->create([
-      'bundle' => 'av_portal_video',
-      'oe_media_avportal_video' => $ref,
+      'bundle' => $bundle,
+      $field => $ref,
     ]);
 
     $entity->save();

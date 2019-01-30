@@ -57,7 +57,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: e9f8e84a-9574-4de7-90de-caec7acf030d
-    weight: -5
+    weight: -7
     label: 'Add File'
     id: entity_form
   1bebeec0-27e3-4786-b948-b3493118fdaf:
@@ -67,7 +67,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: 1bebeec0-27e3-4786-b948-b3493118fdaf
-    weight: -7
+    weight: -6
     label: 'Add AV Portal Video'
     id: entity_form
   1e860959-7a88-4f28-8ac4-f347ef6fa6f4:
@@ -77,7 +77,7 @@ widgets:
       form_mode: default
       submit_text: 'Save entity'
     uuid: 1e860959-7a88-4f28-8ac4-f347ef6fa6f4
-    weight: -7
+    weight: -5
     label: 'Add AV Portal Photo'
     id: entity_form
   26756177-b89a-44e6-9427-c7e0be911125:
@@ -87,11 +87,21 @@ widgets:
       submit_text: 'Select entities'
       auto_select: false
     uuid: 26756177-b89a-44e6-9427-c7e0be911125
-    weight: -6
-    label: 'Search in AV Portal'
+    weight: -4
+    label: 'Search videos in AV Portal'
+    id: avportal_search
+  00acf923-aa6f-45ea-89be-8a621767ed3a:
+    settings:
+      view: av_portal_entity_browser
+      view_display: entity_browser_2
+      submit_text: 'Select entities'
+      auto_select: false
+    uuid: 00acf923-aa6f-45ea-89be-8a621767ed3a
+    weight: -3
+    label: 'Search photos in AV Portal'
     id: avportal_search
   3d20d762-efed-4206-bba7-829e62c79879:
     uuid: 3d20d762-efed-4206-bba7-829e62c79879
-    weight: -4
+    weight: -2
     label: 'Register AV Portal video'
     id: av_portal_upload_link
