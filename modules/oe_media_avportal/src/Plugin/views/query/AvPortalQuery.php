@@ -135,21 +135,16 @@ class AVPortalQuery extends QueryPluginBase {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
-          break;
         }
 
         if ($condition['field'] == 'type') {
-
           if ($condition['value'] == 'media_avportal_video') {
             $options['type'] = 'VIDEO';
           }
           elseif ($condition['value'] == 'media_avportal_photo') {
-            $options['type'] = 'PHOTO,REPORTAGE';
+            $options['type'] = 'PHOTO';
           }
-
-          break;
         }
-
       }
     }
 
