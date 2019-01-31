@@ -41,7 +41,7 @@ Feature: AV Portal photo.
     And I press the "Save" button
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
-  @javascript @av_portal @cleanup:media
+  @javascript @av_portal @hernani @cleanup:media
   Scenario: The entity browser should contain a widget that allows to search for photos in AV Portal.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
     When I visit "the demo content creation page"
@@ -50,8 +50,8 @@ Feature: AV Portal photo.
     When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Search photos in AV Portal"
-    Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
-    When I select the video with the title ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
+    Then I should see "Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania"
+    When I select the avportal item with the title 'Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania'
     And I press the "Select entities" button
     And I press the "Save" button
-    Then I should see the AV Portal video ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
+    Then I should see the AV Portal photo 'Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania' with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-615406.jpg"

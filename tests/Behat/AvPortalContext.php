@@ -117,14 +117,14 @@ class AvPortalContext extends RawDrupalContext {
   }
 
   /**
-   * Find a video by title and click on checkbox.
+   * Find a item by title and click on checkbox.
    *
    * @param string $title
-   *   Title of the video.
+   *   Title of the item.
    *
-   * @When I select the video with the title :title
+   * @When I select the avportal item with the title :title
    */
-  public function iSelectVideoByTitle(string $title): void {
+  public function iSelectAvPortalItemByTitle(string $title): void {
     $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-col ')]";
     $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-title ')][contains(string(.), '$title')]]";
     $xpath .= "//input[@type='checkbox']";
