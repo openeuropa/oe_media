@@ -41,7 +41,7 @@ Feature: AV Portal photo.
     And I press the "Save" button
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
-  @javascript @av_portal @hernani @cleanup:media
+  @javascript @av_portal @cleanup:media
   Scenario: The entity browser should contain a widget that allows to search for photos in AV Portal.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
     When I visit "the demo content creation page"
