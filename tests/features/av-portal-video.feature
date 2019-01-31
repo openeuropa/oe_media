@@ -57,7 +57,7 @@ Feature: AV Portal video.
     And I click the fieldset "Media browser field"
     When I press the "Select entities" button
     Then I should see entity browser modal window
-    When I click "Search in AV Portal"
+    When I click "Search videos in AV Portal"
     Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
     When I select the video with the title ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
     And I press the "Select entities" button
