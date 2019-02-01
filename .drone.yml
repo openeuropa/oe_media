@@ -13,13 +13,12 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
   selenium:
-    image: selenium/standalone-chrome:3
+    image: selenium/standalone-chrome:3.141.5
     environment:
       - DISPLAY=:99
       - SE_OPTS=-debug
       - SCREEN_WIDTH=1280
       - SCREEN_HEIGHT=800
-      - VNC_NO_PASSWORD=1
 
 pipeline:
   composer-install:
