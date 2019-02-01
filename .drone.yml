@@ -24,40 +24,43 @@ services:
 pipeline:
   composer-install:
     group: prepare
-    image: fpfis/httpd-php-dev:7.1
+    image: fpfis/php71-dev
     volumes:
       - /cache:/cache
+    environment:
+      - DOCUMENT_ROOT=/tmp/html
+    commands:
+      - composer global require hirak/prestissimo --ansi --no-suggest --no-progress
+      - composer install --ansi --no-suggest --no-progress
+
+  composer-update-lowest:
+    group: prepare-update-lowest
+    image: fpfis/php71-dev
+    volumes:
+      - /cache:/cache
+    environment:
+      - DOCUMENT_ROOT=/tmp/html
     commands:
       # @todo remove "composer install" step once the following issue is fixed.
       # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
-      - composer install --ansi --no-suggest --no-progress
+      - composer global require hirak/prestissimo --ansi --no-suggest --no-progress
       - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
     when:
       matrix:
         COMPOSER_BOUNDARY: lowest
-  composer-install-highest:
-    group: prepare
-    image: fpfis/httpd-php-dev:7.1
-    volumes:
-      - /cache:/cache
-    commands:
-      - composer install --ansi --no-suggest --no-progress
-    when:
-      matrix:
-        COMPOSER_BOUNDARY: highest
 
   site-install:
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/run drupal:site-install
 
-  grumphp:
+  test-grumphp:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/grumphp run
 
-  phpunit:
+  test-phpunit:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
@@ -66,7 +69,7 @@ pipeline:
       - find /tmp/html/build/sites/default/files -type f -exec chmod 664 {} \;
       - su -s /bin/bash -c "./vendor/bin/phpunit" www-data
 
-  behat:
+  test-behat:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
@@ -77,5 +80,5 @@ pipeline:
 
 matrix:
   COMPOSER_BOUNDARY:
-    - lowest
     - highest
+    - lowest
