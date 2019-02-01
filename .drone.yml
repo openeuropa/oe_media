@@ -14,6 +14,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
   selenium:
     image: selenium/standalone-chrome:3.141.5
+    shm_size: 2g
     environment:
       - DISPLAY=:99
       - SE_OPTS=-debug
@@ -73,8 +74,6 @@ pipeline:
       - find /tmp/html/build/sites/default/files -type d -exec chmod 775 {} \;
       - find /tmp/html/build/sites/default/files -type f -exec chmod 664 {} \;
       - su -s /bin/bash -c "./vendor/bin/behat" www-data
-    volumes:
-      - /dev/shm:/dev/shm
 
 matrix:
   COMPOSER_BOUNDARY:
