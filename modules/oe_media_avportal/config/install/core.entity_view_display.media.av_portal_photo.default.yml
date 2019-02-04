@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.av_portal_video.oe_media_avportal_video
+    - field.field.media.av_portal_photo.oe_media_avportal_photo
     - image.style.thumbnail
-    - media.type.av_portal_video
+    - media.type.av_portal_photo
   module:
     - image
     - media_avportal
     - user
-id: media.av_portal_video.default
+id: media.av_portal_photo.default
 targetEntityType: media
-bundle: av_portal_video
+bundle: av_portal_photo
 mode: default
 content:
   created:
@@ -24,14 +24,12 @@ content:
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
-  oe_media_avportal_video:
+  oe_media_avportal_photo:
     weight: 6
     label: hidden
-    settings:
-      max_width: 640
-      max_height: 390
+    settings: { }
     third_party_settings: {  }
-    type: avportal_video
+    type: avportal_photo
     region: content
   thumbnail:
     type: image

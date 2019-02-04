@@ -70,11 +70,16 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: default
+        type: grid
         options:
           grouping: {  }
-          row_class: ''
-          default_row_class: true
+          columns: 4
+          automatic_width: true
+          alignment: horizontal
+          col_class_default: true
+          col_class_custom: ''
+          row_class_default: true
+          row_class_custom: ''
       row:
         type: fields
         options:
@@ -389,7 +394,7 @@ display:
           exposed: true
           expose:
             operator_id: bundle_op
-            label: Media type
+            label: 'Media type'
             description: ''
             use_operator: false
             operator: bundle_op
