@@ -136,8 +136,7 @@ class AVPortalQuery extends QueryPluginBase {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
         }
-
-        if ($condition['field'] == 'type') {
+        elseif ($condition['field'] == 'type') {
           if ($condition['value'] == 'media_avportal_video') {
             $options['type'] = 'VIDEO';
           }
@@ -156,6 +155,18 @@ class AVPortalQuery extends QueryPluginBase {
     $view->pager->total_items = $this->total_rows = $results['num_found'];
     $view->pager->postExecute($view->result);
     $view->pager->updatePageInfo();
+    $this->buildRow($results, $view);
+  }
+
+  /**
+   * Build row from results.
+   *
+   * @param array $results
+   *   The results.
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view.
+   */
+  protected function buildRow(array $results, ViewExecutable $view): void {
 
     $index = 0;
 
@@ -200,21 +211,21 @@ class AVPortalQuery extends QueryPluginBase {
     $type = $resource->getType();
 
     switch ($type) {
-      case 'VIDEO':{
+      case 'VIDEO':
         if (stripos($ref, 'I-') === 0) {
           return $ref;
         }
 
         return (string) preg_replace('/^I|^i/', 'I-', $ref);
-      }
+
       case 'PHOTO':
-      case 'REPORTAGE':{
+      case 'REPORTAGE':
         if (stripos($ref, 'P-')) {
           return $ref;
         }
 
         return (string) preg_replace('/^P|^i/', 'P-', $ref);
-      }
+
     }
 
     return NULL;
