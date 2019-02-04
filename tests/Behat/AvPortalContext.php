@@ -41,7 +41,7 @@ class AvPortalContext extends RawDrupalContext {
   }
 
   /**
-   * Fills in the Demo content AV Portal reference field.
+   * Fills in the Demo content AV Portal reference field for the video type.
    *
    * @param string $title
    *   The media title.
@@ -53,7 +53,7 @@ class AvPortalContext extends RawDrupalContext {
   }
 
   /**
-   * Fills in the Demo content AV Portal reference field.
+   * Fills in the Demo content AV Portal reference field for the photo type.
    *
    * @param string $title
    *   The media title.

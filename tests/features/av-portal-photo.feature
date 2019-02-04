@@ -7,7 +7,7 @@ Feature: AV Portal photo.
   @av_portal @cleanup:media
   Scenario: Create and reference an AV Portal photo
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_photo media" permission
-    When I visit "the AV Portal photo selection page"
+    When I visit "the AV Portal photo creation page"
     And I fill in "Media AV Portal Photo" with "https://ec.europa.eu/avservices/photo/photoDetails.cfm?sitelang=en&ref=038924#14"
     And I press "Save"
     And I visit "the demo content creation page"
@@ -17,7 +17,7 @@ Feature: AV Portal photo.
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
   @javascript @av_portal @cleanup:media
-  Scenario: The node adding form should contain entity browser widget with possibility to add new and reuse existing AV Portal photo.
+  Scenario: The node adding form should contain an entity browser widget with the possibility to add new and reuse existing AV Portal photos.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_photo media,access media_entity_browser entity browser pages" permission
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
