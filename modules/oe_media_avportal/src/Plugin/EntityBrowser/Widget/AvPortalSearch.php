@@ -38,7 +38,10 @@ class AVPortalSearch extends View {
     foreach ($selected_rows as $row) {
       // The selected item (row) is the resource ref.
       // @see AvPortalSelectForm::getRowId().
-      $entities[] = $this->getMediaEntityFromRef($row);
+      $entity = $this->getMediaEntityFromRef($row);
+      if ($entity) {
+        $entities[] = $entity;
+      }
     }
 
     return $entities;
@@ -50,10 +53,12 @@ class AVPortalSearch extends View {
    * @param string $ref
    *   The resource ref.
    *
-   * @return \Drupal\media\MediaInterface
+   * @return \Drupal\media\MediaInterface|null
    *   The media entity.
    */
   protected function getMediaEntityFromRef(string $ref): MediaInterface {
+    $bundle = NULL;
+    $field = NULL;
 
     if (preg_match('/I\-(\d+)/', $ref)) {
       $bundle = 'av_portal_video';
@@ -62,6 +67,10 @@ class AVPortalSearch extends View {
     elseif (preg_match('/P\-(\d+)\/(\d+)\-(\d+)/', $ref)) {
       $bundle = 'av_portal_photo';
       $field = 'oe_media_avportal_photo';
+    }
+
+    if (!$field || !$bundle) {
+      return NULL;
     }
 
     $entities = $this->entityTypeManager->getStorage('media')->loadByProperties([

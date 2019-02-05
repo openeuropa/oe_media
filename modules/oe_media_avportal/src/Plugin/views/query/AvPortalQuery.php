@@ -31,7 +31,14 @@ class AVPortalQuery extends QueryPluginBase {
   protected $client;
 
   /**
-   * AV Portal constructor.
+   * The AP Portal settings.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
+   * AV Portal query constructor.
    *
    * @param array $configuration
    *   Configuration.
@@ -136,13 +143,15 @@ class AVPortalQuery extends QueryPluginBase {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
         }
-        elseif ($condition['field'] == 'type') {
-          if ($condition['value'] == 'media_avportal_video') {
-            $options['type'] = 'VIDEO';
+        if ($condition['field'] == 'type') {
+          $types = [];
+          if (in_array('media_avportal_video', $condition['value'])) {
+            $types[] = 'VIDEO';
           }
-          elseif ($condition['value'] == 'media_avportal_photo') {
-            $options['type'] = 'PHOTO';
+          if (in_array('media_avportal_photo', $condition['value'])) {
+            $types[] = 'PHOTO';
           }
+          $options['type'] = implode(',', $types);
         }
       }
     }
@@ -155,19 +164,18 @@ class AVPortalQuery extends QueryPluginBase {
     $view->pager->total_items = $this->total_rows = $results['num_found'];
     $view->pager->postExecute($view->result);
     $view->pager->updatePageInfo();
-    $this->buildRow($results, $view);
+    $this->createViewResults($results, $view);
   }
 
   /**
-   * Build row from results.
+   * Creates the View results from the query results.
    *
    * @param array $results
    *   The results.
    * @param \Drupal\views\ViewExecutable $view
    *   The view.
    */
-  protected function buildRow(array $results, ViewExecutable $view): void {
-
+  protected function createViewResults(array $results, ViewExecutable $view): void {
     $index = 0;
 
     /** @var \Drupal\media_avportal\AvPortalResource $resource */
@@ -225,7 +233,6 @@ class AVPortalQuery extends QueryPluginBase {
         }
 
         return (string) preg_replace('/^P|^i/', 'P-', $ref);
-
     }
 
     return NULL;
@@ -238,12 +245,12 @@ class AVPortalQuery extends QueryPluginBase {
    *   The where group.
    * @param string $field
    *   The condition field.
-   * @param string $value
+   * @param mixed $value
    *   The condition value.
    * @param string $operator
    *   The condition operator.
    */
-  public function addWhere(int $group = 0, string $field = NULL, string $value = NULL, string $operator = NULL): void {
+  public function addWhere(int $group = 0, string $field = NULL, $value = NULL, string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }
@@ -257,7 +264,7 @@ class AVPortalQuery extends QueryPluginBase {
       'field' => $field,
       // SQL based '%' for LIKE filters need to be removed. In AV Portal
       // it's always LIKE.
-      'value' => trim($value, '%'),
+      'value' => is_string($value) ? trim($value, '%') : $value,
       'operator' => $operator,
     ];
   }
