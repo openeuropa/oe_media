@@ -1,6 +1,10 @@
 views.filter.avportal_text_search:
   type: views.filter.string
-  label: 'AV Portal Search'
+  label: 'AV Portal Full text Search'
+
+views.filter.avportal_type_search:
+  type: views.filter.in_operator
+  label: 'AV Portal Type'
 
 entity_browser.browser.widget.avportal_search:
   type: entity_browser.browser.widget.view

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\media_avportal\AvPortalClientInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
@@ -29,7 +30,14 @@ class AVPortalQuery extends QueryPluginBase {
   protected $client;
 
   /**
-   * AV Portal constructor.
+   * The AP Portal settings.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
+   * AV Portal query constructor.
    *
    * @param array $configuration
    *   Configuration.
@@ -39,10 +47,13 @@ class AVPortalQuery extends QueryPluginBase {
    *   Plugin definition.
    * @param \Drupal\media_avportal\AvPortalClientInterface $client
    *   The AV Portal client.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client, ConfigFactoryInterface $configFactory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->client = $client;
+    $this->config = $configFactory->get('media_avportal.settings');
   }
 
   /**
@@ -53,7 +64,8 @@ class AVPortalQuery extends QueryPluginBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('media_avportal.client')
+      $container->get('media_avportal.client'),
+      $container->get('config.factory')
     );
   }
 
@@ -129,7 +141,16 @@ class AVPortalQuery extends QueryPluginBase {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
           $options['kwand'] = $condition['value'];
-          break 2;
+        }
+        if ($condition['field'] == 'type') {
+          $types = [];
+          if (in_array('media_avportal_video', $condition['value'])) {
+            $types[] = 'VIDEO';
+          }
+          if (in_array('media_avportal_photo', $condition['value'])) {
+            $types[] = 'PHOTO';
+          }
+          $options['type'] = implode(',', $types);
         }
       }
     }
@@ -142,7 +163,18 @@ class AVPortalQuery extends QueryPluginBase {
     $view->pager->total_items = $this->total_rows = $results['num_found'];
     $view->pager->postExecute($view->result);
     $view->pager->updatePageInfo();
+    $this->createViewResults($results, $view);
+  }
 
+  /**
+   * Creates the View results from the query results.
+   *
+   * @param array $results
+   *   The results.
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view.
+   */
+  protected function createViewResults(array $results, ViewExecutable $view): void {
     $index = 0;
 
     /** @var \Drupal\media_avportal\AvPortalResource $resource */
@@ -150,7 +182,12 @@ class AVPortalQuery extends QueryPluginBase {
       $row = [];
       $row['ref'] = $resource->getRef();
       $row['title'] = $resource->getTitle();
+      $row['type'] = $resource->getType();
       $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
+
+      if (in_array($resource->getType(), ['PHOTO', 'REPORTAGE'])) {
+        $row['thumbnail'] = $this->config->get('photos_base_uri') . $row['thumbnail'];
+      }
 
       $row['index'] = $index;
       $view->result[] = new ResultRow($row);
@@ -165,12 +202,12 @@ class AVPortalQuery extends QueryPluginBase {
    *   The where group.
    * @param string $field
    *   The condition field.
-   * @param string $value
+   * @param mixed $value
    *   The condition value.
    * @param string $operator
    *   The condition operator.
    */
-  public function addWhere(int $group = 0, string $field = NULL, string $value = NULL, string $operator = NULL): void {
+  public function addWhere(int $group = 0, string $field = NULL, $value = NULL, string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }
@@ -184,7 +221,7 @@ class AVPortalQuery extends QueryPluginBase {
       'field' => $field,
       // SQL based '%' for LIKE filters need to be removed. In AV Portal
       // it's always LIKE.
-      'value' => trim($value, '%'),
+      'value' => is_string($value) ? trim($value, '%') : $value,
       'operator' => $operator,
     ];
   }
