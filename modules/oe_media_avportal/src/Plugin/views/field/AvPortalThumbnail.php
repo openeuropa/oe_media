@@ -22,6 +22,9 @@ class AvPortalThumbnail extends FieldPluginBase {
     return [
       '#theme' => 'image',
       '#uri' => $this->sanitizeValue($value),
+      '#attributes' => [
+        'width' => 300,
+      ],
     ];
   }
 

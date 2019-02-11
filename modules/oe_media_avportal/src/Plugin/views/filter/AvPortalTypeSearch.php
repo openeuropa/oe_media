@@ -82,7 +82,7 @@ class AvPortalTypeSearch extends InOperator {
     }
 
     $this->ensureMyTable();
-    $this->query->addWhere($this->options['group'], "$this->realField", array_values($this->value), $this->operator);
+    $this->query->addWhere((int) $this->options['group'], "$this->realField", array_values($this->value), $this->operator);
   }
 
 }

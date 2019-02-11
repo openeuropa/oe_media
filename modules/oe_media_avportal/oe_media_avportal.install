@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Install file for OpenEuropa Media AV Portal.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\Core\Config\FileStorage;
+use Drupal\views\Entity\View;
+
+/**
+ * Creates the AV Portal Entity Browsers view.
+ */
+function oe_media_avportal_update_8001(&$sandbox): void {
+  $view = View::load('av_portal_entity_browsers');
+  if (!$view) {
+    $storage = new FileStorage(drupal_get_path('module', 'oe_media_avportal') . '/config/install');
+    $view = View::create($storage->read('views.view.av_portal_entity_browsers'));
+    $view->save();
+  }
+}
