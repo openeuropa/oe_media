@@ -2,7 +2,7 @@
 
 /**
  * @file
- * OpenEuropa Media AV Portal module.
+ * Views hook implementations for OpenEuropa Media AV Portal.
  */
 
 declare(strict_types = 1);
