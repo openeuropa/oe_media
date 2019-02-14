@@ -7,6 +7,8 @@
 
 declare(strict_types = 1);
 
+use Drupal\media\IFrameMarkup;
+
 /**
  * Implements hook_media_source_info_alter().
  *
@@ -15,4 +17,26 @@ declare(strict_types = 1);
  */
 function oe_media_media_source_info_alter(array &$sources): void {
   $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion'];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for media-oembed-iframe.html.twig template.
+ *
+ * According to fact that from oEmbed service we receive html code with iframe,
+ * we have to change "src" attribute value for cookie consent service usage.
+ */
+function oe_media_preprocess_media_oembed_iframe(array &$variables): void {
+  // Originally the cookie consent kit feature
+  // should be implemented in the oe_webtools_cookie_consent module.
+  // But cookie consent kit for remote videos doesn't have direct dependency
+  // from the oe_webtools_cookie_consent module.
+  // By enabling the oe_webtools_cookie_consent module we assume
+  // that we have to cover remote video functionality as well.
+  if ($variables['media'] instanceof IFrameMarkup && \Drupal::moduleHandler()->moduleExists('oe_webtools_cookie_consent')) {
+    preg_match('/<iframe.*src=["\']+([^"\']*)["\']+[^<>]*><\/iframe>/', $variables['media']->__toString(), $matches);
+    if (!empty($matches[1])) {
+      $new_iframe = str_replace($matches[1], '//ec.europa.eu/cookie-consent/iframe?oriurl=' . $matches[1] . '&lang=' . \Drupal::languageManager()->getCurrentLanguage()->getId(), $variables['media']);
+      $variables['media'] = IFrameMarkup::create($new_iframe);
+    }
+  }
 }
