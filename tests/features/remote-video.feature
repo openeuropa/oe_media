@@ -20,6 +20,7 @@ Feature: Remote video media entities.
     And I press "Save"
     Then I should see the heading "My Node"
     And I should see the embedded video player for "<url>"
+    And I should see the oEmbed video iframe "<url>" with cookie consent kit usage
 
     Examples:
       | url                                         | title                            |

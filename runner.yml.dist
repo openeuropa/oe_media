@@ -20,6 +20,7 @@ drupal:
     - "./vendor/bin/drush config-set node.settings use_admin_theme 1 -y"
     # Enable the modules.
     - "./vendor/bin/drush en oe_media oe_media_avportal oe_media_demo -y"
+    - "./vendor/bin/drush en oe_webtools_cookie_consent -y"
   settings:
     settings:
       file_scan_ignore_directories:

@@ -129,4 +129,18 @@ class DrupalContext extends RawDrupalContext {
     $this->assertSession()->elementExists('css', "iframe[src*='$partial_iframe_url']");
   }
 
+  /**
+   * Checks that an OEmbed iframe url use CCK service.
+   *
+   * @param string $url
+   *   The video url.
+   *
+   * @Then I should see the oEmbed video iframe :url with cookie consent kit usage
+   */
+  public function assertOembedIframeWithCckUsage(string $url): void {
+    $iframe_url = $this->getSession()->getPage()->find('css', 'iframe')->getAttribute('src');
+    $this->visitPath(str_replace(rtrim($this->getDrupalParameter('drupal')['drupal_root'], '/'), '', $iframe_url));
+    $this->assertSession()->elementExists('css', "iframe[src^='//ec.europa.eu/cookie-consent/iframe?oriurl=']");
+  }
+
 }
