@@ -12,6 +12,7 @@ use Drupal\entity_browser\WidgetBase;
 use Drupal\entity_browser\WidgetValidationManager;
 use Drupal\media\OEmbed\ResourceException;
 use Drupal\media\OEmbed\UrlResolverInterface;
+use Drupal\media_avportal\AvPortalUrlResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -44,15 +45,16 @@ class OEMediaReferenceByUrl extends WidgetBase {
    *   The Widget Validation Manager service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle info service.
-   * @param \Drupal\media\OEmbed\UrlResolverInterface $url_resolver
-   *   The OEmbed url resolver.
-   *
-   * @internal param \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository The entity display repository.*   The entity display repository.
+   * @param \Drupal\media\OEmbed\UrlResolverInterface $oembed_url_resolver
+   *   Oembed UrlResolver.
+   * @param \Drupal\media_avportal\AvPortalUrlResolver $avportal_url_resolver
+   *   AvPortal UrlResolver.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, UrlResolverInterface $url_resolver) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EventDispatcherInterface $event_dispatcher, EntityTypeManagerInterface $entity_type_manager, WidgetValidationManager $validation_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, UrlResolverInterface $oembed_url_resolver, AvPortalUrlResolver $avportal_url_resolver) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $event_dispatcher, $entity_type_manager, $validation_manager);
     $this->entityTypeBundleInfo = $entity_type_bundle_info;
-    $this->urlResolver = $url_resolver;
+    $this->oembedUrlResolver = $oembed_url_resolver;
+    $this->avPortalUrlResolver = $avportal_url_resolver;
   }
 
   /**
@@ -67,7 +69,8 @@ class OEMediaReferenceByUrl extends WidgetBase {
       $container->get('entity_type.manager'),
       $container->get('plugin.manager.entity_browser.widget_validation'),
       $container->get('entity_type.bundle.info'),
-      $container->get('media.oembed.url_resolver')
+      $container->get('media.oembed.url_resolver'),
+      $container->get('media_avportal.url_resolver')
     );
   }
 
@@ -129,8 +132,8 @@ class OEMediaReferenceByUrl extends WidgetBase {
     }
 
     // For AVPortal resources.
-    if (empty($bundle) && (in_array('media_av_portal_video', array_keys($sources)) || in_array('media_av_portal_video', array_keys($sources)))) {
-      $bundle_info = $this->getAvPortalBundle($url, $sources);
+    if (empty($bundle_info) && (in_array('media_avportal_video', array_keys($sources)) || in_array('media_avportal_photo', array_keys($sources)))) {
+      $bundle_info = $this->getAvPortalBundleInfo($url, $sources);
     }
 
     // $url is not mappeable to any bundle.
@@ -173,7 +176,7 @@ class OEMediaReferenceByUrl extends WidgetBase {
 
       foreach ($plugins as $pluginId => $sources) {
         // Ensure that the URL matches a provider.
-        $provider = $this->urlResolver->getProviderByUrl($url);
+        $provider = $this->oembedUrlResolver->getProviderByUrl($url);
 
         // If it does, no exception thrown,  bundle is the first one
         // implementing the media source.
@@ -207,7 +210,22 @@ class OEMediaReferenceByUrl extends WidgetBase {
    *   The associated bundle, source and source field if valid.
    */
   protected function getAvPortalBundleInfo(string $url, array $plugins) : ?array {
-    return NULL;
+    foreach ($plugins as $pluginId => $sources) {
+      // Ensure that the URL matches a source.
+      $matching_source = $this->avPortalUrlResolver->getSourceByUrl($url);
+
+      // If it does, no exception thrown,  bundle is the first one
+      // implementing the media source.
+      foreach ($sources as $source) {
+        if ($matching_source == $pluginId) {
+          return [
+            'bundle' => $source['bundle'],
+            'source_field' => $source['source_field'],
+          ];
+        }
+      }
+
+    }
   }
 
   /**
