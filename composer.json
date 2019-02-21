@@ -16,7 +16,6 @@
         "composer/installers": "~1.5",
         "drush/drush": "~9.0@stable",
         "drupal-composer/drupal-scaffold": "^2.5.2",
-        "drupal/ctools": "^3.0",
         "openeuropa/behat-transformation-context" : "~0.1",
         "openeuropa/code-review": "^1.0.0-alpha4",
         "openeuropa/task-runner": "~1.0.0-beta2",
