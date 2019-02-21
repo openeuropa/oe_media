@@ -26,7 +26,13 @@ content:
     third_party_settings: {  }
     type: file_generic
     region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 100
+    region: content
+    third_party_settings: {  }
 hidden:
   created: true
-  status: true
   uid: true

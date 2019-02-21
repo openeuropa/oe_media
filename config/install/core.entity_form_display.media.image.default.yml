@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-  - field.field.media.image.oe_media_image
-  - image.style.thumbnail
-  - media.type.image
+    - field.field.media.image.oe_media_image
+    - image.style.thumbnail
+    - media.type.image
   module:
-  - image
+    - image
 id: media.image.default
 targetEntityType: media
 bundle: image
@@ -28,7 +28,13 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 100
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
 hidden:
   created: true
-  status: true
   uid: true
