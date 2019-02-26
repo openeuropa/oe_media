@@ -1,10 +1,23 @@
 # Change Log
 
+## [0.3.0](https://github.com/openeuropa/oe_media/tree/0.3.0) (2019-02-26)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/0.2.0...0.3.0)
+
+**Closed issues:**
+
+- `phpparser` is not present in this project [\#15](https://github.com/openeuropa/oe_media/issues/15)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1600: Improving media entity form consistency. [\#34](https://github.com/openeuropa/oe_media/pull/34) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-1656: Removing ctools dependency. [\#32](https://github.com/openeuropa/oe_media/pull/32) ([upchuk](https://github.com/upchuk))
+
 ## [0.2.0](https://github.com/openeuropa/oe_media/tree/0.2.0) (2019-02-21)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.1.0...0.2.0)
 
 **Merged pull requests:**
 
+- RELEASE 0.2.0 [\#33](https://github.com/openeuropa/oe_media/pull/33) ([voidtek](https://github.com/voidtek))
 - OPENEUROPA-1609: Add ajax\_timeout setting for behat. [\#29](https://github.com/openeuropa/oe_media/pull/29) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-1585: OE Media should ship with an AV Portal entity browser view [\#28](https://github.com/openeuropa/oe_media/pull/28) ([upchuk](https://github.com/upchuk))
 - OPENEUROPA-1609 Set drupal-extension version to v4. [\#27](https://github.com/openeuropa/oe_media/pull/27) ([nagyad](https://github.com/nagyad))
