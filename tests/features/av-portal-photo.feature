@@ -8,7 +8,7 @@ Feature: AV Portal photo.
   Scenario: Create and reference an AV Portal photo
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_photo media" permission
     When I visit "the AV Portal photo creation page"
-    And I fill in "Media AV Portal Photo" with "https://ec.europa.eu/avservices/photo/photoDetails.cfm?sitelang=en&ref=038924#14"
+    And I fill in "Media AV Portal Photo" with "https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15"
     And I press "Save"
     And I visit "the demo content creation page"
     And I fill in "Title" with "My demo node"
@@ -25,7 +25,7 @@ Feature: AV Portal photo.
     And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add AV Portal Photo"
-    And I fill in "Media AV Portal Photo" with "https://ec.europa.eu/avservices/photo/photoDetails.cfm?sitelang=en&ref=038924#14"
+    And I fill in "Media AV Portal Photo" with "https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15"
     And I press the "Save entity" button
     And I press the "Save" button
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"

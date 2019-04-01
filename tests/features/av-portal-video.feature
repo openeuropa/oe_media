@@ -8,7 +8,7 @@ Feature: AV Portal video.
   Scenario: Create and reference an AV Portal video
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media" permission
     When I visit "the AV Portal video creation page"
-    And I fill in "Media AV Portal Video" with "https://ec.europa.eu/avservices/video/player.cfm?sitelang=en&ref=I-162747"
+    And I fill in "Media AV Portal Video" with "https://audiovisual.ec.europa.eu/en/video/I-162747"
     And I press "Save"
     And I visit "the demo content creation page"
     And I fill in "Title" with "My demo node"
@@ -25,7 +25,7 @@ Feature: AV Portal video.
     And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add AV Portal Video"
-    And I fill in "Media AV Portal Video" with "https://ec.europa.eu/avservices/video/player.cfm?sitelang=en&ref=I-162747"
+    And I fill in "Media AV Portal Video" with "https://audiovisual.ec.europa.eu/en/video/I-162747"
     And I press the "Save entity" button
     And I press the "Save" button
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
