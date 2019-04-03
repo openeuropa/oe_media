@@ -10,7 +10,7 @@
         "drupal/core": "^8.6",
         "drupal/entity_browser": "^2.0",
         "drupal/inline_entity_form": "^1.0",
-        "drupal/media_avportal": "dev-1.x#004a9f7fda03e351bf871e45e6c0cbfd37c08beb"
+        "drupal/media_avportal": "1.x-dev"
     },
     "require-dev": {
         "composer/installers": "~1.5",
