@@ -35,7 +35,7 @@ Feature: Document media entities.
     And I attach the file "sample.pdf" to "File"
     And I press the "Save entity" button
     And I press the "Save" button
-    Then I should see the link "sample.pdf"
+    Then I should see the link "sample_0.pdf"
 
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
@@ -46,4 +46,4 @@ Feature: Document media entities.
     And I select the "Media document" media entity in the entity browser modal window
     And I press the "Select entities" button
     And I press the "Save" button
-    Then I should see the link "sample.pdf"
+    Then I should see the link "sample_0.pdf"
