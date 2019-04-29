@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains installation hooks.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Updates mapping of remote video media type.
+ */
+function oe_media_update_8001() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('media.type.remote_video');
+  $config->clear('field_map.url');
+  $config->save();
+}
