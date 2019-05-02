@@ -16,4 +16,3 @@ source_configuration:
   source_field: oe_media_oembed_video
 field_map:
   title: name
-  url: oe_media_oembed_video
