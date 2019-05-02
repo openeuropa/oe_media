@@ -1,5 +1,14 @@
 # Change Log
 
+## [0.4.0](https://github.com/openeuropa/oe_media/tree/0.4.0) (2019-05-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/0.3.0...0.4.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1871: Prepare update for 8.7 . [\#39](https://github.com/openeuropa/oe_media/pull/39) ([hernani](https://github.com/hernani))
+- OPENEUROPA-1788: Fix problem on trying to edit existing remote video. [\#38](https://github.com/openeuropa/oe_media/pull/38) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-1725: Fixing url used in tests. [\#36](https://github.com/openeuropa/oe_media/pull/36) ([hernani](https://github.com/hernani))
+
 ## [0.3.0](https://github.com/openeuropa/oe_media/tree/0.3.0) (2019-02-26)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.2.0...0.3.0)
 
@@ -9,6 +18,7 @@
 
 **Merged pull requests:**
 
+- OPENEUROPA-1669: Update change log for release 0.3.0. [\#35](https://github.com/openeuropa/oe_media/pull/35) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1600: Improving media entity form consistency. [\#34](https://github.com/openeuropa/oe_media/pull/34) ([upchuk](https://github.com/upchuk))
 - OPENEUROPA-1656: Removing ctools dependency. [\#32](https://github.com/openeuropa/oe_media/pull/32) ([upchuk](https://github.com/upchuk))
 
