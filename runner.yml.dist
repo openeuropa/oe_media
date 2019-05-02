@@ -25,6 +25,7 @@ drupal:
       file_scan_ignore_directories:
         - "vendor"
         - "${drupal.root}"
+      extension_discovery_scan_tests: TRUE
 
 selenium:
   host: "http://selenium"
