@@ -1,10 +1,19 @@
 # Change Log
 
+## [1.0.0-beta1](https://github.com/openeuropa/oe_media/tree/1.0.0-beta1) (2019-05-15)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/0.4.0...1.0.0-beta1)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1864: Changed media\_avportal dependency. [\#42](https://github.com/openeuropa/oe_media/pull/42) ([hernani](https://github.com/hernani))
+- OPENEUROPA-1766: Update container on drone. [\#41](https://github.com/openeuropa/oe_media/pull/41) ([voidtek](https://github.com/voidtek))
+
 ## [0.4.0](https://github.com/openeuropa/oe_media/tree/0.4.0) (2019-05-02)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.3.0...0.4.0)
 
 **Merged pull requests:**
 
+- OPENEUROPA-1766: Update change log for release 0.4.0. [\#40](https://github.com/openeuropa/oe_media/pull/40) ([voidtek](https://github.com/voidtek))
 - OPENEUROPA-1871: Prepare update for 8.7 . [\#39](https://github.com/openeuropa/oe_media/pull/39) ([hernani](https://github.com/hernani))
 - OPENEUROPA-1788: Fix problem on trying to edit existing remote video. [\#38](https://github.com/openeuropa/oe_media/pull/38) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1725: Fixing url used in tests. [\#36](https://github.com/openeuropa/oe_media/pull/36) ([hernani](https://github.com/hernani))
