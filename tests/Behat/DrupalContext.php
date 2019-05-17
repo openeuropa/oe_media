@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
@@ -11,6 +12,14 @@ use Drupal\DrupalExtension\Context\RawDrupalContext;
  * The main Drupal context.
  */
 class DrupalContext extends RawDrupalContext {
+
+
+  /**
+   * The config context.
+   *
+   * @var \Drupal\DrupalExtension\Context\ConfigContext
+   */
+  protected $configContext;
 
   /**
    * Clicks on a fieldset form element.
@@ -127,6 +136,29 @@ class DrupalContext extends RawDrupalContext {
       ],
     ])->toString();
     $this->assertSession()->elementExists('css', "iframe[src*='$partial_iframe_url']");
+  }
+
+  /**
+   * Gathers some other contexts.
+   *
+   * @param \Behat\Behat\Hook\Scope\BeforeScenarioScope $scope
+   *   The before scenario scope.
+   *
+   * @BeforeScenario
+   */
+  public function gatherContexts(BeforeScenarioScope $scope) {
+    $environment = $scope->getEnvironment();
+    $this->configContext = $environment->getContext('Drupal\DrupalExtension\Context\ConfigContext');
+  }
+
+  /**
+   * Enables standalone url for media entities.
+   *
+   * @beforeScenario @media-enable-standalone-url
+   */
+  public function enableMediaStandaloneUrl(BeforeScenarioScope $scope): void {
+    $this->configContext->setConfig('media.settings', 'standalone_url', TRUE);
+    \Drupal::service('router.builder')->rebuild();
   }
 
 }
