@@ -47,15 +47,6 @@ pipeline:
     commands:
       - ./vendor/bin/run drupal:site-install
 
-  change-permission:
-    group: debug-image
-    image: fpfis/httpd-php-ci:7.1
-    commands:
-      # Reset permission since installation runs as root. @todo Fix this.
-      - chown -R www-data /test/oe_media/build/sites
-      - find /test/oe_media/build/sites/default/files -type d -exec chmod 775 {} \;
-      - find /test/oe_media/build/sites/default/files -type f -exec chmod 664 {} \;
-
   grumphp:
     group: test
     image: fpfis/httpd-php-ci:7.1
