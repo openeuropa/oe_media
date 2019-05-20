@@ -1,10 +1,19 @@
 # Change Log
 
+## [1.0.0-beta2](https://github.com/openeuropa/oe_media/tree/1.0.0-beta2) (2019-05-20)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta1...1.0.0-beta2)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1922: Do not modify configuration in hook\_install\(\) if configuration is in syncing mode. [\#46](https://github.com/openeuropa/oe_media/pull/46) ([ademarco](https://github.com/ademarco))
+- OPENEUROPA-1897: Removed drone permission fix. [\#45](https://github.com/openeuropa/oe_media/pull/45) ([imanoleguskiza](https://github.com/imanoleguskiza))
+
 ## [1.0.0-beta1](https://github.com/openeuropa/oe_media/tree/1.0.0-beta1) (2019-05-15)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.4.0...1.0.0-beta1)
 
 **Merged pull requests:**
 
+- OPENEUROPA-1864: Updated changelog.md. [\#43](https://github.com/openeuropa/oe_media/pull/43) ([hernani](https://github.com/hernani))
 - OPENEUROPA-1864: Changed media\_avportal dependency. [\#42](https://github.com/openeuropa/oe_media/pull/42) ([hernani](https://github.com/hernani))
 - OPENEUROPA-1766: Update container on drone. [\#41](https://github.com/openeuropa/oe_media/pull/41) ([voidtek](https://github.com/voidtek))
 
