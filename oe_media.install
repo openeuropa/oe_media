@@ -11,6 +11,11 @@ declare(strict_types = 1);
  * Implements hook_install().
  */
 function oe_media_install() {
+  if (\Drupal::isConfigSyncing()) {
+    // If config is syncing, we do nothing here.
+    return;
+  }
+
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('media.settings');
   $config->set('standalone_url', TRUE);
