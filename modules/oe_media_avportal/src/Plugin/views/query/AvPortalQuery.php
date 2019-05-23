@@ -140,7 +140,7 @@ class AVPortalQuery extends QueryPluginBase {
     foreach ($this->where as $where) {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
-          $options['kwand'] = $condition['value'];
+          $options['kwgg'] = $condition['value'];
         }
         if ($condition['field'] == 'type') {
           $types = [];
