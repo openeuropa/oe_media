@@ -8,21 +8,6 @@
 declare(strict_types = 1);
 
 /**
- * Implements hook_install().
- */
-function oe_media_install() {
-  if (\Drupal::isConfigSyncing()) {
-    // If config is syncing, we do nothing here.
-    return;
-  }
-
-  $config_factory = \Drupal::configFactory();
-  $config = $config_factory->getEditable('media.settings');
-  $config->set('standalone_url', TRUE);
-  $config->save();
-}
-
-/**
  * Updates mapping of remote video media type.
  */
 function oe_media_update_8001() {
@@ -39,5 +24,15 @@ function oe_media_update_8002() {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('media.settings');
   $config->set('standalone_url', TRUE);
+  $config->save();
+}
+
+/**
+ * Reverts standalone url value for media entities.
+ */
+function oe_media_update_8003() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('media.settings');
+  $config->set('standalone_url', FALSE);
   $config->save();
 }

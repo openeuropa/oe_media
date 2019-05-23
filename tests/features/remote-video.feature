@@ -4,7 +4,7 @@ Feature: Remote video media entities.
   As a site editor
   I want to be able to reference remote videos.
 
-  @cleanup:node @cleanup:media
+  @cleanup:node @cleanup:media @media-enable-standalone-url
   Scenario Outline: Remote videos can be referenced and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create remote_video media" permissions
     When I go to "the remote video selection page"

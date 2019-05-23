@@ -4,7 +4,7 @@ Feature: Image media entities.
   As a site editor
   I want to be able to upload images.
 
-  @cleanup:node @cleanup:media
+  @cleanup:node @cleanup:media @media-enable-standalone-url
   Scenario: Images can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create image media" permissions
     When I go to "the image creation page"

@@ -4,7 +4,7 @@ Feature: Document media entities.
   As a site editor
   I want to be able to upload documents and reference Document media entities.
 
-  @cleanup:node @cleanup:media @cleanup:file
+  @cleanup:node @cleanup:media @cleanup:file @media-enable-standalone-url
   Scenario: Documents can be uploaded and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create document media" permissions
     When I go to "the document creation page"
