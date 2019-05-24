@@ -1,0 +1,7 @@
+embed.embed_type_settings.embed_media:
+  type: mapping
+  label: 'Schema for the media embed type'
+  mapping:
+    media_type:
+      type: string
+      label: 'Media type'

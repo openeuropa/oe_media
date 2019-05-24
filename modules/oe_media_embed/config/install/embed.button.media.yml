@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_media_embed
+label: Media
+id: media
+type_id: embed_media
+type_settings:
+  media_type: image
+icon_uuid: null

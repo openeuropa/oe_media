@@ -1,0 +1,56 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function oe_media_embed_element_info_alter(array &$info) {
+  if (!isset($info['text_format'])) {
+    return;
+  }
+
+  $info['text_format']['#process'][] = '_oe_media_embed_attach_text_format_library';
+}
+
+/**
+ * Process callback for the Text Format element to add the media embed library.
+ *
+ * @param array $element
+ *   The form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ * @param $complete_form
+ *   The entire form.
+ *
+ * @return array
+ *   The form element.
+ */
+function _oe_media_embed_attach_text_format_library(&$element, FormStateInterface $form_state, &$complete_form) {
+  /** @var \Drupal\editor\EditorInterface[] $editors */
+  $editors = \Drupal::entityTypeManager()->getStorage('editor')->loadByProperties(['format' => $element['#format']]);
+  if (!$editors) {
+    return $element;
+  }
+
+  /** @var \Drupal\embed\EmbedButtonInterface[] $buttons */
+  $buttons = \Drupal::entityTypeManager()->getStorage('embed_button')->getQuery()
+    ->condition('type_id', 'embed_media')
+    ->execute();
+  if (!$buttons) {
+    return $element;
+  }
+
+  foreach ($editors as $editor) {
+    foreach ($editor->getSettings()['toolbar']['rows'] as $row) {
+      foreach ($row as $column) {
+        if (count(array_intersect($column['items'], $buttons))) {
+          $element['#attached']['library'][] = 'oe_media_embed/media_embed';
+          return $element;
+        }
+      }
+    }
+  }
+
+  return $element;
+}
