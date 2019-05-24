@@ -1,10 +1,19 @@
 # Change Log
 
+## [1.0.0-beta3](https://github.com/openeuropa/oe_media/tree/1.0.0-beta3) (2019-05-24)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta2...1.0.0-beta3)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1930: Update text filter parameter on view query. [\#48](https://github.com/openeuropa/oe_media/pull/48) ([imanoleguskiza](https://github.com/imanoleguskiza))
+- OPENEUROPA-1898: Revert value of standalone url option in oe\_media. [\#44](https://github.com/openeuropa/oe_media/pull/44) ([sergepavle](https://github.com/sergepavle))
+
 ## [1.0.0-beta2](https://github.com/openeuropa/oe_media/tree/1.0.0-beta2) (2019-05-20)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta1...1.0.0-beta2)
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md for release 1.0.0-beta1. [\#47](https://github.com/openeuropa/oe_media/pull/47) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-1922: Do not modify configuration in hook\_install\(\) if configuration is in syncing mode. [\#46](https://github.com/openeuropa/oe_media/pull/46) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-1897: Removed drone permission fix. [\#45](https://github.com/openeuropa/oe_media/pull/45) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
