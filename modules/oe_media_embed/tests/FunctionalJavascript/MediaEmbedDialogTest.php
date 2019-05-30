@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\FunctionalJavascript;
 
 /**
- * Tests the media embed dialog
+ * Tests the media embed dialog.
  */
 class MediaEmbedDialogTest extends MediaEmbedTestBase {
 
   /**
-   * Tests the entity embed button markup.
+   * Tests the media embed button markup.
    */
-  public function testEntityEmbedButtonMarkup() {
+  public function testEntityEmbedButtonMarkup(): void {
     $this->getEmbedDialog('html', 'media');
 
     // Image media with view modes.

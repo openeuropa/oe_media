@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\oe_media_embed\Traits\MediaEmbedTrait;
 
 /**
- * Base class for all media embed tests.
+ * Base class for all media embed functional tests.
  */
 abstract class MediaEmbedTestBase extends BrowserTestBase {
 
   use MediaEmbedTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'embed',
@@ -40,4 +40,5 @@ abstract class MediaEmbedTestBase extends BrowserTestBase {
 
     $this->basicSetup();
   }
+
 }

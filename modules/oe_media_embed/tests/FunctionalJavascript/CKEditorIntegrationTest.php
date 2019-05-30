@@ -1,17 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\FunctionalJavascript;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
-use Drupal\editor\Entity\Editor;
-use Drupal\filter\Entity\FilterFormat;
-use Drupal\media\MediaInterface;
 
 /**
- * Tests ckeditor integration.
- *
- * @group entity_embed
+ * Tests CKEditor integration.
  */
 class CKEditorIntegrationTest extends MediaEmbedTestBase {
 
@@ -65,12 +61,16 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
   }
 
   /**
-   * Test integration with Filter, Editor and Ckeditor.
+   * Tests integration with CKEditor.
+   *
+   * We test that the we can configure a text format to use our widget and
+   * that we can embed Media entities in the WYSIWYG.
    */
-  public function testIntegration() {
+  public function testIntegration(): void {
     $this->drupalGet('admin/config/content/formats/manage/html');
 
-    // @todo test the filter HTML status to ensure that our tag can be configured.
+    // @todo test the filter HTML format filter to ensure that our tag can be
+    // configured.
     // @todo test the oEmbed filter.
 
     // Add "Embeds" toolbar button group to the active toolbar.
@@ -80,7 +80,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->waitForElementVisible('css', '[name="group-name"]')->setValue('Embeds');
     $this->assertSession()->buttonExists('Apply')->press();
 
-   // Drag the Media embed button to the toolbar.
+    // Drag the Media embed button to the toolbar.
     $target = $this->assertSession()->waitForElementVisible('css', 'ul.ckeditor-toolbar-group-buttons');
     $buttonElement = $this->assertSession()->elementExists('xpath', '//li[@data-drupal-ckeditor-button-name="' . $this->button->id() . '"]');
     $buttonElement->dragTo($target);
@@ -93,12 +93,11 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->drupalGet('/node/add/page');
     $this->assignNameToCkeditorIframe();
 
-
     $this->getSession()->switchToIFrame('ckeditor');
     $this->assertSession()->pageTextNotContains('My image media');
     $this->assertSession()->pageTextNotContains('Digital Single Market: cheaper calls to other EU countries as of 15 May');
 
-    // Embed the Image media
+    // Embed the Image media.
     $this->getSession()->switchToIFrame();
     $this->assertSession()->elementExists('css', 'a.cke_button__' . $this->button->id())->click();
     $this->assertSession()->waitForId('drupal-modal');

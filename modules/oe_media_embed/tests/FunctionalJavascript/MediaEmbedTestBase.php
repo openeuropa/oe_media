@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
@@ -13,9 +15,7 @@ abstract class MediaEmbedTestBase extends WebDriverTestBase {
   use MediaEmbedTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'oe_media',
@@ -48,9 +48,10 @@ abstract class MediaEmbedTestBase extends WebDriverTestBase {
 
     // Create a video media.
     // The title is "Digital Single Market: cheaper calls to other EU countries
-    // as of 15 May"
+    // as of 15 May".
     $this->drupalGet('media/add/remote_video');
     $page->fillField('oe_media_oembed_video[0][value]', 'https://www.youtube.com/watch?v=OkPW9mK5Vw8');
     $page->pressButton('Save');
   }
+
 }

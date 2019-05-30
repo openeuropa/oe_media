@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\Traits;
 
 use Drupal\editor\Entity\Editor;
@@ -20,7 +22,7 @@ trait MediaEmbedTrait {
   /**
    * Performs the basic setup of the test.
    */
-  protected function basicSetup() {
+  protected function basicSetup(): void {
 
     // Create a page content type.
     $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
@@ -37,7 +39,7 @@ trait MediaEmbedTrait {
         ],
         'filter_html_image_secure' => [
           'status' => 1,
-        ]
+        ],
       ],
     ]);
     $format->save();
@@ -82,7 +84,7 @@ trait MediaEmbedTrait {
    * @return string
    *   The retrieved HTML string.
    */
-  public function getEmbedDialog($filter_format_id = NULL, $embed_button_id = NULL) {
+  public function getEmbedDialog($filter_format_id = NULL, $embed_button_id = NULL): string {
     $url = 'media-embed/dialog';
     if (!empty($filter_format_id)) {
       $url .= '/' . $filter_format_id;
@@ -92,4 +94,5 @@ trait MediaEmbedTrait {
     }
     return $this->drupalGet($url);
   }
+
 }

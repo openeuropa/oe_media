@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\oe_media_embed\Functional;
 
 use Drupal\editor\Entity\Editor;
 
+/**
+ * Tests the media embed dialog.
+ */
 class MediaEmbedDialogTest extends MediaEmbedTestBase {
 
   /**
-   * Tests the entity embed dialog.
+   * Tests access and configuration of the media embed dialog.
    */
-  public function testEntityEmbedDialog() {
+  public function testMediaEmbedDialog(): void {
     // Ensure that the route is not accessible without specifying all the
     // parameters.
     $this->getEmbedDialog();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\oe_media_embed\Plugin\EmbedType;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -19,6 +21,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
 
   /**
+   * The entity type manager.
+   *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
@@ -46,14 +50,14 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [
       'media_types' => [
-        'av_portal_photo' =>'av_portal_photo',
-        'av_portal_video' =>'av_portal_video',
-        'document' =>'document',
-        'image' =>'image',
-        'remote_video' =>'remote_video',
+        'av_portal_photo' => 'av_portal_photo',
+        'av_portal_video' => 'av_portal_video',
+        'document' => 'document',
+        'image' => 'image',
+        'remote_video' => 'remote_video',
       ],
     ];
   }
@@ -61,7 +65,7 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $media_types = $this->entityTypeManager->getStorage('media_type')->loadMultiple();
     $options = [];
     foreach ($media_types as $media_type) {
@@ -82,7 +86,8 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultIconUrl() {
+  public function getDefaultIconUrl(): string {
     return '';
   }
+
 }
