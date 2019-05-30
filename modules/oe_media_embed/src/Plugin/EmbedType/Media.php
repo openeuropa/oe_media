@@ -86,8 +86,8 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultIconUrl(): string {
-    return '';
+  public function getDefaultIconUrl() {
+    return file_create_url(drupal_get_path('module', 'oe_media_embed') . '/js/plugins/embed_media/embed.png');
   }
 
 }
