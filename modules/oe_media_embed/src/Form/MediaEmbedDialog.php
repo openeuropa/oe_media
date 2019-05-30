@@ -33,13 +33,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MediaEmbedDialog extends FormBase {
 
   /**
-   * The entity embed display manager.
-   *
-   * @var \Drupal\entity_embed\EntityEmbedDisplay\EntityEmbedDisplayManager
-   */
-  protected $entityEmbedDisplayManager;
-
-  /**
    * The form builder.
    *
    * @var \Drupal\Core\Form\FormBuilderInterface
@@ -68,20 +61,6 @@ class MediaEmbedDialog extends FormBase {
   protected $entityBrowser;
 
   /**
-   * The entity field manager.
-   *
-   * @var \Drupal\Core\Entity\EntityFieldManager
-   */
-  protected $entityFieldManager;
-
-  /**
-   * The module handler service.
-   *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
    * The entity browser settings from the entity embed button.
    *
    * @var array
@@ -89,7 +68,7 @@ class MediaEmbedDialog extends FormBase {
   protected $entityBrowserSettings = [];
 
   /**
-   * Constructs a EntityEmbedDialog object.
+   * Constructs a MediaEmbedDialog object.
    *
    * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
    *   The Form Builder.
@@ -97,17 +76,11 @@ class MediaEmbedDialog extends FormBase {
    *   The entity type manager service.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
    *   Event dispatcher service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
-   *   The entity field manager.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
    */
-  public function __construct(FormBuilderInterface $form_builder, EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher, EntityFieldManagerInterface $entity_field_manager, ModuleHandlerInterface $module_handler) {
+  public function __construct(FormBuilderInterface $form_builder, EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher) {
     $this->formBuilder = $form_builder;
     $this->entityTypeManager = $entity_type_manager;
     $this->eventDispatcher = $event_dispatcher;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -117,9 +90,7 @@ class MediaEmbedDialog extends FormBase {
     return new static(
       $container->get('form_builder'),
       $container->get('entity_type.manager'),
-      $container->get('event_dispatcher'),
-      $container->get('entity_field.manager'),
-      $container->get('module_handler')
+      $container->get('event_dispatcher')
     );
   }
 
@@ -131,16 +102,7 @@ class MediaEmbedDialog extends FormBase {
   }
 
   /**
-   * Form constructor.
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   * @param \Drupal\editor\EditorInterface $editor
-   *   The editor to which this dialog corresponds.
-   * @param \Drupal\embed\EmbedButtonInterface $embed_button
-   *   The URL button to which this dialog corresponds.
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, EditorInterface $editor = NULL, EmbedButtonInterface $embed_button = NULL) {
     $values = $form_state->getValues();
@@ -475,18 +437,6 @@ class MediaEmbedDialog extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {}
 
   /**
-   * Form submission handler to update the plugin configuration form.
-   *
-   * @param array $form
-   *   The form array.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  public function updatePluginConfigurationForm(array &$form, FormStateInterface $form_state) {
-    return $form['attributes']['data-entity-embed-display-settings'];
-  }
-
-  /**
    * Form submission handler to to another step of the form.
    *
    * @param array $form
@@ -634,10 +584,6 @@ class MediaEmbedDialog extends FormBase {
     else {
       $values['attributes'] = $this->prepareAttributes($values['attributes'], $entity);
 
-      // Allow other modules to alter the values before getting submitted to the
-      // WYSIWYG.
-      $this->moduleHandler->alter('entity_embed_values', $values, $entity, $display);
-
       $response->addCommand(new EditorDialogSave($values));
       $response->addCommand(new CloseModalDialogCommand());
     }
@@ -655,28 +601,6 @@ class MediaEmbedDialog extends FormBase {
     if ($value = trim($element['#value'])) {
       $form_state->setValueForElement($element, Html::escape($value));
     }
-  }
-
-  /**
-   * Returns the allowed display plugins given an embed button and an entity.
-   *
-   * @param \Drupal\embed\EmbedButtonInterface $embed_button
-   *   The embed button.
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity.
-   *
-   * @return array
-   *   List of allowed Entity Embed Display plugins.
-   */
-  public function getDisplayPluginOptions(EmbedButtonInterface $embed_button, EntityInterface $entity) {
-    $plugins = $this->entityEmbedDisplayManager->getDefinitionOptionsForEntity($entity);
-
-    if ($allowed_plugins = $embed_button->getTypeSetting('display_plugins')) {
-      $plugins = array_intersect_key($plugins, array_flip($allowed_plugins));
-    }
-
-    natsort($plugins);
-    return $plugins;
   }
 
   /**

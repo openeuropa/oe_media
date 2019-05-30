@@ -5,11 +5,3 @@ media_embed.dialog:
   dependencies:
     - core/drupal
     - core/jquery
-
-media_embed:
-  version: VERSION
-  js:
-    js/oe_media_embed.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery

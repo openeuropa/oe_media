@@ -39,6 +39,7 @@
    * Media Embed dialog utility functions.
    */
   Drupal.mediaEmbedDialog = Drupal.mediaEmbedDialog || {
+
     /**
      * Open links to entities within forms in a new window.
      */
