@@ -2,8 +2,11 @@
 
 namespace Drupal\oe_media_embed\Plugin\EmbedType;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\embed\EmbedType\EmbedTypeBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Embeds Media entities in a Drupal-agnostic way.
@@ -13,14 +16,45 @@ use Drupal\embed\EmbedType\EmbedTypeBase;
  *   label = @Translation("Media"),
  * )
  */
-class Media extends EmbedTypeBase {
+class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->entityTypeManager = $entityTypeManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
-      'media_type' => 'image',
+      'media_types' => [
+        'av_portal_photo' =>'av_portal_photo',
+        'av_portal_video' =>'av_portal_video',
+        'document' =>'document',
+        'image' =>'image',
+        'remote_video' =>'remote_video',
+      ],
     ];
   }
 
@@ -28,13 +62,17 @@ class Media extends EmbedTypeBase {
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form['media_type'] = [
-      '#type' => 'select',
+    $media_types = $this->entityTypeManager->getStorage('media_type')->loadMultiple();
+    $options = [];
+    foreach ($media_types as $media_type) {
+      $options[$media_type->id()] = $media_type->label();
+    }
+
+    $form['media_types'] = [
+      '#type' => 'checkboxes',
       '#title' => $this->t('Media type'),
-      '#options' => [
-        'image' => $this->t('Image'),
-      ],
-      '#default_value' => $this->getConfigurationValue('media_type'),
+      '#options' => $options,
+      '#default_value' => $this->getConfigurationValue('media_types'),
       '#required' => TRUE,
     ];
 
@@ -47,5 +85,4 @@ class Media extends EmbedTypeBase {
   public function getDefaultIconUrl() {
     return '';
   }
-
 }

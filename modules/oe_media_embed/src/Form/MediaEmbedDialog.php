@@ -176,6 +176,8 @@ class MediaEmbedDialog extends FormBase {
     // See self::buildForm().
     $entity_element = $form_state->get('entity_element');
     $entity = $form_state->get('entity');
+    /** @var EmbedButtonInterface $embed_button */
+    $embed_button = $form_state->get('embed_button');
 
     $label = $this->t('Label');
     $form['#title'] = $this->t('Select Media to embed');
@@ -192,9 +194,13 @@ class MediaEmbedDialog extends FormBase {
       ];
     }
     else {
+      $media_types = $embed_button->getTypeSetting('media_types');
       $form['entity_id'] = [
         '#type' => 'entity_autocomplete',
         '#target_type' => 'media',
+        '#selection_settings' => [
+          'target_bundles' => array_values($media_types),
+        ],
         '#title' => $label,
         '#default_value' => $entity,
         '#required' => TRUE,
@@ -635,22 +641,6 @@ class MediaEmbedDialog extends FormBase {
   }
 
   /**
-   * Extracts the media UUID from the oEmbed data.
-   *
-   * @param $data
-   *
-   * @return string
-   */
-  protected function getUuidFromOembedData($data) {
-    preg_match('/' . Uuid::VALID_PATTERN . '/', $data, $matches);
-    if ($matches && Uuid::isValid($matches[0])) {
-      return $matches[0];
-    }
-
-    return NULL;
-  }
-
-  /**
    * Prepares the attributes for the oEmbed tag.
    *
    * @param $attributes
@@ -688,6 +678,8 @@ class MediaEmbedDialog extends FormBase {
    * Gets the options to be used for the View mode selector.
    *
    * @param $media
+   *
+   * @return array
    */
   protected function getMediaViewModeOptions(MediaInterface $media) {
     $bundle = $media->bundle();

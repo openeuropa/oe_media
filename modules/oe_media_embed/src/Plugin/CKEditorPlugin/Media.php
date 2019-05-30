@@ -38,8 +38,6 @@ class Media extends EmbedCKEditorPluginBase {
    */
   public function getConfig(Editor $editor) {
     return [
-      'Media_dialogTitleAdd' => t('Insert media'),
-      'Media_dialogTitleEdit' => t('Edit media'),
       'Media_buttons' => $this->getButtons(),
     ];
   }
