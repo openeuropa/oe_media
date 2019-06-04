@@ -23,7 +23,6 @@ trait MediaEmbedTrait {
    * Performs the basic setup of the test.
    */
   protected function basicSetup(): void {
-
     // Create a page content type.
     $this->drupalCreateContentType(['type' => 'page', 'name' => 'Basic page']);
 

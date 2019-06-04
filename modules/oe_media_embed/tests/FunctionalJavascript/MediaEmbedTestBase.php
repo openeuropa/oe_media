@@ -34,8 +34,7 @@ abstract class MediaEmbedTestBase extends WebDriverTestBase {
     $this->basicSetup();
 
     // Create an image media.
-    $session = $this->getSession();
-    $page = $session->getPage();
+    $page = $this->getSession()->getPage();
     $assert_session = $this->assertSession();
     $this->drupalGet('media/add/image');
     $page->fillField('name[0][value]', 'My image media');
