@@ -43,9 +43,10 @@ function oe_media_file_download($uri) {
     return;
   }
 
+  $usage = \Drupal::service('file.usage')->listUsage($file);
+
   // Find out if a temporary file is still used in the system.
   if ($file->isTemporary()) {
-    $usage = \Drupal::service('file.usage')->listUsage($file);
     if (empty($usage) && $file->getOwnerId() != \Drupal::currentUser()->id()) {
       // Deny access to temporary files without usage that are not owned by the
       // same user. This prevents the security issue that a private file that
@@ -57,11 +58,9 @@ function oe_media_file_download($uri) {
     }
   }
 
-  $usage_list = \Drupal::service('file.usage')->listUsage($file);
-
   if ($file->isPermanent()) {
     $referencing_entity_is_accessible = FALSE;
-    $references = $usage_list['file'] ?? [];
+    $references = $usage['file'] ?? [];
     $media_ids = !empty($references['media']) ? array_keys($references['media']) : NULL;
 
     if (empty($media_ids)) {
@@ -69,11 +68,13 @@ function oe_media_file_download($uri) {
     }
 
     // Getting fields which could have references to 'document' media type.
+    // @TODO Check impact with possible usage of 'Entity Usage' module.
     $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
       'entity_type' => 'node',
       'field_type' => 'entity_reference',
     ]);
 
+    // Get all medias which use this file.
     $field_referenced_to_media = [];
     /** @var \Drupal\field\Entity\FieldConfig $field */
     foreach ($fields as $field) {
@@ -83,6 +84,7 @@ function oe_media_file_download($uri) {
       }
     }
 
+    // Get all medias which use this file.
     $query = \Drupal::entityQuery('node', 'OR');
     foreach ($field_referenced_to_media as $field_name) {
       $query->condition($field_name, $media_ids);
@@ -91,9 +93,12 @@ function oe_media_file_download($uri) {
 
     $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
 
+    // Check access to parent nodes.
     foreach ($referencing_node_entities as $node_entity) {
       if ($node_entity->access('view', NULL, TRUE)->isAllowed()) {
         $referencing_entity_is_accessible = TRUE;
+        // Break, if user have access at least to one node.
+        break;
       }
     }
 
