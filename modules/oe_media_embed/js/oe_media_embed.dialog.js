@@ -8,7 +8,7 @@
 
 (function ($, Drupal) {
 
-  "use strict";
+  'use strict';
 
   /**
    * Attach behaviors to links for entities.
@@ -42,13 +42,16 @@
 
     /**
      * Open links to entities within forms in a new window.
+     *
+     * @param {jQuery.Event} event
+     *   The click event.
      */
     openInNewWindow: function (event) {
       event.preventDefault();
       $(this).attr('target', '_blank');
       window.open(this.href, 'entityPreview', 'toolbar=0,scrollbars=1,location=1,statusbar=1,menubar=0,resizable=1');
     },
-    selectionCompleted: function(event, uuid, entities) {
+    selectionCompleted: function (event, uuid, entities) {
       $('.media-select-dialog .js-button-next').click();
     }
   };

@@ -5,7 +5,7 @@
 
 (function ($, Drupal, CKEDITOR) {
 
-  "use strict";
+  'use strict';
 
   CKEDITOR.plugins.add('embed_media', {
     // This plugin requires the Widgets System defined in the 'widget' plugin.
@@ -17,25 +17,25 @@
       editor.addCommand('editmedia', {
         allowedContent: 'p[data-oembed]',
         requiredContent: 'p[data-oembed]',
-        modes: { wysiwyg : 1 },
+        modes: {wysiwyg: 1},
         canUndo: true,
         exec: function (editor) {
-          let dialogSettings = {
+          var dialogSettings = {
             dialogClass: 'media-select-dialog',
             resizable: false
           };
 
-          let saveCallback = function (values) {
-            let entityElement = editor.document.createElement('p');
-            let attributes = values.attributes;
-            for (let key in attributes) {
+          var saveCallback = function (values) {
+            var entityElement = editor.document.createElement('p');
+            var attributes = values.attributes;
+            for (var key in attributes) {
               if (['data-resource-url', 'data-resource-label'].includes(key)) {
                 continue;
               }
               entityElement.setAttribute(key, attributes[key]);
             }
 
-            let childElement = editor.document.createElement('a');
+            var childElement = editor.document.createElement('a');
             childElement.setAttribute('href', attributes['data-resource-url']);
             childElement.setHtml(attributes['data-resource-label']);
             entityElement.setHtml(childElement.getOuterHtml());
@@ -53,8 +53,8 @@
 
         // Upcasts the embedded element to be treated as a widget by CKEditor.
         upcast: function (element, data) {
-          let attributes = element.attributes;
-          if (attributes['data-oembed'] === undefined) {
+          var attributes = element.attributes;
+          if (typeof attributes['data-oembed'] === 'undefined') {
             return;
           }
 
@@ -80,12 +80,12 @@
 
       // Register the toolbar button.
       if (editor.ui.addButton) {
-        let button = editor.config.Media_buttons['media'];
+        var button = editor.config.Media_buttons['media'];
         editor.ui.addButton(button.id, {
           label: button.label,
           data: button,
           allowedContent: 'p[!data-oembed]',
-          click: function(editor) {
+          click: function (editor) {
             editor.execCommand('editmedia', this.data);
           },
           icon: button.image,
@@ -98,7 +98,8 @@
   /**
    * Generates unique HTML IDs for the widgets.
    *
-   * @returns {string}
+   * @return {string}
+   *   A unique HTML ID.
    */
   function generateEmbedId() {
     if (typeof generateEmbedId.counter === 'undefined') {
