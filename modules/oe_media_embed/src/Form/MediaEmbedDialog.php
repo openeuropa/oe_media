@@ -639,7 +639,7 @@ class MediaEmbedDialog extends FormBase {
     });
 
     // Unset the button.
-    if ($attributes['data-embed-button']) {
+    if (isset($attributes['data-embed-button'])) {
       unset($attributes['data-embed-button']);
     }
 
