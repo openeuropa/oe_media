@@ -1,0 +1,9 @@
+name: OE Media Embed Test
+description: Test module for OE Media Embed
+core: 8.x
+type: module
+package: Testing
+
+dependencies:
+  - oe_media:oe_media
+  - oe_media_embed:oe_media_embed

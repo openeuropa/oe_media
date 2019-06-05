@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_media_embed
+label: Media
+id: media
+type_id: embed_media
+type_settings:
+  media_types:
+    av_portal_photo: av_portal_photo
+    document: document
+    av_portal_video: av_portal_video
+    image: image
+    remote_video: remote_video
+icon_uuid: null
