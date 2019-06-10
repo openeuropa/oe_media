@@ -8,3 +8,14 @@ embed.embed_type_settings.embed_media:
       sequence:
         type: string
         label: 'The media type'
+
+oe_media_embed.settings:
+  type: config_object
+  label: 'Configuration for the media embed module.'
+  mapping:
+    resource_base_url:
+      type: uri
+      label: 'Base path for the oEmbed resource URL'
+    service_url:
+      type: uri
+      label: 'oEmbed service URL'
