@@ -7,6 +7,11 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
 /**
  * Implements hook_media_source_info_alter().
  *
@@ -18,96 +23,66 @@ function oe_media_media_source_info_alter(array &$sources): void {
 }
 
 /**
- * Implements hook_file_download().
+ * Implements hook_ENTITY_TYPE_access().
  *
- * Allow file downloading only if user have view access to parent entity (node).
+ * Check access to nodes with referencies to document media types.
  */
-function oe_media_file_download($uri) {
+function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
+  if ($entity->bundle() !== 'document' || $operation !== 'view') {
+    return AccessResult::neutral()->cachePerUser();
+  }
+
   $entity_type_manager = \Drupal::entityTypeManager();
-  /* @var \Drupal\file\FileInterface[] $files */
-  $files = $entity_type_manager
-    ->getStorage('file')
-    ->loadByProperties(['uri' => $uri]);
 
-  if (count($files)) {
-    foreach ($files as $item) {
-      // Since some database servers sometimes use a case-insensitive comparison
-      // by default, double check that the filename is an exact match.
-      if ($item->getFileUri() === $uri) {
-        $file = $item;
-        break;
-      }
-    }
-  }
-  if (!isset($file)) {
-    return;
-  }
+  // Getting fields which could have references to 'document' media type.
+  // @TODO Check impact with possible usage of 'Entity Usage' module.
+  $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
+    'entity_type' => 'node',
+    'field_type' => 'entity_reference',
+  ]);
 
-  $usage = \Drupal::service('file.usage')->listUsage($file);
-
-  // Find out if a temporary file is still used in the system.
-  if ($file->isTemporary()) {
-    if (empty($usage) && $file->getOwnerId() != \Drupal::currentUser()->id()) {
-      // Deny access to temporary files without usage that are not owned by the
-      // same user. This prevents the security issue that a private file that
-      // was protected by field permissions becomes available after its usage
-      // was removed and before it is actually deleted from the file system.
-      // Modules that depend on this behavior should make the file permanent
-      // instead.
-      return -1;
+  $field_referenced_to_media = [];
+  /** @var \Drupal\field\Entity\FieldConfig $field */
+  foreach ($fields as $field) {
+    $field_settings = $field->getSettings();
+    if ($field_settings['handler'] === 'default:media' && in_array('document', $field_settings['handler_settings']['target_bundles'])) {
+      $field_referenced_to_media[] = $field->getName();
     }
   }
 
-  if ($file->isPermanent()) {
-    $referencing_entity_is_accessible = FALSE;
-    $references = $usage['file'] ?? [];
-    $media_ids = !empty($references['media']) ? array_keys($references['media']) : NULL;
+  // Get all nodes which use this media entity.
+  $query = \Drupal::entityQuery('node', 'OR');
+  foreach ($field_referenced_to_media as $field_name) {
+    $query->condition($field_name, $entity->id());
+  }
+  $nodes = $query->execute();
 
-    if (empty($media_ids)) {
-      return;
-    }
+  if (!$nodes) {
+    return AccessResult::neutral()->cachePerUser();
+  }
 
-    // Getting fields which could have references to 'document' media type.
-    // @TODO Check impact with possible usage of 'Entity Usage' module.
-    $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
-      'entity_type' => 'node',
-      'field_type' => 'entity_reference',
-    ]);
+  $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
 
-    // Get all medias which use this file.
-    $field_referenced_to_media = [];
-    /** @var \Drupal\field\Entity\FieldConfig $field */
-    foreach ($fields as $field) {
-      $field_settings = $field->getSettings();
-      if ($field_settings['handler'] === 'default:media' && in_array('document', $field_settings['handler_settings']['target_bundles'])) {
-        $field_referenced_to_media[] = $field->getName();
-      }
-    }
-
-    // Get all medias which use this file.
-    $query = \Drupal::entityQuery('node', 'OR');
-    foreach ($field_referenced_to_media as $field_name) {
-      $query->condition($field_name, $media_ids);
-    }
-    $nodes = $query->execute();
-
-    $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
-
-    // Check access to parent nodes.
-    foreach ($referencing_node_entities as $node_entity) {
-      if ($node_entity->access('view', NULL, TRUE)->isAllowed()) {
-        $referencing_entity_is_accessible = TRUE;
-        // Break, if user have access at least to one node.
-        break;
-      }
-    }
-
-    if (!$referencing_entity_is_accessible) {
-      return -1;
+  $referencing_entity_is_accessible = FALSE;
+  $accessible_node = FALSE;
+  // Check access to parent nodes.
+  foreach ($referencing_node_entities as $node_entity) {
+    if ($node_entity->access('view', NULL, TRUE)->isAllowed()) {
+      $referencing_entity_is_accessible = TRUE;
+      $accessible_node = $node_entity;
+      // Break, if user have access at least to one node.
+      break;
     }
   }
 
-  // Access is granted.
-  $headers = file_get_content_headers($file);
-  return $headers;
+  $access_result = AccessResult::forbiddenIf($referencing_entity_is_accessible === FALSE);
+
+  if ($accessible_node instanceof NodeInterface) {
+    $access_result->addCacheableDependency($accessible_node)->cachePerUser();
+  }
+  else {
+    $access_result->addCacheContexts(['user', 'node_list']);
+  }
+
+  return $access_result;
 }
