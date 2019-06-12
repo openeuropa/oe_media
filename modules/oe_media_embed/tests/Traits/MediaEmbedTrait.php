@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace Drupal\Tests\oe_media_embed\Traits;
 
 use Drupal\editor\Entity\Editor;
+use Drupal\file\Entity\File;
 use Drupal\filter\Entity\FilterFormat;
+use Drupal\media\Entity\Media;
 
 /**
  * Used across functional and functional JS tests for common tasks.
@@ -83,7 +85,7 @@ trait MediaEmbedTrait {
    * @return string
    *   The retrieved HTML string.
    */
-  public function getEmbedDialog($filter_format_id = NULL, $embed_button_id = NULL): string {
+  protected function getEmbedDialog(string $filter_format_id = NULL, string $embed_button_id = NULL): string {
     $url = 'media-embed/dialog';
     if (!empty($filter_format_id)) {
       $url .= '/' . $filter_format_id;
@@ -92,6 +94,61 @@ trait MediaEmbedTrait {
       }
     }
     return $this->drupalGet($url);
+  }
+
+  /**
+   * Creates 3 media entities, one of each type.
+   */
+  protected function createTestMediaEntities(): void {
+    /** @var \Drupal\media\MediaTypeInterface[] $media_types */
+    $media_types = $this->container->get('entity_type.manager')->getStorage('media_type')->loadMultiple();
+
+    // Image media.
+    $this->container->get('file_system')->copy(drupal_get_path('module', 'oe_oembed') . '/tests/fixtures/example_1.jpeg', 'public://example_1.jpeg');
+    $image = File::create([
+      'uri' => 'public://example_1.jpeg',
+    ]);
+    $image->save();
+
+    $media_type = $media_types['image'];
+    $media_source = $media_type->getSource();
+    $source_field = $media_source->getSourceFieldDefinition($media_type);
+    $media = Media::create([
+      'bundle' => $media_type->id(),
+      'name' => 'Test image media',
+      $source_field->getName() => [$image],
+    ]);
+
+    $media->save();
+
+    // Remote video media.
+    $media_type = $media_types['remote_video'];
+    $media_source = $media_type->getSource();
+    $source_field = $media_source->getSourceFieldDefinition($media_type);
+    $media = Media::create([
+      'bundle' => $media_type->id(),
+      $source_field->getName() => 'https://www.youtube.com/watch?v=OkPW9mK5Vw8',
+    ]);
+
+    $media->save();
+
+    // File media.
+    $this->container->get('file_system')->copy(drupal_get_path('module', 'oe_oembed') . '/tests/fixtures/sample.pdf', 'public://sample.pdf');
+    $file = File::create([
+      'uri' => 'public://sample.pdf',
+    ]);
+    $file->save();
+
+    $media_type = $media_types['document'];
+    $media_source = $media_type->getSource();
+    $source_field = $media_source->getSourceFieldDefinition($media_type);
+    $media = Media::create([
+      'bundle' => $media_type->id(),
+      'name' => 'Test document media',
+      $source_field->getName() => [$file],
+    ]);
+
+    $media->save();
   }
 
 }

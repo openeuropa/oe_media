@@ -127,7 +127,7 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
     $xpath = new \DOMXPath($dom);
 
     foreach ($xpath->query('//p[@data-oembed]') as $node) {
-      $this->replaceOembedNode($node, $result);
+      $this->replaceOembedNode($node);
     }
 
     $result->setProcessedText(Html::serialize($dom));
