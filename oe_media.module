@@ -8,9 +8,10 @@
 declare(strict_types = 1);
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_media_source_info_alter().
@@ -25,7 +26,8 @@ function oe_media_media_source_info_alter(array &$sources): void {
 /**
  * Implements hook_ENTITY_TYPE_access().
  *
- * Check access to nodes with referencies to document media types.
+ * Ensure that Document media access is derived from the nodes that reference
+ * them.
  */
 function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
   if ($entity->bundle() !== 'document' || $operation !== 'view') {
@@ -33,9 +35,10 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   }
 
   $entity_type_manager = \Drupal::entityTypeManager();
+  $cache = new CacheableMetadata();
+  $cache->addCacheTags(['node_list']);
 
   // Getting fields which could have references to 'document' media type.
-  // @TODO Check impact with possible usage of 'Entity Usage' module.
   $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
     'entity_type' => 'node',
     'field_type' => 'entity_reference',
@@ -50,39 +53,41 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
     }
   }
 
-  // Get all nodes which use this media entity.
-  $query = \Drupal::entityQuery('node', 'OR');
+  // Get all the nodes which use this media entity.
+  $query = $entity_type_manager->getStorage('node')->getQuery('OR');
   foreach ($field_referenced_to_media as $field_name) {
     $query->condition($field_name, $entity->id());
   }
   $nodes = $query->execute();
 
   if (!$nodes) {
-    return AccessResult::neutral()->cachePerUser();
+    return AccessResult::neutral()->addCacheableDependency($cache);
   }
 
   $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
 
-  $referencing_entity_is_accessible = FALSE;
-  $accessible_node = FALSE;
-  // Check access to parent nodes.
-  foreach ($referencing_node_entities as $node_entity) {
-    if ($node_entity->access('view', NULL, TRUE)->isAllowed()) {
-      $referencing_entity_is_accessible = TRUE;
-      $accessible_node = $node_entity;
-      // Break, if user have access at least to one node.
-      break;
+  // Check access on the referencing nodes. If at least one of these returns
+  // access, we allow access as well. Otherwise, we deny it.
+  foreach ($referencing_node_entities as $node) {
+    $access = $node->access($operation, $account, TRUE);
+    $cache->addCacheableDependency($access);
+    if ($access instanceof AccessResultAllowed) {
+      // We only allow access if the user also can view media entities in
+      // general.
+      $view = AccessResult::allowedIfHasPermission($account, 'view media');
+      return $access->andIf($view)->addCacheableDependency($cache);
     }
   }
 
-  $access_result = AccessResult::forbiddenIf($referencing_entity_is_accessible === FALSE);
-
-  if ($accessible_node instanceof NodeInterface) {
-    $access_result->addCacheableDependency($accessible_node)->cachePerUser();
-  }
-  else {
-    $access_result->addCacheContexts(['user', 'node_list']);
+  // When denying access, we still allow access to users who can either
+  // administer media or own the media entity itself.
+  if ($account->hasPermission('administer media')) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
   }
 
-  return $access_result;
+  if ($account->id() === $entity->getOwnerId()) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
+  }
+
+  return AccessResult::forbidden()->addCacheableDependency($cache);
 }

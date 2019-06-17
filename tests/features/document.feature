@@ -4,7 +4,7 @@ Feature: Document media entities.
   As a site editor
   I want to be able to upload documents and reference Document media entities.
 
-  @cleanup:node @cleanup:media @cleanup:file @media-enable-standalone-url @doc
+  @cleanup:node @cleanup:media @cleanup:file @media-enable-standalone-url
   Scenario: Documents can be uploaded and attached to nodes.
     Given I am logged in as a user with the "administer nodes, create oe_media_demo content, edit own oe_media_demo content, view own unpublished content, create document media" permissions
     When I go to "the document creation page"
@@ -21,18 +21,24 @@ Feature: Document media entities.
     And I press "Save"
     Then I should see the heading "My Node"
     And I should see the link "sample.pdf"
-    # Check inherited permissions for media file.
-    When I click "sample.pdf"
-    Then the response status code should be 200
+
+    # Log out and check that we can see the media.
+    When I log out
+    And I go to the "My Document 1" media page
+    Then I should see the heading "My Document 1"
+
+    # Log back in and unpublish the node.
+    When I am logged in as a user with the "administer nodes, edit any oe_media_demo content" permission
     And I go to the "My node" node page
     When I click "Edit"
     And I uncheck "Published"
     And I press "Save"
-    And I click "sample.pdf"
-    Then the response status code should be 200
-    When I am an anonymous user
-    And I try to download the "My Document 1" media file
-    Then the response status code should be 403
+    Then I should see "My Node has been updated"
+
+    # Log back out and check that the media has no access.
+    When I log out
+    And I go to the "My Document 1" media page
+    Then I should see "Access denied"
 
   @javascript @cleanup:media @cleanup:file
   Scenario: The entity browser should allow the selection and creation of new Document Media entities

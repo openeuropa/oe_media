@@ -7,6 +7,7 @@ namespace Drupal\Tests\oe_media\Behat;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
+use Drupal\media\MediaInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -200,6 +201,46 @@ class DrupalContext extends RawDrupalContext {
     }
 
     return reset($nodes);
+  }
+
+  /**
+   * Navigates to the canonical page of a media entity.
+   *
+   * @param string $name
+   *   The title of the media.
+   *
+   * @When (I )go to the :name media page
+   * @When (I )visit the :name media page
+   */
+  public function visitMediaPage(string $name): void {
+    $media = $this->getMediaByName($name);
+    $this->visitPath($media->toUrl()->toString());
+  }
+
+  /**
+   * Retrieves a media entity by its name.
+   *
+   * @param string $name
+   *   The media name.
+   *
+   * @return \Drupal\media\MediaInterface
+   *   The media entity.
+   */
+  protected function getMediaByName(string $name): MediaInterface {
+    $storage = \Drupal::entityTypeManager()->getStorage('media');
+    $media = $storage->loadByProperties([
+      'name' => $name,
+    ]);
+
+    if (!$media) {
+      throw new \Exception("Could not find media with name '$name'.");
+    }
+
+    if (count($media) > 1) {
+      throw new \Exception("Multiple medias with name '$name' found.");
+    }
+
+    return reset($media);
   }
 
   /**
