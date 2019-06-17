@@ -7,6 +7,12 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
 /**
  * Implements hook_media_source_info_alter().
  *
@@ -15,4 +21,73 @@ declare(strict_types = 1);
  */
 function oe_media_media_source_info_alter(array &$sources): void {
   $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion'];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * Ensure that Document media access is derived from the nodes that reference
+ * them.
+ */
+function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
+  if ($entity->bundle() !== 'document' || $operation !== 'view') {
+    return AccessResult::neutral()->cachePerUser();
+  }
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $cache = new CacheableMetadata();
+  $cache->addCacheTags(['node_list']);
+
+  // Getting fields which could have references to 'document' media type.
+  $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
+    'entity_type' => 'node',
+    'field_type' => 'entity_reference',
+  ]);
+
+  $field_referenced_to_media = [];
+  /** @var \Drupal\field\Entity\FieldConfig $field */
+  foreach ($fields as $field) {
+    $field_settings = $field->getSettings();
+    if ($field_settings['handler'] === 'default:media' && in_array('document', $field_settings['handler_settings']['target_bundles'])) {
+      $field_referenced_to_media[] = $field->getName();
+    }
+  }
+
+  // Get all the nodes which use this media entity.
+  $query = $entity_type_manager->getStorage('node')->getQuery('OR');
+  foreach ($field_referenced_to_media as $field_name) {
+    $query->condition($field_name, $entity->id());
+  }
+  $nodes = $query->execute();
+
+  if (!$nodes) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
+  }
+
+  $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
+
+  // Check access on the referencing nodes. If at least one of these returns
+  // access, we allow access as well. Otherwise, we deny it.
+  foreach ($referencing_node_entities as $node) {
+    $access = $node->access($operation, $account, TRUE);
+    $cache->addCacheableDependency($access);
+    if ($access instanceof AccessResultAllowed) {
+      // We only allow access if the user also can view media entities in
+      // general.
+      $view = AccessResult::allowedIfHasPermission($account, 'view media');
+      return $access->andIf($view)->addCacheableDependency($cache);
+    }
+  }
+
+  // When denying access, we still allow access to users who can either
+  // administer media or own the media entity itself.
+  if ($account->hasPermission('administer media')) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
+  }
+
+  if ($account->id() === $entity->getOwnerId()) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
+  }
+
+  return AccessResult::forbidden()->addCacheableDependency($cache);
 }

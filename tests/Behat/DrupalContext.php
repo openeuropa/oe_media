@@ -7,6 +7,8 @@ namespace Drupal\Tests\oe_media\Behat;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
+use Drupal\media\MediaInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * The main Drupal context.
@@ -159,6 +161,116 @@ class DrupalContext extends RawDrupalContext {
   public function enableMediaStandaloneUrl(BeforeScenarioScope $scope): void {
     $this->configContext->setConfig('media.settings', 'standalone_url', TRUE);
     \Drupal::service('router.builder')->rebuild();
+  }
+
+  /**
+   * Navigates to the canonical page of a node.
+   *
+   * @param string $title
+   *   The title of the node.
+   *
+   * @When (I )go to the :title node page
+   * @When (I )visit the :title node page
+   */
+  public function visitNodePage(string $title): void {
+    $node = $this->getNodeByTitle($title);
+    $this->visitPath($node->toUrl()->toString());
+  }
+
+  /**
+   * Retrieves a node by its title.
+   *
+   * @param string $title
+   *   The node title.
+   *
+   * @return \Drupal\node\NodeInterface
+   *   The node entity.
+   */
+  protected function getNodeByTitle(string $title): NodeInterface {
+    $storage = \Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $storage->loadByProperties([
+      'title' => $title,
+    ]);
+
+    if (!$nodes) {
+      throw new \Exception("Could not find node with title '$title'.");
+    }
+
+    if (count($nodes) > 1) {
+      throw new \Exception("Multiple nodes with title '$title' found.");
+    }
+
+    return reset($nodes);
+  }
+
+  /**
+   * Navigates to the canonical page of a media entity.
+   *
+   * @param string $name
+   *   The title of the media.
+   *
+   * @When (I )go to the :name media page
+   * @When (I )visit the :name media page
+   */
+  public function visitMediaPage(string $name): void {
+    $media = $this->getMediaByName($name);
+    $this->visitPath($media->toUrl()->toString());
+  }
+
+  /**
+   * Retrieves a media entity by its name.
+   *
+   * @param string $name
+   *   The media name.
+   *
+   * @return \Drupal\media\MediaInterface
+   *   The media entity.
+   */
+  protected function getMediaByName(string $name): MediaInterface {
+    $storage = \Drupal::entityTypeManager()->getStorage('media');
+    $media = $storage->loadByProperties([
+      'name' => $name,
+    ]);
+
+    if (!$media) {
+      throw new \Exception("Could not find media with name '$name'.");
+    }
+
+    if (count($media) > 1) {
+      throw new \Exception("Multiple medias with name '$name' found.");
+    }
+
+    return reset($media);
+  }
+
+  /**
+   * Try to download file.
+   *
+   * @param string $media_name
+   *   Name of the media.
+   *
+   * @When I try to download the :media_title media file
+   */
+  public function iTryToDownloadMediaFile(string $media_name): void {
+    $storage = \Drupal::entityTypeManager()->getStorage('media');
+    /** @var \Drupal\media\Entity\Media $media */
+    $medias = $storage->loadByProperties([
+      'name' => $media_name,
+    ]);
+
+    if (!$medias) {
+      throw new \Exception("Could not find media with name '$media_name'.");
+    }
+
+    if (count($medias) > 1) {
+      throw new \Exception("Multiple medias with name '$media_name' found.");
+    }
+
+    $media = reset($medias);
+
+    $source_field = $media->get($media->getSource()->getConfiguration()['source_field']);
+    $file_url = file_create_url($source_field->entity->getFileUri());
+    $this->visitPath(file_url_transform_relative($file_url));
   }
 
 }
