@@ -64,6 +64,11 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
   public function testEmbedFilter(): void {
     $assert_session = $this->assertSession();
 
+    $media_data = [];
+
+    // Log out so we visit all pages as anonymous.
+    $this->drupalLogout();
+
     // Remote video media.
     $media = $this->entityTypeManager->getStorage('media')->loadByProperties(['bundle' => 'remote_video']);
     $media = reset($media);
@@ -77,6 +82,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $assert_session->elementExists('css', '.field--name-oe-media-oembed-video');
     $assert_session->elementExists('css', 'iframe.media-oembed-content');
     $assert_session->elementAttributeContains('css', 'iframe.media-oembed-content', 'src', 'media/oembed?url=https%3A//www.youtube.com/watch%3Fv%3DOkPW9mK5Vw8');
+    $media_data[$media->uuid()] = $media->label();
 
     // Image media.
     $media = $this->entityTypeManager->getStorage('media')->loadByProperties(['bundle' => 'image']);
@@ -90,6 +96,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $this->drupalGet('node/' . $node->id());
     // Check that the media element got rendered.
     $assert_session->elementAttributeContains('css', 'img', 'src', 'files/example_1.jpeg');
+    $media_data[$media->uuid()] = $media->label();
 
     // Document media.
     $media = $this->entityTypeManager->getStorage('media')->loadByProperties(['bundle' => 'document']);
@@ -105,6 +112,37 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $assert_session->elementExists('css', '.media--type-document');
     $assert_session->linkExists('sample.pdf');
     $assert_session->elementAttributeContains('css', '.field--name-oe-media-file a', 'href', 'sample.pdf');
+    $media_data[$media->uuid()] = $media->label();
+
+    // Create a node with all the media.
+    $content = '';
+    foreach ($media_data as $uuid => $name) {
+      $content .= '<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/' . $uuid . '"><a href="https://data.ec.europa.eu/ewp/media/' . $uuid . '">' . $name . '</a></p>';
+    }
+
+    $values = [];
+    $values['type'] = 'page';
+    $values['title'] = 'Test node with all media';
+    $values['body'] = [['value' => $content, 'format' => 'format_with_embed']];
+    $node = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $node->id());
+    file_put_contents('/var/www/html/print.html', $this->getSession()->getPage()->getContent());
+    // Check that the media elements got rendered.
+    $assert_session->elementExists('css', '.field--name-oe-media-oembed-video');
+    $assert_session->elementAttributeContains('css', '.field--name-oe-media-image img', 'src', 'files/example_1.jpeg');
+    $assert_session->elementExists('css', '.media--type-document');
+
+    // Delete all the media entities and ensure they are no longer shown in the
+    // markup.
+    $media = $this->entityTypeManager->getStorage('media')->loadByProperties(['uuid' => array_keys($media_data)]);
+    foreach ($media as $entity) {
+      $entity->delete();
+    }
+
+    $this->drupalGet('node/' . $node->id());
+    $assert_session->elementNotExists('css', '.field--name-oe-media-oembed-video');
+    $assert_session->elementNotExists('css', '.field--name-oe-media-image img');
+    $assert_session->elementNotExists('css', '.media--type-document');
   }
 
 }

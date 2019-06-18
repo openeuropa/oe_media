@@ -7,6 +7,8 @@ namespace Drupal\oe_media_embed\Plugin\Filter;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -102,7 +104,7 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
     $xpath = new \DOMXPath($dom);
 
     foreach ($xpath->query('//p[@data-oembed]') as $node) {
-      $this->replaceOembedNode($node);
+      $this->replaceOembedNode($node, $result);
     }
 
     $result->setProcessedText(Html::serialize($dom));
@@ -119,11 +121,13 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
    *
    * @param \DOMNode $node
    *   The DOM node element to replace.
+   * @param \Drupal\filter\FilterProcessResult $result
+   *   The processed result.
    *
    * @SuppressWarnings(PHPMD.CyclomaticComplexity)
    * @SuppressWarnings(PHPMD.NPathComplexity)
    */
-  protected function replaceOembedNode(\DOMNode $node): void {
+  protected function replaceOembedNode(\DOMNode $node, FilterProcessResult $result): void {
     $oembed = $node->getAttribute('data-oembed');
     $parsed = UrlHelper::parse($oembed);
 
@@ -145,9 +149,16 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
       return;
     }
 
+    // If we reached this point, we will replace the node with something even
+    // if the media is not found or the user doesn't have access to it. We don't
+    // want anything displayed in these cases so we essentially the embedded
+    // tag.
+    $output = '';
+
     $uuid = $matches[0];
     $media = $this->entityTypeManager->getStorage('media')->loadByProperties(['uuid' => $uuid]);
     if (!$media) {
+      $this->replaceNodeContent($node, $output);
       return;
     }
 
@@ -155,10 +166,16 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
 
     $view_mode = isset($parsed_resource_url['query']) && isset($parsed_resource_url['query']['view_mode']) ? $parsed_resource_url['query']['view_mode'] : 'default';
     $build = $this->entityTypeManager->getViewBuilder('media')->view($media, $view_mode);
-    $output = $this->renderer->executeInRenderContext(new RenderContext(), function () use (&$build) {
-      return $this->renderer->render($build);
-    });
+    $cache = CacheableMetadata::createFromRenderArray($build);
+    $access = $media->access('view', NULL, TRUE);
+    $cache->addCacheableDependency($access);
+    if ($access instanceof AccessResultAllowed) {
+      $output = $this->renderer->executeInRenderContext(new RenderContext(), function () use (&$build) {
+        return $this->renderer->render($build);
+      });
+    }
 
+    $result->addCacheableDependency($cache);
     $this->replaceNodeContent($node, $output);
   }
 
