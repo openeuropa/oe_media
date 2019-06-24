@@ -82,6 +82,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $assert_session->elementExists('css', '.field--name-oe-media-oembed-video');
     $assert_session->elementExists('css', 'iframe.media-oembed-content');
     $assert_session->elementAttributeContains('css', 'iframe.media-oembed-content', 'src', 'media/oembed?url=https%3A//www.youtube.com/watch%3Fv%3DOkPW9mK5Vw8');
+    $assert_session->responseNotContains($content);
     $media_data[$media->uuid()] = $media->label();
 
     // Image media.
@@ -112,6 +113,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $assert_session->elementExists('css', '.media--type-document');
     $assert_session->linkExists('sample.pdf');
     $assert_session->elementAttributeContains('css', '.field--name-oe-media-file a', 'href', 'sample.pdf');
+    $assert_session->responseNotContains($content);
     $media_data[$media->uuid()] = $media->label();
 
     // Create a node with all the media.
@@ -126,11 +128,11 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $values['body'] = [['value' => $content, 'format' => 'format_with_embed']];
     $node = $this->drupalCreateNode($values);
     $this->drupalGet('node/' . $node->id());
-    file_put_contents('/var/www/html/print.html', $this->getSession()->getPage()->getContent());
     // Check that the media elements got rendered.
     $assert_session->elementExists('css', '.field--name-oe-media-oembed-video');
     $assert_session->elementAttributeContains('css', '.field--name-oe-media-image img', 'src', 'files/example_1.jpeg');
     $assert_session->elementExists('css', '.media--type-document');
+    $assert_session->responseNotContains($content);
 
     // Delete all the media entities and ensure they are no longer shown in the
     // markup.
@@ -143,6 +145,16 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
     $assert_session->elementNotExists('css', '.field--name-oe-media-oembed-video');
     $assert_session->elementNotExists('css', '.field--name-oe-media-image img');
     $assert_session->elementNotExists('css', '.media--type-document');
+
+    // Test a non-valid URL that doesn't get replaced.
+    $content = '<p data-oembed="https://oembed.ec.europa.eu">Test no real media embed</p>';
+    $values = [];
+    $values['type'] = 'page';
+    $values['title'] = 'Test no real media embed';
+    $values['body'] = [['value' => $content, 'format' => 'format_with_embed']];
+    $node = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $node->id());
+    $assert_session->responseContains($content);
   }
 
 }

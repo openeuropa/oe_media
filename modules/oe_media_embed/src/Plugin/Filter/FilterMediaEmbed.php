@@ -28,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
  * )
  */
-class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
+class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
 
   use DomHelperTrait;
 
@@ -138,7 +138,7 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
       return;
     }
 
-    if (!isset($parsed['query']) || !$parsed['query'] || !isset($parsed['query']['url']) || strpos($parsed['query']['url'], $resource_base_url) === FALSE) {
+    if (!isset($parsed['query']['url']) || strpos($parsed['query']['url'], $resource_base_url) === FALSE) {
       return;
     }
 
@@ -151,8 +151,8 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
 
     // If we reached this point, we will replace the node with something even
     // if the media is not found or the user doesn't have access to it. We don't
-    // want anything displayed in these cases so we essentially the embedded
-    // tag.
+    // want anything displayed in these cases so we essentially kill the
+    // embedded tag.
     $output = '';
 
     $uuid = $matches[0];
@@ -164,7 +164,7 @@ class MediaEmbed extends FilterBase implements ContainerFactoryPluginInterface {
 
     $media = reset($media);
 
-    $view_mode = isset($parsed_resource_url['query']) && isset($parsed_resource_url['query']['view_mode']) ? $parsed_resource_url['query']['view_mode'] : 'default';
+    $view_mode = $parsed_resource_url['query']['view_mode'] ?? 'default';
     $build = $this->entityTypeManager->getViewBuilder('media')->view($media, $view_mode);
     $cache = CacheableMetadata::createFromRenderArray($build);
     $access = $media->access('view', NULL, TRUE);
