@@ -48,8 +48,9 @@
       });
 
       // Register the media embed widget.
-      editor.widgets.add('media', {
+      editor.widgets.add('embed_media', {
         allowedContent: 'p[data-oembed]',
+        requiredContent: 'p[data-oembed]',
 
         // Upcasts the embedded element to be treated as a widget by CKEditor.
         upcast: function (element, data) {
@@ -89,7 +90,6 @@
             editor.execCommand('editmedia', this.data);
           },
           icon: button.image,
-          modes: {wysiwyg: 1, source: 0}
         });
       }
     }
