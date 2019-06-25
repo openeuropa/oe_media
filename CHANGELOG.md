@@ -1,10 +1,21 @@
 # Change Log
 
+## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta3...1.0.0-beta4)
+
+**Merged pull requests:**
+
+- OPENEUROPA-1914: Media embed filter plugin. [\#53](https://github.com/openeuropa/oe_media/pull/53) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-1945: Update allowed file extensions. [\#51](https://github.com/openeuropa/oe_media/pull/51) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-1911: Create the oEmbed WYSIWYG embed plugin [\#50](https://github.com/openeuropa/oe_media/pull/50) ([upchuk](https://github.com/upchuk))
+
 ## [1.0.0-beta3](https://github.com/openeuropa/oe_media/tree/1.0.0-beta3) (2019-05-24)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta2...1.0.0-beta3)
 
 **Merged pull requests:**
 
+- OPENEUROPA-0000: Updated changelog. [\#49](https://github.com/openeuropa/oe_media/pull/49) ([hernani](https://github.com/hernani))
 - OPENEUROPA-1930: Update text filter parameter on view query. [\#48](https://github.com/openeuropa/oe_media/pull/48) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-1898: Revert value of standalone url option in oe\_media. [\#44](https://github.com/openeuropa/oe_media/pull/44) ([sergepavle](https://github.com/sergepavle))
 
