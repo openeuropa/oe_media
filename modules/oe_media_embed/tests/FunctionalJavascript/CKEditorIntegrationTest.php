@@ -69,10 +69,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
   public function testIntegration(): void {
     $this->drupalGet('admin/config/content/formats/manage/html');
 
-    // @todo test the filter HTML format filter to ensure that our tag can be
-    // configured.
     // @todo test the oEmbed filter.
-
     // Add "Embeds" toolbar button group to the active toolbar.
     $this->assertSession()->buttonExists('Show group names')->press();
     $this->assertSession()->waitForElementVisible('css', '.ckeditor-add-new-group');
