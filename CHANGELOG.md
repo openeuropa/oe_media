@@ -1,10 +1,18 @@
 # Change Log
 
+## [1.0.0-beta5](https://github.com/openeuropa/oe_media/tree/1.0.0-beta5) (2019-07-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta4...1.0.0-beta5)
+
+**Merged pull requests:**
+
+- OPENEUROPA-2031: Upgrade path for the document private file system. [\#55](https://github.com/openeuropa/oe_media/pull/55) ([upchuk](https://github.com/upchuk))
+
 ## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta3...1.0.0-beta4)
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md for release 1.0.0-beta4. [\#54](https://github.com/openeuropa/oe_media/pull/54) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-1914: Media embed filter plugin. [\#53](https://github.com/openeuropa/oe_media/pull/53) ([upchuk](https://github.com/upchuk))
 - OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1945: Update allowed file extensions. [\#51](https://github.com/openeuropa/oe_media/pull/51) ([sergepavle](https://github.com/sergepavle))
