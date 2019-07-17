@@ -1,12 +1,16 @@
 # OpenEuropa Media module
 
+The OpenEuropa project uses media entities as a wrapper to any kind of assets such as images, documents, videos, etc. Therefore all asset field types should reference
+media entities rather than directly files.
+
 The OpenEuropa Media module provides various functionality that allows using Media on your site.
 
 The following types of Media (bundles) are currently available:
 
 * Images (local)
-* Files (local)
-* Remote video (supports Youtube, Vimeo, Daily Motion)
+* Documents (local)
+* Remote videos (supports Youtube, Vimeo, Daily Motion)
+* AV Portal videos and photos
 
 Additionally, there is a demo module inside that exposes a content type and a generic Entity Browser meant to demonstrate the usage of Media with content.
 
