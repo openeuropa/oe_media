@@ -7,7 +7,9 @@ namespace Drupal\oe_media_embed\Plugin\EmbedType;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Plugin\PluginDependencyTrait;
 use Drupal\embed\EmbedType\EmbedTypeBase;
+use Drupal\entity_browser\EntityBrowserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,6 +21,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
+
+  use PluginDependencyTrait;
 
   /**
    * The entity type manager.
@@ -59,6 +63,10 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
         'image' => 'image',
         'remote_video' => 'remote_video',
       ],
+      'entity_browser' => '',
+      'entity_browser_settings' => [
+        'display_review' => FALSE,
+      ],
     ];
   }
 
@@ -80,7 +88,80 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
       '#required' => TRUE,
     ];
 
+    /** @var \Drupal\entity_browser\EntityBrowserInterface[] $browsers */
+    if ($this->entityTypeManager->hasDefinition('entity_browser') && ($browsers = $this->entityTypeManager->getStorage('entity_browser')->loadMultiple())) {
+      // Filter out unsupported displays & return array of ids and labels.
+      $browsers = array_map(
+        function ($item) {
+          /** @var \Drupal\entity_browser\EntityBrowserInterface $item */
+          return $item->label();
+        },
+        // Filter out both modal and standalone forms as they don't work.
+        array_filter($browsers, function (EntityBrowserInterface $browser) {
+          return !in_array($browser->getDisplay()->getPluginId(), ['modal', 'standalone'], TRUE);
+        })
+      );
+      $options = ['_none' => $this->t('None (autocomplete)')] + $browsers;
+      $form['entity_browser'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Entity browser'),
+        '#description' => $this->t('Entity browser to be used to select entities to be embedded. Only compatible browsers will be available to be chosen.'),
+        '#options' => $options,
+        '#default_value' => $this->getConfigurationValue('entity_browser'),
+      ];
+      $form['entity_browser_settings'] = [
+        '#type' => 'details',
+        '#title' => $this->t('Entity browser settings'),
+        '#open' => TRUE,
+        '#states' => [
+          'invisible' => [
+            ':input[name="type_settings[entity_browser]"]' => ['value' => '_none'],
+          ],
+        ],
+      ];
+      $form['entity_browser_settings']['display_review'] = [
+        '#type' => 'checkbox',
+        '#title' => 'Display the entity after selection',
+        '#default_value' => $this->getConfigurationValue('entity_browser_settings')['display_review'],
+      ];
+    }
+    else {
+      $form['entity_browser'] = [
+        '#type' => 'value',
+        '#value' => '',
+      ];
+    }
+
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    $entity_browser = $form_state->getValue('entity_browser') == '_none' ? '' : $form_state->getValue('entity_browser');
+    $form_state->setValue('entity_browser', $entity_browser);
+    // @todo is this needed to enforce configuration correctness?
+    $form_state->setValue('entity_browser_settings', $form_state->getValue('entity_browser_settings'));
+
+    parent::submitConfigurationForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateDependencies() {
+    $this->addDependencies(parent::calculateDependencies());
+
+    $entity_browser = $this->getConfigurationValue('entity_browser');
+    if ($entity_browser && $this->entityTypeManager->hasDefinition('entity_browser')) {
+      $browser = $this->entityTypeManager->getStorage('entity_browser')->load($entity_browser);
+      if ($browser) {
+        $this->addDependency($browser->getConfigDependencyKey(), $browser->getConfigDependencyName());
+      }
+    }
+
+    return $this->dependencies;
   }
 
   /**
