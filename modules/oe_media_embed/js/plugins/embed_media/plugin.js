@@ -67,8 +67,21 @@
 
         // Fetch the rendered entity.
         init: function () {
-          // @todo fetch the rendered tag once we actually have a filter in
-          // place.
+          /** @type {CKEDITOR.dom.element} */
+          var element = this.element;
+          // Use the Ajax framework to fetch the HTML, so that we can retrieve
+          // out-of-band assets (JS, CSS...).
+          var entityEmbedPreview = Drupal.ajax({
+            base: element.getId(),
+            element: element.$,
+            url: Drupal.url('embed/preview/' + editor.config.drupal.format + '?' + $.param({
+              value: element.getOuterHtml()
+            })),
+            progress: {type: 'none'},
+            // Use a custom event to trigger the call.
+            event: 'entity_embed_dummy_event'
+          });
+          entityEmbedPreview.execute();
         },
 
         // Downcast the element.
