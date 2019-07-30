@@ -58,7 +58,6 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
     $this->getSession()->getPage()->checkField('entity_browser_select[I-163308]');
     $this->getSession()->getPage()->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->assertSession()->pageTextContains($media_title);
     $this->assertSingleMediaEntity($media_title);
 
     // Make the same selection again and make sure the entity gets reused.
