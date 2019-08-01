@@ -108,10 +108,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->pageTextContains('My image media');
     $this->assertSession()->pageTextContains('Digital Single Market: cheaper calls to other EU countries as of 15 May');
     $this->getSession()->switchToIFrame();
-    $this->getSession()
-      ->getPage()
-      ->find('css', 'input[name="title[0][value]"]')
-      ->setValue('Node with embedded media');
+    $this->getSession()->getPage()->fillField('Title', 'Node with embedded media');
     $this->assertSession()->buttonExists('Save')->press();
 
     // Verify that the embedded media are found in the markup.
@@ -150,6 +147,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->elementExists('css', 'a.cke_button__' . $this->button->id())->click();
     $this->assertSession()->waitForId('drupal-modal');
     $this->getSession()->switchToIFrame('entity_browser_iframe_embed_media_entity_browser_test');
+    // Check the image checkbox.
     $this->getSession()->getPage()->checkField('entity_browser_select[media:1]');
     $this->assertSession()->buttonExists('Select entities')->click();
     $this->getSession()->switchToIFrame();
@@ -161,11 +159,12 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->elementExists('css', 'button.button--primary')->press();
     $this->assertSession()->assertWaitOnAjaxRequest();
 
-    // Embed the Image media.
+    // Embed the Remote video media.
     $this->getSession()->switchToIFrame();
     $this->assertSession()->elementExists('css', 'a.cke_button__' . $this->button->id())->click();
     $this->assertSession()->waitForId('drupal-modal');
     $this->getSession()->switchToIFrame('entity_browser_iframe_embed_media_entity_browser_test');
+    // Check the video checkbox.
     $this->getSession()->getPage()->checkField('entity_browser_select[media:2]');
     $this->assertSession()->buttonExists('Select entities')->click();
     $this->getSession()->switchToIFrame();
