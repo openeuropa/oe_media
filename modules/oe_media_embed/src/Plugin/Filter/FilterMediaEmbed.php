@@ -107,7 +107,7 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
       $this->replaceOembedNode($node, $result);
     }
 
-    $result->setProcessedText(Html::serialize($dom));
+    $result->setProcessedText($this->serialize($dom));
     return $result;
   }
 
@@ -181,6 +181,32 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
     }
 
     $this->replaceNodeContent($node, $output);
+  }
+
+  /**
+   * Converts the body of a \DOMDocument back to an HTML snippet.
+   *
+   * The function serializes the body part of a \DOMDocument back to an (X)HTML
+   * snippet. The resulting (X)HTML snippet will be properly formatted to be
+   * compatible with HTML user agents.
+   *
+   * @param \DOMDocument $document
+   *   A \DOMDocument object to serialize, only the tags below the first <body>
+   *   node will be converted.
+   *
+   * @return string
+   *   A valid (X)HTML snippet, as a string.
+   */
+  private function serialize(\DOMDocument $document) {
+    $body_node = $document->getElementsByTagName('body')->item(0);
+    $html = '';
+
+    if ($body_node !== NULL) {
+      foreach ($body_node->childNodes as $node) {
+        $html .= $document->saveHTML($node);
+      }
+    }
+    return $html;
   }
 
 }
