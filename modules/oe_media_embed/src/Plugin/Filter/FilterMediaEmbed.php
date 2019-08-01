@@ -170,12 +170,16 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
     $access = $media->access('view', NULL, TRUE);
     $cache->addCacheableDependency($access);
     if ($access instanceof AccessResultAllowed) {
-      $output = $this->renderer->executeInRenderContext(new RenderContext(), function () use (&$build) {
+      $context = new RenderContext();
+      $output = $this->renderer->executeInRenderContext($context, function () use (&$build) {
         return $this->renderer->render($build);
       });
+
+      if (!$context->isEmpty()) {
+        $result->addCacheableDependency($context->pop());
+      }
     }
 
-    $result->addCacheableDependency($cache);
     $this->replaceNodeContent($node, $output);
   }
 
