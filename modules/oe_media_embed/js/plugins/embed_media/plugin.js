@@ -68,7 +68,8 @@
         // Fetch the rendered entity.
         init: function () {
           /** @type {CKEDITOR.dom.element} */
-          var element = this.element;
+          // @todo: Use this code once we need to render the media with a defined display mode in WYSIWYG.
+          /**var element = this.element;
           // Use the Ajax framework to fetch the HTML, so that we can retrieve
           // out-of-band assets (JS, CSS...).
           var entityEmbedPreview = Drupal.ajax({
@@ -81,7 +82,7 @@
             // Use a custom event to trigger the call.
             event: 'entity_embed_dummy_event'
           });
-          entityEmbedPreview.execute();
+          entityEmbedPreview.execute();*/
         },
 
         // Downcast the element.

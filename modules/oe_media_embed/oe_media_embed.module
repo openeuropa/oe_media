@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * OpenEuropa Media Embed module.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_ckeditor_css_alter().
+ */
+function oe_media_embed_ckeditor_css_alter(&$css, $editor) {
+  $css[] = drupal_get_path('module', 'oe_media_embed') . '/css/ckeditor_embed.css';
+}

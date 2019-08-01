@@ -110,7 +110,6 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     // Embed the Remote video media.
     $this->assertSession()->elementExists('css', 'a.cke_button__' . $this->button->id())->click();
     $this->assertSession()->waitForId('drupal-modal');
-    $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('entity_id')->setValue('Digital Single Market: cheaper calls to other EU countries as of 15 May (2)');
     $this->assertSession()->elementExists('css', 'button.js-button-next')->click();
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -136,10 +135,10 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
       ->getStorage('media')
       ->loadMultiple();
 
-    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dimage_teaser">', ['@uuid' => $media[1]->uuid(), '@title' => $media[1]->label()]);
+    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dimage_teaser"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[1]->uuid(), '@title' => $media[1]->label()]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
 
-    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid">', ['@uuid' => $media[2]->uuid(), '@title' => $media[2]->label()]);
+    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[2]->uuid(), '@title' => $media[2]->label()]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
   }
 
