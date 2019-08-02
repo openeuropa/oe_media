@@ -122,6 +122,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     // Verify that the embedded entity gets a preview inside the text editor.
     $this->getSession()->switchToIFrame('ckeditor');
     $this->assertSession()->pageTextContains('My image media');
+    $this->assertSession()->pageTextContains('Digital Single Market: cheaper calls to other EU countries as of 15 May');
     $this->getSession()->switchToIFrame();
     $this->getSession()
       ->getPage()
