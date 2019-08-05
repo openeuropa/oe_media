@@ -140,8 +140,6 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $entity_browser = $form_state->getValue('entity_browser') == '_none' ? '' : $form_state->getValue('entity_browser');
     $form_state->setValue('entity_browser', $entity_browser);
-    // @todo is this needed to enforce configuration correctness?
-    $form_state->setValue('entity_browser_settings', $form_state->getValue('entity_browser_settings'));
 
     parent::submitConfigurationForm($form, $form_state);
   }
