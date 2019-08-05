@@ -88,6 +88,11 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
       '#required' => TRUE,
     ];
 
+    $form['entity_browser'] = [
+      '#type' => 'value',
+      '#value' => '',
+    ];
+
     /** @var \Drupal\entity_browser\EntityBrowserInterface[] $browsers */
     if ($this->entityTypeManager->hasDefinition('entity_browser') && ($browsers = $this->entityTypeManager->getStorage('entity_browser')->loadMultiple())) {
       // Filter out unsupported displays & return array of ids and labels.
@@ -123,12 +128,6 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
         '#type' => 'checkbox',
         '#title' => 'Display the entity after selection',
         '#default_value' => $this->getConfigurationValue('entity_browser_settings')['display_review'],
-      ];
-    }
-    else {
-      $form['entity_browser'] = [
-        '#type' => 'value',
-        '#value' => '',
       ];
     }
 
