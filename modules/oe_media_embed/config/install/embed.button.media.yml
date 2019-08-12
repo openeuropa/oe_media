@@ -9,8 +9,11 @@ type_id: embed_media
 type_settings:
   media_types:
     av_portal_photo: av_portal_photo
-    document: document
     av_portal_video: av_portal_video
+    document: document
     image: image
     remote_video: remote_video
+  entity_browser: ''
+  entity_browser_settings:
+    display_review: false
 icon_uuid: null

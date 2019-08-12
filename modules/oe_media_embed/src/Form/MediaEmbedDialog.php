@@ -598,7 +598,7 @@ class MediaEmbedDialog extends FormBase {
    */
   public function registerJsCallback(RegisterJSCallbacks $event): void {
     if ($event->getBrowserID() == $this->entityBrowser->id()) {
-      $event->registerCallback('Drupal.entityEmbedDialog.selectionCompleted');
+      $event->registerCallback('Drupal.mediaEmbedDialog.selectionCompleted');
     }
   }
 
