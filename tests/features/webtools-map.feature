@@ -15,4 +15,4 @@ Feature: Webtools map.
     And I reference the Webtools map "World map"
     And I fill in "Title" with "My demo node"
     And I press "Save"
-    Then I should see the Webtools map
+    Then I should see a map on the page
