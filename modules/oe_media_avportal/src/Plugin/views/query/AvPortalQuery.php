@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   help = @Translation("Query against AV Portal API.")
  * )
  */
-class AVPortalQuery extends QueryPluginBase {
+class AvPortalQuery extends QueryPluginBase {
 
   /**
    * AV Portal client.

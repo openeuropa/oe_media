@@ -22,7 +22,7 @@ use Drupal\media\MediaInterface;
  *   auto_select = TRUE
  * )
  */
-class AVPortalSearch extends View {
+class AvPortalSearch extends View {
 
   /**
    * {@inheritdoc}

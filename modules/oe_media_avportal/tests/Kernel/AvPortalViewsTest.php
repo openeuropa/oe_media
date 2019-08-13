@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\oe_media\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\oe_media_avportal\Plugin\views\query\AVPortalQuery;
+use Drupal\oe_media_avportal\Plugin\views\query\AvPortalQuery;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -53,7 +53,7 @@ class AvPortalViewsTest extends KernelTestBase {
   public function testDefaultAvPortalVideoViews(): void {
     $view = Views::getView('av_portal_test');
     $this->executeView($view, 'page_1');
-    $this->assertInstanceOf(AVPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
+    $this->assertInstanceOf(AvPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
 
     // By default, the view should show 10 results.
     $this->assertCount(10, $view->result);
@@ -97,7 +97,7 @@ class AvPortalViewsTest extends KernelTestBase {
   public function testDefaulAvPortalPhotoViews(): void {
     $view = Views::getView('av_portal_test');
     $this->executeView($view, 'page_2');
-    $this->assertInstanceOf(AVPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
+    $this->assertInstanceOf(AvPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
 
     // By default, the view should show 10 results.
     $this->assertCount(10, $view->result);
@@ -141,7 +141,7 @@ class AvPortalViewsTest extends KernelTestBase {
   public function testDefaultAvPortalBothViews(): void {
     $view = Views::getView('av_portal_test');
     $this->executeView($view, 'page_3');
-    $this->assertInstanceOf(AVPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
+    $this->assertInstanceOf(AvPortalQuery::class, $view->query, 'Wrong query plugin used in the view.');
 
     // By default, the view should show 10 results.
     $this->assertCount(10, $view->result);
