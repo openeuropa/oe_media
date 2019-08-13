@@ -4,7 +4,7 @@ Feature: Webtools map.
   As a site editor
   I want to create and reference webtools map media entities.
 
-  @webtools_map @cleanup:media
+  @webtools_map @cleanup:media @javascript
   Scenario: Create and reference a Webtools map
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_map media" permission
     When I visit "the Webtools map creation page"
