@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_webtools_description
+    - field.storage.media.oe_media_webtools_description
     - media.type.webtools_map
-id: media.webtools_map.field_media_webtools_description
-field_name: field_media_webtools_description
+id: media.webtools_map.oe_media_webtools_description
+field_name: oe_media_webtools_description
 entity_type: media
 bundle: webtools_map
 label: Description

@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.webtools_map.field_media_webtools
-    - field.field.media.webtools_map.field_media_webtools_description
+    - field.field.media.webtools_map.oe_media_webtools
+    - field.field.media.webtools_map.oe_media_webtools_description
     - media.type.webtools_map
   module:
     - json_field
@@ -18,7 +18,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_webtools:
+  oe_media_webtools:
     weight: 2
     settings:
       rows: 5
@@ -26,7 +26,7 @@ content:
     third_party_settings: {  }
     type: json_textarea
     region: content
-  field_media_webtools_description:
+  oe_media_webtools_description:
     weight: 1
     settings:
       rows: 5

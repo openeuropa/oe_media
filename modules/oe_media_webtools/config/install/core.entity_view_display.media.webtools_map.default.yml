@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.webtools_map.field_media_webtools
-    - field.field.media.webtools_map.field_media_webtools_description
+    - field.field.media.webtools_map.oe_media_webtools
+    - field.field.media.webtools_map.oe_media_webtools_description
     - media.type.webtools_map
   module:
     - oe_webtools_media
@@ -23,14 +23,14 @@ content:
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
-  field_media_webtools:
+  oe_media_webtools:
     type: webtools_snippet
     weight: 3
     label: hidden
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_media_webtools_description:
+  oe_media_webtools_description:
     weight: 4
     label: hidden
     settings: {  }

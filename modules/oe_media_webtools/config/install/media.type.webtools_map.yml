@@ -11,7 +11,7 @@ queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:
   widget_type: map
-  source_field: field_media_webtools
+  source_field: oe_media_webtools
 field_map:
-  description: field_media_webtools_description
+  description: oe_media_webtools_description
   title: name

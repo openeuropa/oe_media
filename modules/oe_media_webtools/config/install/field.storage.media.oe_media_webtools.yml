@@ -2,14 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
+    - json_field
     - media
-id: media.field_media_webtools_description
-field_name: field_media_webtools_description
+id: media.oe_media_webtools
+field_name: oe_media_webtools
 entity_type: media
-type: string_long
+type: json
 settings:
-  case_sensitive: false
-module: core
+  size: 4294967296
+module: json_field
 locked: false
 cardinality: 1
 translatable: true
