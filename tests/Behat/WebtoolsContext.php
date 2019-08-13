@@ -39,7 +39,7 @@ class WebtoolsContext extends RawDrupalContext {
       throw new \Exception(sprintf('The media named "%s" does not exist', $title));
     }
     $media = reset($media);
-    $ref = $media->get('field_media_webtools')->value;
+    $ref = $media->get('oe_media_webtools')->value;
     $this->assertSession()->elementContains('css', '.field--name-oe-media-webtools', '<script type="application/json">' . $ref . '</script>');
   }
 
