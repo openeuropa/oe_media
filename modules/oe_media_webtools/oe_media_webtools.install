@@ -51,7 +51,7 @@ function oe_media_webtools_uninstall() {
 
     // Remove the Webtools media type from embed button media.
     $settings = $config->get('type_settings.media_types');
-    $settings = array_diff_key($settings, array_flip($webtools_media_types));
+    $settings = array_diff_key($settings, $webtools_media_types);
     $config->set('type_settings.media_types', $settings)->save();
   }
 }
