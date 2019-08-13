@@ -3,14 +3,14 @@ status: true
 dependencies:
   module:
     - oe_webtools_media
-id: webtools_chart
-label: 'Webtools chart'
-description: 'Media type for webtools chart'
+id: webtools_social_feeds
+label: 'Webtools social feeds'
+description: 'Media type for webtools social feeds'
 source: webtools
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:
-  widget_type: chart
+  widget_type: social_feeds
   source_field: oe_media_webtools
 field_map:
   description: oe_media_webtools_description
