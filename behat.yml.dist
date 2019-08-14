@@ -19,7 +19,9 @@ default:
               document creation: 'media/add/document'
               image creation: 'media/add/image'
               remote video selection: 'media/add/remote_video'
+              Webtools chart creation: 'media/add/webtools_chart'
               Webtools map creation: 'media/add/webtools_map'
+              Webtools social feeds creation: 'media/add/webtools_social_feeds'
   extensions:
     Drupal\MinkExtension:
       goutte: ~

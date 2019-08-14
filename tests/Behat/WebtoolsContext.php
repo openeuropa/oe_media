@@ -12,7 +12,23 @@ use Drupal\DrupalExtension\Context\RawDrupalContext;
 class WebtoolsContext extends RawDrupalContext {
 
   /**
-   * Fills in the Demo content Webtools map reference field for webtools map.
+   * Fills in the Demo content Webtools chart reference field.
+   *
+   * Fills the field with a reference to a webtools chart media.
+   *
+   * @param string $title
+   *   The webtools chart title.
+   *
+   * @Given I reference the Webtools chart :title
+   */
+  public function assertReferenceWebtoolsChart(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_chart[0][target_id]', $title);
+  }
+
+  /**
+   * Fills in the Demo content Webtools map reference field.
+   *
+   * Fills the field with a reference to a webtools map media.
    *
    * @param string $title
    *   The webtools map title.
@@ -24,6 +40,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools social feed reference field.
+   *
+   * Fills the field with a reference to a webtools social feed media.
+   *
+   * @param string $title
+   *   The webtools social feeds title.
+   *
+   * @Given I reference the Webtools social feeds :title
+   */
+  public function assertReferenceWebtoolsSocialFeeds(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_sfeed[0][target_id]', $title);
+  }
+
+  /**
    * Checks that the Webtools widget is exist on the page.
    *
    * @param string $widget_type
@@ -31,7 +61,7 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feed) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|social feeds) "([^"]*)" on the page$/
    */
   public function assertWebtoolsWidgetExist(string $widget_type, string $title): void {
     $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => $title]);
