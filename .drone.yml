@@ -64,7 +64,7 @@ pipeline:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
-      - ./vendor/bin/behat --strict
+      - ./vendor/bin/behat --strict --verbose
 
 matrix:
   COMPOSER_BOUNDARY:

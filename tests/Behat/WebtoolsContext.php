@@ -70,7 +70,7 @@ class WebtoolsContext extends RawDrupalContext {
     }
     $media = reset($media);
     $ref = $media->get('oe_media_webtools')->value;
-    $this->assertSession()->elementContains('css', '.field--name-oe-media-webtools', '<script type="application/json">' . $ref . '</script>');
+    $this->assertSession()->elementContains('css', '.field--name-oe-media-webtools', $ref . '</script>');
   }
 
 }
