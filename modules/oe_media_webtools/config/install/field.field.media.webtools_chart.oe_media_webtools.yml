@@ -10,7 +10,7 @@ id: media.webtools_chart.oe_media_webtools
 field_name: oe_media_webtools
 entity_type: media
 bundle: webtools_chart
-label: 'Webtools Chart snippet'
+label: 'Webtools chart snippet'
 description: 'Enter the snippet without the script tag.'
 required: true
 translatable: true

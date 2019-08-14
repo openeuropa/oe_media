@@ -10,7 +10,7 @@ id: media.webtools_social_feeds.oe_media_webtools
 field_name: oe_media_webtools
 entity_type: media
 bundle: webtools_social_feeds
-label: 'Webtools Social feeds snippet'
+label: 'Webtools social feeds snippet'
 description: 'Enter the snippet without the script tag.'
 required: true
 translatable: true
