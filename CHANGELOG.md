@@ -1,10 +1,21 @@
 # Change Log
 
+## [1.0.0](https://github.com/openeuropa/oe_media/tree/1.0.0) (2019-08-21)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta5...1.0.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-2020: Ensure there is a preview for embed media in WYSIWYG. [\#60](https://github.com/openeuropa/oe_media/pull/60) ([nagyad](https://github.com/nagyad))
+- OPENEUROPA-2019: Entity browser for the media oembed [\#59](https://github.com/openeuropa/oe_media/pull/59) ([brummbar](https://github.com/brummbar))
+- OPENEUROPA-2128: Fix unit tests skipped. [\#58](https://github.com/openeuropa/oe_media/pull/58) ([nagyad](https://github.com/nagyad))
+- OPENEUROPA-1926: Adding helpful readmes. [\#57](https://github.com/openeuropa/oe_media/pull/57) ([upchuk](https://github.com/upchuk))
+
 ## [1.0.0-beta5](https://github.com/openeuropa/oe_media/tree/1.0.0-beta5) (2019-07-02)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta4...1.0.0-beta5)
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md for release 1.0.0-beta5. [\#56](https://github.com/openeuropa/oe_media/pull/56) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-2031: Upgrade path for the document private file system. [\#55](https://github.com/openeuropa/oe_media/pull/55) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
