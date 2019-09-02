@@ -16,11 +16,13 @@
     "require-dev": {
         "composer/installers": "~1.5",
         "drush/drush": "~9.0",
+        "drupal/json_field": "1.0-rc3",
         "drupal-composer/drupal-scaffold": "~2.5.2",
         "openeuropa/behat-transformation-context": "~0.1",
         "openeuropa/code-review": "~1.0.0-beta2",
         "openeuropa/drupal-core-require-dev": "^8.7",
         "openeuropa/task-runner": "~1.0@beta",
+        "openeuropa/oe_webtools": "dev-OPENEUROPA-2130",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "~6.0",
         "symfony/browser-kit": "~3.0||~4.0",
