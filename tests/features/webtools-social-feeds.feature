@@ -4,8 +4,8 @@ Feature: Webtools social feeds.
   As a site editor
   I want to create and reference webtools social feeds media entities.
 
-  @webtools_social_feeds @cleanup:media
-  Scenario: Create and reference a Webtools social feeds
+  @cleanup:media
+  Scenario: Create and reference a Webtools social feeds.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_social_feeds media" permission
     When I visit "the Webtools social feeds creation page"
     And I fill in "Name" with "Basic social feeds"

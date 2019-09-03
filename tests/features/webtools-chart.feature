@@ -4,8 +4,8 @@ Feature: Webtools chart.
   As a site editor
   I want to create and reference webtools chart media entities.
 
-  @webtools_chart @cleanup:media
-  Scenario: Create and reference a Webtools chart
+  @cleanup:media
+  Scenario: Create and reference a Webtools chart.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_chart media" permission
     When I visit "the Webtools chart creation page"
     And I fill in "Name" with "Basic chart"
