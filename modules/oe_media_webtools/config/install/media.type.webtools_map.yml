@@ -12,6 +12,4 @@ new_revision: false
 source_configuration:
   widget_type: map
   source_field: oe_media_webtools
-field_map:
-  description: oe_media_webtools_description
-  title: name
+field_map: {  }
