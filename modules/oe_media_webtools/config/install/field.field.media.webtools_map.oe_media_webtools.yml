@@ -11,7 +11,7 @@ field_name: oe_media_webtools
 entity_type: media
 bundle: webtools_map
 label: 'Webtools map snippet'
-description: 'HTML tags will be stripped.'
+description: 'Enter the snippet without the script tag.'
 required: true
 translatable: true
 default_value: {  }
