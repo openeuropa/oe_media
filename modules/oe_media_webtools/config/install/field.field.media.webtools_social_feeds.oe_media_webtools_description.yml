@@ -10,7 +10,7 @@ entity_type: media
 bundle: webtools_social_feeds
 label: Description
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
