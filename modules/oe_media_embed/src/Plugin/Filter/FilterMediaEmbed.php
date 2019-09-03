@@ -186,9 +186,9 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
   /**
    * Converts the body of a \DOMDocument back to an HTML snippet.
    *
-   * The function serializes the body part of a \DOMDocument back to an (X)HTML
-   * snippet. The resulting (X)HTML snippet will be properly formatted to be
-   * compatible with HTML user agents.
+   * Custom serialize method used to serializes the body part of a \DOMDocument
+   * back to an (X)HTML. Used instead of Html::serialize because that method is
+   * wrapping the snippet in cdata.
    *
    * @param \DOMDocument $document
    *   A \DOMDocument object to serialize, only the tags below the first <body>
@@ -196,6 +196,8 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
    *
    * @return string
    *   A valid (X)HTML snippet, as a string.
+   *
+   * @see Html::serialize()
    */
   private function serialize(\DOMDocument $document) {
     $body_node = $document->getElementsByTagName('body')->item(0);
