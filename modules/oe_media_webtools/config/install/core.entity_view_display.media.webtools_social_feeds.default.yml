@@ -7,50 +7,21 @@ dependencies:
     - media.type.webtools_social_feeds
   module:
     - oe_webtools_media
-    - user
 id: media.webtools_social_feeds.default
 targetEntityType: media
 bundle: webtools_social_feeds
 mode: default
 content:
-  created:
-    label: hidden
-    type: timestamp
-    weight: 2
-    region: content
-    settings:
-      date_format: medium
-      custom_date_format: ''
-      timezone: ''
-    third_party_settings: {  }
-  name:
-    type: string
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   oe_media_webtools:
     type: webtools_snippet
-    weight: 3
+    weight: 0
     label: hidden
     settings: {  }
     third_party_settings: {  }
     region: content
-  oe_media_webtools_description:
-    weight: 4
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  uid:
-    label: hidden
-    type: author
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  created: true
+  name: true
+  oe_media_webtools_description: true
   thumbnail: true
+  uid: true
