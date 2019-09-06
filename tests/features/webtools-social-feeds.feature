@@ -17,3 +17,21 @@ Feature: Webtools social feeds.
     And I fill in "Title" with "My demo node"
     And I press "Save"
     Then I should see the Webtools social feeds "Basic social feeds" on the page
+
+  @cleanup:media
+  Scenario: Validate Webtools social feeds fields.
+    Given I am logged in as a user with the "create oe_media_demo content,create webtools_social_feeds media" permission
+    When I visit "the Webtools social feeds creation page"
+    And I press "Save"
+    Then I should see the following error messages:
+      | error messages                                  |
+      | Name field is required                          |
+      | Description field is required                   |
+      | Webtools social feeds snippet field is required |
+    And I fill in "Name" with "Basic social feeds"
+    And I fill in "Description" with "This is basic social feeds"
+    And I fill in "Webtools social feeds snippet" with "{\"service\": \"charts\"}"
+    And I press "Save"
+    Then I should see the following error messages:
+      | error messages                         |
+      | Invalid webtools Social feeds snippet. |
