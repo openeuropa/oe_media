@@ -9,6 +9,7 @@ Feature: Webtools social feeds.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_social_feeds media" permission
     When I visit "the Webtools social feeds creation page"
     And I fill in "Name" with "Basic social feeds"
+    And I fill in "Description" with "This is basic social feeds"
     And I fill in "Webtools social feeds snippet" with "{\"service\": \"smk\"}"
     And I press "Save"
     And I visit "the demo content creation page"

@@ -9,6 +9,7 @@ Feature: Webtools chart.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_chart media" permission
     When I visit "the Webtools chart creation page"
     And I fill in "Name" with "Basic chart"
+    And I fill in "Description" with "This is basic chart"
     And I fill in "Webtools chart snippet" with "{\"service\": \"charts\"}"
     And I press "Save"
     And I visit "the demo content creation page"

@@ -9,6 +9,7 @@ Feature: Webtools map.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_map media" permission
     When I visit "the Webtools map creation page"
     And I fill in "Name" with "World map"
+    And I fill in "Description" with "This is world map"
     And I fill in "Webtools map snippet" with "{\"service\": \"map\"}"
     And I press "Save"
     And I visit "the demo content creation page"
