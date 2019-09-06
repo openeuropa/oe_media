@@ -24,9 +24,9 @@ Feature: Webtools chart.
     When I visit "the Webtools chart creation page"
     And I press "Save"
     Then I should see the following error messages:
-      | error messages                         |
-      | Name field is required                 |
-      | Description field is required          |
+      | error messages                           |
+      | Name field is required                   |
+      | Description field is required            |
       | Webtools chart snippet field is required |
     And I fill in "Name" with "Basic chart"
     And I fill in "Description" with "This is basic chart"
