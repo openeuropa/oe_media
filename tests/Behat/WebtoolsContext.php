@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
@@ -68,9 +69,13 @@ class WebtoolsContext extends RawDrupalContext {
     if (!$media) {
       throw new \Exception(sprintf('The media named "%s" does not exist', $title));
     }
+
     $media = reset($media);
-    $ref = $media->get('oe_media_webtools')->value;
-    $this->assertSession()->elementContains('css', '.field--name-oe-media-webtools', $ref . '</script>');
+    // Run the escaping on the Json data.
+    $snippet = Json::encode(Json::decode($media->get('oe_media_webtools')->value));
+    // Escape \ and ' for the xpath expression.
+    $xpath = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
+    $this->assertSession()->elementsCount('xpath', $xpath, 1);
   }
 
 }
