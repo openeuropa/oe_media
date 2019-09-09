@@ -22,7 +22,7 @@ default:
               remote video selection: 'media/add/remote_video'
               Webtools chart creation: 'media/add/webtools_chart'
               Webtools map creation: 'media/add/webtools_map'
-              Webtools social feeds creation: 'media/add/webtools_social_feeds'
+              Webtools social feed creation: 'media/add/webtools_social_feed'
   extensions:
     Drupal\MinkExtension:
       goutte: ~

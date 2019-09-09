@@ -3,11 +3,11 @@ status: true
 dependencies:
   config:
     - field.storage.media.oe_media_webtools_description
-    - media.type.webtools_social_feeds
-id: media.webtools_social_feeds.oe_media_webtools_description
+    - media.type.webtools_social_feed
+id: media.webtools_social_feed.oe_media_webtools_description
 field_name: oe_media_webtools_description
 entity_type: media
-bundle: webtools_social_feeds
+bundle: webtools_social_feed
 label: Description
 description: ''
 required: true

@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_oe_demo_webtools_sfeed
-    - media.type.webtools_social_feeds
+    - media.type.webtools_social_feed
     - node.type.oe_media_demo
 id: node.oe_media_demo.field_oe_demo_webtools_sfeed
 field_name: field_oe_demo_webtools_sfeed
@@ -19,7 +19,7 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      webtools_social_feeds: webtools_social_feeds
+      webtools_social_feed: webtools_social_feed
     sort:
       field: _none
     auto_create: false

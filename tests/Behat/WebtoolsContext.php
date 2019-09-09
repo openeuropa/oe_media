@@ -46,11 +46,11 @@ class WebtoolsContext extends RawDrupalContext {
    * Fills the field with a reference to a webtools social feed media.
    *
    * @param string $title
-   *   The webtools social feeds title.
+   *   The webtools social feed title.
    *
-   * @Given I reference the Webtools social feeds :title
+   * @Given I reference the Webtools social feed :title
    */
-  public function assertReferenceWebtoolsSocialFeeds(string $title): void {
+  public function assertReferenceWebtoolsSocialFeed(string $title): void {
     $this->getSession()->getPage()->fillField('field_oe_demo_webtools_sfeed[0][target_id]', $title);
   }
 
@@ -62,13 +62,13 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feeds) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|social feed) "([^"]*)" on the page$/
    */
   public function assertWebtoolsWidgetExist(string $widget_type, string $title): void {
     $bundles = [
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
-      'social feeds' => 'webtools_social_feeds',
+      'social feed' => 'webtools_social_feed',
     ];
 
     $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([

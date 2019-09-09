@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.webtools_social_feeds.oe_media_webtools
-    - field.field.media.webtools_social_feeds.oe_media_webtools_description
-    - media.type.webtools_social_feeds
+    - field.field.media.webtools_social_feed.oe_media_webtools
+    - field.field.media.webtools_social_feed.oe_media_webtools_description
+    - media.type.webtools_social_feed
   module:
     - oe_webtools_media
-id: media.webtools_social_feeds.default
+id: media.webtools_social_feed.default
 targetEntityType: media
-bundle: webtools_social_feeds
+bundle: webtools_social_feed
 mode: default
 content:
   oe_media_webtools:

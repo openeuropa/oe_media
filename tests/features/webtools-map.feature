@@ -19,7 +19,7 @@ Feature: Webtools map.
     And I fill in "Description" with "This is world map"
     And I fill in "Webtools map snippet" with "{\"service\": \"charts\"}"
     And I press "Save"
-    Then I should see the error message "Invalid webtools Map snippet."
+    Then I should see the error message "Invalid Webtools Map snippet."
 
     When I fill in "Webtools map snippet" with "{\"service\": \"map\"}"
     And I press "Save"

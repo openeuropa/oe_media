@@ -1,8 +1,8 @@
 @api
 Feature: Webtools chart.
-  In order to be able to showcase webtools chart
+  In order to be able to showcase Webtools chart
   As a site editor
-  I want to create and reference webtools chart media entities.
+  I want to create and reference Webtools chart media entities.
 
   @cleanup:media
   Scenario: Create and reference a Webtools chart.
@@ -19,7 +19,7 @@ Feature: Webtools chart.
     And I fill in "Description" with "This is basic chart"
     And I fill in "Webtools chart snippet" with "{\"service\": \"map\"}"
     And I press "Save"
-    Then I should see the error message "Invalid webtools Chart snippet."
+    Then I should see the error message "Invalid Webtools Chart snippet."
 
     When I fill in "Webtools chart snippet" with "{\"service\":\"charts\",\"data\":{\"series\":[{\"name\":\"Y\",\"data\":[{\"name\":\"1\",\"y\":0.5}]}]},\"provider\":\"highcharts\"}"
     And I press "Save"
