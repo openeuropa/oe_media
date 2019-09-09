@@ -65,9 +65,18 @@ class WebtoolsContext extends RawDrupalContext {
    * @Then /^I should see the Webtools (map|chart|social feeds) "([^"]*)" on the page$/
    */
   public function assertWebtoolsWidgetExist(string $widget_type, string $title): void {
-    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => $title]);
+    $bundles = [
+      'map' => 'webtools_map',
+      'chart' => 'webtools_chart',
+      'social feeds' => 'webtools_social_feeds',
+    ];
+
+    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([
+      'name' => $title,
+      'bundle' => $bundles[$widget_type],
+    ]);
     if (!$media) {
-      throw new \Exception(sprintf('The media named "%s" does not exist', $title));
+      throw new \Exception(sprintf('The %s media named "%s" does not exist', $widget_type, $title));
     }
 
     $media = reset($media);
