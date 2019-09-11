@@ -1,0 +1,8 @@
+name: OpenEuropa Media Webtools
+description: Provides embeddable webtools media types.
+package: OpenEuropa
+type: module
+core: 8.x
+dependencies:
+  - drupal:media
+  - oe_webtools_media:oe_webtools_media

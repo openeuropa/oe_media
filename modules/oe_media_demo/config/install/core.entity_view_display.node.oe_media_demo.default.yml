@@ -2,11 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.oe_media_demo.field_oe_demo_av_portal_photo
     - field.field.node.oe_media_demo.field_oe_demo_av_portal_video
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
-    - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_media_browser
+    - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_chart
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_map
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
     - node.type.oe_media_demo
   module:
     - user
@@ -15,18 +19,18 @@ targetEntityType: node
 bundle: oe_media_demo
 mode: default
 content:
-  field_oe_demo_av_portal_video:
+  field_oe_demo_av_portal_photo:
     type: entity_reference_entity_view
-    weight: 104
+    weight: 5
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
     region: content
-  field_oe_demo_av_portal_photo:
+  field_oe_demo_av_portal_video:
     type: entity_reference_entity_view
-    weight: 104
+    weight: 6
     label: above
     settings:
       view_mode: default
@@ -35,7 +39,7 @@ content:
     region: content
   field_oe_demo_document_media:
     type: entity_reference_entity_view
-    weight: 103
+    weight: 3
     label: above
     settings:
       view_mode: default
@@ -44,16 +48,7 @@ content:
     region: content
   field_oe_demo_image_media:
     type: entity_reference_entity_view
-    weight: 102
-    label: above
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
-    region: content
-  field_oe_demo_remote_video_media:
-    type: entity_reference_entity_view
-    weight: 103
+    weight: 1
     label: above
     settings:
       view_mode: default
@@ -62,16 +57,52 @@ content:
     region: content
   field_oe_demo_media_browser:
     type: entity_reference_entity_view
-    weight: 102
+    weight: 2
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
     region: content
-  links:
-    weight: 100
-    settings: {  }
+  field_oe_demo_remote_video_media:
+    type: entity_reference_entity_view
+    weight: 4
+    label: above
+    settings:
+      view_mode: default
+      link: false
     third_party_settings: {  }
     region: content
+  field_oe_demo_webtools_chart:
+    type: entity_reference_entity_view
+    weight: 8
+    region: content
+    label: above
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+  field_oe_demo_webtools_map:
+    type: entity_reference_entity_view
+    weight: 7
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_oe_demo_webtools_sfeed:
+    type: entity_reference_entity_view
+    weight: 9
+    region: content
+    label: above
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden: {  }

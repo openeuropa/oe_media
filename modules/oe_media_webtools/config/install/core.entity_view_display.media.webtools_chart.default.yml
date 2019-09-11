@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.webtools_chart.oe_media_webtools
+    - field.field.media.webtools_chart.oe_media_webtools_description
+    - media.type.webtools_chart
+  module:
+    - oe_webtools_media
+id: media.webtools_chart.default
+targetEntityType: media
+bundle: webtools_chart
+mode: default
+content:
+  oe_media_webtools:
+    type: webtools_snippet
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  name: true
+  oe_media_webtools_description: true
+  thumbnail: true
+  uid: true

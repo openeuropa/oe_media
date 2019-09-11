@@ -107,7 +107,7 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
       $this->replaceOembedNode($node, $result);
     }
 
-    $result->setProcessedText(Html::serialize($dom));
+    $result->setProcessedText($this->serialize($dom));
     return $result;
   }
 
@@ -170,13 +170,45 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
     $access = $media->access('view', NULL, TRUE);
     $cache->addCacheableDependency($access);
     if ($access instanceof AccessResultAllowed) {
-      $output = $this->renderer->executeInRenderContext(new RenderContext(), function () use (&$build) {
+      $context = new RenderContext();
+      $output = $this->renderer->executeInRenderContext($context, function () use (&$build) {
         return $this->renderer->render($build);
       });
+
+      if (!$context->isEmpty()) {
+        $result->addCacheableDependency($context->pop());
+      }
     }
 
-    $result->addCacheableDependency($cache);
     $this->replaceNodeContent($node, $output);
+  }
+
+  /**
+   * Converts the body of a \DOMDocument back to an HTML snippet.
+   *
+   * Custom serialize method used to serializes the body part of a \DOMDocument
+   * back to an (X)HTML. Used instead of Html::serialize because that method is
+   * wrapping the snippet in cdata.
+   *
+   * @param \DOMDocument $document
+   *   A \DOMDocument object to serialize, only the tags below the first <body>
+   *   node will be converted.
+   *
+   * @return string
+   *   A valid (X)HTML snippet, as a string.
+   *
+   * @see Html::serialize()
+   */
+  private function serialize(\DOMDocument $document) {
+    $body_node = $document->getElementsByTagName('body')->item(0);
+    $html = '';
+
+    if ($body_node !== NULL) {
+      foreach ($body_node->childNodes as $node) {
+        $html .= $document->saveHTML($node);
+      }
+    }
+    return $html;
   }
 
 }

@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_webtools_media
+id: webtools_social_feed
+label: 'Webtools social feed'
+description: 'Media type for Webtools social feed'
+source: webtools
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  widget_type: social_feed
+  source_field: oe_media_webtools
+field_map: { }

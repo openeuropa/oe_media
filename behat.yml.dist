@@ -7,9 +7,11 @@ default:
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\ConfigContext
+        - Drupal\DrupalExtension\Context\MessageContext
         - Drupal\Tests\oe_media\Behat\DrupalContext
         - Drupal\Tests\oe_media\Behat\AvPortalContext
         - Drupal\Tests\oe_media\Behat\CleanupContext
+        - Drupal\Tests\oe_media\Behat\WebtoolsContext
         - OpenEuropa\Behat\TransformationContext:
             pages:
               AV Portal video creation: 'media/add/av_portal_video'
@@ -18,6 +20,9 @@ default:
               document creation: 'media/add/document'
               image creation: 'media/add/image'
               remote video selection: 'media/add/remote_video'
+              Webtools chart creation: 'media/add/webtools_chart'
+              Webtools map creation: 'media/add/webtools_map'
+              Webtools social feed creation: 'media/add/webtools_social_feed'
   extensions:
     Drupal\MinkExtension:
       goutte: ~
@@ -34,6 +39,10 @@ default:
       api_driver: "drupal"
       drupal:
         drupal_root: "${drupal.root}"
+      selectors:
+        message_selector: '.messages'
+        error_message_selector: '.messages.messages--error'
+        success_message_selector: '.messages.messages--status'
   formatters:
     progress: ~
 

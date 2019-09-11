@@ -6,5 +6,6 @@ core: 8.x
 dependencies:
   - drupal:media
   - oe_media:oe_media
-  - oe_media_avportal:oe_media_avportal
+  - oe_media:oe_media_avportal
+  - oe_media:oe_media_webtools
 
