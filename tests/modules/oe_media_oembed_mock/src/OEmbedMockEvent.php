@@ -73,7 +73,7 @@ class OEmbedMockEvent extends Event {
   /**
    * Getter.
    *
-   * @return array $providers
+   * @return array
    *   The providers.
    */
   public function getProviders(): array {

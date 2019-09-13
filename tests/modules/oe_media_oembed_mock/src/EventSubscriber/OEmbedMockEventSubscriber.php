@@ -22,7 +22,7 @@ class OEmbedMockEventSubscriber implements EventSubscriberInterface {
   /**
    * Sets a new JSON resource.
    *
-   * @param \Drupal\media_avportal_mock\AvPortalMockEvent $event
+   * @param \Drupal\oe_media_oembed_mock\OEmbedMockEvent $event
    *   The event.
    */
   public function setMockResources(OEmbedMockEvent $event): void {
