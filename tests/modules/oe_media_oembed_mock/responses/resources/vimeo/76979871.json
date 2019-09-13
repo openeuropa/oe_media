@@ -1,0 +1,23 @@
+{
+  "type": "video",
+  "version": "1.0",
+  "provider_name": "Vimeo",
+  "provider_url": "https:\/\/vimeo.com\/",
+  "title": "The New Vimeo Player (You Know, For Videos)",
+  "author_name": "Vimeo Staff",
+  "author_url": "https:\/\/vimeo.com\/staff",
+  "is_plus": "0",
+  "account_type": "live_business",
+  "html": "<iframe src=\"https:\/\/player.vimeo.com\/video\/76979871?app_id=122963\" width=\"480\" height=\"270\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen title=\"The New Vimeo Player (You Know, For Videos)\"><\/iframe>",
+  "width": 480,
+  "height": 270,
+  "duration": 62,
+  "description": "It may look (mostly) the same on the surface, but under the hood we totally rebuilt our player. Here\u2019s a quick rundown of some of the coolest new features:\n\n\u2022 Lightning fast playback\n\u2022 Redesigned Share screen\n\u2022 Closed caption and subtitle compatible\n\u2022 HTML5 by default\n\u2022 Purchase-from-player functionality for embedded Vimeo On Demand trailers\n\u2022 More responsive than ever (go ahead, resize it, we dare you!!!)\n\nWe\u2019re really proud of these updates. So proud that we made a spiffy new page to showcase all the reasons why we have the best video player in the galaxy. Check it out here: http:\/\/vimeo.com\/player\n\nIn short, this is a player that even haters can love.",
+  "thumbnail_url": "https:\/\/i.vimeocdn.com\/video\/452001751_295x166.webp",
+  "thumbnail_width": 295,
+  "thumbnail_height": 166,
+  "thumbnail_url_with_play_button": "https:\/\/i.vimeocdn.com\/filter\/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F452001751_295x166.webp&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png",
+  "upload_date": "2013-10-15 14:08:29",
+  "video_id": 76979871,
+  "uri": "\/videos\/76979871"
+}
