@@ -4,7 +4,7 @@ Feature: Remote video media entities.
   As a site editor
   I want to be able to reference remote videos.
 
-  @cleanup:node @cleanup:media @media-enable-standalone-url
+  @cleanup:node @cleanup:media @media-enable-standalone-url @remote-video
   Scenario Outline: Remote videos can be referenced and attached to nodes.
     Given I am logged in as a user with the "create oe_media_demo content, create remote_video media" permissions
     When I go to "the remote video selection page"
@@ -27,7 +27,7 @@ Feature: Remote video media entities.
       | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
       | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
 
-  @javascript @cleanup:node @cleanup:media
+  @javascript @cleanup:node @cleanup:media @remote-video
   Scenario Outline: Remote videos can be added and referenced through the entity browser modal.
     Given I am logged in as a user with the "create oe_media_demo content, create remote_video media, access media_entity_browser entity browser pages" permissions
     When I go to "the demo content creation page"
