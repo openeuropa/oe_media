@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
+use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
@@ -271,6 +272,30 @@ class DrupalContext extends RawDrupalContext {
     $source_field = $media->get($media->getSource()->getConfiguration()['source_field']);
     $file_url = file_create_url($source_field->entity->getFileUri());
     $this->visitPath(file_url_transform_relative($file_url));
+  }
+
+  /**
+   * Enables the Mock for a remote videos.
+   *
+   * @param \Behat\Behat\Hook\Scope\BeforeScenarioScope $scope
+   *   The scope.
+   *
+   * @beforeScenario @remote-video
+   */
+  public function enableTestModule(BeforeScenarioScope $scope): void {
+    \Drupal::service('module_installer')->install(['oe_media_oembed_mock']);
+  }
+
+  /**
+   * Disables the Mock for a remote videos.
+   *
+   * @param \Behat\Behat\Hook\Scope\AfterScenarioScope $scope
+   *   The scope.
+   *
+   * @afterScenario @remote-video
+   */
+  public function disableTestModule(AfterScenarioScope $scope): void {
+    \Drupal::service('module_installer')->uninstall(['oe_media_oembed_mock']);
   }
 
 }
