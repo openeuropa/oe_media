@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media_oembed_mock;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
@@ -17,6 +18,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * This is not intended for production use.
  */
 class OEmbedClientMiddleware {
+
+  /**
+   * The media config.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
 
   /**
    * The event dispatcher.
@@ -40,10 +48,13 @@ class OEmbedClientMiddleware {
   /**
    * OEmbedClientMiddleware constructor.
    *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher.
    */
-  public function __construct(EventDispatcherInterface $eventDispatcher) {
+  public function __construct(ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher) {
+    $this->config = $configFactory->get('media.settings');
     $this->eventDispatcher = $eventDispatcher;
   }
 
@@ -58,7 +69,7 @@ class OEmbedClientMiddleware {
         $uri = $request->getUri();
 
         // oEmbed providers.
-        if ($uri->__toString() === 'https://oembed.com/providers.json') {
+        if ($uri->__toString() === $this->config->get('oembed_providers_url')) {
           $providers = file_get_contents(drupal_get_path('module', 'oe_media_oembed_mock') . '/responses/providers.json');
           $response = new Response(200, [], $providers);
           return new FulfilledPromise($response);
