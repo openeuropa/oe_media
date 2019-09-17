@@ -7,15 +7,13 @@ namespace Drupal\oe_media_oembed_mock;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * A Guzzle middleware for testing the oEmbed medias.
- *
- * This is not intended for production use.
+ * A Guzzle middleware for intercepting oEmbed endpoints.
  */
 class OEmbedClientMiddleware {
 
@@ -59,7 +57,7 @@ class OEmbedClientMiddleware {
   }
 
   /**
-   * HTTP middleware that returns pre-saved data for AV Portal requests.
+   * HTTP middleware that returns pre-saved data for oEmbed requests.
    */
   public function __invoke() {
     // For oEmbed requests, we need to skip the execution to the remote
@@ -84,7 +82,7 @@ class OEmbedClientMiddleware {
           $event = $this->eventDispatcher->dispatch(OEmbedMockEvent::OEMBED_MOCK_EVENT, $event);
           // Get provider name from current url of request.
           $provider = array_search($uri->getHost(), $this->allowedProviders);
-          $ref = $this->getRef($uri, $provider);
+          $ref = $this->getResourceId($uri, $provider);
           // Return available response from fixtures.
           if (isset($event->getResources()[$provider][$ref])) {
             $response = new Response(200, ['Content-Type' => 'application/json'], $event->getResources()[$provider][$ref]);
@@ -104,13 +102,21 @@ class OEmbedClientMiddleware {
   }
 
   /**
-   * Helper function for extracting the video id from the oEmbed url.
+   * Helper function for extracting the resource id from the oEmbed url.
+   *
+   * @param \Psr\Http\Message\UriInterface $uri
+   *   The URI.
+   * @param string $provider
+   *   The provider.
+   *
+   * @return null|string
+   *   The ID.
    */
-  protected function getRef(Uri $uri, string $provider): ?string {
+  protected function getResourceId(UriInterface $uri, string $provider): ?string {
     $video_id = NULL;
     switch ($provider) {
       case 'youtube':
-        // Try to extract video id from url like:
+        // For example:
         // https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=z0NfI2NeDHI
         parse_str(parse_url($uri->__toString(), PHP_URL_QUERY), $parsed);
         parse_str(parse_url($parsed['url'] ?? '', PHP_URL_QUERY), $url);
@@ -119,7 +125,7 @@ class OEmbedClientMiddleware {
         break;
 
       case 'vimeo':
-        // Try to extract video id from url like:
+        // For example:
         // https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/76979871
         parse_str(parse_url($uri->__toString(), PHP_URL_QUERY), $parsed);
         $video_id = substr(parse_url($parsed['url'] ?? '', PHP_URL_PATH), 1);
@@ -127,7 +133,7 @@ class OEmbedClientMiddleware {
         break;
 
       case 'dailymotion':
-        // Try to extract video id from url like:
+        // For example:
         // https://www.dailymotion.com/services/oembed?url=https://www.dailymotion.com/video/x6pa0tr
         parse_str(parse_url($uri->__toString(), PHP_URL_QUERY), $parsed);
         $video_id = substr(parse_url($parsed['url'] ?? '', PHP_URL_PATH), 7);

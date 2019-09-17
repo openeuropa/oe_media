@@ -20,7 +20,7 @@ class OEmbedMockEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Sets a new JSON resource.
+   * Sets default JSON resources provided by the module.
    *
    * @param \Drupal\oe_media_oembed_mock\OEmbedMockEvent $event
    *   The event.

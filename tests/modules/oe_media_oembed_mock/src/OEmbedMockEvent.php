@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Event used to collect the mocking JSON data.
+ * Event used to collect the mocked JSON data.
  */
 class OEmbedMockEvent extends Event {
 
