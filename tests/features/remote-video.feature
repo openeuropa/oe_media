@@ -1,4 +1,4 @@
-@api
+@api @run
 Feature: Remote video media entities.
   In order to show remote videos on the website
   As a site editor
