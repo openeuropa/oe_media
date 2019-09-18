@@ -29,6 +29,5 @@ Feature: Webtools social feeds.
     And I reference the Webtools social feed "Spokepersons"
     And I fill in "Title" with "My demo node"
     And I press "Save"
-    Then I break
     Then I should see the success message "OpenEuropa Media Demo My demo node has been created."
     And I should see the Webtools social feed "Spokepersons" on the page
