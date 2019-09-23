@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - json_field
+    - media
+id: media.oe_media_webtools
+field_name: oe_media_webtools
+entity_type: media
+type: json
+settings:
+  size: 16777216
+module: json_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

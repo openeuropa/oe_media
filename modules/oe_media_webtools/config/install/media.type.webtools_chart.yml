@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_webtools_media
+id: webtools_chart
+label: 'Webtools chart'
+description: 'Media type for webtools chart'
+source: webtools
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  widget_type: chart
+  source_field: oe_media_webtools
+field_map: {  }

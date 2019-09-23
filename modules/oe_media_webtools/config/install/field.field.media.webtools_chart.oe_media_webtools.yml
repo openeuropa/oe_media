@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.oe_media_webtools
+    - media.type.webtools_chart
+  module:
+    - json_field
+id: media.webtools_chart.oe_media_webtools
+field_name: oe_media_webtools
+entity_type: media
+bundle: webtools_chart
+label: 'Webtools chart snippet'
+description: 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://europa.eu/webtools/mgmt/wizard/">Webtools wizzard</a>.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: json

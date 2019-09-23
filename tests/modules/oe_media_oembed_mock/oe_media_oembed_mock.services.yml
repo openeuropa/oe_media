@@ -1,0 +1,10 @@
+services:
+  oe_media_oembed_mock.client_middleware:
+    class: Drupal\oe_media_oembed_mock\OEmbedClientMiddleware
+    arguments: ['@config.factory', '@event_dispatcher']
+    tags:
+      - { name: http_client_middleware }
+  oe_media_oembed_mock.event_subscriber:
+    class: Drupal\oe_media_oembed_mock\EventSubscriber\OEmbedMockEventSubscriber
+    tags:
+      - { name: event_subscriber }

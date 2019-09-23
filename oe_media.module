@@ -58,13 +58,13 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   foreach ($field_referenced_to_media as $field_name) {
     $query->condition($field_name, $entity->id());
   }
-  $nodes = $query->execute();
+  $ids = $query->execute();
 
-  if (!$nodes) {
+  if (!$ids) {
     return AccessResult::neutral()->addCacheableDependency($cache);
   }
 
-  $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple(array_keys($nodes));
+  $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple($ids);
 
   // Check access on the referencing nodes. If at least one of these returns
   // access, we allow access as well. Otherwise, we deny it.
