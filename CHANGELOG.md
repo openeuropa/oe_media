@@ -1,10 +1,24 @@
 # Change Log
 
-## [1.0.0](https://github.com/openeuropa/oe_media/tree/1.0.0) (2019-08-21)
+## [1.1.0](https://github.com/openeuropa/oe_media/tree/1.1.0) (2019-09-23)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0...1.1.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-0000: Bumping media\_avportal version. [\#72](https://github.com/openeuropa/oe_media/pull/72) ([hernani](https://github.com/hernani))
+- OPENEUROPA-2310: Mocking oEmbed media for Behat tests. [\#70](https://github.com/openeuropa/oe_media/pull/70) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-2254: Fixing bug with the media entity access. [\#69](https://github.com/openeuropa/oe_media/pull/69) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-2262: Remove name mappings on image and document media types. [\#68](https://github.com/openeuropa/oe_media/pull/68) ([imanoleguskiza](https://github.com/imanoleguskiza))
+- OPENEUROPA-2259: Fix behat/mink-selenium2-driver missing branch by al… [\#67](https://github.com/openeuropa/oe_media/pull/67) ([msnassar](https://github.com/msnassar))
+- Openeuropa 2131: Add new media types "Webtools map, chart, social feeds" [\#61](https://github.com/openeuropa/oe_media/pull/61) ([msnassar](https://github.com/msnassar))
+
+## [1.0.0](https://github.com/openeuropa/oe_media/tree/1.0.0) (2019-08-23)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta5...1.0.0)
 
 **Merged pull requests:**
 
+- OPENEUROPA-0000: Update file name to match class name. [\#66](https://github.com/openeuropa/oe_media/pull/66) ([brummbar](https://github.com/brummbar))
+- Update CHANGELOG.md for release 1.0.0. [\#65](https://github.com/openeuropa/oe_media/pull/65) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-2020: Ensure there is a preview for embed media in WYSIWYG. [\#60](https://github.com/openeuropa/oe_media/pull/60) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-2019: Entity browser for the media oembed [\#59](https://github.com/openeuropa/oe_media/pull/59) ([brummbar](https://github.com/brummbar))
 - OPENEUROPA-2128: Fix unit tests skipped. [\#58](https://github.com/openeuropa/oe_media/pull/58) ([nagyad](https://github.com/nagyad))
