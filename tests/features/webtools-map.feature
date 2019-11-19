@@ -12,11 +12,9 @@ Feature: Webtools map.
     Then I should see the following error messages:
       | error messages                         |
       | Name field is required                 |
-      | Description field is required          |
       | Webtools map snippet field is required |
 
     When I fill in "Name" with "World map"
-    And I fill in "Description" with "This is world map"
     And I fill in "Webtools map snippet" with "{\"service\": \"charts\"}"
     And I press "Save"
     Then I should see the error message "Invalid Webtools Map snippet."

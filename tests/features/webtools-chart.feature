@@ -12,11 +12,9 @@ Feature: Webtools chart.
     Then I should see the following error messages:
       | error messages                           |
       | Name field is required                   |
-      | Description field is required            |
       | Webtools chart snippet field is required |
 
     When I fill in "Name" with "Basic chart"
-    And I fill in "Description" with "This is basic chart"
     And I fill in "Webtools chart snippet" with "{\"service\": \"map\"}"
     And I press "Save"
     Then I should see the error message "Invalid Webtools Chart snippet."
