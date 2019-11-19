@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.field.media.webtools_social_feed.oe_media_webtools
-    - field.field.media.webtools_social_feed.oe_media_webtools_description
     - media.type.webtools_social_feed
   module:
     - json_field
@@ -33,14 +32,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: json_textarea
-    region: content
-  oe_media_webtools_description:
-    weight: 1
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
     region: content
   status:
     type: boolean_checkbox
