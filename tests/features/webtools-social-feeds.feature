@@ -12,11 +12,9 @@ Feature: Webtools social feeds.
     Then I should see the following error messages:
       | error messages                                 |
       | Name field is required                         |
-      | Description field is required                  |
       | Webtools social feed snippet field is required |
 
     When I fill in "Name" with "Spokepersons"
-    And I fill in "Description" with "This is a feed of EC spokepersons"
     And I fill in "Webtools social feed snippet" with "{\"service\": \"charts\"}"
     And I press "Save"
     Then I should see the error message "Invalid Webtools Social feed snippet."

@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.field.media.webtools_social_feed.oe_media_webtools
-    - field.field.media.webtools_social_feed.oe_media_webtools_description
     - media.type.webtools_social_feed
   module:
     - oe_webtools_media
@@ -22,6 +21,5 @@ content:
 hidden:
   created: true
   name: true
-  oe_media_webtools_description: true
   thumbnail: true
   uid: true
