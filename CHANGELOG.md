@@ -1,5 +1,21 @@
 # Change Log
 
+## [1.2.0](https://github.com/openeuropa/oe_media/tree/1.2.0) (2019-12-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.1.0...1.2.0)
+
+**Closed issues:**
+
+- Class name doesn't match filename; expected class  \(AvPortalQuery/AvPortalSearch\) [\#63](https://github.com/openeuropa/oe_media/issues/63)
+- Proposal: GDPR-compliant YouTube Videos [\#37](https://github.com/openeuropa/oe_media/issues/37)
+
+**Merged pull requests:**
+
+- OPENEUROPA-2418: Webtools assets 'description' field to be removed. [\#77](https://github.com/openeuropa/oe_media/pull/77) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-2258: Undo use of PHP 7.2. [\#76](https://github.com/openeuropa/oe_media/pull/76) ([dxvargas](https://github.com/dxvargas))
+- OPENEUROPA-2464: Use PHP 7.1 in docker-compose. [\#75](https://github.com/openeuropa/oe_media/pull/75) ([dxvargas](https://github.com/dxvargas))
+- OPENEUROPA-0000: Updating changelog for release 1.1.0. [\#74](https://github.com/openeuropa/oe_media/pull/74) ([hernani](https://github.com/hernani))
+- OPENEUROPA-2258: Use PHP 7.2 in drone and docker image. [\#71](https://github.com/openeuropa/oe_media/pull/71) ([dxvargas](https://github.com/dxvargas))
+
 ## [1.1.0](https://github.com/openeuropa/oe_media/tree/1.1.0) (2019-09-23)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0...1.1.0)
 
