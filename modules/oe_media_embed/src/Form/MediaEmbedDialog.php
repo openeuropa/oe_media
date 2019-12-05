@@ -337,7 +337,14 @@ class MediaEmbedDialog extends FormBase {
     // enabled. See EntityEmbedDialog for example.
     // Allow to specify a view mode if the media type has more than 1.
     $options = $this->getMediaViewModeOptions($entity);
-    if ($options) {
+    // If there is only one display, use it and don't ask for input.
+    if (count($options) === 1) {
+      $form['attributes']['data-entity-view-mode'] = [
+        '#type' => 'value',
+        '#value' => array_key_first($options),
+      ];
+    }
+    else {
       $form['attributes']['data-entity-view-mode'] = [
         '#type' => 'select',
         '#title' => $this->t('Display as'),
@@ -674,12 +681,6 @@ class MediaEmbedDialog extends FormBase {
       ->condition('bundle', $bundle)
       ->condition('status', TRUE)
       ->execute();
-
-    // If there is only one display, we don't specify a view mode because we
-    // use the default.
-    if (count($displays) === 1) {
-      return [];
-    }
 
     $options = [];
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $displays */
