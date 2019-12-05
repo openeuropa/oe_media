@@ -29,3 +29,11 @@ oe_media_embed.settings:
     service_url:
       type: uri
       label: 'oEmbed service URL'
+
+core.entity_view_display.*.*.*.third_party.oe_media_embed:
+  type: mapping
+  label: 'OpenEuropa embed settings'
+  mapping:
+    embedable:
+      type: boolean
+      label: 'Embedable'

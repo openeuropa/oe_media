@@ -672,6 +672,7 @@ class MediaEmbedDialog extends FormBase {
     $displays = $this->entityTypeManager->getStorage('entity_view_display')->getQuery()
       ->condition('targetEntityType', 'media')
       ->condition('bundle', $bundle)
+      ->condition('status', TRUE)
       ->execute();
 
     // If there is only one display, we don't specify a view mode because we
@@ -684,7 +685,9 @@ class MediaEmbedDialog extends FormBase {
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $displays */
     $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
     foreach ($displays as $display) {
-      $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default')->__toString() : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+      if ($display->getThirdPartySetting('oe_media_embed', 'embedable')) {
+        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default')->__toString() : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+      }
     }
 
     return $options;
