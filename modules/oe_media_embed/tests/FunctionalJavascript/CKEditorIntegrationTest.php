@@ -58,6 +58,10 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
       'use text format html',
     ]);
 
+    // Make the default remote video view display embedable.
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('media.remote_video.default');
+    $view_display->setThirdPartySetting('oe_media_embed', 'embedable', TRUE);
+    $view_display->save();
     $this->drupalLogin($this->adminUser);
   }
 
@@ -87,7 +91,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->responseContains('Selected entity');
     $this->assertSession()->linkExists('My image media');
-    $this->assertSession()->fieldExists('Display as')->selectOption('Image teaser');
+    $this->assertSession()->fieldNotExists('Display as');
     $this->assertSession()->elementExists('css', 'button.button--primary')->press();
     $this->assertSession()->assertWaitOnAjaxRequest();
 
@@ -119,7 +123,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dimage_teaser"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[1]->uuid(), '@title' => $media[1]->label()]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
 
-    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[2]->uuid(), '@title' => $media[2]->label()]);
+    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Ddefault"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[2]->uuid(), '@title' => $media[2]->label()]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
   }
 
@@ -154,7 +158,7 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->pageTextContains('Selected entity');
     $this->assertSession()->linkExists('My image media');
-    $this->assertSession()->fieldExists('Display as')->selectOption('Image teaser');
+    $this->assertSession()->fieldNotExists('Display as');
     // Press the "Embed" button in the modal actions.
     $this->assertSession()->elementExists('css', 'button.button--primary')->press();
     $this->assertSession()->assertWaitOnAjaxRequest();
