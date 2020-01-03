@@ -26,8 +26,9 @@ display:
         type: none
         options: {  }
       query:
-        type: views_query
-        options: {  }
+        type: avportal
+        options:
+          cache_query_response: false
       exposed_form:
         type: basic
         options:
