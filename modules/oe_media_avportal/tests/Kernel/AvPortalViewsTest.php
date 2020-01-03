@@ -6,6 +6,7 @@ namespace Drupal\Tests\oe_media\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\oe_media_avportal\Plugin\views\query\AVPortalQuery;
+use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -177,6 +178,45 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[0];
     $this->assertEquals('I-163675', $row->ref);
     $this->assertEquals(' Start-up Europe Award Ceremony', $row->title);
+  }
+
+  /**
+   * Tests the query response caching capabilities.
+   */
+  public function testAvPortalQueryCache(): void {
+    $history_middleware = $this->container->get('media_avportal_mock.history_middleware');
+
+    // The test view has the query caching disabled.
+    $view = Views::getView('av_portal_test');
+    $this->executeView($view, 'page_3');
+    // One HTTP request has been fired to the AV Portal service.
+    $this->assertCount(1, $history_middleware->getHistoryContainer());
+
+    // Execute again the view. A new HTTP request should be made.
+    $view = Views::getView('av_portal_test');
+    $this->executeView($view, 'page_3');
+    $this->assertCount(2, $history_middleware->getHistoryContainer());
+
+    // Enable cache for AV Portal queries.
+    $view = View::load('av_portal_test');
+    $display = &$view->getDisplay('default');
+    $display['display_options']['query']['options']['cache_query_response'] = TRUE;
+    $view->save();
+
+    $view = Views::getView('av_portal_test');
+    $this->executeView($view, 'page_3');
+    $this->assertCount(3, $history_middleware->getHistoryContainer());
+
+    // Executing again the view will hit the cache.
+    $view = Views::getView('av_portal_test');
+    $this->executeView($view, 'page_3');
+    $this->assertCount(3, $history_middleware->getHistoryContainer());
+
+    // Requesting a different page causes a new HTTP request.
+    $view = Views::getView('av_portal_test');
+    $view->setCurrentPage(2);
+    $this->executeView($view, 'page_3');
+    $this->assertCount(4, $history_middleware->getHistoryContainer());
   }
 
   /**
