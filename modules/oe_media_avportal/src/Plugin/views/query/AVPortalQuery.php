@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\media_avportal\AvPortalClientInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
@@ -155,7 +156,7 @@ class AVPortalQuery extends QueryPluginBase {
       }
     }
 
-    $results = $this->client->query($options);
+    $results = $this->client->query($options, !empty($this->options['cache_query_response']));
     if ($results['num_found'] === 0) {
       return;
     }
@@ -233,6 +234,33 @@ class AVPortalQuery extends QueryPluginBase {
     $this->view = $view;
     $view->initPager();
     $view->pager->query();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+
+    $options['cache_query_response'] = [
+      'default' => FALSE,
+    ];
+
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::buildOptionsForm($form, $form_state);
+
+    $form['cache_query_response'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use cache for AV Portal queries response'),
+      '#description' => $this->t('Whether or not to cache the responses for the queries executed. If checked, the responses will be cached for the time defined by media_avportal module.'),
+      '#default_value' => !empty($this->options['cache_query_response']),
+    ];
   }
 
 }
