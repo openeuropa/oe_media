@@ -10,17 +10,6 @@ namespace Drupal\Tests\oe_media_embed\FunctionalJavascript;
 class MediaEmbedDialogTest extends MediaEmbedTestBase {
 
   /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-    // Make the default image view display embedable.
-    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('media.image.default');
-    $view_display->setThirdPartySetting('oe_media_embed', 'embedable', TRUE);
-    $view_display->save();
-  }
-
-  /**
    * Tests the media embed button markup.
    */
   public function testEntityEmbedButtonMarkup(): void {
@@ -34,10 +23,15 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
 
     $this->assertSession()->pageTextContainsOnce('Selected entity');
     $this->assertSession()->linkExists('My image media');
-    foreach (['Default', 'Image teaser'] as $plugin) {
+    foreach (['Embed', 'Image teaser'] as $plugin) {
       $this->assertSession()->optionExists('Display as', $plugin);
     }
-    $this->assertSession()->optionNotExists('Display as', 'Image not embedable');
+    $this->assertSession()->optionNotExists('Display as', 'Default');
+
+    // Make the embed remote video view display not embedable.
+    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('media.remote_video.oe_embed');
+    $view_display->setThirdPartySetting('oe_media_embed', 'embedable', FALSE);
+    $view_display->save();
 
     // Remote video without embedable view modes.
     $this->getEmbedDialog('html', 'media');
@@ -52,8 +46,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->pageTextContainsOnce('There is no embedable view mode for this media type.');
     $this->assertSession()->buttonNotExists("Embed");
 
-    // Make the default remove video view display embedable.
-    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('media.remote_video.default');
+    // Make the embed remote video view display embedable.
     $view_display->setThirdPartySetting('oe_media_embed', 'embedable', TRUE);
     $view_display->save();
 
@@ -63,7 +56,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->buttonExists('Next')->press();
     $this->assertSession()->assertWaitOnAjaxRequest();
 
-    // Assert that it is not possible to embed the media.
+    // Assert that it is now possible to embed the media.
     $this->assertSession()->pageTextContainsOnce('Selected entity');
     $this->assertSession()->linkExists('Digital Single Market: cheaper calls to other EU countries as of 15 May');
     $this->assertSession()->pageTextNotContains('There is no embedable view mode for this media type.');

@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.oe_embed
+    - field.field.media.document.oe_media_file
+    - image.style.thumbnail
+    - media.type.document
+  module:
+    - file
+    - image
+    - user
+third_party_settings:
+  oe_media_embed:
+    embedable: true
+id: media.document.oe_embed
+targetEntityType: media
+bundle: document
+mode: oe_embed
+content:
+  oe_media_file:
+    weight: 0
+    label: hidden
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true

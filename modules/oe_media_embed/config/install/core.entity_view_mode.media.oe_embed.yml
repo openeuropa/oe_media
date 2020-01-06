@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - media
-id: media.image_not_embedable
-label: Image not embedable
+id: media.oe_embed
+label: Embed
 targetEntityType: media
 cache: true

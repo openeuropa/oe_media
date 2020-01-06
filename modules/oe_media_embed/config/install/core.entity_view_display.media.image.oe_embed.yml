@@ -2,18 +2,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.image_not_embedable
+    - core.entity_view_mode.media.oe_embed
     - field.field.media.image.oe_media_image
     - media.type.image
   module:
     - image
 third_party_settings:
   oe_media_embed:
-    embedable: false
-id: media.image.image_not_embedable
+    embedable: true
+id: media.image.oe_embed
 targetEntityType: media
 bundle: image
-mode: image_not_embedable
+mode: oe_embed
 content:
   oe_media_image:
     type: image

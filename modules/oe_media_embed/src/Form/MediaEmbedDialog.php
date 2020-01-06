@@ -367,26 +367,26 @@ class MediaEmbedDialog extends FormBase {
         ];;
       }
     }
-    else {
-      // If there is only one display, use it and don't ask for input.
-      if (count($display_options) === 1) {
-        reset($display_options);
-        $form['attributes']['data-entity-view-mode'] = [
-          '#type' => 'value',
-          '#value' => key($display_options),
-        ];
-      }
-      else {
-        $form['attributes']['data-entity-view-mode'] = [
-          '#type' => 'select',
-          '#title' => $this->t('Display as'),
-          '#options' => $display_options,
-          '#default_value' => $entity_element['data-entity-view-mode'],
-          '#required' => TRUE,
-          '#access' => TRUE,
-        ];
-      }
+    // If there is only one display, use it and don't ask for input.
+    elseif (count($display_options) === 1) {
+      reset($display_options);
+      $form['attributes']['data-entity-view-mode'] = [
+        '#type' => 'value',
+        '#value' => key($display_options),
+      ];
     }
+    // If there is more than one display, add a select field.
+    else {
+      $form['attributes']['data-entity-view-mode'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Display as'),
+        '#options' => $display_options,
+        '#default_value' => $entity_element['data-entity-view-mode'],
+        '#required' => TRUE,
+        '#access' => TRUE,
+      ];
+    }
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
