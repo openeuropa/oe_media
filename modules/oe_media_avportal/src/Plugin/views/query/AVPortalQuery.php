@@ -261,7 +261,7 @@ class AVPortalQuery extends QueryPluginBase {
     $form['cache_query_response'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use cache for AV Portal queries response'),
-      '#description' => $this->t('Whether or not to cache the responses for the queries executed. If checked, the responses will be cached for the time defined by media_avportal module.'),
+      '#description' => $this->t('Whether or not to cache the responses for the queries executed. If checked, the responses will be cached by the media_avportal module.'),
       '#default_value' => !empty($this->options['cache_query_response']),
     ];
   }
