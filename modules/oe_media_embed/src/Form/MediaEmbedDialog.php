@@ -354,12 +354,12 @@ class MediaEmbedDialog extends FormBase {
     // prompt the user to enable one.
     if (empty($display_options)) {
       $form['attributes']['data-entity-view-mode-warning'] = [
-        '#markup' => '<div>' . t('There is no embedable view mode for this media type.') . '</div>',
+        '#markup' => '<div>' . $this->t('There is no embedable view mode for this media type.') . '</div>',
       ];
       if ($this->moduleHandler->moduleExists('field_ui')) {
         $form['attributes']['data-entity-view-mode-link'] = [
           '#type' => 'link',
-          '#title' => t('Manage @media view modes', ['@media' => $entity->bundle()]),
+          '#title' => $this->t('Manage @media view modes', ['@media' => $entity->bundle()]),
           '#url' => Url::fromRoute('entity.entity_view_display.' . $entity->getEntityTypeId() . '.default', [
             'media_type' => $entity->bundle(),
           ]),
