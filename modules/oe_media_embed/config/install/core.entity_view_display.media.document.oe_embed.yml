@@ -4,12 +4,10 @@ dependencies:
   config:
     - core.entity_view_mode.media.oe_embed
     - field.field.media.document.oe_media_file
-    - image.style.thumbnail
     - media.type.document
   module:
     - file
-    - image
-    - user
+    - oe_media_embed
 third_party_settings:
   oe_media_embed:
     embeddable: true

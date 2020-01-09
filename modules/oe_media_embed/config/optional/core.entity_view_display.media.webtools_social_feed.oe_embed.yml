@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.webtools_social_feed.oe_media_webtools
     - media.type.webtools_social_feed
   module:
+    - oe_media_embed
     - oe_webtools_media
 third_party_settings:
   oe_media_embed:

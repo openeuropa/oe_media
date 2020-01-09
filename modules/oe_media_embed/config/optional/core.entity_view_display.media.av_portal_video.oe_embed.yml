@@ -4,12 +4,10 @@ dependencies:
   config:
     - core.entity_view_mode.media.oe_embed
     - field.field.media.av_portal_video.oe_media_avportal_video
-    - image.style.thumbnail
     - media.type.av_portal_video
   module:
-    - image
     - media_avportal
-    - user
+    - oe_media_embed
 third_party_settings:
   oe_media_embed:
     embeddable: true
@@ -18,18 +16,8 @@ targetEntityType: media
 bundle: av_portal_video
 mode: oe_embed
 content:
-  created:
-    label: hidden
-    type: timestamp
-    weight: 0
-    region: content
-    settings:
-      date_format: medium
-      custom_date_format: ''
-      timezone: ''
-    third_party_settings: {  }
   oe_media_avportal_video:
-    weight: 6
+    weight: 0
     label: hidden
     settings:
       max_width: 640
@@ -37,21 +25,8 @@ content:
     third_party_settings: {  }
     type: avportal_video
     region: content
-  thumbnail:
-    type: image
-    weight: 5
-    label: hidden
-    settings:
-      image_style: thumbnail
-      image_link: ''
-    region: content
-    third_party_settings: {  }
-  uid:
-    label: hidden
-    type: author
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  created: true
   name: true
+  thumbnail: true
+  uid: true

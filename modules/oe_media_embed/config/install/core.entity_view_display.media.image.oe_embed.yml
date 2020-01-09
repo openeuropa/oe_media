@@ -7,6 +7,7 @@ dependencies:
     - media.type.image
   module:
     - image
+    - oe_media_embed
 third_party_settings:
   oe_media_embed:
     embeddable: true
