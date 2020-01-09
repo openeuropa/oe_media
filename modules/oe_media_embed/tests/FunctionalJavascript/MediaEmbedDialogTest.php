@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media_embed\FunctionalJavascript;
 
+use Drupal\Core\Url;
+
 /**
  * Tests the media embed dialog.
  */
@@ -29,9 +31,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->optionNotExists('Display as', 'Default');
 
     // Make the embed remote video view display not embeddable.
-    $view_display = \Drupal::entityTypeManager()->getStorage('entity_view_display')->load('media.remote_video.oe_embed');
-    $view_display->setThirdPartySetting('oe_media_embed', 'embeddable', FALSE);
-    $view_display->save();
+    $this->configureEmbeddableMediaViewMode('remote_video', 'oe_embed', TRUE);
 
     // Remote video without embeddable view modes.
     $this->getEmbedDialog('html', 'media');
@@ -46,9 +46,8 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->pageTextContainsOnce('There is no embeddable view mode for this media type.');
     $this->assertSession()->buttonNotExists("Embed");
 
-    // Make the embed remote video view display embeddable.
-    $view_display->setThirdPartySetting('oe_media_embed', 'embeddable', TRUE);
-    $view_display->save();
+    // Revert the configuration change on the remote video view display.
+    $this->configureEmbeddableMediaViewMode('remote_video', 'oe_embed');
 
     $this->getEmbedDialog('html', 'media');
     $title = 'Digital Single Market: cheaper calls to other EU countries as of 15 May (2)';
@@ -60,7 +59,26 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->pageTextContainsOnce('Selected entity');
     $this->assertSession()->linkExists('Digital Single Market: cheaper calls to other EU countries as of 15 May');
     $this->assertSession()->pageTextNotContains('There is no embeddable view mode for this media type.');
-    $this->assertSession()->buttonExists("Embed");
+    $this->assertSession()->buttonExists('Embed');
+  }
+
+  /**
+   * Configures a view mode so it becomes available to be embedded.
+   */
+  protected function configureEmbeddableMediaViewMode($media_type, $view_mode, $disable = FALSE) {
+    $this->drupalGet(Url::fromRoute('entity.entity_view_display.media.default', [
+      'media_type' => $media_type,
+    ]));
+    $this->click('summary');
+    $embeddable_form = $this->getSession()->getPage()->find('css', '#edit-embeddable-displays');
+    if ($disable) {
+      $this->assertSession()->checkboxChecked('Embed', $embeddable_form);
+    }
+    else {
+      $this->assertSession()->checkboxNotChecked('Embed', $embeddable_form);
+    }
+    $this->click('input[name="embeddable_displays[' . $view_mode . ']"]', $embeddable_form);
+    $this->assertSession()->buttonExists("Save")->press();
   }
 
 }

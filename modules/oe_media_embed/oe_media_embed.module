@@ -45,7 +45,7 @@ function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormSta
   }
   $form['modes']['embeddable_displays'] = [
     '#type' => 'checkboxes',
-    '#title' => t('Embedable view displays'),
+    '#title' => t('Embeddable view displays'),
     '#description' => t('Select which of the view modes should be available when embedding a media entity.'),
     '#options' => $options,
     '#default_value' => $default_value,

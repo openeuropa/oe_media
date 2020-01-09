@@ -36,4 +36,4 @@ core.entity_view_display.*.*.*.third_party.oe_media_embed:
   mapping:
     embeddable:
       type: boolean
-      label: 'Embedable'
+      label: 'Embeddable'

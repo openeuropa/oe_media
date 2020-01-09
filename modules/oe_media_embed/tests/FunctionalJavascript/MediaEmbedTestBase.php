@@ -18,6 +18,7 @@ abstract class MediaEmbedTestBase extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'field_ui',
     'oe_media',
     'oe_media_embed',
     'oe_media_embed_test',
@@ -33,6 +34,18 @@ abstract class MediaEmbedTestBase extends WebDriverTestBase {
     parent::setUp();
 
     $this->basicSetup();
+
+    // Create a user with required permissions.
+    $this->user = $this->drupalCreateUser([
+      'access content',
+      'administer media display',
+      'create page content',
+      'use text format html',
+      'create image media',
+      'create remote_video media',
+    ]);
+
+    $this->drupalLogin($this->user);
 
     // Create an image media.
     $page = $this->getSession()->getPage();
