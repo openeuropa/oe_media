@@ -225,6 +225,7 @@ class MediaEmbedDialog extends FormBase {
       '#type' => 'value',
       '#title' => $entity_element['data-entity-uuid'],
     ];
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -345,47 +346,7 @@ class MediaEmbedDialog extends FormBase {
       '#value' => $entity_element['data-entity-uuid'],
     ];
 
-    // @todo add element alignment and caption if the relevant filters are
-    // enabled. See EntityEmbedDialog for example.
-    // Allow to specify a view mode if the media type has more than 1.
-    $display_options = $this->getMediaViewModeOptions($entity);
-
-    // If no view mode was found for this media type,
-    // prompt the user to enable one.
-    if (empty($display_options)) {
-      $form['attributes']['data-entity-view-mode-warning'] = [
-        '#markup' => '<div>' . $this->t('There is no embeddable view mode for this media type.') . '</div>',
-      ];
-      if ($this->moduleHandler->moduleExists('field_ui')) {
-        $form['attributes']['data-entity-view-mode-link'] = [
-          '#type' => 'link',
-          '#title' => $this->t('Manage @media view modes', ['@media' => $entity->bundle()]),
-          '#url' => Url::fromRoute('entity.entity_view_display.' . $entity->getEntityTypeId() . '.default', [
-            'media_type' => $entity->bundle(),
-          ]),
-          '#attributes' => ['target' => '_blank'],
-        ];;
-      }
-    }
-    // If there is only one display, use it and don't ask for input.
-    elseif (count($display_options) === 1) {
-      reset($display_options);
-      $form['attributes']['data-entity-view-mode'] = [
-        '#type' => 'value',
-        '#value' => key($display_options),
-      ];
-    }
-    // If there is more than one display, add a select field.
-    else {
-      $form['attributes']['data-entity-view-mode'] = [
-        '#type' => 'select',
-        '#title' => $this->t('Display as'),
-        '#options' => $display_options,
-        '#default_value' => $entity_element['data-entity-view-mode'],
-        '#required' => TRUE,
-        '#access' => TRUE,
-      ];
-    }
+    $form['attributes'] += $this->getMediaViewModeFormElement($form_state);
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -699,6 +660,74 @@ class MediaEmbedDialog extends FormBase {
     $attributes['data-resource-label'] = $media->label();
 
     return $attributes;
+  }
+
+  /**
+   * Returns the form element required to select a media view mode.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   The form element.
+   */
+  protected function getMediaViewModeFormElement(FormStateInterface $form_state) {
+    $entity_element = $form_state->get('entity_element');
+    $entity = $form_state->get('entity');
+    // @todo add element alignment and caption if the relevant filters are
+    // enabled. See EntityEmbedDialog for example.
+    // Allow to specify a view mode if the media type has more than 1.
+    $display_options = $this->getMediaViewModeOptions($entity);
+
+    // If no view mode was found for this media type,
+    // prompt the user to enable one.
+    if (empty($display_options)) {
+      $form_element['data-entity-view-mode-warning'] = [
+        '#type' => 'inline_template',
+        '#template' => '<div>{{ warning }}</div>',
+        '#context' => [
+          'warning' => $this->t('There is no embeddable view mode for this media type.'),
+        ],
+      ];
+      if ($this->moduleHandler->moduleExists('field_ui')) {
+        $media_type_storage = $this->entityTypeManager->getStorage('media_type');
+        $media_type = $media_type_storage->load($entity->bundle());
+        $form_element['data-entity-view-mode-link'] = [
+          '#type' => 'link',
+          '#title' => $this->t('Manage @media view modes', ['@media' => $media_type->label()]),
+          '#url' => Url::fromRoute('entity.entity_view_display.' . $entity->getEntityTypeId() . '.default', [
+            'media_type' => $entity->bundle(),
+          ]),
+          '#attributes' => ['target' => '_blank'],
+        ];;
+      }
+
+      return $form_element;
+    }
+
+    // If there is only one display, use it and don't ask for input.
+    if (count($display_options) === 1) {
+      reset($display_options);
+
+      return [
+        'data-entity-view-mode' => [
+          '#type' => 'value',
+          '#value' => key($display_options),
+        ],
+      ];
+    }
+
+    // If there is more than one display, add a select field.
+    return [
+      'data-entity-view-mode' => [
+        '#type' => 'select',
+        '#title' => $this->t('Display as'),
+        '#options' => $display_options,
+        '#default_value' => $entity_element['data-entity-view-mode'],
+        '#required' => TRUE,
+        '#access' => TRUE,
+      ],
+    ];
   }
 
   /**
