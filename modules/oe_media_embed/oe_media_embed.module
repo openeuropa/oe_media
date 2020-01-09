@@ -20,8 +20,9 @@ function oe_media_embed_ckeditor_css_alter(&$css, $editor) {
 /**
  * Implements hook_form_FORM_ID_alter().
  *
- * We add our own custom embedable field to select which view displays can be
- * used when embedding media.
+ * Alters the entity view display edit form for Media entities to add an element
+ * that allows to select which view modes can be used for embedding in the
+ * WYSIWYG.
  */
 function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $entity */
@@ -30,7 +31,7 @@ function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormSta
   if ($entity->getTargetEntityTypeId() !== 'media') {
     return;
   }
-  // We only care if different view modes are available.
+  // We only add to the Custom Display Settings, if it exists.
   if (!isset($form['modes'])) {
     return;
   }
@@ -45,7 +46,7 @@ function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormSta
   $form['modes']['embedable_displays'] = [
     '#type' => 'checkboxes',
     '#title' => t('Embedable view displays'),
-    '#description' => t('Select which of the available view displays should be available when embedding a media entity.'),
+    '#description' => t('Select which of the view modes should be available when embedding a media entity.'),
     '#options' => $options,
     '#default_value' => $default_value,
   ];
