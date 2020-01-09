@@ -41,9 +41,9 @@ function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormSta
   $default_value = [];
   foreach (_oe_media_embed_get_enabled_display_options($entity) as $id => $details) {
     $options[$id] = $details['label'];
-    $default_value[$id] = $details['embedable'] ? $id : 0;
+    $default_value[$id] = $details['embeddable'] ? $id : 0;
   }
-  $form['modes']['embedable_displays'] = [
+  $form['modes']['embeddable_displays'] = [
     '#type' => 'checkboxes',
     '#title' => t('Embedable view displays'),
     '#description' => t('Select which of the view modes should be available when embedding a media entity.'),
@@ -52,28 +52,28 @@ function oe_media_embed_form_entity_view_display_edit_form_alter(&$form, FormSta
   ];
   foreach ($form['actions'] as &$action) {
     if (is_array($action) && isset($action['#submit'])) {
-      $action['#submit'][] = '_oe_media_embed_save_embedable_displays';
+      $action['#submit'][] = '_oe_media_embed_save_embeddable_displays';
     }
   }
-  $form['#submit'][] = '_oe_media_embed_save_embedable_displays';
+  $form['#submit'][] = '_oe_media_embed_save_embeddable_displays';
 }
 
 /**
  * Custom submit method for entity view display edit forms.
  *
- * We store whether an entity view display should be embedable or not.
+ * We store whether an entity view display should be embeddable or not.
  */
-function _oe_media_embed_save_embedable_displays(array &$form, FormStateInterface $form_state) {
-  if (!$form_state->getValue('embedable_displays')) {
+function _oe_media_embed_save_embeddable_displays(array &$form, FormStateInterface $form_state) {
+  if (!$form_state->getValue('embeddable_displays')) {
     return;
   }
   $display = $form_state->getFormObject()->getEntity();
-  foreach ($form_state->getValue('embedable_displays') as $mode => $value) {
+  foreach ($form_state->getValue('embeddable_displays') as $mode => $value) {
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
     $view_display = \Drupal::entityTypeManager()->getStorage($display->getEntityTypeId())->load($display->getTargetEntityTypeId() . '.' . $display->getTargetBundle() . '.' . $mode);
     // Only save if the value has changed.
-    if ($view_display->getThirdPartySetting('oe_media_embed', 'embedable') != $value) {
-      $view_display->setThirdPartySetting('oe_media_embed', 'embedable', $value);
+    if ($view_display->getThirdPartySetting('oe_media_embed', 'embeddable') != $value) {
+      $view_display->setThirdPartySetting('oe_media_embed', 'embeddable', $value);
       $view_display->save();
     }
   }
@@ -81,7 +81,7 @@ function _oe_media_embed_save_embedable_displays(array &$form, FormStateInterfac
 }
 
 /**
- * Returns the available entity view displays and if they are embedable or not.
+ * Returns the available entity view displays and if they are embeddable or not.
  *
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The display being edited.
@@ -99,7 +99,7 @@ function _oe_media_embed_get_enabled_display_options(EntityViewDisplayInterface 
     if ($view_display && $view_display->status()) {
       $available_options[$mode] = [
         'label' => $label,
-        'embedable' => $view_display->getThirdPartySetting('oe_media_embed', 'embedable'),
+        'embeddable' => $view_display->getThirdPartySetting('oe_media_embed', 'embeddable'),
       ];
     }
   }

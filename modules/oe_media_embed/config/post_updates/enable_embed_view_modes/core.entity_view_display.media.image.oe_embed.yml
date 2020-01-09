@@ -9,7 +9,7 @@ dependencies:
     - image
 third_party_settings:
   oe_media_embed:
-    embedable: true
+    embeddable: true
 id: media.image.oe_embed
 targetEntityType: media
 bundle: image

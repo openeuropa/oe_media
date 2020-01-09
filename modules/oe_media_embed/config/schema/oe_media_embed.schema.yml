@@ -34,6 +34,6 @@ core.entity_view_display.*.*.*.third_party.oe_media_embed:
   type: mapping
   label: 'OpenEuropa embed settings'
   mapping:
-    embedable:
+    embeddable:
       type: boolean
       label: 'Embedable'

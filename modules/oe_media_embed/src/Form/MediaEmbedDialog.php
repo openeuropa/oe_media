@@ -354,7 +354,7 @@ class MediaEmbedDialog extends FormBase {
     // prompt the user to enable one.
     if (empty($display_options)) {
       $form['attributes']['data-entity-view-mode-warning'] = [
-        '#markup' => '<div>' . $this->t('There is no embedable view mode for this media type.') . '</div>',
+        '#markup' => '<div>' . $this->t('There is no embeddable view mode for this media type.') . '</div>',
       ];
       if ($this->moduleHandler->moduleExists('field_ui')) {
         $form['attributes']['data-entity-view-mode-link'] = [
@@ -722,7 +722,7 @@ class MediaEmbedDialog extends FormBase {
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $displays */
     $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
     foreach ($displays as $display) {
-      if ($display->getThirdPartySetting('oe_media_embed', 'embedable')) {
+      if ($display->getThirdPartySetting('oe_media_embed', 'embeddable')) {
         $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default')->__toString() : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
       }
     }
