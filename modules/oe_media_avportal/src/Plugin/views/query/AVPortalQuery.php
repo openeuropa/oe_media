@@ -157,7 +157,7 @@ class AVPortalQuery extends QueryPluginBase {
     }
 
     $client = $this->clientFactory->getClient([
-      'use_cache' => !empty($this->options['cache_query_response'])
+      'use_cache' => !empty($this->options['cache_query_response']),
     ]);
     $results = $client->query($options);
     if ($results['num_found'] === 0) {
