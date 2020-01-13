@@ -31,7 +31,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->optionNotExists('Display as', 'Default');
 
     // Make the embed remote video view display not embeddable.
-    $this->configureEmbeddableMediaViewMode('remote_video', 'oe_embed', TRUE);
+    $this->configureEmbeddableMediaViewMode('remote_video', 'Embed', 'disable');
 
     // Remote video without embeddable view modes.
     $this->getEmbedDialog('html', 'media');
@@ -47,7 +47,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->buttonNotExists("Embed");
 
     // Revert the configuration change on the remote video view display.
-    $this->configureEmbeddableMediaViewMode('remote_video', 'oe_embed');
+    $this->configureEmbeddableMediaViewMode('remote_video', 'Embed');
 
     $this->getEmbedDialog('html', 'media');
     $title = 'Digital Single Market: cheaper calls to other EU countries as of 15 May (2)';
@@ -64,21 +64,31 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
 
   /**
    * Configures a view mode so it becomes available to be embedded.
+   *
+   * @param string $media_type
+   *   The media type for which to enable/disable the view mode.
+   * @param string $view_mode
+   *   The view mode.
+   * @param string $action
+   *   Whether to enable or disable.
    */
-  protected function configureEmbeddableMediaViewMode($media_type, $view_mode, $disable = FALSE) {
+  protected function configureEmbeddableMediaViewMode(string $media_type, string $view_mode, string $action = 'enable') {
     $this->drupalGet(Url::fromRoute('entity.entity_view_display.media.default', [
       'media_type' => $media_type,
     ]));
-    $this->click('summary');
-    $embeddable_form = $this->getSession()->getPage()->find('css', '#edit-embeddable-displays');
-    if ($disable) {
-      $this->assertSession()->checkboxChecked('Embed', $embeddable_form);
+    // Open the Custom Display Settings details element.
+    $this->click('#edit-modes summary');
+    $embeddable_form_container = $this->getSession()->getPage()->find('css', '#edit-embeddable-displays');
+    if ($action === 'disable') {
+      $this->assertSession()->checkboxChecked('Embed', $embeddable_form_container);
+      $embeddable_form_container->uncheckField($view_mode);
     }
-    else {
-      $this->assertSession()->checkboxNotChecked('Embed', $embeddable_form);
+    if ($action === 'enable') {
+      $this->assertSession()->checkboxNotChecked('Embed', $embeddable_form_container);
+      $embeddable_form_container->checkField($view_mode);
     }
-    $this->click('input[name="embeddable_displays[' . $view_mode . ']"]', $embeddable_form);
-    $this->assertSession()->buttonExists("Save")->press();
+
+    $this->assertSession()->buttonExists('Save')->press();
   }
 
 }
