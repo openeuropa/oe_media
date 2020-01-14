@@ -6,6 +6,7 @@ namespace Drupal\oe_media_avportal\Plugin\views\query;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\media_avportal\AvPortalClientInterface;
+use Drupal\media_avportal\AvPortalResource;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
@@ -183,7 +184,7 @@ class AVPortalQuery extends QueryPluginBase {
       $row['ref'] = $resource->getRef();
       $row['title'] = $resource->getTitle();
       $row['type'] = $resource->getType();
-      $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
+      $row['thumbnail'] = $resource->getThumbnailUrl(AvPortalResource::THUMBNAIL_RESOLUTION_MEDIUM) ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
 
       if (in_array($resource->getType(), ['PHOTO', 'REPORTAGE'])) {
         $row['thumbnail'] = $this->config->get('photos_base_uri') . $row['thumbnail'];
