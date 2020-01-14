@@ -27,6 +27,9 @@ function oe_media_embed_post_update_00001(): void {
     'core.entity_view_display.media.image.oe_embed',
     'core.entity_view_display.media.remote_video.oe_embed',
   ];
+  // Because all the optional configuration from the other modules require
+  // the "Embed" view mode, we need to enable them here to avoid
+  // unmet dependency errors.
   if (\Drupal::moduleHandler()->moduleExists('oe_media_avportal')) {
     $display_modes = array_merge($display_modes, [
       'core.entity_view_display.media.av_portal_photo.oe_embed',
