@@ -67,7 +67,7 @@
         },
         "patches": {
             "drupal/media_avportal": {
-                "latest-8.x-1.x": "https://github.com/openeuropa/media_avportal/compare/8.x-1.0-beta5...8.x-1.x.diff"
+                "OPENEUROPA-2661": "https://github.com/openeuropa/media_avportal/compare/8.x-1.0-beta5...OPENEUROPA-2661.diff"
             }
         }
     }
