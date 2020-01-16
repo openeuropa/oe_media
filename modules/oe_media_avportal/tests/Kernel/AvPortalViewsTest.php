@@ -106,13 +106,13 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[0];
     $this->assertEquals('P-039321/00-04', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertEquals('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-615406.jpg', $row->thumbnail);
+    $this->assertEquals('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-225309.jpg', $row->thumbnail);
 
     // Assert the second result from the mock.
     $row = $view->result[1];
     $this->assertEquals('P-039321/00-05', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertContains('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-25217.jpg', $row->thumbnail);
+    $this->assertContains('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-937559.jpg', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
     $view = Views::getView('av_portal_test');
