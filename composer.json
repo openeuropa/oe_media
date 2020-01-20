@@ -64,6 +64,11 @@
             "build/modules/contrib/{$name}": [
                 "type:drupal-module"
             ]
+        },
+        "patches": {
+            "drupal/media_avportal": {
+                "latest-master": "https://github.com/openeuropa/media_avportal/compare/8.x-1.0-beta5...OPENEUROPA-2716-2.diff"
+            }
         }
     }
 }
