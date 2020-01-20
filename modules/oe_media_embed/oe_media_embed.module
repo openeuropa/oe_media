@@ -64,9 +64,9 @@ function _oe_media_embed_save_embeddable_displays(array &$form, FormStateInterfa
     return;
   }
   $display = $form_state->getFormObject()->getEntity();
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
+  $view_display = \Drupal::entityTypeManager()->getStorage($display->getEntityTypeId())->load($display->getTargetEntityTypeId() . '.' . $display->getTargetBundle() . '.' . $mode);
   foreach ($form_state->getValue('embeddable_displays') as $mode => $value) {
-    /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
-    $view_display = \Drupal::entityTypeManager()->getStorage($display->getEntityTypeId())->load($display->getTargetEntityTypeId() . '.' . $display->getTargetBundle() . '.' . $mode);
     // Only save if the value has changed.
     if ($view_display->getThirdPartySetting('oe_media_embed', 'embeddable') !== $value) {
       $view_display->setThirdPartySetting('oe_media_embed', 'embeddable', $value);
@@ -89,10 +89,10 @@ function _oe_media_embed_get_enabled_display_options(EntityViewDisplayInterface 
   $available_options = [];
   // Retrieve all available displays for the target entity type.
   $available_display_modes = \Drupal::service('entity_display.repository')->getViewModeOptions($display->getTargetEntityTypeId());
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
+  $view_display = \Drupal::entityTypeManager()->getStorage($display->getEntityTypeId())->load($display->getTargetEntityTypeId() . '.' . $display->getTargetBundle() . '.' . $mode);
   foreach ($available_display_modes as $mode => $label) {
-    /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
-    $view_display = \Drupal::entityTypeManager()->getStorage($display->getEntityTypeId())->load($display->getTargetEntityTypeId() . '.' . $display->getTargetBundle() . '.' . $mode);
-    if ($view_display && $view_display->status()) {
+   if ($view_display && $view_display->status()) {
       $available_options[$mode] = [
         'label' => $label,
         'embeddable' => $view_display->getThirdPartySetting('oe_media_embed', 'embeddable'),

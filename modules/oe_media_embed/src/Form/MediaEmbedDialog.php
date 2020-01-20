@@ -31,11 +31,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MediaEmbedDialog extends FormBase {
 
   /**
-   * The form builder.
+   * The entity browser.
    *
-   * @var \Drupal\Core\Form\FormBuilderInterface
+   * @var \Drupal\entity_browser\EntityBrowserInterface
    */
-  protected $formBuilder;
+  protected $entityBrowser;
+
+  /**
+   * The entity browser settings from the entity embed button.
+   *
+   * @var array
+   */
+  protected $entityBrowserSettings = [];
 
   /**
    * The entity type manager service.
@@ -52,25 +59,18 @@ class MediaEmbedDialog extends FormBase {
   protected $eventDispatcher;
 
   /**
-   * The entity browser.
+   * The form builder.
    *
-   * @var \Drupal\entity_browser\EntityBrowserInterface
+   * @var \Drupal\Core\Form\FormBuilderInterface
    */
-  protected $entityBrowser;
+  protected $formBuilder;
 
   /**
-   * The entity browser.
+   * The module handler.
    *
    * @var \Drupal\Core\Extension\ModuleHandler
    */
   protected $moduleHandler;
-
-  /**
-   * The entity browser settings from the entity embed button.
-   *
-   * @var array
-   */
-  protected $entityBrowserSettings = [];
 
   /**
    * Constructs a MediaEmbedDialog object.
@@ -725,7 +725,6 @@ class MediaEmbedDialog extends FormBase {
         '#options' => $display_options,
         '#default_value' => $entity_element['data-entity-view-mode'],
         '#required' => TRUE,
-        '#access' => TRUE,
       ],
     ];
   }
@@ -752,7 +751,7 @@ class MediaEmbedDialog extends FormBase {
     $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
     foreach ($displays as $display) {
       if ($display->getThirdPartySetting('oe_media_embed', 'embeddable')) {
-        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default')->__toString() : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+        $options[$display->getMode()] = $display->getMode() === 'default' ? (string) $this->t('Default') : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
       }
     }
 
