@@ -751,7 +751,7 @@ class MediaEmbedDialog extends FormBase {
     $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
     foreach ($displays as $display) {
       if ($display->getThirdPartySetting('oe_media_embed', 'embeddable')) {
-        $options[$display->getMode()] = $display->getMode() === 'default' ? (string) $this->t('Default') : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default') : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
       }
     }
 
