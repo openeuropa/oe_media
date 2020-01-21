@@ -36,3 +36,10 @@ function oe_media_update_8003() {
   $config->set('standalone_url', FALSE);
   $config->save();
 }
+
+/**
+ * Update previously imported avportal resources.
+ */
+function oe_media_update_8004() {
+  \Drupal::service('media_avportal.media_updater')->refreshMappedFields();
+}
