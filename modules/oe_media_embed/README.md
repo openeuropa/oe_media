@@ -2,8 +2,8 @@
 
 The OpenEuropa Media Embed module allows the embedding of Media entities into content in an agnostic (non-Drupal) way.
 
-To this end, it comes with two main elements: the WYSIWYG embed button and the filter plugin. On top of that, it forces
-the site administrators to define which available view modes are also available to be embedded.
+To this end, it comes with two main elements: the WYSIWYG embed button and the filter plugin. On top of that, it allows
+the site administrators to define which available view displays are also available to be embedded.
 
 ## WYSIWYG button
 
@@ -28,26 +28,31 @@ The embed code provided by the WYSIWYG button is transformed into the rendered e
 Adding this to a text format will replace the embed tags with the rendered media entity.
 
 
-## Embeddable view modes
+## Embeddable view displays
 
-Site adminstrators will need to define which available view modes are also available to be embedded via the tools described above.
-This is done by selecting the available view modes on the display mode configuration page for each available entity bundle.
+Site administrators will need to define which available view modes are also available to be embedded via the tools described above.
+This is done by selecting the available view displays on the display mode configuration page for each available media bundle.
 
 ## Usage
 
-In order to use the functionalities of the module, first you will need to create a text format.
-You can find more information on how to do that on the official [documentation][2]
+In order to use the functionalities of the module, follow the next steps:
 
-Once that is done you have to make sure that:
+1) Create a custom text format.
+You can do so by navigating to admin/config/content/formats and clicking the "Add text format button". More information
+is available on the official [documentation][2].
 
-a) The Media Embed button is added to your Active toolbar
+2) Add the Media Embed button to your Active toolbar.
+You can do that while creating your custom text format or by navigating to the text format configuration form (/admin/config/content/formats/manage/TEXT_FORMAT_ID).
+Make sure you select CKEditor as the Text editor for your custom text format and move the "Media" button from the available button section to the Active toolbar.
 
-and b) the "Embeds media entities using the oEmbed format" filter is enabled and placed last in your filter processing order
-(WARNING: This is very important if you want the oEmbed specific urls to be converted into internal aliases).
+3) Enable the "Embeds media entities using the oEmbed format" filter
+The "Embeds media entities using the oEmbed format" filter needs to be enabled and placed last in the Filter processing order.
+(WARNING: This is very important if you want the oEmbed specific urls to be converted into internal aliases)
 
-Once that is done, navigate to the display mode configuration of the bundle you wish to be embeddable and select which of
-the available view modes will be available for embedding. E.g., in order to configure which of the view modes of the Page content type
-are available for embedding, you will need to navigate to /admin/structure/types/manage/page/display).
+4) Make view displays embeddable.
+Once the previous steps are done, navigate to the display mode configuration of the bundle you wish to be embeddable and select which of
+the available view displays will be available for embedding. E.g., in order to configure which of the view displays of the Image media type
+are available for embedding, you will need to navigate to /admin/structure/media/manage/image/display).
 
 
 

@@ -44,7 +44,7 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->pageTextContainsOnce('Selected entity');
     $this->assertSession()->linkExists('Digital Single Market: cheaper calls to other EU countries as of 15 May');
     $this->assertSession()->pageTextContainsOnce('There is no embeddable view mode for this media type.');
-    $this->assertSession()->buttonNotExists("Embed");
+    $this->assertSession()->buttonNotExists('Embed');
 
     // Revert the configuration change on the remote video view display.
     $this->configureEmbeddableMediaViewMode('remote_video', 'Embed');
