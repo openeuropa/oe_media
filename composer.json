@@ -10,7 +10,7 @@
         "drupal/core": "^8.7",
         "drupal/entity_browser": "^2.0",
         "drupal/inline_entity_form": "^1.0",
-        "drupal/media_avportal": "dev-OPENEUROPA-2313",
+        "drupal/media_avportal": "^1.0-beta5",
         "drupal/embed": "^1.0"
     },
     "require-dev": {
@@ -34,16 +34,12 @@
         "post-install-cmd": "./vendor/bin/run drupal:site-setup",
         "post-update-cmd": "./vendor/bin/run drupal:site-setup"
     },
-    "repositories": [
-        {
+    "repositories": {
+        "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/openeuropa/media_avportal.git"
         }
-    ],
+    },
     "autoload": {
         "psr-4": {
             "Drupal\\oe_media\\": "./src/"
