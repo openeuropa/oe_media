@@ -5,7 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\media_avportal\AvPortalClientInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\media_avportal\AvPortalClientFactory;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
@@ -23,11 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AVPortalQuery extends QueryPluginBase {
 
   /**
-   * AV Portal client.
+   * AV Portal client factory.
    *
-   * @var \Drupal\media_avportal\AvPortalClientInterface
+   * @var \Drupal\media_avportal\AvPortalClientFactory
    */
-  protected $client;
+  protected $clientFactory;
 
   /**
    * The AP Portal settings.
@@ -45,15 +46,15 @@ class AVPortalQuery extends QueryPluginBase {
    *   Plugin Id.
    * @param mixed $plugin_definition
    *   Plugin definition.
-   * @param \Drupal\media_avportal\AvPortalClientInterface $client
-   *   The AV Portal client.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param \Drupal\media_avportal\AvPortalClientFactory $client_factory
+   *   The AV Portal client factory.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientInterface $client, ConfigFactoryInterface $configFactory) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->client = $client;
-    $this->config = $configFactory->get('media_avportal.settings');
+    $this->clientFactory = $client_factory;
+    $this->config = $config_factory->get('media_avportal.settings');
   }
 
   /**
@@ -64,7 +65,7 @@ class AVPortalQuery extends QueryPluginBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('media_avportal.client'),
+      $container->get('media_avportal.client_factory'),
       $container->get('config.factory')
     );
   }
@@ -155,7 +156,10 @@ class AVPortalQuery extends QueryPluginBase {
       }
     }
 
-    $results = $this->client->query($options);
+    $client = $this->clientFactory->getClient([
+      'use_cache' => !empty($this->options['cache_query_response']),
+    ]);
+    $results = $client->query($options);
     if ($results['num_found'] === 0) {
       return;
     }
@@ -233,6 +237,33 @@ class AVPortalQuery extends QueryPluginBase {
     $this->view = $view;
     $view->initPager();
     $view->pager->query();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+
+    $options['cache_query_response'] = [
+      'default' => FALSE,
+    ];
+
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::buildOptionsForm($form, $form_state);
+
+    $form['cache_query_response'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use cache for AV Portal queries response'),
+      '#description' => $this->t('Whether or not to cache the responses for the queries executed. If checked, the responses will be cached by the media_avportal module.'),
+      '#default_value' => !empty($this->options['cache_query_response']),
+    ];
   }
 
 }

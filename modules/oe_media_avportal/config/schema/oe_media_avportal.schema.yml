@@ -1,3 +1,11 @@
+views.query.avportal:
+  type: views_query
+  label: 'AV Portal query'
+  mapping:
+    cache_query_response:
+      type: boolean
+      label: 'Use cache for AV Portal queries response'
+
 views.filter.avportal_text_search:
   type: views.filter.string
   label: 'AV Portal Full text Search'
