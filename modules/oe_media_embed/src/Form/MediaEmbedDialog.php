@@ -741,18 +741,20 @@ class MediaEmbedDialog extends FormBase {
    */
   protected function getMediaViewModeOptions(MediaInterface $media): array {
     $bundle = $media->bundle();
-    $displays = $this->entityTypeManager->getStorage('entity_view_display')->getQuery()
+    $view_display_storage = $this->entityTypeManager->getStorage('entity_view_display');
+    $displays = $view_display_storage->getQuery()
       ->condition('targetEntityType', 'media')
       ->condition('bundle', $bundle)
       ->condition('status', TRUE)
       ->execute();
 
-    $options = [];
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $displays */
-    $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
+    $displays = $view_display_storage->loadMultiple($displays);
+    $view_mode_storage = $this->entityTypeManager->getStorage('entity_view_mode');
+    $options = [];
     foreach ($displays as $display) {
       if ($display->getThirdPartySetting('oe_media_embed', 'embeddable')) {
-        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default') : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default') : $view_mode_storage->load('media.' . $display->getMode())->label();
       }
     }
 
