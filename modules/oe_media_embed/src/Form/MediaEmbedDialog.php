@@ -8,6 +8,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\SetDialogTitleCommand;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Form\FormBase;
@@ -346,7 +347,7 @@ class MediaEmbedDialog extends FormBase {
       '#value' => $entity_element['data-entity-uuid'],
     ];
 
-    $form['attributes'] += $this->getMediaViewModeFormElement($form_state);
+    $form['attributes'] += $this->getMediaViewModeFormElement($form_state->get('entity_element'), $form_state->get('entity'));
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -665,15 +666,15 @@ class MediaEmbedDialog extends FormBase {
   /**
    * Returns the form element required to select a media view mode.
    *
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
+   * @param array $entity_element
+   *   The entity element values from the form.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Th media entity.
    *
    * @return array
    *   The form element.
    */
-  protected function getMediaViewModeFormElement(FormStateInterface $form_state) {
-    $entity_element = $form_state->get('entity_element');
-    $entity = $form_state->get('entity');
+  protected function getMediaViewModeFormElement(array $entity_element, EntityInterface $entity) {
     // @todo add element alignment and caption if the relevant filters are
     // enabled. See EntityEmbedDialog for example.
     // Allow to specify a view mode if the media type has more than 1.
