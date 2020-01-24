@@ -37,22 +37,22 @@ This is done by selecting the available view displays on the display mode config
 
 In order to use the functionalities of the module, follow the next steps:
 
-1) Create a custom text format.
-You can do so by navigating to admin/config/content/formats and clicking the "Add text format button". More information
+1) Create a text format.
+You can do so by navigating to `/admin/config/content/formats` and clicking the "Add text format button". More information
 is available on the official [documentation][2].
 
 2) Add the Media Embed button to your Active toolbar.
-You can do that while creating your custom text format or by navigating to the text format configuration form (/admin/config/content/formats/manage/TEXT_FORMAT_ID).
-Make sure you select CKEditor as the Text editor for your custom text format and move the "Media" button from the available button section to the Active toolbar.
+You can do that while creating your text format or by navigating to the text format configuration form (`/admin/config/content/formats/manage/TEXT_FORMAT_ID`).
+Make sure you select CKEditor as the Text editor for your text format and move the "Media" button from the *available buttons* section to the Active toolbar.
 
-3) Enable the "Embeds media entities using the oEmbed format" filter
-The "Embeds media entities using the oEmbed format" filter needs to be enabled and placed last in the Filter processing order.
-(WARNING: This is very important if you want the oEmbed specific urls to be converted into internal aliases)
+3) Enable the "Embeds media entities using the oEmbed format" filter.
+This filter needs to be enabled and placed last in the Filter processing order.
+(**WARNING**: This is very important if you want the oEmbed specific urls to be converted into internal aliases)
 
 4) Make view displays embeddable.
 Once the previous steps are done, navigate to the display mode configuration of the bundle you wish to be embeddable and select which of
 the available view displays will be available for embedding. E.g., in order to configure which of the view displays of the Image media type
-are available for embedding, you will need to navigate to /admin/structure/media/manage/image/display).
+are available for embedding, you will need to navigate to `/admin/structure/media/manage/image/display`.
 
 
 
