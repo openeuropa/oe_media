@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.image_teaser
+    - core.entity_view_mode.media.embed
     - field.field.media.image.oe_media_image
     - media.type.image
   module:
@@ -11,10 +11,10 @@ dependencies:
 third_party_settings:
   oe_media_embed:
     embeddable: true
-id: media.image.image_teaser
+id: media.image.embed
 targetEntityType: media
 bundle: image
-mode: image_teaser
+mode: embed
 content:
   oe_media_image:
     type: image

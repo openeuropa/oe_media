@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - media
-id: media.image_teaser
-label: 'Image teaser'
+id: media.embed
+label: Embed
 targetEntityType: media
 cache: true
