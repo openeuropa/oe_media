@@ -674,7 +674,7 @@ class MediaEmbedDialog extends FormBase {
    * @return array
    *   The form element.
    */
-  protected function getMediaViewModeFormElement(array $entity_element, EntityInterface $entity) {
+  protected function getMediaViewModeFormElement(array $entity_element, EntityInterface $entity): array {
     // @todo add element alignment and caption if the relevant filters are
     // enabled. See EntityEmbedDialog for example.
     // Allow to specify a view mode if the media type has more than 1.
