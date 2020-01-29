@@ -67,7 +67,7 @@
         },
         "patches": {
             "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/3080666": "https://www.drupal.org/files/issues/2020-01-21/3080666-7.patch"
+                "https://www.drupal.org/project/drupal/issues/3080666": "https://www.drupal.org/files/issues/2020-01-27/3080666-8.patch"
             }
         }
 
