@@ -77,7 +77,20 @@ class AvPortalContext extends RawDrupalContext {
 
     $media = reset($media);
     $ref = $media->get('oe_media_avportal_video')->value;
-    $this->assertSession()->elementAttributeContains('css', 'iframe', 'src', $ref);
+    $iframes = $this->getSession()->getPage()->findAll('css', 'iframe');
+    if (empty($iframes)) {
+      throw new \Exception('No iframes found on the page.');
+
+    }
+    $video_found = FALSE;
+    foreach ($iframes as $iframe) {
+      if (strpos($iframe->getAttribute('src'), $ref) !== FALSE) {
+        $video_found = TRUE;
+      }
+    }
+    if (!$video_found) {
+      throw new \Exception(sprintf('The video named "%s" was not found on the page.', $title));
+    }
   }
 
   /**
@@ -95,8 +108,20 @@ class AvPortalContext extends RawDrupalContext {
     if (!$media) {
       throw new \Exception(sprintf('The media named "%s" does not exist', $title));
     }
+    $images = $this->getSession()->getPage()->findAll('css', 'img.avportal-photo');
+    if (empty($images)) {
+      throw new \Exception('No avportal images found on the page.');
 
-    $this->assertSession()->elementAttributeContains('css', 'img.avportal-photo', 'src', $src);
+    }
+    $image_found = FALSE;
+    foreach ($images as $image) {
+      if (strpos($image->getAttribute('src'), $src) !== FALSE) {
+        $image_found = TRUE;
+      }
+    }
+    if (!$image_found) {
+      throw new \Exception(sprintf('The imaged named "%s" was not found on the page.', $title));
+    }
   }
 
   /**
