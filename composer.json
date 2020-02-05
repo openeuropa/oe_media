@@ -10,7 +10,7 @@
         "drupal/core": "^8.7",
         "drupal/entity_browser": "^2.0",
         "drupal/inline_entity_form": "^1.0",
-        "drupal/media_avportal": "^1.0-beta5",
+        "drupal/media_avportal": "^1.0-beta6",
         "drupal/embed": "^1.0"
     },
     "require-dev": {
@@ -64,11 +64,6 @@
             "build/modules/contrib/{$name}": [
                 "type:drupal-module"
             ]
-        },
-        "patches": {
-            "drupal/media_avportal": {
-                "latest-8.x-1.x": "https://github.com/openeuropa/media_avportal/compare/8.x-1.0-beta5...8.x-1.x.diff"
-            }
         }
     }
 }

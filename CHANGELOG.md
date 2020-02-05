@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.3.0](https://github.com/openeuropa/oe_media/tree/1.3.0) (2020-02-05)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.2.0...1.3.0)
+
+**Closed issues:**
+
+- Not possible to install 0.4.0 version [\#62](https://github.com/openeuropa/oe_media/issues/62)
+
+**Merged pull requests:**
+
+- Revert "OPENEUROPA-2662: Update previously imported avportal medias." [\#86](https://github.com/openeuropa/oe_media/pull/86) ([nagyad](https://github.com/nagyad))
+- OPENEUROPA-2662: Update previously imported avportal medias. [\#83](https://github.com/openeuropa/oe_media/pull/83) ([nagyad](https://github.com/nagyad))
+- OPENEUROPA-2663: Make sure that titles of av portal video is filtered. [\#82](https://github.com/openeuropa/oe_media/pull/82) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-2661: Specify AV portal thumbnail resolution. [\#81](https://github.com/openeuropa/oe_media/pull/81) ([nagyad](https://github.com/nagyad))
+- OPENEUROPA-2313: Add caching of requests to AvPortal [\#80](https://github.com/openeuropa/oe_media/pull/80) ([brummbar](https://github.com/brummbar))
+
 ## [1.2.0](https://github.com/openeuropa/oe_media/tree/1.2.0) (2019-12-02)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.1.0...1.2.0)
 
@@ -10,6 +25,7 @@
 
 **Merged pull requests:**
 
+- OPENEUROPA-1766: Prepare Release 1.2.0. [\#78](https://github.com/openeuropa/oe_media/pull/78) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-2418: Webtools assets 'description' field to be removed. [\#77](https://github.com/openeuropa/oe_media/pull/77) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-2258: Undo use of PHP 7.2. [\#76](https://github.com/openeuropa/oe_media/pull/76) ([dxvargas](https://github.com/dxvargas))
 - OPENEUROPA-2464: Use PHP 7.1 in docker-compose. [\#75](https://github.com/openeuropa/oe_media/pull/75) ([dxvargas](https://github.com/dxvargas))
