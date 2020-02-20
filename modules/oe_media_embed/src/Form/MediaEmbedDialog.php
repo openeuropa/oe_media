@@ -8,7 +8,9 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\SetDialogTitleCommand;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -30,11 +32,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MediaEmbedDialog extends FormBase {
 
   /**
-   * The form builder.
+   * The entity browser.
    *
-   * @var \Drupal\Core\Form\FormBuilderInterface
+   * @var \Drupal\entity_browser\EntityBrowserInterface
    */
-  protected $formBuilder;
+  protected $entityBrowser;
+
+  /**
+   * The entity browser settings from the entity embed button.
+   *
+   * @var array
+   */
+  protected $entityBrowserSettings = [];
 
   /**
    * The entity type manager service.
@@ -51,18 +60,18 @@ class MediaEmbedDialog extends FormBase {
   protected $eventDispatcher;
 
   /**
-   * The entity browser.
+   * The form builder.
    *
-   * @var \Drupal\entity_browser\EntityBrowserInterface
+   * @var \Drupal\Core\Form\FormBuilderInterface
    */
-  protected $entityBrowser;
+  protected $formBuilder;
 
   /**
-   * The entity browser settings from the entity embed button.
+   * The module handler.
    *
-   * @var array
+   * @var \Drupal\Core\Extension\ModuleHandler
    */
-  protected $entityBrowserSettings = [];
+  protected $moduleHandler;
 
   /**
    * Constructs a MediaEmbedDialog object.
@@ -73,11 +82,14 @@ class MediaEmbedDialog extends FormBase {
    *   The entity type manager service.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
    *   Event dispatcher service.
+   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   *   Module handler service.
    */
-  public function __construct(FormBuilderInterface $form_builder, EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher) {
+  public function __construct(FormBuilderInterface $form_builder, EntityTypeManagerInterface $entity_type_manager, EventDispatcherInterface $event_dispatcher, ModuleHandler $module_handler) {
     $this->formBuilder = $form_builder;
     $this->entityTypeManager = $entity_type_manager;
     $this->eventDispatcher = $event_dispatcher;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -87,7 +99,8 @@ class MediaEmbedDialog extends FormBase {
     return new static(
       $container->get('form_builder'),
       $container->get('entity_type.manager'),
-      $container->get('event_dispatcher')
+      $container->get('event_dispatcher'),
+      $container->get('module_handler')
     );
   }
 
@@ -213,6 +226,7 @@ class MediaEmbedDialog extends FormBase {
       '#type' => 'value',
       '#title' => $entity_element['data-entity-uuid'],
     ];
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -333,20 +347,7 @@ class MediaEmbedDialog extends FormBase {
       '#value' => $entity_element['data-entity-uuid'],
     ];
 
-    // @todo add element alignment and caption if the relevant filters are
-    // enabled. See EntityEmbedDialog for example.
-    // Allow to specify a view mode if the media type has more than 1.
-    $options = $this->getMediaViewModeOptions($entity);
-    if ($options) {
-      $form['attributes']['data-entity-view-mode'] = [
-        '#type' => 'select',
-        '#title' => $this->t('Display as'),
-        '#options' => $options,
-        '#default_value' => $entity_element['data-entity-view-mode'],
-        '#required' => TRUE,
-        '#access' => TRUE,
-      ];
-    }
+    $form['attributes'] += $this->getMediaViewModeFormElement($form_state->get('entity_element'), $form_state->get('entity'));
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -361,17 +362,21 @@ class MediaEmbedDialog extends FormBase {
         'event' => 'click',
       ],
     ];
-    $form['actions']['save_modal'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Embed'),
-      '#button_type' => 'primary',
-      // No regular submit-handler. This form only works via JavaScript.
-      '#submit' => [],
-      '#ajax' => [
-        'callback' => '::submitEmbedStep',
-        'event' => 'click',
-      ],
-    ];
+
+    // Only show the submit button if a view mode is available.
+    if (isset($form['attributes']['data-entity-view-mode'])) {
+      $form['actions']['save_modal'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Embed'),
+        '#button_type' => 'primary',
+        // No regular submit-handler. This form only works via JavaScript.
+        '#submit' => [],
+        '#ajax' => [
+          'callback' => '::submitEmbedStep',
+          'event' => 'click',
+        ],
+      ];
+    }
 
     return $form;
   }
@@ -659,6 +664,73 @@ class MediaEmbedDialog extends FormBase {
   }
 
   /**
+   * Returns the form element required to select a media view mode.
+   *
+   * @param array $entity_element
+   *   The entity element values from the form.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Th media entity.
+   *
+   * @return array
+   *   The form element.
+   */
+  protected function getMediaViewModeFormElement(array $entity_element, EntityInterface $entity): array {
+    // @todo add element alignment and caption if the relevant filters are
+    // enabled. See EntityEmbedDialog for example.
+    // Allow to specify a view mode if the media type has more than 1.
+    $display_options = $this->getMediaViewModeOptions($entity);
+
+    // If no view mode was found for this media type,
+    // prompt the user to enable one.
+    if (empty($display_options)) {
+      $form_element['data-entity-view-mode-warning'] = [
+        '#type' => 'inline_template',
+        '#template' => '<div>{{ warning }}</div>',
+        '#context' => [
+          'warning' => $this->t('There is no embeddable view mode for this media type.'),
+        ],
+      ];
+      if ($this->moduleHandler->moduleExists('field_ui')) {
+        $media_type_storage = $this->entityTypeManager->getStorage('media_type');
+        $media_type = $media_type_storage->load($entity->bundle());
+        $form_element['data-entity-view-mode-link'] = [
+          '#type' => 'link',
+          '#title' => $this->t('Manage @media view modes', ['@media' => $media_type->label()]),
+          '#url' => Url::fromRoute('entity.entity_view_display.' . $entity->getEntityTypeId() . '.default', [
+            'media_type' => $entity->bundle(),
+          ]),
+          '#attributes' => ['target' => '_blank'],
+        ];;
+      }
+
+      return $form_element;
+    }
+
+    // If there is only one display, use it and don't ask for input.
+    if (count($display_options) === 1) {
+      reset($display_options);
+
+      return [
+        'data-entity-view-mode' => [
+          '#type' => 'value',
+          '#value' => key($display_options),
+        ],
+      ];
+    }
+
+    // If there is more than one display, add a select field.
+    return [
+      'data-entity-view-mode' => [
+        '#type' => 'select',
+        '#title' => $this->t('Display as'),
+        '#options' => $display_options,
+        '#default_value' => $entity_element['data-entity-view-mode'],
+        '#required' => TRUE,
+      ],
+    ];
+  }
+
+  /**
    * Gets the options to be used for the View mode selector.
    *
    * @param \Drupal\media\MediaInterface $media
@@ -669,22 +741,21 @@ class MediaEmbedDialog extends FormBase {
    */
   protected function getMediaViewModeOptions(MediaInterface $media): array {
     $bundle = $media->bundle();
-    $displays = $this->entityTypeManager->getStorage('entity_view_display')->getQuery()
+    $view_display_storage = $this->entityTypeManager->getStorage('entity_view_display');
+    $displays = $view_display_storage->getQuery()
       ->condition('targetEntityType', 'media')
       ->condition('bundle', $bundle)
+      ->condition('status', TRUE)
       ->execute();
 
-    // If there is only one display, we don't specify a view mode because we
-    // use the default.
-    if (count($displays) === 1) {
-      return [];
-    }
-
-    $options = [];
     /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $displays */
-    $displays = $this->entityTypeManager->getStorage('entity_view_display')->loadMultiple($displays);
+    $displays = $view_display_storage->loadMultiple($displays);
+    $view_mode_storage = $this->entityTypeManager->getStorage('entity_view_mode');
+    $options = [];
     foreach ($displays as $display) {
-      $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default')->__toString() : $this->entityTypeManager->getStorage('entity_view_mode')->load('media.' . $display->getMode())->label();
+      if ($display->getThirdPartySetting('oe_media_embed', 'embeddable')) {
+        $options[$display->getMode()] = $display->getMode() === 'default' ? $this->t('Default') : $view_mode_storage->load('media.' . $display->getMode())->label();
+      }
     }
 
     return $options;

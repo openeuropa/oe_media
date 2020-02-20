@@ -77,7 +77,11 @@ class AvPortalContext extends RawDrupalContext {
 
     $media = reset($media);
     $ref = $media->get('oe_media_avportal_video')->value;
-    $this->assertSession()->elementAttributeContains('css', 'iframe', 'src', $ref);
+
+    $iframe = $this->getSession()->getPage()->findAll('css', 'iframe[src*="' . $ref . '"]');
+    if (!$iframe) {
+      throw new \Exception(sprintf('The video named "%s" was not found on the page.', $title));
+    }
   }
 
   /**
@@ -96,7 +100,10 @@ class AvPortalContext extends RawDrupalContext {
       throw new \Exception(sprintf('The media named "%s" does not exist', $title));
     }
 
-    $this->assertSession()->elementAttributeContains('css', 'img.avportal-photo', 'src', $src);
+    $image = $this->getSession()->getPage()->findAll('css', 'img.avportal-photo[src*="' . $src . '"]');
+    if (!$image) {
+      throw new \Exception(sprintf('The imaged named "%s" was not found on the page.', $title));
+    }
   }
 
   /**
