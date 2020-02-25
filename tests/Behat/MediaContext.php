@@ -115,9 +115,9 @@ class MediaContext extends RawDrupalContext {
    *
    * @Given the following document(s):
    */
-  public function createMediaDocuments(TableNode $file_table): void {
+  public function createMediaDocuments(TableNode $table): void {
     // Retrieve the url table from the test scenario.
-    $files = $file_table->getColumnsHash();
+    $files = $table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
       $media = \Drupal::entityTypeManager()
@@ -151,9 +151,9 @@ class MediaContext extends RawDrupalContext {
    *
    * @Given the following image(s):
    */
-  public function createMediaImages(TableNode $file_table): void {
+  public function createMediaImages(TableNode $table): void {
     // Retrieve the url table from the test scenario.
-    $files = $file_table->getColumnsHash();
+    $files = $table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
       $media = \Drupal::entityTypeManager()
