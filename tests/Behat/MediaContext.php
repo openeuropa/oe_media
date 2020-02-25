@@ -52,6 +52,8 @@ class MediaContext extends RawDrupalContext {
    * @BeforeScenario
    */
   public function gatherContexts(BeforeScenarioScope $scope): void {
+    // We check if the current Behat environment has the given context.
+    // This is necessary as this context can be reused on external projects.
     $environment = $scope->getEnvironment();
     if ($environment->hasContextClass(self::CONFIG_CONTEXT_CLASS)) {
       $this->configContext = $environment->getContext(self::CONFIG_CONTEXT_CLASS);
@@ -121,20 +123,17 @@ class MediaContext extends RawDrupalContext {
   public function createMediaDocuments(TableNode $file_table): void {
     // Retrieve the url table from the test scenario.
     $files = $file_table->getColumnsHash();
-
-    foreach ($files as $file_properties) {
-      $file = $this->createFileEntity($file_properties['file']);
-
+    foreach ($files as $properties) {
+      $file = $this->createFileEntity($properties['file']);
       $media = \Drupal::service('entity_type.manager')
         ->getStorage('media')->create([
           'bundle' => 'document',
-          'name' => $file_properties['name'],
+          'name' => $properties['name'],
           'oe_media_file' => [
             'target_id' => (int) $file->id(),
           ],
           'status' => 1,
         ]);
-
       $media->save();
 
       // Store for cleanup.
@@ -160,22 +159,19 @@ class MediaContext extends RawDrupalContext {
   public function createMediaImages(TableNode $file_table): void {
     // Retrieve the url table from the test scenario.
     $files = $file_table->getColumnsHash();
-
-    foreach ($files as $file_properties) {
-      $file = $this->createFileEntity($file_properties['file']);
-
+    foreach ($files as $properties) {
+      $file = $this->createFileEntity($properties['file']);
       $media = \Drupal::service('entity_type.manager')
         ->getStorage('media')->create([
           'bundle' => 'image',
-          'name' => $file_properties['name'],
+          'name' => $properties['name'],
           'oe_media_image' => [
             'target_id' => (int) $file->id(),
-            'alt' => $file_properties['alt'] ?? $file_properties['name'],
-            'title' => $file_properties['title'] ?? $file_properties['name'],
+            'alt' => $properties['alt'] ?? $properties['name'],
+            'title' => $properties['title'] ?? $properties['name'],
           ],
           'status' => 1,
         ]);
-
       $media->save();
 
       // Store for cleanup.
@@ -198,12 +194,9 @@ class MediaContext extends RawDrupalContext {
   public function createMediaAvPortalPhotos(TableNode $url_table): void {
     // Retrieve the url table from the test scenario.
     $urls = $url_table->getColumnsHash();
-
     $pattern = '@audiovisual\.ec\.europa\.eu/(.*)/photo/(P\-.*\~2F.*)@i';
-
     foreach ($urls as $url) {
       $url = reset($url);
-
       preg_match_all($pattern, $url, $matches);
       if (empty($matches)) {
         continue;
@@ -211,14 +204,12 @@ class MediaContext extends RawDrupalContext {
 
       // Converts the slash in the photo id.
       $photo_id = str_replace("~2F", "/", $matches[2][0]);
-
       $media = \Drupal::service('entity_type.manager')
         ->getStorage('media')->create([
           'bundle' => 'av_portal_photo',
           'oe_media_avportal_photo' => $photo_id,
           'status' => 1,
         ]);
-
       $media->save();
 
       // Store for cleanup.
