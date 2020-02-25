@@ -7,6 +7,7 @@ namespace Drupal\Tests\oe_media\Behat;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
+use Drupal\DrupalExtension\Context\ConfigContext;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -15,6 +16,11 @@ use Drupal\media\MediaInterface;
  * Context to related to media testing.
  */
 class MediaContext extends RawDrupalContext {
+
+  /**
+   * Configuration context class name.
+   */
+  const CONFIG_CONTEXT_CLASS = 'Drupal\DrupalExtension\Context\ConfigContext';
 
   /**
    * Keep track of medias so they can be cleaned up.
@@ -47,7 +53,9 @@ class MediaContext extends RawDrupalContext {
    */
   public function gatherContexts(BeforeScenarioScope $scope): void {
     $environment = $scope->getEnvironment();
-    $this->configContext = $environment->getContext('Drupal\DrupalExtension\Context\ConfigContext');
+    if ($environment->hasContextClass(self::CONFIG_CONTEXT_CLASS)) {
+      $this->configContext = $environment->getContext(self::CONFIG_CONTEXT_CLASS);
+    }
   }
 
   /**
@@ -80,7 +88,7 @@ class MediaContext extends RawDrupalContext {
    * @beforeScenario @media-enable-standalone-url
    */
   public function enableMediaStandaloneUrl(BeforeScenarioScope $scope): void {
-    $this->configContext->setConfig('media.settings', 'standalone_url', TRUE);
+    $this->getConfigContext()->setConfig('media.settings', 'standalone_url', TRUE);
     \Drupal::service('router.builder')->rebuild();
   }
 
@@ -244,6 +252,19 @@ class MediaContext extends RawDrupalContext {
 
     \Drupal::entityTypeManager()->getStorage('file')->delete($this->files);
     $this->files = [];
+  }
+
+  /**
+   * Get config context object, if any.
+   *
+   * @return \Drupal\DrupalExtension\Context\ConfigContext
+   *   Config context object.
+   */
+  protected function getConfigContext(): ConfigContext {
+    if (!$this->configContext) {
+      throw new \RuntimeException(sprintf('Configuration context not found, add %s to your contexts.', self::CONFIG_CONTEXT_CLASS));
+    }
+    return $this->configContext;
   }
 
   /**
