@@ -20,14 +20,14 @@ class MediaContext extends RawDrupalContext {
   /**
    * Keep track of medias so they can be cleaned up.
    *
-   * @var array
+   * @var \Drupal\Core\Entity\ContentEntityInterface[]
    */
-  protected $medias = [];
+  protected $media = [];
 
   /**
    * Keep track of files so they can be cleaned up.
    *
-   * @var array
+   * @var \Drupal\Core\Entity\ContentEntityInterface[]
    */
   protected $files = [];
 
@@ -113,14 +113,14 @@ class MediaContext extends RawDrupalContext {
    *   | name 1 | file 1 |
    *   |   ...  |   ...  |
    *
-   * @Given the following documents:
+   * @Given the following document(s):
    */
   public function createMediaDocuments(TableNode $file_table): void {
     // Retrieve the url table from the test scenario.
     $files = $file_table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
-      $media = \Drupal::service('entity_type.manager')
+      $media = \Drupal::entityTypeManager()
         ->getStorage('media')->create([
           'bundle' => 'document',
           'name' => $properties['name'],
@@ -132,7 +132,7 @@ class MediaContext extends RawDrupalContext {
       $media->save();
 
       // Store for cleanup.
-      $this->medias[] = $media;
+      $this->media[] = $media;
     }
   }
 
@@ -149,14 +149,14 @@ class MediaContext extends RawDrupalContext {
    * Properties "alt" and "title" are optional, "name" will be used if they
    * are not provided.
    *
-   * @Given the following images:
+   * @Given the following image(s):
    */
   public function createMediaImages(TableNode $file_table): void {
     // Retrieve the url table from the test scenario.
     $files = $file_table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
-      $media = \Drupal::service('entity_type.manager')
+      $media = \Drupal::entityTypeManager()
         ->getStorage('media')->create([
           'bundle' => 'image',
           'name' => $properties['name'],
@@ -170,7 +170,7 @@ class MediaContext extends RawDrupalContext {
       $media->save();
 
       // Store for cleanup.
-      $this->medias[] = $media;
+      $this->media[] = $media;
     }
   }
 
@@ -184,31 +184,27 @@ class MediaContext extends RawDrupalContext {
    *   | url 1 |
    *   |  ...  |
    *
-   * @Given the following AV Portal photos:
+   * @Given the following AV Portal photo(s):
    */
-  public function createMediaAvPortalPhotos(TableNode $url_table): void {
-    // Retrieve the url table from the test scenario.
-    $urls = $url_table->getColumnsHash();
-    $pattern = '@audiovisual\.ec\.europa\.eu/(.*)/photo/(P\-.*\~2F.*)@i';
-    foreach ($urls as $url) {
-      $url = reset($url);
-      preg_match_all($pattern, $url, $matches);
-      if (empty($matches)) {
-        continue;
-      }
+  public function createMediaAvPortalPhotos(TableNode $table): void {
+    /** @var \Drupal\media_avportal\Plugin\media\Source\MediaAvPortalSourceInterface $media_source */
+    $media_source = \Drupal::entityTypeManager()
+      ->getStorage('media_type')
+      ->load('av_portal_photo')
+      ->getSource();
 
-      // Converts the slash in the photo id.
-      $photo_id = str_replace("~2F", "/", $matches[2][0]);
-      $media = \Drupal::service('entity_type.manager')
+    // Retrieve the url table from the test scenario.
+    foreach ($table->getColumnsHash() as $hash) {
+      $media = \Drupal::entityTypeManager()
         ->getStorage('media')->create([
           'bundle' => 'av_portal_photo',
-          'oe_media_avportal_photo' => $photo_id,
+          'oe_media_avportal_photo' => $media_source->transformUrlToReference($hash['url']),
           'status' => 1,
         ]);
       $media->save();
 
       // Store for cleanup.
-      $this->medias[] = $media;
+      $this->media[] = $media;
     }
   }
 
@@ -218,12 +214,17 @@ class MediaContext extends RawDrupalContext {
    * @AfterScenario
    */
   public function cleanMedias(): void {
-    if (empty($this->medias)) {
-      return;
+    $storage = \Drupal::entityTypeManager()->getStorage('media');
+    foreach ($this->media as $media) {
+      // Tests might manually delete entities created via this step.
+      // Here we check if the entity still exists before deleting it.
+      if ($storage->load($media->id()) !== NULL) {
+        $media->delete();
+      }
     }
 
-    \Drupal::entityTypeManager()->getStorage('media')->delete($this->medias);
-    $this->medias = [];
+    // Reset entity array.
+    $this->media = [];
   }
 
   /**
@@ -232,11 +233,16 @@ class MediaContext extends RawDrupalContext {
    * @AfterScenario
    */
   public function cleanFiles(): void {
-    if (empty($this->files)) {
-      return;
+    $storage = \Drupal::entityTypeManager()->getStorage('file');
+    foreach ($this->files as $file) {
+      // Tests might manually delete entities created via this step.
+      // Here we check if the entity still exists before deleting it.
+      if ($storage->load($file->id()) !== NULL) {
+        $file->delete();
+      }
     }
 
-    \Drupal::entityTypeManager()->getStorage('file')->delete($this->files);
+    // Reset entity array.
     $this->files = [];
   }
 
