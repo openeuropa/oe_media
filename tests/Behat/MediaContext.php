@@ -137,7 +137,7 @@ class MediaContext extends RawDrupalContext {
   }
 
   /**
-   * Creates media documents with the specified file names.
+   * Creates media images with the specified field values.
    *
    * Usage example:
    *
