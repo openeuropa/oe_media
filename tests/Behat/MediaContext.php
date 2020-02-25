@@ -18,11 +18,6 @@ use Drupal\media\MediaInterface;
 class MediaContext extends RawDrupalContext {
 
   /**
-   * Configuration context class name.
-   */
-  const CONFIG_CONTEXT_CLASS = 'Drupal\DrupalExtension\Context\ConfigContext';
-
-  /**
    * Keep track of medias so they can be cleaned up.
    *
    * @var array
@@ -55,8 +50,8 @@ class MediaContext extends RawDrupalContext {
     // We check if the current Behat environment has the given context.
     // This is necessary as this context can be reused on external projects.
     $environment = $scope->getEnvironment();
-    if ($environment->hasContextClass(self::CONFIG_CONTEXT_CLASS)) {
-      $this->configContext = $environment->getContext(self::CONFIG_CONTEXT_CLASS);
+    if ($environment->hasContextClass(ConfigContext::class)) {
+      $this->configContext = $environment->getContext(ConfigContext::class);
     }
   }
 
@@ -253,7 +248,7 @@ class MediaContext extends RawDrupalContext {
    */
   protected function getConfigContext(): ConfigContext {
     if (!$this->configContext) {
-      throw new \RuntimeException(sprintf('Configuration context not found, add %s to your contexts.', self::CONFIG_CONTEXT_CLASS));
+      throw new \RuntimeException(sprintf('Configuration context not found, add %s to your contexts.', ConfigContext::class));
     }
     return $this->configContext;
   }
