@@ -24,6 +24,8 @@ Additionally, there is a demo module inside that exposes a content type and a ge
 ## Known Issues
 
 * The Daily Motion video URLs in the Remote video bundles need to have the HTTP scheme (not HTTPs).
+* The Daily Motion thumbnail URLs are typically without an extension so the local copy is not usable. This is fixed in [#3080666](https://www.drupal.org/project/drupal/issues/3080666) so if 
+your version of Drupal core does not include that commit yet, you can apply the latest patch there.
 
 ## Development setup
 

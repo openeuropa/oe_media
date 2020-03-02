@@ -64,12 +64,6 @@
             "build/modules/contrib/{$name}": [
                 "type:drupal-module"
             ]
-        },
-        "patches": {
-            "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/3080666": "https://www.drupal.org/files/issues/2020-02-04/3080666-9.patch"
-            }
         }
-
     }
 }
