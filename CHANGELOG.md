@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.4.0](https://github.com/openeuropa/oe_media/tree/1.4.0) (2020-03-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.3.0...1.4.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-2221: Add media creation steps to MediaContext. [\#90](https://github.com/openeuropa/oe_media/pull/90) ([ademarco](https://github.com/ademarco))
+- OPENEUROA-2705: Display dailymotion thumbnails [\#85](https://github.com/openeuropa/oe_media/pull/85) ([imanoleguskiza](https://github.com/imanoleguskiza))
+- OPENEUROPA-2416: Allow to define which view modes are embedable. [\#79](https://github.com/openeuropa/oe_media/pull/79) ([imanoleguskiza](https://github.com/imanoleguskiza))
+
 ## [1.3.0](https://github.com/openeuropa/oe_media/tree/1.3.0) (2020-02-05)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.2.0...1.3.0)
 
@@ -9,6 +18,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md and composer dependencies for release 1.3.0. [\#88](https://github.com/openeuropa/oe_media/pull/88) ([brummbar](https://github.com/brummbar))
 - Revert "OPENEUROPA-2662: Update previously imported avportal medias." [\#86](https://github.com/openeuropa/oe_media/pull/86) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-2662: Update previously imported avportal medias. [\#83](https://github.com/openeuropa/oe_media/pull/83) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-2663: Make sure that titles of av portal video is filtered. [\#82](https://github.com/openeuropa/oe_media/pull/82) ([sergepavle](https://github.com/sergepavle))
