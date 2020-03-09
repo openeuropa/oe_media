@@ -269,7 +269,7 @@ class MediaContext extends RawDrupalContext {
    *   File entity object.
    */
   protected function createFileEntity(string $file_name): FileInterface {
-    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $file_name), 'public://' . $file_name);
+    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $file_name), 'public://' . basename($file_name));
     $file->setPermanent();
     $file->save();
 
