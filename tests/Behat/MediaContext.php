@@ -155,7 +155,9 @@ class MediaContext extends RawDrupalContext {
     // Retrieve the url table from the test scenario.
     $files = $table->getColumnsHash();
     foreach ($files as $properties) {
-      $file = $this->createFileEntity($properties['file']);
+      $file_name = basename($properties['file']);
+      $file_path = strpos($properties['file'], '/') ? dirname($properties['file']) . '/' : '';
+      $file = $this->createFileEntity($file_name, $file_path);
       $media = \Drupal::entityTypeManager()
         ->getStorage('media')->create([
           'bundle' => 'image',
@@ -264,12 +266,14 @@ class MediaContext extends RawDrupalContext {
    *
    * @param string $file_name
    *   File name, relative to Mink 'files_path' location.
+   * @param string $path
+   *   The relative file path.
    *
    * @return \Drupal\file\FileInterface
    *   File entity object.
    */
-  protected function createFileEntity(string $file_name): FileInterface {
-    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $file_name), 'public://' . $file_name);
+  protected function createFileEntity(string $file_name, string $path = ''): FileInterface {
+    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $path . $file_name), 'public://' . $file_name);
     $file->setPermanent();
     $file->save();
 
