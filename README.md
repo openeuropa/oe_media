@@ -14,6 +14,10 @@ The following types of Media (bundles) are currently available:
 
 Additionally, there is a demo module inside that exposes a content type and a generic Entity Browser meant to demonstrate the usage of Media with content.
 
+## Permissions
+
+The component provides a new permission called `view any unpublished media` which is used when checking access to viewing unpublished media entities.
+
 **Table of contents:**
 
 - [Known issues](#known-issues)
