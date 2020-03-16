@@ -12,6 +12,7 @@ use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -102,10 +103,9 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
  */
 function oe_media_views_plugins_filter_alter(array &$plugins) {
   if (isset($plugins['media_status'])) {
-    $plugins['media_status']['class'] = \Drupal\oe_media\Status::class;
+    $plugins['media_status']['class'] = Status::class;
   }
 }
-
 
 /**
  * Implements hook_views_query_substitutions().
