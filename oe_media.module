@@ -32,17 +32,18 @@ function oe_media_media_source_info_alter(array &$sources): void {
  * them.
  */
 function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
-  if ($operation === 'view' && $account->hasPermission('view any unpublished media')) {
-    return AccessResult::allowed()->cachePerPermissions();
+  if ($operation === 'view' && !$entity->isPublished() && $account->hasPermission('view any unpublished media')) {
+    return AccessResult::allowed()->cachePerPermissions()->addCacheableDependency($entity);
   }
 
   if ($entity->bundle() !== 'document' || $operation !== 'view') {
-    return AccessResult::neutral()->cachePerUser();
+    return AccessResult::neutral()->addCacheableDependency($entity);
   }
 
   $entity_type_manager = \Drupal::entityTypeManager();
   $cache = new CacheableMetadata();
   $cache->addCacheTags(['node_list']);
+  $cache->addCacheableDependency($entity);
 
   // Getting fields which could have references to 'document' media type.
   $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
