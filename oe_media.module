@@ -12,6 +12,8 @@ use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\oe_media\Status;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_media_source_info_alter().
@@ -30,8 +32,12 @@ function oe_media_media_source_info_alter(array &$sources): void {
  * them.
  */
 function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
+  if ($operation === 'view' && !$entity->isPublished() && $account->hasPermission('view any unpublished media')) {
+    return AccessResult::allowed()->cachePerPermissions();
+  }
+
   if ($entity->bundle() !== 'document' || $operation !== 'view') {
-    return AccessResult::neutral()->cachePerUser();
+    return AccessResult::neutral();
   }
 
   $entity_type_manager = \Drupal::entityTypeManager();
@@ -90,4 +96,23 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   }
 
   return AccessResult::forbidden()->addCacheableDependency($cache);
+}
+
+/**
+ * Implements hook_views_plugins_filter_alter().
+ */
+function oe_media_views_plugins_filter_alter(array &$plugins) {
+  if (isset($plugins['media_status'])) {
+    $plugins['media_status']['class'] = Status::class;
+  }
+}
+
+/**
+ * Implements hook_views_query_substitutions().
+ */
+function oe_media_views_query_substitutions(ViewExecutable $view) {
+  $account = \Drupal::currentUser();
+  return [
+    '***VIEW_ANY_UNPUBLISHED_MEDIA***' => (int) $account->hasPermission('view any unpublished media'),
+  ];
 }

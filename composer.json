@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
-        "drupal/core": "^8.7",
+        "drupal/core-recommended": "^8.7",
         "drupal/entity_browser": "^2.0",
         "drupal/inline_entity_form": "^1.0",
         "drupal/media_avportal": "^1.0-beta6",
@@ -25,9 +25,8 @@
         "openeuropa/oe_webtools": "dev-master",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "~6.0",
-        "symfony/browser-kit": "~3.0||~4.0",
         "nikic/php-parser": "^3.1.5",
-        "symfony/dom-crawler": "~3.4"
+        "symfony/browser-kit": "~3.0||~4.0"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",

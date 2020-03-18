@@ -229,7 +229,7 @@ class AvPortalViewsTest extends KernelTestBase {
    *
    * @internal param string $display The display id*   The display id
    */
-  protected function executeView(ViewExecutable $view, string $display_id) {
+  protected function executeView(ViewExecutable $view, string $display_id): void {
     $view->setDisplay($display_id);
     $view->initQuery();
     $view->preExecute();
