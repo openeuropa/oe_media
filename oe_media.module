@@ -33,7 +33,7 @@ function oe_media_media_source_info_alter(array &$sources): void {
  */
 function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
   if ($operation === 'view' && !$entity->isPublished() && $account->hasPermission('view any unpublished media')) {
-    return AccessResult::allowed()->cachePerPermissions();
+    return AccessResult::allowed()->cachePerPermissions()->addCacheableDependency($entity);
   }
 
   if ($entity->bundle() !== 'document' || $operation !== 'view') {
