@@ -1,10 +1,21 @@
 # Change Log
 
-## [1.4.0](https://github.com/openeuropa/oe_media/tree/1.4.0) (2020-03-02)
+## [1.5.0](https://github.com/openeuropa/oe_media/tree/1.5.0) (2020-03-25)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.4.0...1.5.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-0000: Use drupal/core instead of drupal/core-recommended. [\#97](https://github.com/openeuropa/oe_media/pull/97) ([22Alexandra](https://github.com/22Alexandra))
+- OPENEUROPA-3022: Access checks that rely on entity data should depend on the entity. [\#96](https://github.com/openeuropa/oe_media/pull/96) ([brummbar](https://github.com/brummbar))
+- OPENEUROPA-2940: PHP 7.3. - Update OE Media component. [\#95](https://github.com/openeuropa/oe_media/pull/95) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-3022: Drupal 8.8 upgrade & permission to view any unpublished media [\#93](https://github.com/openeuropa/oe_media/pull/93) ([upchuk](https://github.com/upchuk))
+
+## [1.4.0](https://github.com/openeuropa/oe_media/tree/1.4.0) (2020-03-03)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.3.0...1.4.0)
 
 **Merged pull requests:**
 
+- Release-1.4.0: Update changelog. [\#91](https://github.com/openeuropa/oe_media/pull/91) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-2221: Add media creation steps to MediaContext. [\#90](https://github.com/openeuropa/oe_media/pull/90) ([ademarco](https://github.com/ademarco))
 - OPENEUROA-2705: Display dailymotion thumbnails [\#85](https://github.com/openeuropa/oe_media/pull/85) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-2416: Allow to define which view modes are embedable. [\#79](https://github.com/openeuropa/oe_media/pull/79) ([imanoleguskiza](https://github.com/imanoleguskiza))
