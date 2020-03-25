@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "require": {
         "php": "~7.2.0 || ~7.3.0",
-        "drupal/core-recommended": "^8.7",
+        "drupal/core": "^8.7",
         "drupal/entity_browser": "^2.0",
         "drupal/inline_entity_form": "^1.0",
         "drupal/media_avportal": "^1.0-beta6",
