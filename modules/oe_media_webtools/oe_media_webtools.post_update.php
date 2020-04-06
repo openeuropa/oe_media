@@ -12,7 +12,7 @@ use Drupal\field\Entity\FieldConfig;
 /**
  * Update webtools media fields description to open the wizard in new tab.
  */
-function oe_media_webtools_post_update_fields_description(): void {
+function oe_media_webtools_post_update_00001(): void {
   $fields = [
     'media.webtools_chart.oe_media_webtools',
     'media.webtools_map.oe_media_webtools',
