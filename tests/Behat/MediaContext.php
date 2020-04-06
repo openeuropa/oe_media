@@ -119,7 +119,9 @@ class MediaContext extends RawDrupalContext {
     // Retrieve the url table from the test scenario.
     $files = $table->getColumnsHash();
     foreach ($files as $properties) {
-      $file = $this->createFileEntity($properties['file']);
+      $file_name = basename($properties['file']);
+      $file_path = strpos($properties['file'], '/') ? dirname($properties['file']) . '/' : '';
+      $file = $this->createFileEntity($file_name, $file_path);
       $media = \Drupal::entityTypeManager()
         ->getStorage('media')->create([
           'bundle' => 'document',
