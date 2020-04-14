@@ -34,6 +34,6 @@ function oe_media_webtools_post_update_00001() {
   }
 
   if (!empty($modified)) {
-    return 'The field description update for the following fields was skipped as it was changed: ' . implode(', ', $modified);
+    return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
   }
 }
