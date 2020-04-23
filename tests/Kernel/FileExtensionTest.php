@@ -46,7 +46,7 @@ class FileExtensionTest extends KernelTestBase {
    */
   public function testDocumentUploadFileExtensions(): void {
     $field = FieldConfig::load('media.document.oe_media_file');
-    $this->assertEquals('txt text md readme info doc dot docx dotx docm dotm xls xlt xla xlsx xltx xlsm xltm xlam xlsb ppt pot pps ppa pptx potx ppsx ppam pptm potm ppsm pdf ods odt odf', $field->getSetting('file_extensions'));
+    $this->assertEquals('txt text md readme info doc dot docx dotx docm dotm xls xlt xla xlsx xltx xlsm xltm xlam xlsb ppt pot pps ppa pptx potx ppsx ppam pptm potm ppsm pdf ods odt odf zip', $field->getSetting('file_extensions'));
   }
 
   /**
