@@ -1,10 +1,19 @@
 # Change Log
 
+## [1.6.0](https://github.com/openeuropa/oe_media/tree/1.6.0) (2020-04-29)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.5.0...1.6.0)
+
+**Merged pull requests:**
+
+- OPENEUROPA-2975: Open Webtools wizard in new tab from the field's description. [\#100](https://github.com/openeuropa/oe_media/pull/100) ([22Alexandra](https://github.com/22Alexandra))
+- OPENEUROPA-2792: Allow file creation step to give path with file name. [\#92](https://github.com/openeuropa/oe_media/pull/92) ([nagyad](https://github.com/nagyad))
+
 ## [1.5.0](https://github.com/openeuropa/oe_media/tree/1.5.0) (2020-04-08)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.4.0...1.5.0)
 
 **Merged pull requests:**
 
+- OPENEUROPA-2954: Release 1.5.0. [\#102](https://github.com/openeuropa/oe_media/pull/102) ([nagyad](https://github.com/nagyad))
 - OPENEUROPA-2943: Update composer.json. [\#99](https://github.com/openeuropa/oe_media/pull/99) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-0000: Use drupal/core instead of drupal/core-recommended. [\#97](https://github.com/openeuropa/oe_media/pull/97) ([22Alexandra](https://github.com/22Alexandra))
 - OPENEUROPA-3022: Access checks that rely on entity data should depend on the entity. [\#96](https://github.com/openeuropa/oe_media/pull/96) ([brummbar](https://github.com/brummbar))
