@@ -30,3 +30,11 @@ function oe_media_post_update_document_private_files(): void {
     $field->save();
   }
 }
+
+function oe_media_post_update_change_document_media_source() {
+  $document = \Drupal\media\Entity\MediaType::load('document');
+  $document->set('source', 'file_with_thumbnail');
+  $document->save();
+
+  // @todo Flush caches
+}

@@ -116,3 +116,16 @@ function oe_media_views_query_substitutions(ViewExecutable $view) {
     '***VIEW_ANY_UNPUBLISHED_MEDIA***' => (int) $account->hasPermission('view any unpublished media'),
   ];
 }
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function oe_media_entity_base_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'media') {
+    $fields['thumbnail']
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('form', [
+        'region' => 'hidden',
+      ]);
+  }
+}
