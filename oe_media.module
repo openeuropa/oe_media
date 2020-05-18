@@ -11,7 +11,11 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\media\Entity\MediaType;
+use Drupal\oe_media\BundleFieldStorage;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
@@ -118,14 +122,44 @@ function oe_media_views_query_substitutions(ViewExecutable $view) {
 }
 
 /**
- * Implements hook_entity_base_field_info_alter().
+ * Implements hook_entity_bundle_field_info().
  */
-function oe_media_entity_base_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type) {
-  if ($entity_type->id() === 'media') {
-    $fields['thumbnail']
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('form', [
-        'region' => 'hidden',
-      ]);
+function oe_media_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
+  $fields = [];
+
+  if ($entity_type->id() !== 'media') {
+    return $fields;
   }
+
+  $bundle_entity = MediaType::load($bundle);
+  if ($bundle_entity->get('source') !== 'file_with_thumbnail') {
+    return $fields;
+  }
+
+  $storage_definitions = oe_media_entity_field_storage_info($entity_type);
+  $fields['oe_file_thumbnail'] = FieldDefinition::createFromFieldStorageDefinition($storage_definitions['oe_file_thumbnail'])
+    ->setLabel('File thumbnail')
+    ->setDisplayOptions('form', [
+      'type' => 'image_image',
+    ])
+    ->setDisplayConfigurable('form', TRUE);
+
+  return $fields;
+}
+
+/**
+ * Implements hook_entity_field_storage_info().
+ */
+function oe_media_entity_field_storage_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  if ($entity_type->id() === 'media') {
+    $fields['oe_file_thumbnail'] = BundleFieldStorage::create('image')
+      ->setName('oe_file_thumbnail')
+      ->setLabel(t('File thumbnail'))
+      ->setRevisionable(TRUE)
+      ->setTargetEntityTypeId($entity_type->id());
+  }
+
+  return $fields;
 }

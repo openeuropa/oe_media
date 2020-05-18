@@ -23,11 +23,9 @@ use Drupal\media\Plugin\media\Source\File;
 class FileWithThumbnail extends File {
 
   public function getMetadata(MediaInterface $media, $attribute_name) {
-    // At first iteration this has the value!
-    $a = $media->get('thumbnail')->alt;
     switch ($attribute_name) {
       case 'thumbnail_uri':
-        $thumbnail = $media->get('thumbnail')->entity;
+        $thumbnail = $media->get('oe_file_thumbnail')->entity;
         if (!$thumbnail instanceof FileInterface) {
           return parent::getMetadata($media, $attribute_name);
         }
@@ -35,7 +33,7 @@ class FileWithThumbnail extends File {
         break;
 
       case 'thumbnail_alt_value':
-        return $media->get('thumbnail')->alt ?? '';
+        return $media->get('oe_file_thumbnail')->alt ?? '';
         break;
 
       default:
