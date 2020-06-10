@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_media_iframe
+id: video_iframe
+label: 'Video iframe'
+description: 'Media type that uses iframes as source for medias.'
+source: oe_media_iframe
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_oe_media_iframe
+field_map: {  }
