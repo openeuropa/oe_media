@@ -6,11 +6,7 @@ dependencies:
     - field.field.media.video_iframe.field_oe_media_iframe_ratio
     - media.type.video_iframe
   module:
-    - oe_media_embed
     - oe_media_iframe
-third_party_settings:
-  oe_media_embed:
-    embeddable: false
 id: media.video_iframe.default
 targetEntityType: media
 bundle: video_iframe
