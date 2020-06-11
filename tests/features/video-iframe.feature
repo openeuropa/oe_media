@@ -5,7 +5,7 @@ Feature: Video iframe media.
   I want to be able to create medias with iframe as source.
 
   @cleanup:node @cleanup:media @media-enable-standalone-url
-  Scenario: Video iframe medias can be uploaded and attached to nodes.
+  Scenario: Video iframe medias can be created.
     Given I am logged in as a user with the "create oe_media_demo content, create video_iframe media" permissions
     When I go to "the Video iframe creation page"
     Then I should see the heading "Add Video iframe"
