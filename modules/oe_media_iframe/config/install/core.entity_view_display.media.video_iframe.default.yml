@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.video_iframe.field_media_oe_media_iframe
+    - field.field.media.video_iframe.field_oe_media_iframe_ratio
+    - media.type.video_iframe
+  module:
+    - oe_media_iframe
+id: media.video_iframe.default
+targetEntityType: media
+bundle: video_iframe
+mode: default
+content:
+  field_media_oe_media_iframe:
+    label: hidden
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: oe_media_iframe
+    region: content
+hidden:
+  created: true
+  field_oe_media_iframe_ratio: true
+  name: true
+  thumbnail: true
+  uid: true
