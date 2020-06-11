@@ -10,6 +10,7 @@ default:
         - Drupal\DrupalExtension\Context\MessageContext
         - Drupal\Tests\oe_media\Behat\DrupalContext
         - Drupal\Tests\oe_media\Behat\AvPortalContext
+        - Drupal\Tests\oe_media\Behat\FeatureContext
         - Drupal\Tests\oe_media\Behat\MediaContext
         - Drupal\Tests\oe_media\Behat\CleanupContext
         - Drupal\Tests\oe_media\Behat\WebtoolsContext
@@ -25,6 +26,7 @@ default:
               Webtools chart creation: 'media/add/webtools_chart'
               Webtools map creation: 'media/add/webtools_map'
               Webtools social feed creation: 'media/add/webtools_social_feed'
+              Video iframe creation: 'media/add/video_iframe'
   extensions:
     Drupal\MinkExtension:
       goutte: ~
