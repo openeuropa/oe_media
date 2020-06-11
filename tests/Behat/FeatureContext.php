@@ -27,7 +27,7 @@ class FeatureContext extends RawMinkContext {
     $field = $this->getSession()->getPage()->find('named', ['select', $select]);
 
     if (empty($field)) {
-      throw new \Exception("Select field '{$select}' not found.");
+      throw new \Exception(sprintf('Select field "%s" not found.', $select));
     }
 
     $available_options = [];
@@ -40,7 +40,7 @@ class FeatureContext extends RawMinkContext {
     $options = $table->getColumn(0);
     sort($options);
 
-    Assert::assertEquals($options, $available_options, "The '{$select}' select options don't match the expected ones.");
+    Assert::assertEquals($options, $available_options, sprintf('The "%s" select options don\'t match the expected ones.', $select));
   }
 
 }
