@@ -3,6 +3,11 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_oe_demo_media_browser
+    - media.type.av_portal_photo
+    - media.type.av_portal_video
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
     - node.type.oe_media_demo
 id: node.oe_media_demo.field_oe_demo_media_browser
 field_name: field_oe_demo_media_browser

@@ -4,8 +4,8 @@ dependencies:
   module:
     - media
     - node
-id: node.field_oe_demo_webtools_chart
-field_name: field_oe_demo_webtools_chart
+id: node.field_oe_demo_video_iframe
+field_name: field_oe_demo_video_iframe
 entity_type: node
 type: entity_reference
 settings:
