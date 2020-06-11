@@ -15,7 +15,7 @@ use Drupal\oe_media_iframe\Plugin\media\Source\Iframe;
  * @FieldFormatter(
  *   id = "oe_media_iframe",
  *   label = @Translation("Media iframe"),
- *   description = @Translation("Renders the iframe for medias with iframe sources."),
+ *   description = @Translation("Renders the iframe for media entities with iframe sources."),
  *   field_types = {
  *     "string_long"
  *   }

@@ -2,10 +2,10 @@
 Feature: Video iframe media.
   In order to show remote videos
   As a site editor
-  I want to be able to create medias with iframe as source.
+  I want to be able to create media entities with iframe as source.
 
   @cleanup:node @cleanup:media
-  Scenario: Video iframe medias can be created and rendered.
+  Scenario: Video iframe media entities can be created and rendered.
     Given I am logged in as a user with the "create oe_media_demo content, create video_iframe media" permissions
     When I go to "the Video iframe creation page"
     Then I should see the heading "Add Video iframe"

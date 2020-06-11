@@ -12,7 +12,7 @@ use Drupal\media\MediaSourceBase;
  * @MediaSource(
  *   id = "oe_media_iframe",
  *   label = @Translation("Iframe"),
- *   description = @Translation("Use iframes as source for medias."),
+ *   description = @Translation("Use iframes as source for media entities."),
  *   allowed_field_types = {"string_long"}
  * )
  */
