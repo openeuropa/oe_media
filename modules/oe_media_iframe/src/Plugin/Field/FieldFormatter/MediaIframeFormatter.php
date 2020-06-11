@@ -39,11 +39,7 @@ class MediaIframeFormatter extends FormatterBase {
     /** @var \Drupal\media\MediaTypeInterface $media_type */
     $media_type = \Drupal::entityTypeManager()->getStorage('media_type')->load($bundle_id);
 
-    if ($media_type && $media_type->getSource() instanceof Iframe) {
-      return TRUE;
-    }
-
-    return parent::isApplicable($field_definition);
+    return $media_type && $media_type->getSource() instanceof Iframe;
   }
 
   /**
