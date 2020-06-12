@@ -13,7 +13,8 @@ use Drupal\media\MediaSourceBase;
  *   id = "oe_media_iframe",
  *   label = @Translation("Iframe"),
  *   description = @Translation("Use iframes as source for media entities."),
- *   allowed_field_types = {"string_long"}
+ *   allowed_field_types = {"string_long"},
+ *   default_thumbnail_filename = "video.png"
  * )
  */
 class Iframe extends MediaSourceBase {
