@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - media
-id: media.field_media_oe_media_iframe
-field_name: field_media_oe_media_iframe
+id: media.oe_media_iframe
+field_name: oe_media_iframe
 entity_type: media
 type: string_long
 settings:

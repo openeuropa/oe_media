@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.video_iframe.field_media_oe_media_iframe
-    - field.field.media.video_iframe.field_oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe
+    - field.field.media.video_iframe.oe_media_iframe_ratio
     - media.type.video_iframe
 id: media.video_iframe.default
 targetEntityType: media
@@ -16,7 +16,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_oe_media_iframe:
+  oe_media_iframe:
     weight: 1
     settings:
       rows: 5
@@ -24,7 +24,7 @@ content:
     third_party_settings: {  }
     type: string_textarea
     region: content
-  field_oe_media_iframe_ratio:
+  oe_media_iframe_ratio:
     weight: 2
     settings: {  }
     third_party_settings: {  }

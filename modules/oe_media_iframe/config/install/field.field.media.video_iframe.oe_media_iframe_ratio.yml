@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_oe_media_iframe_ratio
+    - field.storage.media.oe_media_iframe_ratio
     - media.type.video_iframe
   module:
     - options
-id: media.video_iframe.field_oe_media_iframe_ratio
-field_name: field_oe_media_iframe_ratio
+id: media.video_iframe.oe_media_iframe_ratio
+field_name: oe_media_iframe_ratio
 entity_type: media
 bundle: video_iframe
 label: Ratio
