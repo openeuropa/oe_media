@@ -10,5 +10,5 @@ source: oe_media_iframe
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:
-  source_field: field_media_oe_media_iframe
+  source_field: oe_media_iframe
 field_map: {  }

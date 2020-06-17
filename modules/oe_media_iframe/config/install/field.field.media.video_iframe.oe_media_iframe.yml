@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_oe_media_iframe
+    - field.storage.media.oe_media_iframe
     - media.type.video_iframe
-id: media.video_iframe.field_media_oe_media_iframe
-field_name: field_media_oe_media_iframe
+id: media.video_iframe.oe_media_iframe
+field_name: oe_media_iframe
 entity_type: media
 bundle: video_iframe
 label: Iframe
