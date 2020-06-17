@@ -30,6 +30,8 @@ function oe_media_media_source_info_alter(array &$sources): void {
  *
  * Ensure that Document media access is derived from the nodes that reference
  * them.
+ *
+ * @deprecated in 1.8.0 and will be removed from 2.0.0.
  */
 function oe_media_media_access(EntityInterface $entity, string $operation, AccountInterface $account) {
   if ($operation === 'view' && !$entity->isPublished() && $account->hasPermission('view any unpublished media')) {
