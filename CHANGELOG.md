@@ -1,10 +1,22 @@
 # Change Log
 
+## [1.7.0](https://github.com/openeuropa/oe_media/tree/1.7.0) (2020-06-18)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.6.0...1.7.0)
+
+**Merged pull requests:**
+
+- Merge epic video iframe media v1 [\#111](https://github.com/openeuropa/oe_media/pull/111) ([brummbar](https://github.com/brummbar))
+- OPENEUROPA-3295: Renaming the video iframe media fields. [\#109](https://github.com/openeuropa/oe_media/pull/109) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-3299: Video iframe media source schema. [\#108](https://github.com/openeuropa/oe_media/pull/108) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-0000: Use video as default thumbnail for iframe media source. [\#107](https://github.com/openeuropa/oe_media/pull/107) ([brummbar](https://github.com/brummbar))
+- OPENEUROPA-3295: Create the video iframe media type [\#106](https://github.com/openeuropa/oe_media/pull/106) ([brummbar](https://github.com/brummbar))
+
 ## [1.6.0](https://github.com/openeuropa/oe_media/tree/1.6.0) (2020-04-29)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.5.0...1.6.0)
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md for release 1.6.0. [\#104](https://github.com/openeuropa/oe_media/pull/104) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-2975: Open Webtools wizard in new tab from the field's description. [\#100](https://github.com/openeuropa/oe_media/pull/100) ([22Alexandra](https://github.com/22Alexandra))
 - OPENEUROPA-2792: Allow file creation step to give path with file name. [\#92](https://github.com/openeuropa/oe_media/pull/92) ([nagyad](https://github.com/nagyad))
 
