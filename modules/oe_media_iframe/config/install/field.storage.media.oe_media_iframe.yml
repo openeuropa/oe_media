@@ -3,13 +3,12 @@ status: true
 dependencies:
   module:
     - media
-    - node
-id: node.field_oe_demo_webtools_chart
-field_name: field_oe_demo_webtools_chart
-entity_type: node
-type: entity_reference
+id: media.oe_media_iframe
+field_name: oe_media_iframe
+entity_type: media
+type: string_long
 settings:
-  target_type: media
+  case_sensitive: false
 module: core
 locked: false
 cardinality: 1

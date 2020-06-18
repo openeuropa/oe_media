@@ -1,0 +1,20 @@
+name: 'OpenEuropa Media iframe'
+description: 'Provides media types with iframe as media source.'
+package: OpenEuropa
+
+type: module
+core: 8.x
+
+dependencies:
+  - drupal:options
+  - media:media
+
+config_devel:
+  install:
+    - core.entity_form_display.media.video_iframe.default
+    - core.entity_view_display.media.video_iframe.default
+    - field.storage.media.oe_media_iframe
+    - field.storage.media.oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe
+    - field.field.media.video_iframe.oe_media_iframe_ratio
+    - media.type.video_iframe

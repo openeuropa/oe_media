@@ -106,6 +106,7 @@ class DrupalContext extends RawDrupalContext {
       'image' => 'field_oe_demo_image_media',
       'document' => 'field_oe_demo_document_media',
       'remote video' => 'field_oe_demo_remote_video_media',
+      'video iframe' => 'field_oe_demo_video_iframe',
     ];
 
     if (!isset($mappings[$media_type])) {

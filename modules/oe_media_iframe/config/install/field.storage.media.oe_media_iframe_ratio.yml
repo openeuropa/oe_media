@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - options
+id: media.oe_media_iframe_ratio
+field_name: oe_media_iframe_ratio
+entity_type: media
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '16_9'
+      label: '16:9'
+    -
+      value: '4_3'
+      label: '4:3'
+    -
+      value: '3_2'
+      label: '3:2'
+    -
+      value: '1_1'
+      label: '1:1'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

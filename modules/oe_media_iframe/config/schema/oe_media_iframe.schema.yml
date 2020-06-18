@@ -1,0 +1,3 @@
+media.source.oe_media_iframe:
+  type: media.source.field_aware
+  label: '"Video iframe" media source configuration'

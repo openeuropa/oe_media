@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.oe_media_iframe
+    - media.type.video_iframe
+id: media.video_iframe.oe_media_iframe
+field_name: oe_media_iframe
+entity_type: media
+bundle: video_iframe
+label: Iframe
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

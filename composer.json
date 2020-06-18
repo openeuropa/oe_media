@@ -27,7 +27,8 @@
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "~6.0",
         "nikic/php-parser": "^3.1.5",
-        "symfony/browser-kit": "~3.0||~4.0"
+        "symfony/browser-kit": "~3.0||~4.0",
+        "drupal/config_devel": "^1.7"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
