@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * The OpenEuropa Media Link Lists install file.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Implements hook_install().
+ */
+function oe_media_link_lists_install() {
+  // Allow manual links field to reference internal_media bundle.
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
+  $field = FieldConfig::load('link_list.manual.links');
+  if (!$field) {
+    return;
+  }
+
+  $settings = $field->getSetting('handler_settings');
+  $bundles = &$settings['target_bundles'];
+  $bundles['internal_media'] = 'internal_media';
+  $field->setSetting('handler_settings', $settings);
+  $field->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function oe_media_link_lists_uninstall() {
+  // Remove internal_media from manual links field target bundles.
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field */
+  $field = FieldConfig::load('link_list.manual.links');
+  if (!$field) {
+    return;
+  }
+
+  $settings = $field->getSetting('handler_settings');
+  $bundles = &$settings['target_bundles'];
+  if (isset($bundles['internal_media'])) {
+    unset($bundles['internal_media']);
+    $field->setSetting('handler_settings', $settings);
+    $field->save();
+  }
+}

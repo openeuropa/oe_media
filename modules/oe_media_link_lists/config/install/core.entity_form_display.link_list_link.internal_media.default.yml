@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.link_list_link.internal_media.media_target
+    - oe_link_lists_manual_source.link_list_link_type.internal_media
+id: link_list_link.internal_media.default
+targetEntityType: link_list_link
+bundle: internal_media
+mode: default
+content:
+  media_target:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
