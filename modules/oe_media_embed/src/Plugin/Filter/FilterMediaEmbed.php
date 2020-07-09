@@ -180,6 +180,8 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
       }
     }
 
+    $result->addCacheableDependency($cache);
+
     $this->replaceNodeContent($node, $output);
   }
 
