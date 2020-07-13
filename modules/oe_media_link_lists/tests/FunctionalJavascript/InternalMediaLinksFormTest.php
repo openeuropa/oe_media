@@ -71,6 +71,8 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
 
     $links_wrapper = $this->getSession()->getPage()->find('css', '.field--widget-inline-entity-form-complex');
+    $this->assertSession()->checkboxNotChecked('Override target values', $links_wrapper);
+
     $links_wrapper->fillField('Use existing media', 'Test document');
     $this->getSession()->getPage()->pressButton('Create Link');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -93,7 +95,7 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     $edit = $this->getSession()->getPage()->find('xpath', '(//input[@type="submit" and @value="Edit"])[1]');
     $edit->press();
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $links_wrapper = $this->getSession()->getPage()->find('css', '.field--widget-inline-entity-form-complex');
+    $links_wrapper->checkField('Override target values');
     $links_wrapper->fillField('Title', 'Internal document');
     $links_wrapper->fillField('Teaser', 'Internal document teaser');
     $this->getSession()->getPage()->pressButton('Update Link');
