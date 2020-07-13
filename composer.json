@@ -23,7 +23,7 @@
         "openeuropa/code-review": "~1.0.0-beta2",
         "openeuropa/drupal-core-require-dev": "^8.7",
         "openeuropa/task-runner": "~1.0@beta",
-        "openeuropa/oe_link_lists": "dev-master",
+        "openeuropa/oe_link_lists": "dev-EWPP-37",
         "openeuropa/oe_webtools": "dev-master",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "~6.0",
