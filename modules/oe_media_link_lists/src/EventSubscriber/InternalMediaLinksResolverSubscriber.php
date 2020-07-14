@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_link_lists\EventSubscriber;
 
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\media\MediaInterface;
 use Drupal\oe_link_lists\Event\EntityValueResolverEvent;
 use Drupal\oe_link_lists_manual_source\Event\EntityValueOverrideResolverEvent;
 use Drupal\oe_link_lists_manual_source\Event\ManualLinkResolverEvent;
@@ -64,8 +65,14 @@ class InternalMediaLinksResolverSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $referenced_media */
-    $referenced_media = $this->entityRepository->getTranslationFromContext($link_entity->get('media_target')->entity);
+    $referenced_media = $link_entity->get('media_target')->entity;
+    if (!$referenced_media instanceof MediaInterface) {
+      // If the Media entity was deleted, we cannot resolve anything anymore.
+      return;
+    }
+
+    /** @var \Drupal\media\MediaInterface $referenced_media */
+    $referenced_media = $this->entityRepository->getTranslationFromContext($referenced_media);
 
     // Dispatch an event to turn the referenced media into a Link object.
     // We default to the oe_link_lists defaults and go with an empty teaser
