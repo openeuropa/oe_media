@@ -71,7 +71,11 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
 
     $links_wrapper = $this->getSession()->getPage()->find('css', '.field--widget-inline-entity-form-complex');
+    // By default, the override checkbox is not checked and title and teaser
+    // fields are not visible.
     $this->assertSession()->checkboxNotChecked('Override target values', $links_wrapper);
+    $this->assertSession()->elementNotExists('css', 'Title', $links_wrapper);
+    $this->assertSession()->elementNotExists('css', 'Teaser', $links_wrapper);
 
     $links_wrapper->fillField('Use existing media', 'Test document');
     $this->getSession()->getPage()->pressButton('Create Link');
