@@ -19,4 +19,5 @@ config_devel:
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
     - field.field.media.video_iframe.oe_media_iframe_thumbnail
+    - filter.format.oe_iframe_media
     - media.type.video_iframe
