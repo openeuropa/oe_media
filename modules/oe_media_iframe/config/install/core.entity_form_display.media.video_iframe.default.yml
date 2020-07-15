@@ -9,6 +9,7 @@ dependencies:
     - media.type.video_iframe
   module:
     - image
+    - oe_media_iframe
 id: media.video_iframe.default
 targetEntityType: media
 bundle: video_iframe
@@ -42,7 +43,7 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textarea
+    type: oe_media_iframe
     region: content
   oe_media_iframe_ratio:
     weight: 3

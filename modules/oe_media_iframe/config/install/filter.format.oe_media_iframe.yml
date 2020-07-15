@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Iframe Media'
+format: oe_media_iframe
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder accesskey autocapitalize class contenteditable data-* dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate>'
+      filter_html_help: true
+      filter_html_nofollow: false
