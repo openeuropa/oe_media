@@ -35,7 +35,7 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
   protected $entityTypeManager;
 
   /**
-   * Constructs a StringFormatter instance.
+   * Constructs a MediaIframeFormatter instance.
    *
    * @param string $plugin_id
    *   The plugin_id for the formatter.
@@ -56,7 +56,6 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
    */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-
     $this->entityTypeManager = $entity_type_manager;
   }
 

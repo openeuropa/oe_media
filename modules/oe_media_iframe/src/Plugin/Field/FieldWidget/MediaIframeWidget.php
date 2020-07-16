@@ -33,7 +33,7 @@ class MediaIframeWidget extends StringTextareaWidget {
   protected $entityTypeManager;
 
   /**
-   * Constructs a WidgetBase object.
+   * Constructs a MediaIframeWidget object.
    *
    * @param string $plugin_id
    *   The plugin_id for the widget.
