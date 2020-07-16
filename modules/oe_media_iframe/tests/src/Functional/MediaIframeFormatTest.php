@@ -26,7 +26,7 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
   /**
    * Test text formats selected for Media source.
    */
-  public function testMedisSourceTextFormats(): void {
+  public function testMediaSourceTextFormats(): void {
     foreach ($this->getFixtures() as $test_data) {
       $media = Media::create([
         'bundle' => 'video_iframe',
