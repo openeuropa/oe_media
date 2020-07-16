@@ -90,31 +90,16 @@ class MediaIframeWidget extends StringTextareaWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $element = parent::formElement($items, $delta, $element, $form, $form_state);
+    $main_widget = parent::formElement($items, $delta, $element, $form, $form_state);
 
     $media_type = $this->entityTypeManager->getStorage('media_type')->load($this->fieldDefinition->getTargetBundle());
     $text_format = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
-    $format = $this->entityTypeManager->getStorage('filter_format')->load($text_format);
 
-    // Turn original element into a text format wrapper.
-    $element['#attached']['library'][] = 'filter/drupal.filter';
-
-    // Setup child container for the text format widget.
-    $element['format'] = [
-      '#type' => 'container',
-      '#attributes' => ['class' => ['js-filter-wrapper']],
-    ];
-
-    // Prepare text format guidelines.
-    $element['format']['guidelines'] = [
-      '#type' => 'container',
-      '#attributes' => ['class' => ['js-filter-guidelines']],
-      '#weight' => 20,
-    ];
-    $element['format']['guidelines'][$format->id()] = [
-      '#theme' => 'filter_guidelines',
-      '#format' => $format,
-    ];
+    $element = $main_widget['value'];
+    $element['#type'] = 'text_format';
+    $element['#format'] = $text_format;
+    $element['#allowed_formats'] = [$text_format];
+    $element['#base_type'] = $main_widget['value']['#type'];
 
     return $element;
   }
