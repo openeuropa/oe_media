@@ -6,6 +6,7 @@ type: module
 core: 8.x
 
 dependencies:
+  - drupal:filter
   - drupal:options
   - media:media
 
