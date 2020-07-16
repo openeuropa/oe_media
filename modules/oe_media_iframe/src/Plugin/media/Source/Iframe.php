@@ -113,7 +113,6 @@ class Iframe extends MediaSourceBase {
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-
     $text_formats = [];
     /** @var \Drupal\filter\FilterFormatInterface $filter_format */
     foreach (filter_formats() as $filter_format) {
@@ -125,7 +124,7 @@ class Iframe extends MediaSourceBase {
       '#type' => 'select',
       '#options' => $text_formats,
       '#default_value' => $this->getConfiguration()['text_format'],
-      '#description' => $this->t('Pick the text format which could be used with a iframe input field.'),
+      '#description' => $this->t('Pick the text format which could be used with an iframe input field.'),
     ];
 
     return parent::buildConfigurationForm($form, $form_state);
