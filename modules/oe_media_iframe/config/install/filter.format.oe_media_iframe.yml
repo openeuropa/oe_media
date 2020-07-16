@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-name: 'Iframe Media'
+name: 'Iframe media'
 format: oe_media_iframe
 weight: 0
 filters:
