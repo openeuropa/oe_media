@@ -15,6 +15,8 @@ config_devel:
     - core.entity_view_display.media.video_iframe.default
     - field.storage.media.oe_media_iframe
     - field.storage.media.oe_media_iframe_ratio
+    - field.storage.media.oe_media_iframe_thumbnail
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe_thumbnail
     - media.type.video_iframe
