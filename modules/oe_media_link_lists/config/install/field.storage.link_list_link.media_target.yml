@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - oe_link_lists_manual_source
+id: link_list_link.media_target
+field_name: media_target
+entity_type: link_list_link
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

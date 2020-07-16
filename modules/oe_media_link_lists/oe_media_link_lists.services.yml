@@ -1,0 +1,6 @@
+services:
+  oe_media_link_lists.event_subscriber.internal_media_links_resolver:
+    class: 'Drupal\oe_media_link_lists\EventSubscriber\InternalMediaLinksResolverSubscriber'
+    arguments: ['@event_dispatcher', '@entity.repository']
+    tags:
+      - { name: 'event_subscriber' }
