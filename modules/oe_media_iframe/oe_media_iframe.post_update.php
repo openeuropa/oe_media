@@ -7,8 +7,6 @@
 
 declare(strict_types = 1);
 
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
-
 /**
  * Add thumbnail field to media types using iframe source.
  */
@@ -64,19 +62,24 @@ function oe_media_iframe_post_update_00002() {
     'name' => 'Iframe Media',
     'filters' => [
       'filter_html' => [
-        'allowed_html' => '<iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder accesskey autocapitalize class contenteditable data-* dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate>',
+        'settings' => [
+          'allowed_html' => '<iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>',
+        ],
         'status' => TRUE,
       ],
     ],
   ]);
   $format->save();
 
-  $form_display = EntityFormDisplay::load('media.video_iframe.default');
+  $entity_form_storage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
+  $form_display = $entity_form_storage->load('media.video_iframe.default');
   $source_field = $form_display->getComponent('oe_media_iframe');
   if ($source_field) {
-    $form_display['type'] = 'oe_media_iframe';
+    $source_field['type'] = 'oe_media_iframe';
     $form_display->setComponent('oe_media_iframe', $source_field);
     $form_display->save();
+    // Invalidate the cache of related config manually as workaround.
+    \Drupal::cache('config')->delete('core.entity_form_display.media.video_iframe.default');
   }
   $video_iframe = \Drupal::entityTypeManager()->getStorage('media_type')->load('video_iframe');
   $settings = $video_iframe->getSource()->getConfiguration();
