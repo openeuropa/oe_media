@@ -119,7 +119,7 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
       $cacheable_metadata->addCacheableDependency($this->entityTypeManager->getStorage('filter_format')->load($text_format));
     }
     else {
-      // Fallback in case if somehow we don't have the selected text format.
+      // Fallback in case we don't have the selected text format.
       foreach ($items as $delta => $item) {
         $elements[$delta] = [
           '#markup' => $item->value,
