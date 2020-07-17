@@ -32,6 +32,7 @@ class VideoIframeTest extends WebDriverTestBase {
     $page = $this->getSession()->getPage();
     $page->fillField('Name', 'EBS');
     $page->fillField('Iframe', '<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\"><a href=\"#\">invalid</a></iframe><script type=\"text/javascript\">alert(\'no js\')</script>');
+    // Upload an image as thumbnail.
     $page->attachFileToField('Iframe thumbnail', drupal_get_path('module', 'oe_media') . '/tests/fixtures/example_1.jpeg');
     $this->assertSession()->waitForField('Alternative text');
     $page->fillField('Alternative text', 'thumbnail');
@@ -39,7 +40,19 @@ class VideoIframeTest extends WebDriverTestBase {
 
     $this->assertSession()->pageTextContains('Video iframe EBS has been created.');
     $image_element = $this->assertSession()->elementExists('css', '.priority-low img');
+    // Check that the uploaded image is used as thumbnail for the media.
     $this->assertContains('example_1.jpeg', $image_element->getAttribute('src'));
+
+    // Edit the video iframe to remove thumbnail.
+    $this->getSession()->getPage()->clickLink('Edit');
+    $page = $this->getSession()->getPage();
+    $page->pressButton('Remove');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $page->pressButton('Save');
+    $this->assertSession()->pageTextContains('Video iframe EBS has been updated.');
+    $image_element = $this->assertSession()->elementExists('css', '.priority-low img');
+    // Default thumbnail should replace the removed thumbnail.
+    $this->assertContains('video.png', $image_element->getAttribute('src'));
   }
 
 }

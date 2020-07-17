@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * OpenEuropa Media iframe module.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\media\MediaInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oe_media_iframe_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $source = $form_state->getFormObject()->getEntity()->getSource()->getPluginId();
+  if ($source !== 'oe_media_iframe') {
+    return;
+  }
+  $form['#entity_builders'][] = 'oe_media_iframe_thumbnail_entity_builder';
+}
+
+/**
+ * Entity form builder to enforce the media source field update for thumbnail.
+ *
+ * @see \Drupal\media\Entity\Media::shouldUpdateThumbnail()
+ */
+function oe_media_iframe_thumbnail_entity_builder($entity_type, MediaInterface $entity, &$form, FormStateInterface $form_state) {
+  $entity->set('thumbnail', NULL);
+}
