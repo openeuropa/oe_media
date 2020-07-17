@@ -16,7 +16,7 @@ Feature: Video iframe media.
       | 1:1  |
     When I fill in "Name" with "EBS"
     And I fill in "Iframe" with "<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\"><a href=\"#\">invalid</a></iframe><script type=\"text/javascript\">alert('no js')</script>"
-    And I should see "Allowed HTML tags: <iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder accesskey autocapitalize class contenteditable data-* dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate>"
+    And I should see "Allowed HTML tags: <iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>"
     And I press "Save"
     Then I should see the success message "Video iframe EBS has been created."
 
