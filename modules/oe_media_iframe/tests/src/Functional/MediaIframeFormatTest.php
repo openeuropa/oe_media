@@ -26,7 +26,7 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
    * Test text formats selected for Media source.
    */
   public function testMediaSourceTextFormats(): void {
-    foreach ($this->getFixtures() as $test_data) {
+    foreach ($this->getFixtures() as $case_name => $test_data) {
       $media = $this->storage->create([
         'bundle' => 'video_iframe',
         'name' => 'Test iframe media',
@@ -85,7 +85,7 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
       'test iframe with all allowed attributes' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading name referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script>',
         'formats_output' => [
-          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow="" allowfullscreen="" allowpaymentrequest="" csp="" importance="" loading="" name="" referrerpolicy="" sandbox="" srcdoc="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" accesskey="" autocapitalize="" class="" contenteditable="" data-test="" data-test2="" draggable="" dropzone="" exportparts="" hidden="" id="" inputmode="" is="" itemid="" itemprop="" itemref="" itemscope="" itemtype="" lang="" part="" slot="" spellcheck="" tabindex="" title="" translate="" xml:lang="">invalid</iframe>alert(\'no js\')',
+          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow="" allowfullscreen="" allowpaymentrequest="" csp="" importance="" loading="" name="" referrerpolicy="" sandbox="" srcdoc="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" id="" xml:lang="">invalid</iframe>alert(\'no js\')',
         ],
       ],
       'test iframe with not allowed attribute' => [
