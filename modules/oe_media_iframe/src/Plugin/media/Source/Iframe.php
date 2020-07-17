@@ -51,7 +51,7 @@ class Iframe extends MediaSourceBase {
       '#type' => 'select',
       '#options' => $text_formats,
       '#default_value' => $this->getConfiguration()['text_format'],
-      '#description' => $this->t('Pick the text format which could be used with an iframe input field.'),
+      '#description' => $this->t('Pick the text format to be used for the iframe field.'),
     ];
 
     return parent::buildConfigurationForm($form, $form_state);
