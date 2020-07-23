@@ -24,7 +24,7 @@ class VideoIframeTest extends WebDriverTestBase {
   /**
    * Tests the video iframe uses the attached thumbnail.
    */
-  public function testVideoIframeThumbnail() {
+  public function testVideoIframeThumbnail(): void {
     $user = $this->createUser([], '', TRUE);
     $this->drupalLogin($user);
 

@@ -26,6 +26,6 @@ function oe_media_iframe_form_media_form_alter(&$form, FormStateInterface $form_
  *
  * @see \Drupal\media\Entity\Media::shouldUpdateThumbnail()
  */
-function oe_media_iframe_thumbnail_entity_builder($entity_type, MediaInterface $entity, &$form, FormStateInterface $form_state) {
+function oe_media_iframe_thumbnail_entity_builder($entity_type, MediaInterface $entity, &$form, FormStateInterface $form_state): void {
   $entity->set('thumbnail', NULL);
 }
