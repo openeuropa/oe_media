@@ -6,6 +6,7 @@ namespace Drupal\oe_media_iframe\Plugin\media\Source;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\media\MediaSourceBase;
+use Drupal\media\MediaSourceFieldConstraintsInterface;
 
 /**
  * Iframe media source.
@@ -18,7 +19,7 @@ use Drupal\media\MediaSourceBase;
  *   default_thumbnail_filename = "video.png"
  * )
  */
-class Iframe extends MediaSourceBase {
+class Iframe extends MediaSourceBase implements MediaSourceFieldConstraintsInterface {
 
   /**
    * {@inheritdoc}
@@ -34,6 +35,15 @@ class Iframe extends MediaSourceBase {
    */
   public function getMetadataAttributes() {
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSourceFieldConstraints() {
+    return [
+      'IframeMedia' => [],
+    ];
   }
 
   /**
