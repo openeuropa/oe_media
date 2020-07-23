@@ -10,7 +10,7 @@ declare(strict_types = 1);
 /**
  * Incorporate text format setting into Iframe media source.
  */
-function oe_media_iframe_post_update_00001() {
+function oe_media_iframe_post_update_00001(): void {
   $format = \Drupal::entityTypeManager()->getStorage('filter_format')->create([
     'format' => 'oe_media_iframe',
     'name' => 'Iframe Media',
