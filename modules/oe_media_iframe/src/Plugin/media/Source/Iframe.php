@@ -58,8 +58,7 @@ class Iframe extends MediaSourceBase {
     // Create the thumbnail field at the same time with the source field.
     $fields = $this->entityFieldManager->getFieldStorageDefinitions('media');
     /** @var \Drupal\field\FieldStorageConfigInterface $storage */
-    if (!isset($fields['oe_media_iframe_thumbnail']) ||
-      $fields['oe_media_iframe_thumbnail']->getTargetEntityTypeId() !== 'media') {
+    if (!isset($fields['oe_media_iframe_thumbnail'])) {
       $storage = $this->entityTypeManager
         ->getStorage('field_storage_config')
         ->create([

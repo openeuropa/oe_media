@@ -10,14 +10,13 @@ declare(strict_types = 1);
 /**
  * Add thumbnail field to media types using iframe source.
  */
-function oe_media_iframe_post_update_00001() {
+function oe_media_iframe_post_update_00001(): void {
   $entity_type_manager = \Drupal::entityTypeManager();
   $media_type_storage = $entity_type_manager->getStorage('media_type');
   $iframe_types = $media_type_storage->loadByProperties(['source' => 'oe_media_iframe']);
 
   $fields = \Drupal::service('entity_field.manager')->getFieldStorageDefinitions('media');
-  if (!isset($fields['oe_media_iframe_thumbnail']) ||
-    $fields['oe_media_iframe_thumbnail']->getTargetEntityTypeId() !== 'media') {
+  if (!isset($fields['oe_media_iframe_thumbnail'])) {
     $storage = $entity_type_manager
       ->getStorage('field_storage_config')
       ->create([

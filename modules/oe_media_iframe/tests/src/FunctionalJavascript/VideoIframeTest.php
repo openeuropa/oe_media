@@ -12,9 +12,14 @@ class VideoIframeTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'oe_media_iframe',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stable';
 
   /**
    * Tests the video iframe uses the attached thumbnail.
@@ -39,7 +44,7 @@ class VideoIframeTest extends WebDriverTestBase {
     $page->pressButton('Save');
 
     $this->assertSession()->pageTextContains('Video iframe EBS has been created.');
-    $image_element = $this->assertSession()->elementExists('css', '.priority-low img');
+    $image_element = $this->assertSession()->elementExists('css', '.layout-content table tbody tr:nth-child(1) img');
     // Check that the uploaded image is used as thumbnail for the media.
     $this->assertContains('example_1.jpeg', $image_element->getAttribute('src'));
 
@@ -50,7 +55,7 @@ class VideoIframeTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $page->pressButton('Save');
     $this->assertSession()->pageTextContains('Video iframe EBS has been updated.');
-    $image_element = $this->assertSession()->elementExists('css', '.priority-low img');
+    $image_element = $this->assertSession()->elementExists('css', '.layout-content table tbody tr:nth-child(1) img');
     // Default thumbnail should replace the removed thumbnail.
     $this->assertContains('video.png', $image_element->getAttribute('src'));
   }
