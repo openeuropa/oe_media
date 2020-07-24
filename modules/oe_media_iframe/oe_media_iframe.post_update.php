@@ -38,6 +38,7 @@ function oe_media_iframe_post_update_00001(): void {
         'bundle' => $type->id(),
         'label' => 'Iframe thumbnail',
         'required' => FALSE,
+        'translatable' => FALSE,
       ]);
     $field->save();
 

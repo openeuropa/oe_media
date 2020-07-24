@@ -79,6 +79,7 @@ class Iframe extends MediaSourceBase {
         'bundle' => $type->id(),
         'label' => 'Iframe thumbnail',
         'required' => FALSE,
+        'translatable' => FALSE,
       ]);
     $field->save();
 
