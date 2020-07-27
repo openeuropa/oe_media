@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.link_list_link.media_target
+    - media.type.av_portal_photo
+    - media.type.av_portal_video
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video_iframe
+    - media.type.webtools_chart
+    - media.type.webtools_map
+    - media.type.webtools_social_feed
+    - oe_link_lists_manual_source.link_list_link_type.internal_media
+id: link_list_link.internal_media.media_target
+field_name: media_target
+entity_type: link_list_link
+bundle: internal_media
+label: Media
+description: 'The internal media target of the link'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      av_portal_photo: av_portal_photo
+      av_portal_video: av_portal_video
+      document: document
+      image: image
+      remote_video: remote_video
+      video_iframe: video_iframe
+      webtools_chart: webtools_chart
+      webtools_map: webtools_map
+      webtools_social_feed: webtools_social_feed
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: av_portal_photo
+field_type: entity_reference
