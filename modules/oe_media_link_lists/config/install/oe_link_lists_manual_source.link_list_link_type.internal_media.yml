@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: internal_media
+label: Internal media
+third_party_settings:
+  oe_link_lists_manual_source:
+    override: true
