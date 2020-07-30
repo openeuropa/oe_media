@@ -4,7 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media_iframe\Functional;
 
-use Drupal\node\Entity\Node;
+use Drupal\filter\Entity\FilterFormat;
+use Drupal\media\Entity\MediaType;
 use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
 
 /**
@@ -17,10 +18,72 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
+  public $defaultTheme = 'stable';
+
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'oe_media_iframe',
-    'oe_media_demo',
   ];
+
+  /**
+   * The media type.
+   *
+   * @var \Drupal\media\MediaTypeInterface
+   */
+  protected $mediaType;
+
+  /**
+   * The source field.
+   *
+   * @var \Drupal\field\FieldConfigInterface
+   */
+  protected $sourceField;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+    \Drupal::configFactory()
+      ->getEditable('media.settings')
+      ->set('standalone_url', TRUE)
+      ->save(TRUE);
+
+    $this->container->get('router.builder')->rebuild();
+
+    /** @var \Drupal\media\MediaTypeInterface $media_type */
+    $media_type = MediaType::create([
+      'id' => 'test_iframe',
+      'label' => 'Test iframe source',
+      'source' => 'oe_media_iframe',
+    ]);
+    $media_type->save();
+    $source = $media_type->getSource();
+    $source_field = $source->createSourceField($media_type);
+    $source_configuration = $source->getConfiguration();
+    $source_configuration['source_field'] = $source_field->getName();
+    $source->setConfiguration($source_configuration);
+    $source_field->getFieldStorageDefinition()->save();
+    $source_field->save();
+    $media_type->set('source_configuration', [
+      'source_field' => $source_field->getName(),
+    ]);
+    $media_type->save();
+    $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('media', $media_type->id());
+    $source->prepareFormDisplay($media_type, $form_display);
+    $form_display->save();
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
+    $source->prepareViewDisplay($media_type, $view_display);
+    $view_display->save();
+
+    $this->sourceField = $source_field;
+    $this->mediaType = $media_type;
+
+    // Create user with permission for using oe_media_iframe text format.
+    $this->adminUser = $this->createUser(array_merge(static::$adminUserPermissions, [FilterFormat::load('oe_media_iframe')->getPermissionName()]));
+  }
 
   /**
    * Test text formats selected for Media source.
@@ -28,37 +91,42 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
   public function testMediaSourceTextFormats(): void {
     foreach ($this->getFixtures() as $case_name => $test_data) {
       $media = $this->storage->create([
-        'bundle' => 'video_iframe',
+        'bundle' => $this->mediaType->id(),
         'name' => 'Test iframe media',
-        'oe_media_iframe' => $test_data['html'],
+        $this->sourceField->getName() => $test_data['html'],
         'status' => TRUE,
       ]);
       $media->save();
-
-      $node = Node::create([
-        'type' => 'oe_media_demo',
-        'title' => 'Test Demo page',
-        'field_oe_demo_video_iframe' => [
-            [
-              'target_id' => $media->id(),
-            ],
-        ],
-        'status' => TRUE,
-      ]
-      );
-      $node->save();
-
       foreach ($test_data['formats_output'] as $format_name => $expected) {
         $this->drupalLogin($this->adminUser);
-        $this->drupalGet('admin/structure/media/manage/video_iframe');
+        $this->drupalGet('admin/structure/media/manage/' . $this->mediaType->id());
         $this->getSession()->getPage()->selectFieldOption('Text format', $format_name);
         $this->getSession()->getPage()->pressButton('Save');
         $this->drupalLogout();
-        $this->drupalGet('node/' . $node->id());
+        $this->drupalGet('media/' . $media->id());
         $this->assertSession()->responseContains($expected);
       }
     }
 
+  }
+
+  /**
+   * Test text formats selected for Media source.
+   */
+  public function testMediaSourceWidgetConfiguration(): void {
+    $this->drupalLogin($this->adminUser);
+    $this->drupalGet('/admin/structure/media/manage/' . $this->mediaType->id() . '/form-display');
+    $this->assertTrue($this->assertSession()->optionExists('fields[' . $this->sourceField->getName() . '][region]', 'content')->isSelected());
+    $this->assertTrue($this->assertSession()->optionExists('fields[' . $this->sourceField->getName() . '][type]', 'oe_media_iframe_textarea')->isSelected());
+    $this->assertTrue($this->assertSession()->optionExists('fields[' . $this->sourceField->getName() . '][type]', 'oe_media_iframe_textarea')->isSelected());
+
+    $this->drupalPostForm(NULL, [], $this->sourceField->getName() . '_settings_edit');
+    $this->assertText('Widget settings: Media iframe text area');
+    $this->assertSession()->pageTextContains('Rows');
+    $this->assertSession()->pageTextContains('Placeholder');
+    $this->drupalGet('media/add/' . $this->mediaType->id());
+    $this->assertSession()->fieldExists('Iframe');
+    $this->assertSession()->pageTextContains('Allowed HTML tags: <iframe allowfullscreen height importance loading name referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>');
   }
 
   /**
@@ -79,13 +147,13 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
       'test iframe with used attributes for EbS Live' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading name referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script>',
         'formats_output' => [
-          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow="" allowfullscreen="" allowpaymentrequest="" csp="" importance="" loading="" name="" referrerpolicy="" sandbox="" srcdoc="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" id="">invalid</iframe>alert(\'no js\')',
+          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" name="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" id="">invalid</iframe>alert(\'no js\')',
         ],
       ],
       'test iframe with all allowed attributes' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading name referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script>',
         'formats_output' => [
-          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow="" allowfullscreen="" allowpaymentrequest="" csp="" importance="" loading="" name="" referrerpolicy="" sandbox="" srcdoc="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" id="" xml:lang="">invalid</iframe>alert(\'no js\')',
+          'oe_media_iframe' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" name="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" id="" xml:lang="">invalid</iframe>alert(\'no js\')',
         ],
       ],
       'test iframe with not allowed attribute' => [

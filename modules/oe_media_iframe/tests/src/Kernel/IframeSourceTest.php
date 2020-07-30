@@ -17,6 +17,7 @@ class IframeSourceTest extends MediaKernelTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
+    'filter',
     'oe_media',
     'oe_media_iframe',
     'options',
