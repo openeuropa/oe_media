@@ -16,8 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Plugin implementation for the "oe_media_iframe" widget plugin.
  *
  * @FieldWidget(
- *   id = "oe_media_iframe",
- *   label = @Translation("Media iframe"),
+ *   id = "oe_media_iframe_textarea",
+ *   label = @Translation("Media iframe text area"),
+ *   description = @Translation("Text area field widget with information about selected text format in the Iframe media source."),
  *   field_types = {
  *     "string_long"
  *   }
