@@ -11,6 +11,6 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<iframe allow allowfullscreen allowpaymentrequest csp height importance loading name referrerpolicy sandbox src srcdoc width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>'
+      allowed_html: '<iframe allowfullscreen height importance loading name referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>'
       filter_html_help: true
       filter_html_nofollow: false

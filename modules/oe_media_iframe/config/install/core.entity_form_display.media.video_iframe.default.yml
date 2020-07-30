@@ -43,7 +43,7 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: oe_media_iframe
+    type: oe_media_iframe_textarea
     region: content
   oe_media_iframe_ratio:
     weight: 3
