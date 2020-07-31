@@ -82,7 +82,7 @@ function oe_media_iframe_post_update_00002(): void {
     $form_display->setComponent('oe_media_iframe', $source_field);
     $form_display->save();
     // Invalidate the cache of related config manually as workaround.
-    \Drupal::cache('config')->delete('core.entity_form_display.media.video_iframe.default');
+    \Drupal::cache('config')->invalidate('core.entity_form_display.media.video_iframe.default');
   }
   $media_type_storage = \Drupal::entityTypeManager()->getStorage('media_type');
   $iframe_types = $media_type_storage->loadByProperties(['source' => 'oe_media_iframe']);
