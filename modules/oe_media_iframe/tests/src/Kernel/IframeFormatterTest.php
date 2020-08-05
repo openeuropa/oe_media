@@ -15,11 +15,9 @@ use Drupal\media\Entity\MediaType;
 class IframeFormatterTest extends KernelTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'field',
     'text',
     'system',
