@@ -107,20 +107,18 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
 
     $text_format = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
 
-    if ($text_format) {
-      foreach ($items as $delta => $item) {
+    foreach ($items as $delta => $item) {
+      if ($text_format) {
         $elements[$delta] = [
           '#type' => 'processed_text',
           '#text' => $item->value,
           '#format' => $text_format,
         ];
+        // Add cacheable dependency from the used filter format.
+        $cacheable_metadata->addCacheableDependency($this->entityTypeManager->getStorage('filter_format')->load($text_format));
       }
-      // Add cacheable dependency from the used filter format.
-      $cacheable_metadata->addCacheableDependency($this->entityTypeManager->getStorage('filter_format')->load($text_format));
-    }
-    else {
-      // Fallback in case we don't have the selected text format.
-      foreach ($items as $delta => $item) {
+      else {
+        // Fallback in case we don't have the selected text format.
         $elements[$delta] = [
           '#markup' => $item->value,
           '#allowed_tags' => ['iframe'],
