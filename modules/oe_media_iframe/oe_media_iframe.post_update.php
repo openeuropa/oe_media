@@ -81,8 +81,11 @@ function oe_media_iframe_post_update_00002(): void {
     $source_field['type'] = 'oe_media_iframe_textarea';
     $form_display->setComponent('oe_media_iframe', $source_field);
     $form_display->save();
-    // Invalidate the cache of related config manually as workaround.
-    \Drupal::cache('config')->invalidate('core.entity_form_display.media.video_iframe.default');
+    // We have to remove cache record directly because we can't invalidate
+    // this cache record by tags ('cache_config' table have empty 'tags' field).
+    // \Drupal::cache('config')->invalidate() do not work either because core,
+    // for some reason, does not check the validity of the cache record.
+    \Drupal::cache('config')->delete('core.entity_form_display.media.video_iframe.default');
   }
   $media_type_storage = \Drupal::entityTypeManager()->getStorage('media_type');
   $iframe_types = $media_type_storage->loadByProperties(['source' => 'oe_media_iframe']);
