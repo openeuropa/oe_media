@@ -7,12 +7,5 @@ media.source.oe_media_iframe:
       label: 'Text format'
 
 field.widget.settings.oe_media_iframe_textarea:
-  type: mapping
+  type: field.widget.settings.string_textarea
   label: 'Textarea display format settings'
-  mapping:
-    rows:
-      type: integer
-      label: 'Rows'
-    placeholder:
-      type: label
-      label: 'Placeholder'
