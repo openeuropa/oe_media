@@ -91,16 +91,17 @@ class MediaIframeWidget extends StringTextareaWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $main_widget = parent::formElement($items, $delta, $element, $form, $form_state);
+    $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
     $media_type = $this->entityTypeManager->getStorage('media_type')->load($this->fieldDefinition->getTargetBundle());
     $text_format = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
 
-    $element = $main_widget['value'];
-    $element['#type'] = 'text_format';
-    $element['#format'] = $text_format;
-    $element['#allowed_formats'] = [$text_format];
-    $element['#base_type'] = $main_widget['value']['#type'];
+    $value = $element['value'];
+    $value['#type'] = 'text_format';
+    $value['#format'] = $text_format;
+    $value['#allowed_formats'] = [$text_format];
+    $value['#base_type'] = $element['value']['#type'];
+    $element['value'] = $value;
 
     return $element;
   }
