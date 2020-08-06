@@ -1,10 +1,24 @@
-# Change Log
+# Changelog
+
+## [1.8.0](https://github.com/openeuropa/oe_media/tree/1.8.0) (2020-08-04)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.7.0...1.8.0)
+
+**Merged pull requests:**
+
+- EWPP-37: Add override third party setting to internal media bundle. [\#116](https://github.com/openeuropa/oe_media/pull/116) ([22Alexandra](https://github.com/22Alexandra))
+- OPENEUROPA-3327: Make basic and webtools media fields not translatable by default. [\#115](https://github.com/openeuropa/oe_media/pull/115) ([imanoleguskiza](https://github.com/imanoleguskiza))
+- OPENEUROPA-3364: Add cache dependency when rendering the media via the Filter. [\#114](https://github.com/openeuropa/oe_media/pull/114) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-3315: Add support for documents in manual link lists. [\#113](https://github.com/openeuropa/oe_media/pull/113) ([22Alexandra](https://github.com/22Alexandra))
+- OPENEUROPA-3047: Deprecate oe\_media\_media\_access\(\). [\#110](https://github.com/openeuropa/oe_media/pull/110) ([nagyad](https://github.com/nagyad))
 
 ## [1.7.0](https://github.com/openeuropa/oe_media/tree/1.7.0) (2020-06-18)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.6.0...1.7.0)
 
 **Merged pull requests:**
 
+- Update CHANGELOG.md for release 1.7.0. [\#112](https://github.com/openeuropa/oe_media/pull/112) ([brummbar](https://github.com/brummbar))
 - Merge epic video iframe media v1 [\#111](https://github.com/openeuropa/oe_media/pull/111) ([brummbar](https://github.com/brummbar))
 - OPENEUROPA-3295: Renaming the video iframe media fields. [\#109](https://github.com/openeuropa/oe_media/pull/109) ([upchuk](https://github.com/upchuk))
 - OPENEUROPA-3299: Video iframe media source schema. [\#108](https://github.com/openeuropa/oe_media/pull/108) ([upchuk](https://github.com/upchuk))
@@ -12,6 +26,7 @@
 - OPENEUROPA-3295: Create the video iframe media type [\#106](https://github.com/openeuropa/oe_media/pull/106) ([brummbar](https://github.com/brummbar))
 
 ## [1.6.0](https://github.com/openeuropa/oe_media/tree/1.6.0) (2020-04-29)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.5.0...1.6.0)
 
 **Merged pull requests:**
@@ -21,6 +36,7 @@
 - OPENEUROPA-2792: Allow file creation step to give path with file name. [\#92](https://github.com/openeuropa/oe_media/pull/92) ([nagyad](https://github.com/nagyad))
 
 ## [1.5.0](https://github.com/openeuropa/oe_media/tree/1.5.0) (2020-04-08)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.4.0...1.5.0)
 
 **Merged pull requests:**
@@ -33,6 +49,7 @@
 - OPENEUROPA-3022: Drupal 8.8 upgrade & permission to view any unpublished media [\#93](https://github.com/openeuropa/oe_media/pull/93) ([upchuk](https://github.com/upchuk))
 
 ## [1.4.0](https://github.com/openeuropa/oe_media/tree/1.4.0) (2020-03-03)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.3.0...1.4.0)
 
 **Merged pull requests:**
@@ -43,6 +60,7 @@
 - OPENEUROPA-2416: Allow to define which view modes are embedable. [\#79](https://github.com/openeuropa/oe_media/pull/79) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.3.0](https://github.com/openeuropa/oe_media/tree/1.3.0) (2020-02-05)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.2.0...1.3.0)
 
 **Closed issues:**
@@ -59,6 +77,7 @@
 - OPENEUROPA-2313: Add caching of requests to AvPortal [\#80](https://github.com/openeuropa/oe_media/pull/80) ([brummbar](https://github.com/brummbar))
 
 ## [1.2.0](https://github.com/openeuropa/oe_media/tree/1.2.0) (2019-12-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.1.0...1.2.0)
 
 **Closed issues:**
@@ -76,6 +95,7 @@
 - OPENEUROPA-2258: Use PHP 7.2 in drone and docker image. [\#71](https://github.com/openeuropa/oe_media/pull/71) ([dxvargas](https://github.com/dxvargas))
 
 ## [1.1.0](https://github.com/openeuropa/oe_media/tree/1.1.0) (2019-09-23)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0...1.1.0)
 
 **Merged pull requests:**
@@ -88,6 +108,7 @@
 - Openeuropa 2131: Add new media types "Webtools map, chart, social feeds" [\#61](https://github.com/openeuropa/oe_media/pull/61) ([msnassar](https://github.com/msnassar))
 
 ## [1.0.0](https://github.com/openeuropa/oe_media/tree/1.0.0) (2019-08-23)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta5...1.0.0)
 
 **Merged pull requests:**
@@ -100,25 +121,28 @@
 - OPENEUROPA-1926: Adding helpful readmes. [\#57](https://github.com/openeuropa/oe_media/pull/57) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta5](https://github.com/openeuropa/oe_media/tree/1.0.0-beta5) (2019-07-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta4...1.0.0-beta5)
 
 **Merged pull requests:**
 
 - Update CHANGELOG.md for release 1.0.0-beta5. [\#56](https://github.com/openeuropa/oe_media/pull/56) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-2031: Upgrade path for the document private file system. [\#55](https://github.com/openeuropa/oe_media/pull/55) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta3...1.0.0-beta4)
 
 **Merged pull requests:**
 
 - Update CHANGELOG.md for release 1.0.0-beta4. [\#54](https://github.com/openeuropa/oe_media/pull/54) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-1914: Media embed filter plugin. [\#53](https://github.com/openeuropa/oe_media/pull/53) ([upchuk](https://github.com/upchuk))
-- OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1945: Update allowed file extensions. [\#51](https://github.com/openeuropa/oe_media/pull/51) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1911: Create the oEmbed WYSIWYG embed plugin [\#50](https://github.com/openeuropa/oe_media/pull/50) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta3](https://github.com/openeuropa/oe_media/tree/1.0.0-beta3) (2019-05-24)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta2...1.0.0-beta3)
 
 **Merged pull requests:**
@@ -128,6 +152,7 @@
 - OPENEUROPA-1898: Revert value of standalone url option in oe\_media. [\#44](https://github.com/openeuropa/oe_media/pull/44) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.0.0-beta2](https://github.com/openeuropa/oe_media/tree/1.0.0-beta2) (2019-05-20)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta1...1.0.0-beta2)
 
 **Merged pull requests:**
@@ -137,6 +162,7 @@
 - OPENEUROPA-1897: Removed drone permission fix. [\#45](https://github.com/openeuropa/oe_media/pull/45) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.0.0-beta1](https://github.com/openeuropa/oe_media/tree/1.0.0-beta1) (2019-05-15)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.4.0...1.0.0-beta1)
 
 **Merged pull requests:**
@@ -146,6 +172,7 @@
 - OPENEUROPA-1766: Update container on drone. [\#41](https://github.com/openeuropa/oe_media/pull/41) ([voidtek](https://github.com/voidtek))
 
 ## [0.4.0](https://github.com/openeuropa/oe_media/tree/0.4.0) (2019-05-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.3.0...0.4.0)
 
 **Merged pull requests:**
@@ -156,6 +183,7 @@
 - OPENEUROPA-1725: Fixing url used in tests. [\#36](https://github.com/openeuropa/oe_media/pull/36) ([hernani](https://github.com/hernani))
 
 ## [0.3.0](https://github.com/openeuropa/oe_media/tree/0.3.0) (2019-02-26)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.2.0...0.3.0)
 
 **Closed issues:**
@@ -169,6 +197,7 @@
 - OPENEUROPA-1656: Removing ctools dependency. [\#32](https://github.com/openeuropa/oe_media/pull/32) ([upchuk](https://github.com/upchuk))
 
 ## [0.2.0](https://github.com/openeuropa/oe_media/tree/0.2.0) (2019-02-21)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.1.0...0.2.0)
 
 **Merged pull requests:**
@@ -185,6 +214,9 @@
 - OPENEUROPA-1370: Replace the functional tests with Behat in OE Media. [\#19](https://github.com/openeuropa/oe_media/pull/19) ([sergepavle](https://github.com/sergepavle))
 
 ## [0.1.0](https://github.com/openeuropa/oe_media/tree/0.1.0) (2018-12-05)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/8474db42d00cf86c57b337ad38308333b99cab3c...0.1.0)
+
 **Merged pull requests:**
 
 - Create CHANGELOG.md. [\#18](https://github.com/openeuropa/oe_media/pull/18) ([ademarco](https://github.com/ademarco))
@@ -207,4 +239,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
