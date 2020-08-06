@@ -94,14 +94,15 @@ class MediaIframeWidget extends StringTextareaWidget {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
     $media_type = $this->entityTypeManager->getStorage('media_type')->load($this->fieldDefinition->getTargetBundle());
-    $text_format = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
+    $format_id = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
 
-    $value = $element['value'];
-    $value['#type'] = 'text_format';
-    $value['#format'] = $text_format;
-    $value['#allowed_formats'] = [$text_format];
-    $value['#base_type'] = $element['value']['#type'];
-    $element['value'] = $value;
+    if ($format_id) {
+      $format = $this->entityTypeManager->getStorage('filter_format')->load($format_id);
+      $element['format']['guidelines'][$format->id()] = [
+        '#theme' => 'filter_tips',
+        '#tips' => _filter_tips($format->id(), FALSE),
+      ];
+    }
 
     return $element;
   }
