@@ -209,6 +209,33 @@ class MediaContext extends RawDrupalContext {
   }
 
   /**
+   * Creates media Remote video with the specified URLs.
+   *
+   * Usage example:
+   *
+   * Given the following remote videos:
+   *   | url   |
+   *   | url 1 |
+   *   |  ...  |
+   *
+   * @Given the following remote video(s):
+   */
+  public function createMediaRemoteVideo(TableNode $table): void {
+    foreach ($table->getColumnsHash() as $hash) {
+      $media = \Drupal::entityTypeManager()
+        ->getStorage('media')->create([
+          'bundle' => 'remote_video',
+          'oe_media_oembed_video' => $hash['url'],
+          'status' => 1,
+        ]);
+      $media->save();
+
+      // Store for cleanup.
+      $this->media[] = $media;
+    }
+  }
+
+  /**
    * Remove any created media.
    *
    * @AfterScenario
