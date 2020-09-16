@@ -11,11 +11,14 @@ use Drupal\DrupalExtension\Context\ConfigContext;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
+use Drupal\Tests\oe_media\Traits\MediaCreationTrait;
 
 /**
  * Context to related to media testing.
  */
 class MediaContext extends RawDrupalContext {
+
+  use MediaCreationTrait;
 
   /**
    * Keep track of medias so they can be cleaned up.
@@ -120,16 +123,10 @@ class MediaContext extends RawDrupalContext {
     $files = $table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
-      $media = \Drupal::entityTypeManager()
-        ->getStorage('media')->create([
-          'bundle' => 'document',
-          'name' => $properties['name'],
-          'oe_media_file' => [
-            'target_id' => (int) $file->id(),
-          ],
-          'status' => 1,
-        ]);
-      $media->save();
+      $media = $this->createMediaDocument($file, [
+        'name' => $properties['name'],
+        'file_id' => $file->id(),
+      ]);
 
       // Store for cleanup.
       $this->media[] = $media;
@@ -156,18 +153,11 @@ class MediaContext extends RawDrupalContext {
     $files = $table->getColumnsHash();
     foreach ($files as $properties) {
       $file = $this->createFileEntity($properties['file']);
-      $media = \Drupal::entityTypeManager()
-        ->getStorage('media')->create([
-          'bundle' => 'image',
-          'name' => $properties['name'],
-          'oe_media_image' => [
-            'target_id' => (int) $file->id(),
-            'alt' => $properties['alt'] ?? $properties['name'],
-            'title' => $properties['title'] ?? $properties['name'],
-          ],
-          'status' => 1,
-        ]);
-      $media->save();
+      $media = $this->createMediaImage($file, [
+        'name' => $properties['name'],
+        'alt' => $properties['alt'] ?? $properties['name'],
+        'title' => $properties['title'] ?? $properties['name'],
+      ]);
 
       // Store for cleanup.
       $this->media[] = $media;
@@ -195,13 +185,9 @@ class MediaContext extends RawDrupalContext {
 
     // Retrieve the url table from the test scenario.
     foreach ($table->getColumnsHash() as $hash) {
-      $media = \Drupal::entityTypeManager()
-        ->getStorage('media')->create([
-          'bundle' => 'av_portal_photo',
-          'oe_media_avportal_photo' => $media_source->transformUrlToReference($hash['url']),
-          'status' => 1,
-        ]);
-      $media->save();
+      $media = $this->createMediaAvPortalPhoto($media_source, [
+        'url' => $hash['url'],
+      ]);
 
       // Store for cleanup.
       $this->media[] = $media;
@@ -222,13 +208,9 @@ class MediaContext extends RawDrupalContext {
    */
   public function createMediaRemoteVideo(TableNode $table): void {
     foreach ($table->getColumnsHash() as $hash) {
-      $media = \Drupal::entityTypeManager()
-        ->getStorage('media')->create([
-          'bundle' => 'remote_video',
-          'oe_media_oembed_video' => $hash['url'],
-          'status' => 1,
-        ]);
-      $media->save();
+      $media = $this->createMediaRemoteVideo([
+        'url' => $hash['url'],
+      ]);
 
       // Store for cleanup.
       $this->media[] = $media;
@@ -296,9 +278,8 @@ class MediaContext extends RawDrupalContext {
    *   File entity object.
    */
   protected function createFileEntity(string $file_name): FileInterface {
-    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $file_name), 'public://' . basename($file_name));
-    $file->setPermanent();
-    $file->save();
+    $filepah = $this->getMinkParameter('files_path') . $file_name;
+    $file = $this->createFile($filepah);
 
     // Store for cleanup.
     $this->files[] = $file;
