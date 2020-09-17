@@ -6,6 +6,7 @@ dependencies:
     - views.view.media_entity_browser
   module:
     - entity_browser_entity_form
+    - oe_media
     - oe_media_avportal
     - views
 name: media_entity_browser
@@ -108,3 +109,10 @@ widgets:
     weight: -2
     label: 'Register AV Portal video'
     id: av_portal_upload_link
+  71c9f393-649c-49dd-9b7a-738c2e15cc8a:
+    settings:
+      submit_text: 'Save media'
+    uuid: 71c9f393-649c-49dd-9b7a-738c2e15cc8a
+    weight: 10
+    label: 'Media creation form'
+    id: oe_media_creation_form
