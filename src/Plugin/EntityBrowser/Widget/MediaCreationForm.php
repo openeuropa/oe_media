@@ -8,10 +8,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\entity_browser\WidgetBase;
-use Drupal\entity_browser_entity_form\Plugin\EntityBrowser\Widget\EntityForm;
 
 /**
  * Entity browser widget linking to the AV Portal service for uploading videos.
@@ -53,7 +50,7 @@ class MediaCreationForm extends WidgetBase {
       '#ajax' => [
         'callback' => [$this, 'ajaxCallback'],
         'wrapper' => $id,
-      ]
+      ],
     ];
 
     $form['entity_form'] = [
@@ -68,7 +65,12 @@ class MediaCreationForm extends WidgetBase {
     $bundle = isset($user_input['media_bundle']) ? $user_input['media_bundle'] : NULL;
     if ($bundle && isset($options[$bundle])) {
       // Pretend to be IEFs submit button.
-      $form['#submit'] = [['Drupal\inline_entity_form\ElementSubmit', 'trigger']];
+      $form['#submit'] = [
+        [
+          'Drupal\inline_entity_form\ElementSubmit',
+          'trigger',
+        ],
+      ];
       $form['actions']['submit']['#ief_submit_trigger'] = TRUE;
       $form['actions']['submit']['#ief_submit_trigger_all'] = TRUE;
 
@@ -84,9 +86,17 @@ class MediaCreationForm extends WidgetBase {
     return $form;
   }
 
-  public function ajaxCallback(array &$form, FormStateInterface $form_state) {
-    $triggering_element = $form_state->getTriggeringElement();
-    $element = NestedArray::getValue($form, array_merge([$form['#browser_parts']['widget'], 'entity_form']));
+  /**
+   * Ajax callback to generate the media entity form.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   An ajax response object.
+   */
+  public function ajaxCallback(array &$form) {
+    $element = NestedArray::getValue($form, array_merge([
+      $form['#browser_parts']['widget'],
+      'entity_form',
+    ]));
     return $element;
   }
 
