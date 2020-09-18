@@ -10,6 +10,7 @@ use Drupal\Component\Uuid\Uuid;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\RenderContext;
@@ -54,6 +55,13 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
   protected $entityTypeManager;
 
   /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected $entityRepository;
+
+  /**
    * Constructs a new MediaEmbed object.
    *
    * @param array $configuration
@@ -68,12 +76,15 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
    *   The renderer.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entityRepository
+   *   The entity repository.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, Renderer $renderer, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, Renderer $renderer, EntityTypeManagerInterface $entityTypeManager, EntityRepositoryInterface $entityRepository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->config = $config_factory->get('oe_media_embed.settings');
     $this->renderer = $renderer;
     $this->entityTypeManager = $entityTypeManager;
+    $this->entityRepository = $entityRepository;
   }
 
   /**
@@ -86,7 +97,8 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
       $plugin_definition,
       $container->get('config.factory'),
       $container->get('renderer'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('entity.repository')
     );
   }
 
@@ -165,7 +177,8 @@ class FilterMediaEmbed extends FilterBase implements ContainerFactoryPluginInter
     $media = reset($media);
 
     $view_mode = $parsed_resource_url['query']['view_mode'] ?? 'default';
-    $build = $this->entityTypeManager->getViewBuilder('media')->view($media, $view_mode);
+    $translated = $this->entityRepository->getTranslationFromContext($media);
+    $build = $this->entityTypeManager->getViewBuilder('media')->view($translated, $view_mode);
     $cache = CacheableMetadata::createFromRenderArray($build);
     $access = $media->access('view', NULL, TRUE);
     $cache->addCacheableDependency($access);
