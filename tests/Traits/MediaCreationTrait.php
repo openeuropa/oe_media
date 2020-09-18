@@ -99,11 +99,12 @@ trait MediaCreationTrait {
    *   The media object.
    */
   protected function createMediaImage(FileInterface $file, array $settings = []): Media {
+    $filename_suggestion = $this->getFileNameSuggestion($file);
     $settings += [
-      'name' => $this->getFileNameSuggestion($file),
+      'name' => $filename_suggestion,
       'file_id' => FALSE,
-      'alt' => 'image',
-      'title' => 'image',
+      'alt' => $filename_suggestion,
+      'title' => $filename_suggestion,
       'status' => 1,
       'uid' => 0,
     ];
