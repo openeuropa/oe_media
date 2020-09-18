@@ -56,7 +56,7 @@ class AVPortalSearch extends View {
    * @return \Drupal\media\MediaInterface|null
    *   The media entity.
    */
-  protected function getMediaEntityFromRef(string $ref): MediaInterface {
+  protected function getMediaEntityFromRef(string $ref): ?MediaInterface {
     $bundle = NULL;
     $field = NULL;
 
