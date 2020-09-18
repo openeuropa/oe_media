@@ -62,10 +62,13 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   }
 
   // Get all the nodes which use this media entity.
-  $query = $entity_type_manager->getStorage('node')->getQuery('OR');
+  $query = $entity_type_manager->getStorage('node')->getQuery();
+  $orGroup = $query->orConditionGroup();
   foreach ($field_referenced_to_media as $field_name) {
-    $query->condition($field_name, $entity->id());
+    $orGroup->condition($field_name, $entity->id());
   }
+  $query->condition($orGroup);
+
   $ids = $query->execute();
 
   if (!$ids) {
