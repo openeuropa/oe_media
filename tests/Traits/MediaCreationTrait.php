@@ -6,7 +6,7 @@ namespace Drupal\Tests\oe_media\Traits;
 
 use Drupal\file\FileInterface;
 use Drupal\media_avportal\Plugin\media\Source\MediaAvPortalSourceInterface;
-use Drupal\media\Entity\Media;
+use Drupal\media\MediaInterface;
 use Drupal\Component\Utility\Html;
 
 /**
@@ -15,7 +15,7 @@ use Drupal\Component\Utility\Html;
 trait MediaCreationTrait {
 
   /**
-   * Create a file entity from given file path.
+   * Create a file entity from the given file path.
    *
    * @param string $filepath
    *   Path to the file location.
@@ -52,10 +52,10 @@ trait MediaCreationTrait {
    * @param array $settings
    *   An associative array of settings for the media entity.
    *
-   * @return \Drupal\media\Entity\Media
+   * @return \Drupal\media\MediaInterface
    *   The media object.
    */
-  protected function createMediaDocument(FileInterface $file, array $settings = []): Media {
+  protected function createMediaDocument(FileInterface $file, array $settings = []): MediaInterface {
     $settings += [
       'name' => $this->getFileNameSuggestion($file),
       'status' => 1,
@@ -95,10 +95,10 @@ trait MediaCreationTrait {
    * @param array $settings
    *   An associative array of settings for the media entity.
    *
-   * @return \Drupal\media\Entity\Media
+   * @return \Drupal\media\MediaInterface
    *   The media object.
    */
-  protected function createMediaImage(FileInterface $file, array $settings = []): Media {
+  protected function createMediaImage(FileInterface $file, array $settings = []): MediaInterface {
     $filename_suggestion = $this->getFileNameSuggestion($file);
     $settings += [
       'name' => $filename_suggestion,
@@ -144,10 +144,10 @@ trait MediaCreationTrait {
    * @param array $settings
    *   An associative array of settings for the media entity.
    *
-   * @return \Drupal\media\Entity\Media
+   * @return \Drupal\media\MediaInterface
    *   The media object.
    */
-  protected function createMediaAvPortalPhoto(MediaAvPortalSourceInterface $media_source, array $settings = []): Media {
+  protected function createMediaAvPortalPhoto(MediaAvPortalSourceInterface $media_source, array $settings = []): MediaInterface {
     $settings += [
       'status' => 1,
       'uid' => 0,
@@ -181,10 +181,10 @@ trait MediaCreationTrait {
    * @param array $settings
    *   An associative array of settings for the media entity.
    *
-   * @return \Drupal\media\Entity\Media
+   * @return \Drupal\media\MediaInterface
    *   The media object.
    */
-  protected function createMediaRemoteVideo(array $settings = []): Media {
+  protected function createMediaRemoteVideo(array $settings = []): MediaInterface {
     $settings += [
       'status' => 1,
       'uid' => 0,
