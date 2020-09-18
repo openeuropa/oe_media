@@ -22,7 +22,7 @@ Feature: AV Portal photo.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press the "Select entities" button
+    And I press "Select entities" in the "media browser field"
     Then I should see entity browser modal window
     When I click "Add AV Portal Photo"
     And I fill in "Media AV Portal Photo" with "https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15"
@@ -33,7 +33,7 @@ Feature: AV Portal photo.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    When I press the "Select entities" button
+    And I press "Select entities" in the "media browser field"
     Then I should see entity browser modal window
     When I click "View"
     And I select the "Euro with miniature figurines" media entity in the entity browser modal window
@@ -47,7 +47,7 @@ Feature: AV Portal photo.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    When I press the "Select entities" button
+    And I press "Select entities" in the "media browser field"
     Then I should see entity browser modal window
     When I click "Search photos in AV Portal"
     Then I should see "Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania"
