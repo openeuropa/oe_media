@@ -8,7 +8,7 @@
     "require": {
         "php": ">=7.2",
         "drupal/core": "^8.7",
-        "drupal/entity_browser": "^2.0",
+        "drupal/entity_browser": "^2.2",
         "drupal/inline_entity_form": "^1.0",
         "drupal/media_avportal": "^1.0-beta6",
         "drupal/embed": "^1.0"
@@ -19,9 +19,9 @@
         "drupal/json_field": "1.0-rc3",
         "drupal-composer/drupal-scaffold": "~2.5.2",
         "guzzlehttp/guzzle": "~6.3",
-        "instaclick/php-webdriver": "~1.4.1",
         "openeuropa/behat-transformation-context": "~0.1",
         "openeuropa/code-review": "~1.5.0",
+        "instaclick/php-webdriver": "^1.4.5",
         "openeuropa/drupal-core-require-dev": "^8.7",
         "openeuropa/task-runner": "~1.0@beta",
         "openeuropa/oe_link_lists": "dev-master",
