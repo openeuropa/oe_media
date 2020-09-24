@@ -46,8 +46,6 @@ default:
         message_selector: '.messages'
         error_message_selector: '.messages.messages--error'
         success_message_selector: '.messages.messages--status'
-      region_map:
-        media browser field: '.field--name-field-oe-demo-media-browser'
   formatters:
     progress: ~
 
