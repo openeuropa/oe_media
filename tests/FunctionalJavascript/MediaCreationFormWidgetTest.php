@@ -69,6 +69,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     // Assert that only the allowed target bundles on a different field.
     $this->getSession()->reload();
+    $this->getSession()->getPage()->pressButton('Images browser field');
     $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-images-browser');
     $image_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
