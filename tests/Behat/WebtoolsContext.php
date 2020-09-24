@@ -6,7 +6,6 @@ namespace Drupal\Tests\oe_media\Behat;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
-use PHPUnit\Framework\Assert;
 
 /**
  * Behat context for Webtools.
@@ -83,14 +82,7 @@ class WebtoolsContext extends RawDrupalContext {
     $media = reset($media);
     // Run the escaping on the Json data.
     $snippet = Json::encode(Json::decode($media->get('oe_media_webtools')->value));
-    // Escape \ and ' for the xpath expression.
-    $xpath = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
-    $result = $this->getSession()->getPage()->find('xpath', $xpath);
-    if (!$result) {
-      Assert::assertEquals('', $this->getSession()->getPage()->getContent());
-    }
-    $this->assertSession()->elementsCount('xpath', $xpath, 1);
-
+    $this->assertSession()->responseContains('<script type="application/json">' . $snippet . '</script>');
   }
 
 }
