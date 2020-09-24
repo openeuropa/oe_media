@@ -22,7 +22,7 @@ Feature: AV Portal video.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add AV Portal Video"
     And I fill in "Media AV Portal Video" with "https://audiovisual.ec.europa.eu/en/video/I-162747"
@@ -33,7 +33,7 @@ Feature: AV Portal video.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "View"
     And I select the "Midday press briefing from 25/10/2018" media entity in the entity browser modal window
@@ -44,7 +44,7 @@ Feature: AV Portal video.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Register AV Portal video"
     Then I should see the link "external link"
@@ -55,7 +55,7 @@ Feature: AV Portal video.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Search videos in AV Portal"
     Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"

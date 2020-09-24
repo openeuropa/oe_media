@@ -35,7 +35,7 @@ Feature: Remote video media entities.
 
     When I fill in "Title" with "Videos are awesome"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    And I press "Select entities"
     Then I should see entity browser modal window
     And I wait for AJAX to finish
 
@@ -55,7 +55,7 @@ Feature: Remote video media entities.
     Then I should see the heading "Create OpenEuropa Media Demo"
     When I fill in "Title" with "More videos"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    And I press "Select entities"
     Then I should see entity browser modal window
     And I wait for AJAX to finish
 

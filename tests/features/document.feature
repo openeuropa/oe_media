@@ -46,7 +46,7 @@ Feature: Document media entities.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add File"
     And I fill in "Name" with "Media document"
@@ -58,7 +58,7 @@ Feature: Document media entities.
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
-    And I press "Select entities" in the "media browser field"
+    And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "View"
     And I select the "Media document" media entity in the entity browser modal window
