@@ -69,7 +69,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     // Assert that only the allowed target bundles on a different field.
     $this->getSession()->reload();
-    $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-image-media');
+    $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-images-browser');
     $image_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
@@ -77,6 +77,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertFieldSelectOptions($select_field, [
       '- Select -',
+      'AV Portal Photo',
       'Image',
     ]);
     $this->getSession()->getPage()->selectFieldOption('Bundle', 'Image');
