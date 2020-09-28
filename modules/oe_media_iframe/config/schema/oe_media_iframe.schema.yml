@@ -1,3 +1,11 @@
 media.source.oe_media_iframe:
   type: media.source.field_aware
   label: '"Video iframe" media source configuration'
+  mapping:
+    text_format:
+      type: string
+      label: 'Text format'
+
+field.widget.settings.oe_media_iframe_textarea:
+  type: field.widget.settings.string_textarea
+  label: 'Textarea display format settings'

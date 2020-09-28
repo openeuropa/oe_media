@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.video_iframe.oe_media_iframe_thumbnail
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
     - media.type.video_iframe
@@ -21,7 +22,8 @@ content:
     region: content
 hidden:
   created: true
-  oe_media_iframe_ratio: true
+  oe_media_iframe_thumbnail: true
   name: true
+  oe_media_iframe_ratio: true
   thumbnail: true
   uid: true
