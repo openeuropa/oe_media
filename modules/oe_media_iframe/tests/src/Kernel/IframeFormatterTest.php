@@ -7,12 +7,14 @@ namespace Drupal\Tests\oe_media_iframe\Kernel;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\media\Entity\MediaType;
+use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests the field iframe formatter.
  */
 class IframeFormatterTest extends KernelTestBase {
+
+  use MediaTypeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -30,13 +32,6 @@ class IframeFormatterTest extends KernelTestBase {
     'oe_media',
     'oe_media_iframe',
   ];
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * The field name.
@@ -77,33 +72,19 @@ class IframeFormatterTest extends KernelTestBase {
     $this->installEntitySchema('media');
     $this->installEntitySchema('user');
 
-    /** @var \Drupal\media\MediaTypeInterface $media_type */
-    $media_type = MediaType::create([
+    $media_type = $this->createMediaType('oe_media_iframe', [
       'id' => 'test_iframe',
       'label' => 'Test iframe source',
       'source' => 'oe_media_iframe',
     ]);
-    $media_type->save();
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
     $source = $media_type->getSource();
-    $source_field = $source->createSourceField($media_type);
-    $source_configuration = $source->getConfiguration();
-    $source_configuration['source_field'] = $source_field->getName();
-    $source->setConfiguration($source_configuration);
-    $source_field->getFieldStorageDefinition()->save();
-    $source_field->save();
-    $media_type->set('source_configuration', [
-      'source_field' => $source_field->getName(),
-    ]);
-    $media_type->save();
-    $view_display = \Drupal::service('entity_display.repository')
-      ->getViewDisplay('media', $media_type->id());
     $source->prepareViewDisplay($media_type, $view_display);
     $view_display->save();
     $this->display = $view_display;
 
-    $this->fieldName = $source_field->getName();
+    $this->fieldName = $source->getConfiguration()['source_field'];
     $this->mediaType = $media_type;
-    $this->entityTypeManager = \Drupal::entityTypeManager();
   }
 
   /**
@@ -112,7 +93,7 @@ class IframeFormatterTest extends KernelTestBase {
   public function testIframeFormatter(): void {
     $value = '<iframe src="http://web:8080/tests/fixtures/example.html" invalid-attribute="with value" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading name referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script>';
 
-    $entity = $this->entityTypeManager->getStorage('media')->create([
+    $entity = \Drupal::entityTypeManager()->getStorage('media')->create([
       'bundle' => $this->mediaType->id(),
       'name' => 'Test iframe media',
       'status' => TRUE,

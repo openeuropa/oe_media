@@ -4,9 +4,10 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media_iframe\Functional;
 
+use Behat\Mink\Exception\ExpectationException;
 use Drupal\filter\Entity\FilterFormat;
-use Drupal\media\Entity\MediaType;
 use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
+use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
  * Test the Media Iframe text formats.
@@ -14,6 +15,8 @@ use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
  * @group oe_media_iframe
  */
 class MediaIframeFormatTest extends MediaFunctionalTestBase {
+
+  use MediaTypeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -46,43 +49,31 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
    */
   protected function setUp() {
     parent::setUp();
+
     \Drupal::configFactory()
       ->getEditable('media.settings')
       ->set('standalone_url', TRUE)
       ->save(TRUE);
-
     $this->container->get('router.builder')->rebuild();
 
-    /** @var \Drupal\media\MediaTypeInterface $media_type */
-    $media_type = MediaType::create([
+    $media_type = $this->createMediaType('oe_media_iframe', [
       'id' => 'test_iframe',
       'label' => 'Test iframe source',
       'source' => 'oe_media_iframe',
     ]);
-    $media_type->save();
-    $source = $media_type->getSource();
-    $source_field = $source->createSourceField($media_type);
-    $source_configuration = $source->getConfiguration();
-    $source_configuration['source_field'] = $source_field->getName();
-    $source->setConfiguration($source_configuration);
-    $source_field->getFieldStorageDefinition()->save();
-    $source_field->save();
-    $media_type->set('source_configuration', [
-      'source_field' => $source_field->getName(),
-    ]);
-    $media_type->save();
-    $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('media', $media_type->id());
-    $source->prepareFormDisplay($media_type, $form_display);
-    $form_display->save();
     $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
+    $source = $media_type->getSource();
     $source->prepareViewDisplay($media_type, $view_display);
     $view_display->save();
 
-    $this->sourceField = $source_field;
+    $this->sourceField = $source->getConfiguration()['source_field'];
     $this->mediaType = $media_type;
 
     // Create user with permission for using oe_media_iframe text format.
-    $this->adminUser = $this->createUser(array_merge(static::$adminUserPermissions, [FilterFormat::load('oe_media_iframe')->getPermissionName()]));
+    $this->adminUser = $this->createUser(array_merge(
+      static::$adminUserPermissions,
+      [FilterFormat::load('oe_media_iframe')->getPermissionName()]
+    ));
   }
 
   /**
@@ -93,7 +84,7 @@ class MediaIframeFormatTest extends MediaFunctionalTestBase {
       $media = $this->storage->create([
         'bundle' => $this->mediaType->id(),
         'name' => 'Test iframe media',
-        $this->sourceField->getName() => $test_data['html'],
+        $this->sourceField => $test_data['html'],
         'status' => TRUE,
       ]);
       $media->save();
