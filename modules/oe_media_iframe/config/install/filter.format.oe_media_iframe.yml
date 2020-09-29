@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - oe_media_iframe
 name: 'Iframe media'
 format: oe_media_iframe
 weight: 0
@@ -14,3 +16,9 @@ filters:
       allowed_html: '<iframe allowfullscreen height importance loading name referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>'
       filter_html_help: true
       filter_html_nofollow: false
+  filter_iframe_tag:
+    id: filter_iframe_tag
+    provider: oe_media_iframe
+    status: true
+    weight: 0
+    settings: {  }
