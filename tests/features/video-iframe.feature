@@ -15,8 +15,9 @@ Feature: Video iframe media.
       | 3:2  |
       | 1:1  |
     When I fill in "Name" with "EBS"
-    And I fill in "Iframe" with "<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\"><a href=\"#\">invalid</a></iframe><script type=\"text/javascript\">alert('no js')</script>"
+    And I fill in "Iframe" with "<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\"><a href=\"#\">Some text.</a></iframe><script type=\"text/javascript\">alert('no js')</script><p>Unwanted text.</p>More unwanted text.<iframe src=\"http://web:8080/tests/fixtures/example.html\" allowfullscreen=\"true\"></iframe>"
     And I should see "Allowed HTML tags: <iframe allowfullscreen height importance loading name referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>"
+    And I should see "Only one iframe tag allowed. All other content will be stripped."
     And I press "Save"
     Then I should see the success message "Video iframe EBS has been created."
 
@@ -28,4 +29,7 @@ Feature: Video iframe media.
     Then I should see the heading "My Node"
 
     # Verify that the iframe has been embedded, with all the tags except "<iframe>" stripped.
-    And the response should contain "<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\">invalid</iframe>alert('no js')"
+    And the response should contain "<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\">Some text.</iframe>"
+    And the response should not contain "Unwanted text."
+    And the response should not contain "More unwanted text."
+    And the response should not contain "<iframe src=\"http://web:8080/tests/fixtures/example.html\" allowfullscreen=\"true\"></iframe>"
