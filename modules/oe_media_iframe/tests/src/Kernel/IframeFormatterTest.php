@@ -103,7 +103,7 @@ class IframeFormatterTest extends KernelTestBase {
     // Verify that all allowed attributes is present and disallowed is removed.
     $this->renderEntityFields($entity, $this->display);
     $this->assertNoRaw($value);
-    $this->assertRaw('<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" name="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" id="" xml:lang="">invalid</iframe>alert(\'no js\')');
+    $this->assertRaw('<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" xml:lang="" xml:lang="">invalid</iframe>');
   }
 
   /**
