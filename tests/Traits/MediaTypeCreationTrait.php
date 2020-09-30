@@ -9,10 +9,12 @@ use Drupal\media\Entity\MediaType;
 /**
  * Provides methods to create a media type from given values.
  *
- * This trait is a copy of the media module one, with only the difference that
- * it saves the media type after creation, to avoid errors during dependency
- * calculation. It then updates the source configuration stored inside the media
- * type.
+ * This trait is a copy of the media module one, with some differences:
+ * - saves the media type after creation, to avoid errors during dependency
+ *   calculation.
+ * - updates the source configuration stored inside the media type to save the
+ *   field name.
+ * - prepares the view display.
  *
  * @see \Drupal\Tests\media\Traits\MediaTypeCreationTrait
  */
@@ -77,6 +79,11 @@ trait MediaTypeCreationTrait {
     $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('media', $media_type->id(), 'default');
     $source->prepareFormDisplay($media_type, $form_display);
     $form_display->save();
+
+    // Do the same for the view display.
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
+    $source->prepareViewDisplay($media_type, $view_display);
+    $view_display->save();
 
     return $media_type;
   }

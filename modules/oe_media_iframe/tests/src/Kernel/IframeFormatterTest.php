@@ -78,12 +78,10 @@ class IframeFormatterTest extends KernelTestBase {
       'label' => 'Test iframe source',
       'source' => 'oe_media_iframe',
     ]);
-    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
-    $source = $media_type->getSource();
-    $source->prepareViewDisplay($media_type, $view_display);
-    $view_display->save();
-    $this->display = $view_display;
 
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
+    $this->display = $view_display;
+    $source = $media_type->getSource();
     $this->fieldName = $source->getConfiguration()['source_field'];
     $this->mediaType = $media_type;
   }
