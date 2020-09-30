@@ -21,14 +21,14 @@ class IframeFormatterTest extends KernelTestBase {
    */
   protected static $modules = [
     'field',
-    'text',
-    'system',
-    'options',
-    'filter',
-    'user',
-    'image',
     'file',
+    'filter',
+    'image',
     'media',
+    'options',
+    'system',
+    'text',
+    'user',
     'oe_media',
     'oe_media_iframe',
   ];
