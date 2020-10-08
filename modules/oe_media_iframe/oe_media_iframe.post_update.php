@@ -65,9 +65,14 @@ function oe_media_iframe_post_update_00002(): void {
       'filters' => [
         'filter_html' => [
           'settings' => [
-            'allowed_html' => '<iframe allowfullscreen height importance loading name referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>',
+            'allowed_html' => '<iframe allowfullscreen height importance loading referrerpolicy sandbox src width mozallowfullscreen webkitAllowFullScreen scrolling frameborder>',
           ],
           'status' => TRUE,
+          'weight' => -10,
+        ],
+        'filter_iframe_tag' => [
+          'status' => TRUE,
+          'weight' => 0,
         ],
       ],
     ]);

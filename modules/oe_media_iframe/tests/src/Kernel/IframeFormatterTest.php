@@ -7,36 +7,31 @@ namespace Drupal\Tests\oe_media_iframe\Kernel;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\media\Entity\MediaType;
+use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests the field iframe formatter.
  */
 class IframeFormatterTest extends KernelTestBase {
 
+  use MediaTypeCreationTrait;
+
   /**
    * {@inheritdoc}
    */
   protected static $modules = [
     'field',
-    'text',
-    'system',
-    'options',
-    'filter',
-    'user',
-    'image',
     'file',
+    'filter',
+    'image',
     'media',
+    'options',
+    'system',
+    'text',
+    'user',
     'oe_media',
     'oe_media_iframe',
   ];
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * The field name.
@@ -65,11 +60,12 @@ class IframeFormatterTest extends KernelTestBase {
   protected function setUp() {
     parent::setUp();
     $this->installConfig([
-      'system',
       'field',
-      'options',
-      'user',
+      'filter',
       'media',
+      'options',
+      'system',
+      'user',
       'oe_media',
       'oe_media_iframe',
     ]);
@@ -77,52 +73,47 @@ class IframeFormatterTest extends KernelTestBase {
     $this->installEntitySchema('media');
     $this->installEntitySchema('user');
 
-    /** @var \Drupal\media\MediaTypeInterface $media_type */
-    $media_type = MediaType::create([
+    $media_type = $this->createMediaType('oe_media_iframe', [
       'id' => 'test_iframe',
       'label' => 'Test iframe source',
       'source' => 'oe_media_iframe',
     ]);
-    $media_type->save();
-    $source = $media_type->getSource();
-    $source_field = $source->createSourceField($media_type);
-    $source_configuration = $source->getConfiguration();
-    $source_configuration['source_field'] = $source_field->getName();
-    $source->setConfiguration($source_configuration);
-    $source_field->getFieldStorageDefinition()->save();
-    $source_field->save();
-    $media_type->set('source_configuration', [
-      'source_field' => $source_field->getName(),
-    ]);
-    $media_type->save();
-    $view_display = \Drupal::service('entity_display.repository')
-      ->getViewDisplay('media', $media_type->id());
-    $source->prepareViewDisplay($media_type, $view_display);
-    $view_display->save();
-    $this->display = $view_display;
 
-    $this->fieldName = $source_field->getName();
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
+    $this->display = $view_display;
+    $source = $media_type->getSource();
+    $this->fieldName = $source->getConfiguration()['source_field'];
     $this->mediaType = $media_type;
-    $this->entityTypeManager = \Drupal::entityTypeManager();
   }
 
   /**
    * Tests iframe formatter output.
    */
   public function testIframeFormatter(): void {
-    $value = '<iframe src="http://web:8080/tests/fixtures/example.html" invalid-attribute="with value" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading name referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script>';
+    $value = '<iframe src="http://web:8080/tests/fixtures/example.html" invalid-attribute="with value" width="800" height="600" frameborder="0" name="my-iframe">Iframes not available.</iframe><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>';
 
-    $entity = $this->entityTypeManager->getStorage('media')->create([
+    $entity = \Drupal::entityTypeManager()->getStorage('media')->create([
       'bundle' => $this->mediaType->id(),
       'name' => 'Test iframe media',
       'status' => TRUE,
     ]);
     $entity->{$this->fieldName}->value = $value;
 
-    // Verify that all allowed attributes is present and disallowed is removed.
+    // Verify that the oe_media_iframe format has been applied to the output.
     $this->renderEntityFields($entity, $this->display);
     $this->assertNoRaw($value);
-    $this->assertRaw('<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" name="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" id="" xml:lang="">invalid</iframe>alert(\'no js\')');
+    $this->assertRaw('<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0">Iframes not available.</iframe>');
+
+    // Change the media source text format to plain_text.
+    $configuration = $this->mediaType->get('source_configuration');
+    $configuration['text_format'] = 'plain_text';
+    $this->mediaType->set('source_configuration', $configuration)->save();
+
+    // Verify that the newly selected format is now applied to the output of
+    // the formatter.
+    $this->renderEntityFields($entity, $this->display);
+    $this->assertNoRaw($value);
+    $this->assertRaw('<p>&lt;iframe src=&quot;<a href="http://web:8080/tests/fixtures/example.html&amp;quot">http://web:8080/tests/fixtures/example.html&amp;quot</a>; invalid-attribute=&quot;with value&quot; width=&quot;800&quot; height=&quot;600&quot; frameborder=&quot;0&quot; name=&quot;my-iframe&quot;&gt;Iframes not available.&lt;/iframe&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit&lt;/p&gt;</p>');
   }
 
   /**
@@ -132,14 +123,10 @@ class IframeFormatterTest extends KernelTestBase {
    *   The entity object with attached fields to render.
    * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
    *   The display to render the fields in.
-   *
-   * @return string
-   *   The rendered entity fields.
    */
-  protected function renderEntityFields(FieldableEntityInterface $entity, EntityViewDisplayInterface $display): string {
+  protected function renderEntityFields(FieldableEntityInterface $entity, EntityViewDisplayInterface $display): void {
     $content = $display->build($entity);
-    $content = $this->render($content);
-    return $content;
+    $this->render($content);
   }
 
 }

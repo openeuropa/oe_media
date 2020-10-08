@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+namespace Drupal\Tests\oe_media_iframe\FunctionalJavascript;
+
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 
 /**
@@ -19,7 +21,7 @@ class VideoIframeTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stable';
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests the video iframe uses the attached thumbnail.
