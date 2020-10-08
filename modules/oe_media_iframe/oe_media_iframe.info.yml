@@ -6,6 +6,7 @@ type: module
 core: 8.x
 
 dependencies:
+  - drupal:filter
   - drupal:options
   - media:media
 
@@ -15,6 +16,9 @@ config_devel:
     - core.entity_view_display.media.video_iframe.default
     - field.storage.media.oe_media_iframe
     - field.storage.media.oe_media_iframe_ratio
+    - field.storage.media.oe_media_iframe_thumbnail
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe_thumbnail
+    - filter.format.oe_media_iframe
     - media.type.video_iframe

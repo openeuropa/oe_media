@@ -4,7 +4,12 @@ dependencies:
   config:
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe_thumbnail
+    - image.style.thumbnail
     - media.type.video_iframe
+  module:
+    - image
+    - oe_media_iframe
 id: media.video_iframe.default
 targetEntityType: media
 bundle: video_iframe
@@ -12,24 +17,10 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
-  oe_media_iframe:
-    weight: 1
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
-    region: content
-  oe_media_iframe_ratio:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   name:
     type: string_textfield
     weight: 0
@@ -38,16 +29,38 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  oe_media_iframe:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: oe_media_iframe_textarea
+    region: content
+  oe_media_iframe_ratio:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  oe_media_iframe_thumbnail:
+    weight: 2
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 5
+    weight: 6
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 3
+    weight: 4
     settings:
       match_operator: CONTAINS
       size: 60

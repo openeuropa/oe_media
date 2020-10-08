@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.media.video_iframe.oe_media_iframe
     - field.field.media.video_iframe.oe_media_iframe_ratio
+    - field.field.media.video_iframe.oe_media_iframe_thumbnail
     - media.type.video_iframe
   module:
     - oe_media_iframe
@@ -21,7 +22,8 @@ content:
     region: content
 hidden:
   created: true
-  oe_media_iframe_ratio: true
   name: true
+  oe_media_iframe_ratio: true
+  oe_media_iframe_thumbnail: true
   thumbnail: true
   uid: true
