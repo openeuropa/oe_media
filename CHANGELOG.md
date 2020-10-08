@@ -1,11 +1,22 @@
-# Changelog
+# Change Log
 
-## [1.8.0](https://github.com/openeuropa/oe_media/tree/1.8.0) (2020-08-04)
+## [1.9.0](https://github.com/openeuropa/oe_media/tree/1.9.0) (2020-10-08)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.8.0...1.9.0)
 
+**Merged pull requests:**
+
+- EPIC video iframe media v2 [\#128](https://github.com/openeuropa/oe_media/pull/128) ([brummbar](https://github.com/brummbar))
+- EWPP-292: HTML filtering issue with video iframe field. [\#127](https://github.com/openeuropa/oe_media/pull/127) ([brummbar](https://github.com/brummbar))
+- EWPP-32: Add createMediaRemoteVideo to MediaContext. [\#121](https://github.com/openeuropa/oe_media/pull/121) ([drishu](https://github.com/drishu))
+- EWPP-84: Add thumbnail field to iframe media source. [\#118](https://github.com/openeuropa/oe_media/pull/118) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-82: Allow to configure a text format for the video iframe source. [\#117](https://github.com/openeuropa/oe_media/pull/117) ([sergepavle](https://github.com/sergepavle))
+
+## [1.8.0](https://github.com/openeuropa/oe_media/tree/1.8.0) (2020-08-06)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.7.0...1.8.0)
 
 **Merged pull requests:**
 
+- Release-1.8.0: Update changelog. [\#122](https://github.com/openeuropa/oe_media/pull/122) ([nagyad](https://github.com/nagyad))
 - EWPP-37: Add override third party setting to internal media bundle. [\#116](https://github.com/openeuropa/oe_media/pull/116) ([22Alexandra](https://github.com/22Alexandra))
 - OPENEUROPA-3327: Make basic and webtools media fields not translatable by default. [\#115](https://github.com/openeuropa/oe_media/pull/115) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-3364: Add cache dependency when rendering the media via the Filter. [\#114](https://github.com/openeuropa/oe_media/pull/114) ([sergepavle](https://github.com/sergepavle))
