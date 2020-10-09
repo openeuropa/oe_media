@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Entity browser widget linking to the creation form for any media.
+ * Entity browser widget used for creating media of any type.
  *
  * @EntityBrowserWidget(
  *   id = "oe_media_creation_form",
@@ -29,7 +29,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The entity type bundle info.
+   * The entity type bundle info service.
    *
    * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
    */
@@ -80,6 +80,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
   public function getForm(array &$original_form, FormStateInterface $form_state, array $aditional_widget_parameters) {
     $form = parent::getForm($original_form, $form_state, $aditional_widget_parameters);
 
+    // Determine the bundles that the field can reference.
     $context = $form_state->get('entity_browser');
     $target_bundles = $context['widget_context']['target_bundles'] ?? [];
     $bundles = $this->entityTypeBundleInfo->getBundleInfo('media');
@@ -96,7 +97,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
 
     $form['media_bundle'] = [
       '#type' => 'select',
-      '#title' => 'Bundle',
+      '#title' => $this->t('Bundle'),
       '#options' => $options,
       '#required' => TRUE,
       '#ajax' => [
@@ -139,17 +140,21 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
   }
 
   /**
-   * Ajax callback to generate the media entity form.
+   * Ajax callback to rebuild the media creation form.
    *
-   * @return \Drupal\Core\Ajax\AjaxResponse
-   *   An ajax response object.
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   The form element.
    */
-  public function ajaxCallback(array &$form) {
-    $element = NestedArray::getValue($form, array_merge([
+  public function ajaxCallback(array &$form, FormStateInterface $form_state): array {
+    return NestedArray::getValue($form, array_merge([
       $form['#browser_parts']['widget'],
       'entity_form',
     ]));
-    return $element;
   }
 
   /**

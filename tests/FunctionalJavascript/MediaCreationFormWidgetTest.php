@@ -67,7 +67,8 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->elementAttributeContains('css', 'select#edit-media-bundle', 'required', 'required');
     $this->assertSession()->buttonExists('Save media');
 
-    // Assert that only the allowed target bundles on a different field.
+    // Assert that only the allowed target bundles are present on a different
+    // field.
     $this->getSession()->reload();
     $this->getSession()->getPage()->pressButton('Images browser field');
     $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-images-browser');
@@ -96,6 +97,13 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->pageTextContains('Test image');
     $this->assertSession()->buttonExists('Remove');
     $this->assertSession()->buttonExists('Edit');
+
+    // File in the rest of the fields.
+    $this->getSession()->getPage()->fillField('Title', 'The node title');
+    $this->getSession()->getPage()->pressButton('Save');
+
+    $this->assertSession()->pageTextContains('The node title');
+    $this->assertSession()->elementAttributeContains('css', 'img', 'src', $file->filename);
   }
 
   /**
