@@ -59,7 +59,9 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
-   * Checks that the Webtools widget is exist on the page.
+   * Checks that the Webtools widget is present on the page.
+   *
+   * Asserts webtools json presence regardless the javascript availability.
    *
    * @param string $widget_type
    *   The webtools widget type.
