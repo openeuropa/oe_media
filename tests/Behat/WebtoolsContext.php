@@ -6,11 +6,15 @@ namespace Drupal\Tests\oe_media\Behat;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
+use DrupalTest\BehatTraits\Traits\BrowserCapabilityDetectionTrait;
+use PHPUnit\Framework\Assert;
 
 /**
  * Behat context for Webtools.
  */
 class WebtoolsContext extends RawDrupalContext {
+
+  use BrowserCapabilityDetectionTrait;
 
   /**
    * Fills in the Demo content Webtools chart reference field.
@@ -64,7 +68,7 @@ class WebtoolsContext extends RawDrupalContext {
    *
    * @Then /^I should see the Webtools (map|chart|social feed) "([^"]*)" on the page$/
    */
-  public function assertWebtoolsWidgetExist(string $widget_type, string $title): void {
+  public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
@@ -83,8 +87,29 @@ class WebtoolsContext extends RawDrupalContext {
     // Run the escaping on the Json data.
     $snippet = Json::encode(Json::decode($media->get('oe_media_webtools')->value));
     // Escape \ and ' for the xpath expression.
-    $xpath = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
-    $this->assertSession()->elementsCount('xpath', $xpath, 1);
+    $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
+    // Assert presence of webtools JSON with enabled javascript.
+    if ($this->browserSupportsJavaScript()) {
+      // Receive unchanged HTML of the current page by ajax.
+      $script = <<<JS
+        (function(window) {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', window.location.href, false);
+          xhr.send(null);
+          return xhr.responseText;
+        })(window)
+JS;
+
+      $raw_html = $this->getSession()->evaluateScript($script);
+      $doc = new \DOMDocument();
+      libxml_use_internal_errors(TRUE);
+      $doc->loadHTML($raw_html);
+      $xpath = new \DOMXpath($doc);
+      Assert::assertCount(1, $xpath->query($xpath_query));
+    }
+    else {
+      $this->assertSession()->elementsCount('xpath', $xpath_query, 1);
+    }
   }
 
 }
