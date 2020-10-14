@@ -183,6 +183,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
    * {@inheritdoc}
    */
   public function submit(array &$element, array &$form, FormStateInterface $form_state) {
+    // @see \Drupal\entity_browser_entity_form\Plugin\EntityBrowser\Widget\EntityForm::submit().
     if (!empty($form_state->getTriggeringElement()['#eb_widget_main_submit'])) {
       $entities = $this->prepareEntities($form, $form_state);
       array_walk($entities, function (EntityInterface $entity) {
