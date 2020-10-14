@@ -93,15 +93,18 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       $options[$bundle] = $info['label'];
     }
 
-    $id = Html::getId('media_entity_form');
+    $id = Html::getId('media_entity_form_wrapper');
 
     $form['media_bundle'] = [
       '#type' => 'select',
       '#title' => $this->t('Bundle'),
       '#options' => $options,
       '#required' => TRUE,
+      '#executes_submit_callback' => TRUE,
+      '#limit_validation_errors' => [['media_bundle']],
+      '#submit' => [[static::class, 'changeMediaBundle']],
       '#ajax' => [
-        'callback' => [$this, 'ajaxCallback'],
+        'callback' => [static::class, 'ajaxUpdateMediaForm'],
         'wrapper' => $id,
       ],
     ];
@@ -111,19 +114,10 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       '#id' => $id,
     ];
 
-    // Here we need to use the user input because there may be other ajax
-    // requests (such as the one for a file upload) which won't contain the
-    // bundle in the form state values.
-    $user_input = $form_state->getUserInput();
-    $bundle = isset($user_input['media_bundle']) ? $user_input['media_bundle'] : NULL;
+    $bundle = $form_state->get('media_bundle');
     if ($bundle && isset($options[$bundle])) {
       // Pretend to be IEFs submit button.
-      $form['#submit'] = [
-        [
-          'Drupal\inline_entity_form\ElementSubmit',
-          'trigger',
-        ],
-      ];
+      $form['#submit'] = [['Drupal\inline_entity_form\ElementSubmit', 'trigger']];
       $form['actions']['submit']['#ief_submit_trigger'] = TRUE;
       $form['actions']['submit']['#ief_submit_trigger_all'] = TRUE;
 
@@ -140,6 +134,23 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
   }
 
   /**
+   * Updates the bundle value and flags the form for rebuild.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function changeMediaBundle(array $form, FormStateInterface $form_state) : void {
+    // Get the user input for updating the 'media_bundle' field.
+    $user_input = $form_state->getUserInput();
+    $bundle = isset($user_input['media_bundle']) ? $user_input['media_bundle'] : NULL;
+
+    $form_state->set('media_bundle', $bundle);
+    $form_state->setRebuild();
+  }
+
+  /**
    * Ajax callback to rebuild the media creation form.
    *
    * @param array $form
@@ -150,7 +161,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
    * @return array
    *   The form element.
    */
-  public function ajaxCallback(array &$form, FormStateInterface $form_state): array {
+  public function ajaxUpdateMediaForm(array &$form, FormStateInterface $form_state): array {
     return NestedArray::getValue($form, array_merge([
       $form['#browser_parts']['widget'],
       'entity_form',
@@ -174,12 +185,9 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
   public function submit(array &$element, array &$form, FormStateInterface $form_state) {
     if (!empty($form_state->getTriggeringElement()['#eb_widget_main_submit'])) {
       $entities = $this->prepareEntities($form, $form_state);
-      array_walk(
-        $entities,
-        function (EntityInterface $entity) {
-          $entity->save();
-        }
-      );
+      array_walk($entities, function (EntityInterface $entity) {
+        $entity->save();
+      });
       $this->selectEntities($entities, $form_state);
     }
   }
