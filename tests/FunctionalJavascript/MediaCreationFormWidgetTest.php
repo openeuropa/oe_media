@@ -82,8 +82,15 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
       'AV Portal Photo',
       'Image',
     ]);
+    $this->getSession()->getPage()->selectFieldOption('Bundle', 'AV Portal Photo');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->fieldExists('Media AV Portal Photo');
+    // Change the bundle and assert the form is updated.
     $this->getSession()->getPage()->selectFieldOption('Bundle', 'Image');
     $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->fieldExists('Name');
+    $this->assertSession()->fieldExists('Image');
+    $this->assertSession()->fieldNotExists('Media AV Portal Photo');
     $this->getSession()->getPage()->fillField('Name', 'Test image');
 
     // Create a file for image media.
@@ -98,7 +105,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->buttonExists('Remove');
     $this->assertSession()->buttonExists('Edit');
 
-    // File in the rest of the fields.
+    // Fill in the rest of the fields.
     $this->getSession()->getPage()->fillField('Title', 'The node title');
     $this->getSession()->getPage()->pressButton('Save');
 
