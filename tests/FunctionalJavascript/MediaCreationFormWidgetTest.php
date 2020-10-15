@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
-use Behat\Mink\Element\NodeElement;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\TestFileCreationTrait;
 
@@ -55,14 +54,14 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // target bundles.
     $this->assertSession()->selectExists('Bundle');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
-    $this->assertFieldSelectOptions($select_field, [
-      '- Select -',
-      'AV Portal Photo',
-      'AV Portal Video',
-      'Document',
-      'Image',
-      'Remote video',
-    ]);
+    $this->assertEquals([
+      '- Select -' => '- Select -',
+      'av_portal_photo' => 'AV Portal Photo',
+      'av_portal_video' => 'AV Portal Video',
+      'document' => 'Document',
+      'image' => 'Image',
+      'remote_video' => 'Remote video',
+    ], $this->getOptions($select_field));
     // Assert that the bundle field is required.
     $this->assertSession()->elementAttributeContains('css', 'select#edit-media-bundle', 'required', 'required');
     $this->assertSession()->buttonExists('Save media');
@@ -77,11 +76,11 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
     $this->getSession()->getPage()->clickLink('Media creation form');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
-    $this->assertFieldSelectOptions($select_field, [
-      '- Select -',
-      'AV Portal Photo',
-      'Image',
-    ]);
+    $this->assertEquals([
+      '- Select -' => '- Select -',
+      'av_portal_photo' => 'AV Portal Photo',
+      'image' => 'Image',
+    ], $this->getOptions($select_field));
     $this->getSession()->getPage()->selectFieldOption('Bundle', 'AV Portal Photo');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('Media AV Portal Photo');
@@ -111,27 +110,6 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     $this->assertSession()->pageTextContains('The node title');
     $this->assertSession()->elementAttributeContains('css', 'img', 'src', $file->filename);
-  }
-
-  /**
-   * Checks if a select element contains the specified options.
-   *
-   * @param \Behat\Mink\Element\NodeElement $field
-   *   The select field to validate.
-   * @param array $expected_options
-   *   An array of expected options.
-   */
-  protected function assertFieldSelectOptions(NodeElement $field, array $expected_options): void {
-    /** @var \Behat\Mink\Element\NodeElement[] $select_options */
-    $select_options = $field->findAll('xpath', 'option');
-
-    // Validate the number of options.
-    $this->assertCount(count($expected_options), $select_options);
-
-    // Validate the options and expected order.
-    foreach ($select_options as $key => $option) {
-      $this->assertEquals($option->getText(), $expected_options[$key]);
-    }
   }
 
 }
