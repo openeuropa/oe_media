@@ -142,11 +142,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
    *   The form state.
    */
   public function changeMediaBundle(array $form, FormStateInterface $form_state) : void {
-    // Get the user input for updating the 'media_bundle' field.
-    $user_input = $form_state->getUserInput();
-    $bundle = isset($user_input['media_bundle']) ? $user_input['media_bundle'] : NULL;
-
-    $form_state->set('media_bundle', $bundle);
+    $form_state->set('media_bundle', $form_state->getValue('media_bundle'));
     $form_state->setRebuild();
   }
 
