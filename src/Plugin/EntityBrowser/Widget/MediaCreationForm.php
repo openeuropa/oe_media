@@ -158,10 +158,10 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
    *   The form element.
    */
   public function ajaxUpdateMediaForm(array &$form, FormStateInterface $form_state): array {
-    return NestedArray::getValue($form, array_merge([
+    return NestedArray::getValue($form, [
       $form['#browser_parts']['widget'],
       'entity_form',
-    ]));
+    ]);
   }
 
   /**
