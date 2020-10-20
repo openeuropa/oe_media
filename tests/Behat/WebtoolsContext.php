@@ -61,7 +61,7 @@ class WebtoolsContext extends RawDrupalContext {
   /**
    * Checks that the Webtools widget is present on the page.
    *
-   * Asserts webtools json presence regardless the javascript availability.
+   * Asserts Webtools JSON presence regardless the Javascript availability.
    *
    * @param string $widget_type
    *   The webtools widget type.
@@ -91,26 +91,29 @@ class WebtoolsContext extends RawDrupalContext {
     // Escape \ and ' for the xpath expression.
     $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
     // Assert presence of webtools JSON with enabled javascript.
-    if ($this->browserSupportsJavaScript()) {
-      // Receive unchanged HTML of the current page by ajax.
+    if (!$this->browserSupportsJavaScript()) {
+      $this->assertSession()->elementsCount('xpath', $xpath_query, 1);
+    }
+    else {
+      // Retrieve the unprocessed page HTML with AJAX.
+      // JS-enabled drivers execute scripts that might modify the markup.
+      // In order to retrieve the unprocessed HTML, reload the page with AJAX,
+      // so all the cookies are passed. Note that this works
+      // only for pages loaded with GET.
       $script = <<<JS
         (function(window) {
           var xhr = new XMLHttpRequest();
           xhr.open('GET', window.location.href, false);
-          xhr.send(null);
+          xhr.send();
           return xhr.responseText;
         })(window)
 JS;
 
       $raw_html = $this->getSession()->evaluateScript($script);
       $doc = new \DOMDocument();
-      libxml_use_internal_errors(TRUE);
-      $doc->loadHTML($raw_html);
+      @$doc->loadHTML($raw_html);
       $xpath = new \DOMXpath($doc);
       Assert::assertCount(1, $xpath->query($xpath_query));
-    }
-    else {
-      $this->assertSession()->elementsCount('xpath', $xpath_query, 1);
     }
   }
 
