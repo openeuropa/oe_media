@@ -1,0 +1,7 @@
+entity_browser.browser.widget.oe_media_creation_form:
+  type: mapping
+  label: 'Media creation form configuration'
+  mapping:
+    submit_text:
+      type: string
+      label: 'Submit button text'
