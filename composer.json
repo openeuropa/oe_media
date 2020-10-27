@@ -17,6 +17,7 @@
         "composer/installers": "~1.5",
         "drush/drush": "~9.0",
         "drupal/json_field": "1.0-rc3",
+        "drupaltest/behat-traits": "~0.1",
         "drupal-composer/drupal-scaffold": "~2.5.2",
         "guzzlehttp/guzzle": "~6.3",
         "instaclick/php-webdriver": "^1.4.5",
