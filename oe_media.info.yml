@@ -9,4 +9,5 @@ dependencies:
   - drupal:inline_entity_form
   - entity_browser:entity_browser
   - entity_browser_entity_form:entity_browser_entity_form
+  - file_link:file_link
 

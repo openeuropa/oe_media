@@ -2,25 +2,24 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.oe_media_file
+    - field.storage.media.oe_media_remote_file
     - media.type.document
   module:
-    - file
-id: media.document.oe_media_file
-field_name: oe_media_file
+    - file_link
+id: media.document.oe_media_remote_file
+field_name: oe_media_remote_file
 entity_type: media
 bundle: document
-label: File
+label: 'Remote File'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: '[date:custom:Y]-[date:custom:m]'
+  link_type: 17
+  title: 1
   file_extensions: 'txt text md readme info doc dot docx dotx docm dotm xls xlt xla xlsx xltx xlsm xltm xlam xlsb ppt pot pps ppa pptx potx ppsx ppam pptm potm ppsm pdf ods odt odf'
-  max_filesize: ''
-  description_field: false
-  handler: 'default:file'
-  handler_settings: {  }
-field_type: file
+  no_extension: false
+  deferred_request: false
+field_type: file_link
