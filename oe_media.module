@@ -11,6 +11,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
@@ -117,4 +118,56 @@ function oe_media_views_query_substitutions(ViewExecutable $view) {
   return [
     '***VIEW_ANY_UNPUBLISHED_MEDIA***' => (int) $account->hasPermission('view any unpublished media'),
   ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oe_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Alter only the Document media type.
+  $bundle = $form_state->getFormObject()->getEntity()->bundle();
+  if ($bundle !== 'document') {
+    return;
+  }
+
+  // Show file field and set it required if field type is local.
+  $form['oe_media_file']['widget'][0]['#states'] = [
+    'visible' => [
+      'select[name="oe_media_file_type"]' => ['value' => 'local']
+    ],
+    'required' => [
+      'select[name="oe_media_file_type"]' => ['value' => 'local']
+    ]
+  ];
+
+  // Show remote file field and set the URL required if field type is remote.
+  $form['oe_media_remote_file']['widget'][0]['#states'] = [
+    'visible' => [
+      'select[name="oe_media_file_type"]' => ['value' => 'remote']
+    ]
+  ];
+  $form['oe_media_remote_file']['widget'][0]['uri']['#states'] = [
+    'required' => [
+      'select[name="oe_media_file_type"]' => ['value' => 'remote']
+    ]
+  ];
+
+  $form['#validate'][] = 'media_document_form_validate';
+}
+
+/**
+ * Validate document media form.
+ */
+function media_document_form_validate(array $form, FormStateInterface $form_state): void {
+  $file_type = $form_state->getValue(['oe_media_file_type', 0, 'value']);
+  if ($file_type === 'local') {
+    if (empty($form_state->getValue(['oe_media_file', 0, 'fids']))) {
+      $form_state->setErrorByName('oe_media_file', 'File field is required.');
+    }
+  }
+  if ($file_type === 'remote') {
+    if ($form_state->getValue(['oe_media_remote_file', 0, 'uri']) === '') {
+      $form_state->setErrorByName('oe_media_remote_file', 'Remote file URL is required.');
+    }
+  }
 }
