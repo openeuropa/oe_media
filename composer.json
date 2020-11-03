@@ -71,6 +71,11 @@
             "build/modules/contrib/{$name}": [
                 "type:drupal-module"
             ]
+        },
+        "patches": {
+            "drupal/core": {
+                "https://www.drupal.org/project/drupal/issues/2847425": "https://www.drupal.org/files/issues/states_not_affecting-2847425-24.patch"
+            }
         }
     }
 }
