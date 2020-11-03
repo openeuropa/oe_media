@@ -10,6 +10,7 @@ Feature: Document media entities.
     When I go to "the document creation page"
     Then I should see the heading "Add Document"
     When I fill in "Name" with "My Document 1"
+    And I select "Local" from "File Type"
     And I attach the file "sample.pdf" to "File"
     And I press "Save"
     Then I should see the heading "My Document 1"

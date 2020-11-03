@@ -12,7 +12,7 @@
         "drupal/inline_entity_form": "^1.0",
         "drupal/media_avportal": "^1.0-beta6",
         "drupal/embed": "^1.0",
-        "drupal/file_link": "^2.0"
+        "drupal/file_link": "^2.0.3"
     },
     "require-dev": {
         "composer/installers": "~1.5",
