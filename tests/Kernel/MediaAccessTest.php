@@ -24,6 +24,9 @@ class MediaAccessTest extends MediaKernelTestBase {
   public static $modules = [
     'views',
     'oe_media',
+    'file_link',
+    'link',
+    'options',
   ];
 
   /**
