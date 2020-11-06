@@ -13,7 +13,7 @@ use Drupal\media\MediaInterface;
 class DocumentMediaTest extends MediaTestBase {
 
   /**
-   * Tests that the the correct field keeps the value depending on the type.
+   * Tests that the correct field keeps the value depending on the type.
    */
   public function testDocumentMediaValues(): void {
     $this->container->get('file_system')->copy(drupal_get_path('module', 'oe_media') . '/tests/fixtures/sample.pdf', 'public://sample.pdf');

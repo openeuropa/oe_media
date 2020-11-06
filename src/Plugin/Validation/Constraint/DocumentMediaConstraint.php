@@ -32,7 +32,7 @@ class DocumentMediaConstraint extends CompositeConstraintBase {
   public $messageMissingRemoteFile = 'The document is configured to be remote, please reference a remote file.';
 
   /**
-   * Message shown when the remote file is missing.
+   * Message shown when the file type is missing.
    *
    * @var string
    */
