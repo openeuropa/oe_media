@@ -38,20 +38,10 @@ function oe_media_post_update_document_private_files(): void {
  */
 function oe_media_post_update_00001_remote_file(array &$sandbox) {
   // Enable file_link module.
-  $module_handler = \Drupal::service('module_handler');
   $module_installer = \Drupal::service('module_installer');
-  if (!$module_handler->moduleExists('link')) {
-    $module_installer->install(['link']);
-    \Drupal::service('plugin.manager.field.field_type')->clearCachedDefinitions();
-  }
-  if (!$module_handler->moduleExists('options')) {
-    $module_installer->install(['options']);
-    \Drupal::service('plugin.manager.field.field_type')->clearCachedDefinitions();
-  }
-  if (!$module_handler->moduleExists('file_link')) {
-    $module_installer->install(['file_link']);
-    \Drupal::service('plugin.manager.field.field_type')->clearCachedDefinitions();
-  }
+  $module_installer->install(['options', 'file_link']);
+
+  \Drupal::service('plugin.manager.field.field_type')->clearCachedDefinitions();
 
   // Create the new fields.
   $entity_type_manager = \Drupal::entityTypeManager();
@@ -73,16 +63,48 @@ function oe_media_post_update_00001_remote_file(array &$sandbox) {
     }
   }
 
-  // Set file field optional.
+  // Set the file field optional.
   $field_config = FieldConfig::load('media.document.oe_media_file');
   $field_config->setRequired(FALSE);
   $field_config->save();
 
   // Update the form display.
-  $form_display_values = $storage->read('core.entity_form_display.media.document.default');
-  $form_display = EntityFormDisplay::load($form_display_values['id']);
-  $updated_form_display = $entity_type_manager->getStorage($form_display->getEntityTypeId())->updateFromStorageRecord($form_display, $form_display_values);
-  $updated_form_display->save();
+  $form_display = EntityFormDisplay::load('media.document.default');
+  $components = ['name', 'oe_media_file'];
+  $existing_components = $form_display->getComponents();
+  foreach ($existing_components as $name => $component) {
+    // Increase the weight of each of the existing components by 2 (we are
+    // adding 2 new fields).
+    if (!in_array($name, $components)) {
+      $component['weight']++;
+      $form_display->setComponent($name, $component);
+    }
+  }
+
+  $existing_components['name']['weight'] = 0;
+  $form_display->setComponent('name', $existing_components['name']);
+  $file_type = [
+    'weight' => 1,
+    'settings' => [],
+    'third_party_settings' => [],
+    'type' => 'options_select',
+    'region' => 'content',
+  ];
+  $form_display->setComponent('oe_media_file_type', $file_type);
+  $existing_components['oe_media_file']['weight'] = 2;
+  $form_display->setComponent('oe_media_file', $existing_components['oe_media_file']);
+  $remote_file = [
+    'weight' => 1,
+    'settings' => [
+      'placeholder_url' => '',
+      'placeholder_title' => '',
+    ],
+    'third_party_settings' => [],
+    'type' => 'file_link_default',
+    'region' => 'content',
+  ];
+  $form_display->setComponent('oe_media_remote_file', $remote_file);
+  $form_display->save();
 
   $entity_type_manager->clearCachedDefinitions();
 }
@@ -92,15 +114,16 @@ function oe_media_post_update_00001_remote_file(array &$sandbox) {
  */
 function oe_media_post_update_00002_existing_local_documents(array &$sandbox) {
   $media_storage = \Drupal::entityTypeManager()->getStorage('media');
-  $query = $media_storage->getQuery();
-  $query->condition('bundle', 'document');
-  $document_ids = $query->execute();
-  if (empty($document_ids)) {
-    // We don't have to do anything if there are no document media entities.
-    return t('There are no Document media entities to update.');
-  }
-
   if (!isset($sandbox['total'])) {
+    $query = $media_storage->getQuery();
+    $query->condition('bundle', 'document');
+    $document_ids = $query->execute();
+    if (empty($document_ids)) {
+      // We don't have to do anything if there are no document media entities.
+      $sandbox['#finished'] = 1;
+      return t('There are no Document media entities to update.');
+    }
+
     $sandbox['current'] = 0;
     $sandbox['documents_per_batch'] = 1;
     $sandbox['document_ids'] = $document_ids;
