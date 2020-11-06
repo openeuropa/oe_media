@@ -40,8 +40,12 @@ content:
       label_plural: ''
       collapsible: false
       collapsed: false
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
     third_party_settings: {  }
-    type: inline_entity_form_simple
+    type: inline_entity_form_complex
     region: content
   field_oe_demo_av_portal_photo:
     weight: 10
