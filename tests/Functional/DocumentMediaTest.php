@@ -78,7 +78,7 @@ class DocumentMediaTest extends BrowserTestBase {
     $this->drupalGet('media/add/document');
     $this->getSession()->getPage()->fillField('Name', 'Document');
 
-    // Assert that file type field contains the correct values.
+    // Assert that the file type field contains the correct values.
     $this->assertSession()->selectExists('File Type');
     $select_field = $this->getSession()->getPage()->findField('File Type');
     $this->assertEquals([

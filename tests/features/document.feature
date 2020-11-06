@@ -4,13 +4,23 @@ Feature: Document media entities.
   As a site editor
   I want to be able to upload documents and reference Document media entities.
 
-  @cleanup:node @cleanup:media @cleanup:file @media-enable-standalone-url
+  @javascript @cleanup:node @cleanup:media @cleanup:file @media-enable-standalone-url
   Scenario: Documents can be uploaded and attached to nodes.
     Given I am logged in as a user with the "administer nodes, create oe_media_demo content, edit own oe_media_demo content, view own unpublished content, create document media" permissions
     When I go to "the document creation page"
     Then I should see the heading "Add Document"
-    When I fill in "Name" with "My Document 1"
-    And I select "Local" from "File Type"
+    And I should not see the text "One file only."
+    And I should not see the text "URL"
+
+    Then I fill in "Name" with "My Document 1"
+
+    And I select "Remote" from "File Type"
+    Then I should not see the text "One file only."
+    And I should see the text "URL"
+
+    When I select "Local" from "File Type"
+    Then I should see the text "One file only."
+    And I should not see the text "URL"
     And I attach the file "sample.pdf" to "File"
     And I press "Save"
     Then I should see the heading "My Document 1"
@@ -45,12 +55,41 @@ Feature: Document media entities.
   Scenario: The entity browser should allow the selection and creation of new Document Media entities
     Given I am logged in as a user with the "create oe_media_demo content,create document media,access media_entity_browser entity browser pages" permissions
     When I visit "the demo content creation page"
-    And I fill in "Title" with "Media demo"
+
+    # Assert that the IEF document media fields behave correctly.
+    Then I should not see the text "File type"
+    And I press "Add new media item"
+    And I wait for AJAX to finish
+    Then I should see the text "File type"
+    And I should not see the text "One file only."
+    And I should not see the text "URL"
+    And I select "Remote" from "File Type"
+    Then I should not see the text "One file only."
+    And I should see the text "URL"
+    When I select "Local" from "File Type"
+    Then I should see the text "One file only."
+    And I should not see the text "URL"
+
+    # Cancel the IEF and continue editing the node.
+    And I press "Cancel"
+    And I wait for AJAX to finish
+
+    When I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     And I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Add File"
     And I fill in "Name" with "Media document"
+    And I should not see the text "One file only."
+    And I should not see the text "URL"
+
+    And I select "Remote" from "File Type"
+    Then I should not see the text "One file only."
+    And I should see the text "URL"
+
+    When I select "Local" from "File Type"
+    Then I should see the text "One file only."
+    And I should not see the text "URL"
     And I attach the file "sample.pdf" to "File"
     And I press the "Save entity" button
     And I press the "Save" button
