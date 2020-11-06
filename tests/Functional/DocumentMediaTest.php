@@ -93,12 +93,11 @@ class DocumentMediaTest extends BrowserTestBase {
 
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Local');
     $this->drupalPostForm(NULL, [], 'Save');
-    $this->assertSession()->pageTextContains('File field is required.');
+    $this->assertSession()->pageTextContains('The document is configured to be local, please upload a local file.');
 
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Remote');
     $this->drupalPostForm(NULL, [], 'Save');
-    $this->assertSession()->pageTextContains('Remote file URL is required.');
-    file_put_contents('test.html', $this->getSession()->getPage()->getOuterHtml());
+    $this->assertSession()->pageTextContains('The document is configured to be remote, please reference a remote file.');
   }
 
 }

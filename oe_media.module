@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\media\MediaInterface;
+use Drupal\oe_media\DocumentMediaFormHandler;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
@@ -122,6 +123,15 @@ function oe_media_views_query_substitutions(ViewExecutable $view) {
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function oe_media_entity_type_alter(array &$entity_types) {
+  /** @var \Drupal\Core\Entity\EntityTypeInterface $media */
+  $media = $entity_types['media'];
+  $media->addConstraint('DocumentMedia');
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function oe_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -131,46 +141,20 @@ function oe_media_form_media_form_alter(&$form, FormStateInterface $form_state, 
     return;
   }
 
-  // Show file field and set it required if field type is local.
-  $form['oe_media_file']['widget'][0]['#states'] = [
-    'visible' => [
-      'select[name="oe_media_file_type"]' => ['value' => 'local']
-    ],
-    'required' => [
-      'select[name="oe_media_file_type"]' => ['value' => 'local']
-    ]
-  ];
-
-  // Show remote file field and set the URL required if field type is remote.
-  $form['oe_media_remote_file']['widget'][0]['#states'] = [
-    'visible' => [
-      'select[name="oe_media_file_type"]' => ['value' => 'remote']
-    ]
-  ];
-  $form['oe_media_remote_file']['widget'][0]['uri']['#states'] = [
-    'required' => [
-      'select[name="oe_media_file_type"]' => ['value' => 'remote']
-    ]
-  ];
-
-  $form['#validate'][] = 'media_document_form_validate';
+  DocumentMediaFormHandler::formAlter($form, $form_state);
 }
 
 /**
- * Validate document media form.
+ * Implements hook_inline_entity_form_entity_form_alter().
  */
-function media_document_form_validate(array $form, FormStateInterface $form_state): void {
-  $file_type = $form_state->getValue(['oe_media_file_type', 0, 'value']);
-  if ($file_type === 'local') {
-    if (empty($form_state->getValue(['oe_media_file', 0, 'fids']))) {
-      $form_state->setErrorByName('oe_media_file', 'File field is required.');
-    }
+function oe_media_inline_entity_form_entity_form_alter(array &$entity_form, FormStateInterface &$form_state) {
+  /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+  $entity = $entity_form['#entity'];
+  if (!$entity instanceof MediaInterface || $entity->bundle() !== 'document') {
+    return;
   }
-  if ($file_type === 'remote') {
-    if ($form_state->getValue(['oe_media_remote_file', 0, 'uri']) === '') {
-      $form_state->setErrorByName('oe_media_remote_file', 'Remote file URL is required.');
-    }
-  }
+
+  DocumentMediaFormHandler::formAlter($entity_form, $form_state);
 }
 
 /**
@@ -179,7 +163,7 @@ function media_document_form_validate(array $form, FormStateInterface $form_stat
 function media_media_presave(MediaInterface $media) {
   if ($media->bundle() === 'document') {
     // For documents, ensure that when saving, only the relevant field keeps
-    // the value depending on the document type.
+    // the value depending on the document type selected.
     $type = $media->get('oe_media_file_type')->value;
     $clear_map = [
       'remote' => 'oe_media_file',
