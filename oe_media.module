@@ -13,6 +13,7 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\media\MediaInterface;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
@@ -168,6 +169,25 @@ function media_document_form_validate(array $form, FormStateInterface $form_stat
   if ($file_type === 'remote') {
     if ($form_state->getValue(['oe_media_remote_file', 0, 'uri']) === '') {
       $form_state->setErrorByName('oe_media_remote_file', 'Remote file URL is required.');
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for the Media entity.
+ */
+function media_media_presave(MediaInterface $media) {
+  if ($media->bundle() === 'document') {
+    // For documents, ensure that when saving, only the relevant field keeps
+    // the value depending on the document type.
+    $type = $media->get('oe_media_file_type')->value;
+    $clear_map = [
+      'remote' => 'oe_media_file',
+      'local' => 'oe_media_remote_file'
+    ];
+
+    if (isset($clear_map[$type])) {
+      $media->set($clear_map[$type], NULL);
     }
   }
 }

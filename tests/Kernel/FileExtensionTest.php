@@ -5,44 +5,11 @@ declare(strict_types = 1);
 namespace Drupal\Tests\oe_media\Kernel;
 
 use Drupal\field\Entity\FieldConfig;
-use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Tests that media types that allow file uploads use the correct extensions.
  */
-class FileExtensionTest extends KernelTestBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  protected static $modules = [
-    'field',
-    'media',
-    'user',
-    'image',
-    'file',
-    'system',
-    'oe_media',
-    'file_link',
-    'link',
-    'options',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-
-    $this->installConfig([
-      'media',
-      'image',
-      'file',
-      'system',
-      'oe_media',
-    ]);
-
-  }
+class FileExtensionTest extends MediaTestBase {
 
   /**
    * Tests a document upload restriction.
