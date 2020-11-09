@@ -78,7 +78,8 @@
         },
         "patches": {
             "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/2847425": "https://www.drupal.org/files/issues/states_not_affecting-2847425-24.patch"
+                "https://www.drupal.org/project/drupal/issues/2847425": "https://www.drupal.org/files/issues/2019-09-03/states_not_affecting-2847425-39.patch",
+                "https://www.drupal.org/project/drupal/issues/1091852": "https://www.drupal.org/files/issues/2019-11-19/1091852-104.patch"
             }
         }
     }
