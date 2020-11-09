@@ -94,6 +94,13 @@ class DocumentMediaTest extends BrowserTestBase {
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Local');
     $this->drupalPostForm(NULL, [], 'Save');
     $this->assertSession()->pageTextContains('The document is configured to be local, please upload a local file.');
+    // Attach a file, then remove it.
+    $this->getSession()->getPage()->attachFileToField('File', drupal_get_path('module', 'oe_media') . '/tests/fixtures/sample.pdf');
+    $this->drupalPostForm(NULL, [], t('Upload'));
+    $this->getSession()->getPage()->pressButton('Remove');
+    // Assert the file field keeps the required state.
+    $this->drupalPostForm(NULL, [], 'Save');
+    $this->assertSession()->pageTextContains('The document is configured to be local, please upload a local file.');
 
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Remote');
     $this->drupalPostForm(NULL, [], 'Save');
