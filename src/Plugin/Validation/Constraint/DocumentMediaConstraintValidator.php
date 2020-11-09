@@ -4,13 +4,42 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media\Plugin\Validation\Constraint;
 
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\oe_media\DocumentMediaFormHandler;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Validates the DocumentMediaConstraint.
  */
-class DocumentMediaConstraintValidator extends ConstraintValidator {
+class DocumentMediaConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
+
+  /**
+   * The document media form handler.
+   *
+   * @var \Drupal\oe_media\DocumentMediaFormHandler
+   */
+  protected $documentMediaFormHandler;
+
+  /**
+   * DocumentMediaConstraintValidator constructor.
+   *
+   * @param \Drupal\oe_media\DocumentMediaFormHandler $documentMediaFormHandler
+   *   The document media form handler.
+   */
+  public function __construct(DocumentMediaFormHandler $documentMediaFormHandler) {
+    $this->documentMediaFormHandler = $documentMediaFormHandler;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('oe_media.document_media_form_handler')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -18,6 +47,12 @@ class DocumentMediaConstraintValidator extends ConstraintValidator {
   public function validate($value, Constraint $constraint) {
     /** @var \Drupal\media\MediaInterface $value */
     if ($value->bundle() !== 'document') {
+      return;
+    }
+
+    if (!$this->documentMediaFormHandler->isFormDisplayConfigured()) {
+      // We don't perform a validation if the form display is not configured
+      // to show all the fields.
       return;
     }
 

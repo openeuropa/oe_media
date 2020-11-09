@@ -25,10 +25,25 @@ The component provides a new permission called `view any unpublished media` whic
 - [Contributing](#contributing)
 - [Versioning](#versioning)
 
+## Document media bundle
+
+Out of the box, the Document media bundle provides the capability to upload a local document or choose a remote URL for the document, whose metadata will be pulled from that remote file (such as file type and size).
+
+If you are updating from a version before `1.10.0` and you would like to benefit from the remote document capability, all you have to do is:
+
+* Run the database updates as you normally would
+* Edit the Document media form display and place the `File Type` and `Remote File` fields below the `Name` field. The most common order would be:
+  * Name
+  * File Type
+  * File
+  * Remote File
+
+This will ensure the functionality kicks in.
+
 ## Known Issues
 
 * The Daily Motion video URLs in the Remote video bundles need to have the HTTP scheme (not HTTPs).
-* The Daily Motion thumbnail URLs are typically without an extension so the local copy is not usable. This is fixed in [#3080666](https://www.drupal.org/project/drupal/issues/3080666) so if 
+* The Daily Motion thumbnail URLs are typically without an extension so the local copy is not usable. This is fixed in [#3080666](https://www.drupal.org/project/drupal/issues/3080666) so if
 your version of Drupal core does not include that commit yet, you can apply the latest patch there.
 
 ## Development setup
@@ -54,10 +69,10 @@ Your test site will be available at `./build`.
 
 ### Using Docker Compose
 
-Alternatively, you can build a development site using [Docker](https://www.docker.com/get-docker) and 
+Alternatively, you can build a development site using [Docker](https://www.docker.com/get-docker) and
 [Docker Compose](https://docs.docker.com/compose/) with the provided configuration.
 
-Docker provides the necessary services and tools such as a web server and a database server to get the site running, 
+Docker provides the necessary services and tools such as a web server and a database server to get the site running,
 regardless of your local host configuration.
 
 #### Requirements:
@@ -69,7 +84,7 @@ regardless of your local host configuration.
 
 By default, Docker Compose reads two files, a `docker-compose.yml` and an optional `docker-compose.override.yml` file.
 By convention, the `docker-compose.yml` contains your base configuration and it's provided by default.
-The override file, as its name implies, can contain configuration overrides for existing services or entirely new 
+The override file, as its name implies, can contain configuration overrides for existing services or entirely new
 services.
 If a service is defined in both files, Docker Compose merges the configurations.
 
@@ -97,7 +112,7 @@ docker-compose exec web composer install
 docker-compose exec web ./vendor/bin/run drupal:site-install
 ```
 
-Using default configuration, the development site files should be available in the `build` directory and the development 
+Using default configuration, the development site files should be available in the `build` directory and the development
 site should be available at: [http://127.0.0.1:8080/build](http://127.0.0.1:8080/build).
 
 #### Running the tests
@@ -122,10 +137,10 @@ docker-compose exec web ./vendor/bin/behat
 
 ## Contributing
 
-Please read [the full documentation](https://github.com/openeuropa/openeuropa) for details on our code of conduct, 
+Please read [the full documentation](https://github.com/openeuropa/openeuropa) for details on our code of conduct,
 and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the available versions, 
+We use [SemVer](http://semver.org/) for versioning. For the available versions,
 see the [tags on this repository](https://github.com/openeuropa/oe_media/tags).

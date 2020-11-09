@@ -86,7 +86,7 @@ function oe_media_post_update_00002_existing_local_documents(array &$sandbox) {
     }
 
     $sandbox['current'] = 0;
-    $sandbox['documents_per_batch'] = 1;
+    $sandbox['documents_per_batch'] = 5;
     $sandbox['document_ids'] = $document_ids;
     $sandbox['total'] = count($sandbox['document_ids']);
   }

@@ -1,0 +1,4 @@
+services:
+  oe_media.document_media_form_handler:
+    class: Drupal\oe_media\DocumentMediaFormHandler
+    arguments: ['@entity_type.manager']

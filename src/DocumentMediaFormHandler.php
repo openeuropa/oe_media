@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\media\MediaForm;
 
@@ -13,6 +14,51 @@ use Drupal\media\MediaForm;
 class DocumentMediaFormHandler {
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * DocumentMediaFormHandler constructor.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
+   */
+  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+    $this->entityTypeManager = $entityTypeManager;
+  }
+
+  /**
+   * Checks whether the media form display is correctly configured.
+   *
+   * This means that the File Type and Remote File fields are visible on the
+   * form display.
+   *
+   * @return bool
+   *   Whether the form display is configured.
+   */
+  public function isFormDisplayConfigured(): bool {
+    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+    $form_display = $this->entityTypeManager->getStorage('entity_form_display')->load('media.document.default');
+    // All of these fields need to be visible.
+    $fields = [
+      'name',
+      'oe_media_file_type',
+      'oe_media_remote_file',
+      'oe_media_file',
+    ];
+    foreach ($fields as $name) {
+      if (!$form_display->getComponent($name)) {
+        return FALSE;
+      }
+    }
+
+    return TRUE;
+  }
+
+  /**
    * Alters the form to handle the remote and local file fields.
    *
    * @param array $form
@@ -20,12 +66,12 @@ class DocumentMediaFormHandler {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  public static function formAlter(array &$form, FormStateInterface $form_state): void {
+  public function formAlter(array &$form, FormStateInterface $form_state): void {
     $form_object = $form_state->getFormObject();
     if (!$form_object instanceof MediaForm) {
       // This means we are not on a Media form but on an embedded one, in which
       // case we know we are not translating.
-      static::applyVisibilityStates($form);
+      $this->applyVisibilityStates($form);
       return;
     }
     /** @var \Drupal\media\MediaInterface $media */
@@ -56,7 +102,7 @@ class DocumentMediaFormHandler {
 
     // If we are not a translation form, we can apply #states to hide/show the
     // relevant file field.
-    static::applyVisibilityStates($form);
+    $this->applyVisibilityStates($form);
   }
 
   /**
@@ -65,7 +111,11 @@ class DocumentMediaFormHandler {
    * @param array $form
    *   The media form.
    */
-  protected static function applyVisibilityStates(array &$form): void {
+  protected function applyVisibilityStates(array &$form): void {
+    if (!$this->isFormDisplayConfigured()) {
+      return;
+    }
+
     $parents = $form['#parents'];
     $name = 'oe_media_file_type';
     if ($parents) {
