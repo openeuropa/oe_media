@@ -102,3 +102,11 @@ function oe_media_iframe_post_update_00002(): void {
   }
 
 }
+
+/**
+ * Make iframe ratio field storage translatable.
+ */
+function oe_media_iframe_post_update_00003(): void {
+  $field = \Drupal::service('entity_type.manager')->getStorage('field_storage_config')->load('media.oe_media_iframe_ratio');
+  $field->setTranslatable(TRUE)->save();
+}
