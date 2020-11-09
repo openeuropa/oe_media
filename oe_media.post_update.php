@@ -8,7 +8,6 @@
 declare(strict_types = 1);
 
 use Drupal\Core\Config\FileStorage;
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\FieldStorageConfigInterface;
@@ -67,44 +66,6 @@ function oe_media_post_update_00001_remote_file(array &$sandbox) {
   $field_config = FieldConfig::load('media.document.oe_media_file');
   $field_config->setRequired(FALSE);
   $field_config->save();
-
-  // Update the form display.
-  $form_display = EntityFormDisplay::load('media.document.default');
-  $components = ['name', 'oe_media_file'];
-  $existing_components = $form_display->getComponents();
-  foreach ($existing_components as $name => $component) {
-    // Increase the weight of each of the existing components by 2 (we are
-    // adding 2 new fields).
-    if (!in_array($name, $components)) {
-      $component['weight']++;
-      $form_display->setComponent($name, $component);
-    }
-  }
-
-  $existing_components['name']['weight'] = 0;
-  $form_display->setComponent('name', $existing_components['name']);
-  $file_type = [
-    'weight' => 1,
-    'settings' => [],
-    'third_party_settings' => [],
-    'type' => 'options_select',
-    'region' => 'content',
-  ];
-  $form_display->setComponent('oe_media_file_type', $file_type);
-  $existing_components['oe_media_file']['weight'] = 2;
-  $form_display->setComponent('oe_media_file', $existing_components['oe_media_file']);
-  $remote_file = [
-    'weight' => 1,
-    'settings' => [
-      'placeholder_url' => '',
-      'placeholder_title' => '',
-    ],
-    'third_party_settings' => [],
-    'type' => 'file_link_default',
-    'region' => 'content',
-  ];
-  $form_display->setComponent('oe_media_remote_file', $remote_file);
-  $form_display->save();
 
   $entity_type_manager->clearCachedDefinitions();
 }
