@@ -44,8 +44,6 @@ class DocumentMediaTest extends MediaTestBase {
     $media->set('oe_media_file', $file);
     $this->assertViolation($media, 'The document is configured to be remote, please reference a remote file.');
 
-    $media->save();
-
     // Test that when setting the local file, the remote file link is removed.
     $media->set('oe_media_file_type', 'local');
     $media->set('oe_media_remote_file', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
@@ -58,7 +56,7 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertTrue($media->get('oe_media_remote_file')->isEmpty());
     $this->assertEquals($file->id(), $media->get('oe_media_file')->entity->id());
 
-    // Update the media and change to local file.
+    // Update the media and change to remote file.
     $media->set('oe_media_file_type', 'remote');
     $media->set('oe_media_remote_file', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
     $media->set('oe_media_file', $file);

@@ -124,11 +124,8 @@ class DocumentMediaFormHandler {
     }
 
     // Show file field and set it required if field type is local.
-    $form['oe_media_file']['widget'][0]['#states'] = [
+    $form['oe_media_file']['#states'] = [
       'visible' => [
-        'select[name="' . $name . '"]' => ['value' => 'local'],
-      ],
-      'required' => [
         'select[name="' . $name . '"]' => ['value' => 'local'],
       ],
     ];
