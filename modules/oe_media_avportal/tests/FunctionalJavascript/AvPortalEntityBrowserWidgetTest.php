@@ -19,6 +19,7 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
     'views',
     'oe_media_avportal',
     'media_avportal_mock',
+    'options',
   ];
 
   /**

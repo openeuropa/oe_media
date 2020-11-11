@@ -31,6 +31,8 @@ class IframeFormatterTest extends KernelTestBase {
     'user',
     'oe_media',
     'oe_media_iframe',
+    'file_link',
+    'link',
   ];
 
   /**

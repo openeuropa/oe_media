@@ -21,6 +21,8 @@ class IframeSourceTest extends MediaKernelTestBase {
     'oe_media',
     'oe_media_iframe',
     'options',
+    'file_link',
+    'link',
   ];
 
   /**

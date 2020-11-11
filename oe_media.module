@@ -11,7 +11,10 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\media\MediaInterface;
+use Drupal\oe_media\DocumentMediaFormHandler;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
@@ -117,4 +120,63 @@ function oe_media_views_query_substitutions(ViewExecutable $view) {
   return [
     '***VIEW_ANY_UNPUBLISHED_MEDIA***' => (int) $account->hasPermission('view any unpublished media'),
   ];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function oe_media_entity_type_alter(array &$entity_types) {
+  /** @var \Drupal\Core\Entity\EntityTypeInterface $media */
+  $media = $entity_types['media'];
+  $media->addConstraint('DocumentMedia');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oe_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Alter only the Document media type.
+  $bundle = $form_state->getFormObject()->getEntity()->bundle();
+  if ($bundle === 'document') {
+    /** @var DocumentMediaFormHandler $handler */
+    $handler = \Drupal::service('oe_media.document_media_form_handler');
+    $handler->formAlter($form, $form_state);
+  }
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ */
+function oe_media_inline_entity_form_entity_form_alter(array &$entity_form, FormStateInterface &$form_state) {
+  /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+  $entity = $entity_form['#entity'];
+  if ($entity instanceof MediaInterface && $entity->bundle() === 'document') {
+    /** @var DocumentMediaFormHandler $handler */
+    $handler = \Drupal::service('oe_media.document_media_form_handler');
+    $handler->formAlter($entity_form, $form_state);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for the Media entity.
+ */
+function media_media_presave(MediaInterface $media) {
+  if ($media->bundle() === 'document') {
+    // Default the file type to local if one is not set.
+    if ($media->get('oe_media_file_type')->isEmpty()) {
+      $media->set('oe_media_file_type', 'local');
+    }
+
+    // For documents, ensure that when saving, only the relevant field keeps
+    // the value depending on the document type selected.
+    $type = $media->get('oe_media_file_type')->value;
+    $clear_map = [
+      'remote' => 'oe_media_file',
+      'local' => 'oe_media_remote_file'
+    ];
+
+    if (isset($clear_map[$type])) {
+      $media->set($clear_map[$type], NULL);
+    }
+  }
 }

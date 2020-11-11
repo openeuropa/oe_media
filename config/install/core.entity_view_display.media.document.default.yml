@@ -2,18 +2,31 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.document.oe_media_file_type
+    - field.field.media.document.oe_media_remote_file
     - field.field.media.document.oe_media_file
-    - image.style.thumbnail
     - media.type.document
   module:
     - file
-    - image
-    - user
+    - file_link
 id: media.document.default
 targetEntityType: media
 bundle: document
 mode: default
 content:
+  oe_media_remote_file:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+      format_size: true
+    third_party_settings: {  }
+    type: file_link
+    region: content
   oe_media_file:
     weight: 0
     label: hidden
@@ -24,6 +37,7 @@ content:
     region: content
 hidden:
   created: true
+  oe_media_file_type: true
   name: true
   thumbnail: true
   uid: true
