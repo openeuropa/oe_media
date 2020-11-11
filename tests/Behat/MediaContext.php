@@ -115,7 +115,7 @@ class MediaContext extends RawDrupalContext {
    *
    * @Given the following document(s):
    */
-  public function createMediaDocuments(TableNode $table): void {
+  public function createMediaLocalDocuments(TableNode $table): void {
     // Retrieve the url table from the test scenario.
     $files = $table->getColumnsHash();
     foreach ($files as $properties) {
@@ -124,6 +124,7 @@ class MediaContext extends RawDrupalContext {
         ->getStorage('media')->create([
           'bundle' => 'document',
           'name' => $properties['name'],
+          'oe_media_file_type' => 'local',
           'oe_media_file' => [
             'target_id' => (int) $file->id(),
           ],
