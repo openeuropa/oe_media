@@ -131,7 +131,7 @@ class DocumentMediaFormHandler {
     ];
 
     // Show remote file field and set the URL required if field type is remote.
-    $form['oe_media_remote_file']['widget'][0]['#states'] = [
+    $form['oe_media_remote_file']['#states'] = [
       'visible' => [
         'select[name="' . $name . '"]' => ['value' => 'remote'],
       ],
