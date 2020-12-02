@@ -35,12 +35,13 @@ function oe_media_post_update_document_private_files(): void {
 /**
  * Add new fields to document media bundle to allow remote files.
  */
-function oe_media_post_update_00001_remote_file(array &$sandbox) {
+function oe_media_post_update_00001(array &$sandbox) {
   // Enable file_link module.
   $module_installer = \Drupal::service('module_installer');
   $module_installer->install(['options', 'file_link']);
 
   \Drupal::service('plugin.manager.field.field_type')->clearCachedDefinitions();
+  \Drupal::service('kernel')->invalidateContainer();
 
   // Create the new fields.
   $entity_type_manager = \Drupal::entityTypeManager();
@@ -73,7 +74,7 @@ function oe_media_post_update_00001_remote_file(array &$sandbox) {
 /**
  * Set all the existing Document media entities to local files.
  */
-function oe_media_post_update_00002_existing_local_documents(array &$sandbox) {
+function oe_media_post_update_00002(array &$sandbox) {
   $media_storage = \Drupal::entityTypeManager()->getStorage('media');
   if (!isset($sandbox['total'])) {
     $query = $media_storage->getQuery();
