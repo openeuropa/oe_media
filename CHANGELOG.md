@@ -1,10 +1,26 @@
-# Change Log
+# Changelog
+
+## [1.10.0](https://github.com/openeuropa/oe_media/tree/1.10.0) (2020-12-03)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.9.0...1.10.0)
+
+**Merged pull requests:**
+
+- EWPP-483: Invalidate container after enabling the file\_link module, so new field type can discovered. [\#136](https://github.com/openeuropa/oe_media/pull/136) ([ademarco](https://github.com/ademarco))
+- EWPP-526: Apply visible state on remote file field instead of widget. [\#135](https://github.com/openeuropa/oe_media/pull/135) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-516: Update docker images. [\#134](https://github.com/openeuropa/oe_media/pull/134) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-475: Make iframe ratio field storage translatable. [\#132](https://github.com/openeuropa/oe_media/pull/132) ([nagyad](https://github.com/nagyad))
+- EWPP-472: Allow remote files in Document media bundle. [\#131](https://github.com/openeuropa/oe_media/pull/131) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-303: Fix Behat step for Webtools JSON snippets in JS-enabled browsers. [\#130](https://github.com/openeuropa/oe_media/pull/130) ([sergepavle](https://github.com/sergepavle))
+- OPENEUROPA-2178: Media creation entity browser widget. [\#123](https://github.com/openeuropa/oe_media/pull/123) ([upchuk](https://github.com/upchuk))
 
 ## [1.9.0](https://github.com/openeuropa/oe_media/tree/1.9.0) (2020-10-08)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.8.0...1.9.0)
 
 **Merged pull requests:**
 
+- EWPP-0000: Update changelog for release 1.9.0. [\#129](https://github.com/openeuropa/oe_media/pull/129) ([brummbar](https://github.com/brummbar))
 - EPIC video iframe media v2 [\#128](https://github.com/openeuropa/oe_media/pull/128) ([brummbar](https://github.com/brummbar))
 - EWPP-292: HTML filtering issue with video iframe field. [\#127](https://github.com/openeuropa/oe_media/pull/127) ([brummbar](https://github.com/brummbar))
 - EWPP-32: Add createMediaRemoteVideo to MediaContext. [\#121](https://github.com/openeuropa/oe_media/pull/121) ([drishu](https://github.com/drishu))
@@ -12,6 +28,7 @@
 - EWPP-82: Allow to configure a text format for the video iframe source. [\#117](https://github.com/openeuropa/oe_media/pull/117) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.8.0](https://github.com/openeuropa/oe_media/tree/1.8.0) (2020-08-06)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.7.0...1.8.0)
 
 **Merged pull requests:**
