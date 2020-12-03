@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_webtools_media
+id: webtools_op_publication_list
+label: 'Webtools op publication list'
+description: 'Media type for webtools op publication lists.'
+source: webtools
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  widget_type: opwidget
+  source_field: oe_media_webtools
+field_map: {  }

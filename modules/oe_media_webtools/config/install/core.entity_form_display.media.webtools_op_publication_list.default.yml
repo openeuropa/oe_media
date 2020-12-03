@@ -1,0 +1,52 @@
+uuid: 4f1a2d70-b1ea-4ae8-8ffa-95d8dbcd15d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.webtools_op_publication_list.oe_media_webtools
+    - media.type.webtools_op_publication_list
+  module:
+    - oe_media_webtools
+id: media.webtools_op_publication_list.default
+targetEntityType: media
+bundle: webtools_op_publication_list
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  oe_media_webtools:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: oe_media_op_publication_lists_id
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 100
+    region: content
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }
