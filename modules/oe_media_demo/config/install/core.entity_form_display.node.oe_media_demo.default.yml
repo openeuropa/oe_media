@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_webtools_chart
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_op
     - node.type.oe_media_demo
   module:
     - entity_browser
@@ -31,7 +32,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_ief_document_media:
-    weight: 26
+    weight: 18
     settings:
       form_mode: default
       revision: false
@@ -88,7 +89,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_oe_demo_images_browser:
-    weight: 16
+    weight: 17
     settings:
       entity_browser: media_entity_browser
       field_widget_display: label
@@ -126,7 +127,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_oe_demo_video_iframe:
-    weight: 15
+    weight: 16
     settings:
       match_operator: CONTAINS
       match_limit: 10
@@ -165,6 +166,16 @@ content:
       placeholder: ''
       match_limit: 10
     third_party_settings: {  }
+  field_oe_demo_webtools_op:
+    weight: 15
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   promote:
     type: boolean_checkbox
     settings:

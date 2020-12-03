@@ -2,17 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.oe_media_demo.field_oe_demo_images_browser
+    - field.field.node.oe_media_demo.field_ief_document_media
     - field.field.node.oe_media_demo.field_oe_demo_av_portal_photo
     - field.field.node.oe_media_demo.field_oe_demo_av_portal_video
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_image_media
+    - field.field.node.oe_media_demo.field_oe_demo_images_browser
     - field.field.node.oe_media_demo.field_oe_demo_media_browser
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_video_iframe
     - field.field.node.oe_media_demo.field_oe_demo_webtools_chart
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_op
     - node.type.oe_media_demo
   module:
     - user
@@ -21,15 +23,6 @@ targetEntityType: node
 bundle: oe_media_demo
 mode: default
 content:
-  field_oe_demo_images_browser:
-    type: entity_reference_entity_view
-    weight: 11
-    label: above
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
-    region: content
   field_oe_demo_av_portal_photo:
     type: entity_reference_entity_view
     weight: 5
@@ -66,6 +59,15 @@ content:
       link: false
     third_party_settings: {  }
     region: content
+  field_oe_demo_images_browser:
+    type: entity_reference_entity_view
+    weight: 12
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
   field_oe_demo_media_browser:
     type: entity_reference_entity_view
     weight: 2
@@ -86,7 +88,7 @@ content:
     region: content
   field_oe_demo_video_iframe:
     type: entity_reference_entity_view
-    weight: 10
+    weight: 11
     label: above
     settings:
       view_mode: default
@@ -120,9 +122,19 @@ content:
       link: true
       view_mode: default
     third_party_settings: {  }
+  field_oe_demo_webtools_op:
+    type: entity_reference_entity_view
+    weight: 10
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
   links:
     weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_ief_document_media: true
