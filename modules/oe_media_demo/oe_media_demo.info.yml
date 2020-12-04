@@ -18,6 +18,7 @@ config_devel:
     - field.field.node.oe_media_demo.field_oe_demo_av_portal_photo
     - field.field.node.oe_media_demo.field_oe_demo_av_portal_video
     - field.field.node.oe_media_demo.field_oe_demo_document_media
+    - field.field.node.oe_media_demo.field_oe_demo_iframe
     - field.field.node.oe_media_demo.field_oe_demo_image_media
     - field.field.node.oe_media_demo.field_oe_demo_media_browser
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
@@ -28,6 +29,7 @@ config_devel:
     - field.storage.node.field_oe_demo_av_portal_photo
     - field.storage.node.field_oe_demo_av_portal_video
     - field.storage.node.field_oe_demo_document_media
+    - field.storage.node.field_oe_demo_iframe
     - field.storage.node.field_oe_demo_image_media
     - field.storage.node.field_oe_demo_media_browser
     - field.storage.node.field_oe_demo_remote_video_media
