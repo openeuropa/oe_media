@@ -7,11 +7,7 @@ dependencies:
     - field.field.media.iframe.oe_media_iframe_thumbnail
     - media.type.iframe
   module:
-    - oe_media_embed
     - oe_media_iframe
-third_party_settings:
-  oe_media_embed:
-    embeddable: false
 id: media.iframe.default
 targetEntityType: media
 bundle: iframe
