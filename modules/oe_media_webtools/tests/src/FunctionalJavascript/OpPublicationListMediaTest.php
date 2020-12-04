@@ -41,7 +41,16 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
     $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', 'Test media');
     $this->getSession()->getPage()->pressButton('Save');
     // Assert form element validation.
-    $this->assertSession()->pageTextContains('The Webtools OP Publication lists snippet has to contain only digits.');
+    $this->assertSession()->pageTextContains('The Webtools OP Publication lists snippet allows only integer values.');
+    $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '12.12');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('The Webtools OP Publication lists snippet allows only integer values.');
+    $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '12,12');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('The Webtools OP Publication lists snippet allows only integer values.');
+    $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '-1212');
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('The Webtools OP Publication lists snippet allows only positive values.');
 
     $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '6313');
     $this->getSession()->getPage()->pressButton('Save');
