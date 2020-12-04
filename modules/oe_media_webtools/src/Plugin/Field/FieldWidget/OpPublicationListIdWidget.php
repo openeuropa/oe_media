@@ -46,8 +46,13 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
    *   The current state of the form.
    */
   public static function validateInteger(array $element, FormStateInterface $form_state) {
-    if (!is_numeric($element['#value'])) {
-      $form_state->setError($element, t('The @title has to contain only digits.', ['@title' => $element['#title']]));
+    if (!is_numeric($element['#value']) ||
+      strpos($element['#value'], ',') ||
+      strpos($element['#value'], '.')) {
+      $form_state->setError($element, t('The @title allows only integer values.', ['@title' => $element['#title']]));
+    }
+    if ($element['#value'] < 0) {
+      $form_state->setError($element, t('The @title allows only positive values.', ['@title' => $element['#title']]));
     }
   }
 
