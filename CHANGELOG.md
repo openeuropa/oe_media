@@ -1,11 +1,18 @@
-# Changelog
+# Change Log
+
+## [1.10.1](https://github.com/openeuropa/oe_media/tree/1.10.1) (2020-12-04)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.0...1.10.1)
+
+**Merged pull requests:**
+
+- EWPP-0000: Add missing dependency to drupal:options. [\#140](https://github.com/openeuropa/oe_media/pull/140) ([brummbar](https://github.com/brummbar))
 
 ## [1.10.0](https://github.com/openeuropa/oe_media/tree/1.10.0) (2020-12-03)
-
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.9.0...1.10.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.10.0 [\#139](https://github.com/openeuropa/oe_media/pull/139) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-483: Invalidate container after enabling the file\_link module, so new field type can discovered. [\#136](https://github.com/openeuropa/oe_media/pull/136) ([ademarco](https://github.com/ademarco))
 - EWPP-526: Apply visible state on remote file field instead of widget. [\#135](https://github.com/openeuropa/oe_media/pull/135) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-516: Update docker images. [\#134](https://github.com/openeuropa/oe_media/pull/134) ([22Alexandra](https://github.com/22Alexandra))
