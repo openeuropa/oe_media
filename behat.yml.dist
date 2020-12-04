@@ -21,6 +21,7 @@ default:
               media overview: 'admin/content/media'
               demo content creation: 'node/add/oe_media_demo'
               document creation: 'media/add/document'
+              iframe creation: 'media/add/iframe'
               image creation: 'media/add/image'
               remote video selection: 'media/add/remote_video'
               Webtools chart creation: 'media/add/webtools_chart'

@@ -103,6 +103,7 @@ class DrupalContext extends RawDrupalContext {
    */
   public function fillMediaReferenceField(string $media_type, string $value): void {
     $mappings = [
+      'iframe' => 'field_oe_demo_iframe',
       'image' => 'field_oe_demo_image_media',
       'document' => 'field_oe_demo_document_media',
       'remote video' => 'field_oe_demo_remote_video_media',

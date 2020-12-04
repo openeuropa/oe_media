@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_media_iframe
+id: iframe
+label: Iframe
+description: 'Exposes iframes as reusable media.'
+source: oe_media_iframe
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  text_format: oe_media_iframe
+  source_field: oe_media_iframe
+field_map: {  }
