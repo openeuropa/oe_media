@@ -28,8 +28,19 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
+    // If we already have a json string, we get the id to set it as default
+    // value.
+    $id = '';
+    if ($items[$delta]->getValue()) {
+      if (str_contains($items[$delta]->getValue()['value'], '{ "service": "opwidget", "widgetId": "')) {
+        $id = str_replace('{ "service": "opwidget", "widgetId": "', '', $items[$delta]->getValue()['value']);
+        $id = str_replace('" }', '', $id);
+      }
+    }
+
     $element['value']['#type'] = 'textfield';
-    $element['value']['#description'] = 'Enter the widget id of the snippet generated in <a href="https://op.europa.eu/en/my-widgets" target="_blank">OP Website</a>.';
+    $element['value']['#description'] = $this->t('Enter the widget id of the snippet generated in <a href="https://op.europa.eu/en/my-widgets" target="_blank">OP Website</a>.');
+    $element['value']['#default_value'] = $id;
     $element['value']['#element_validate'] = [
       [get_called_class(), 'validateInteger'],
     ];

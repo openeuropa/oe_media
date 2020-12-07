@@ -18,9 +18,6 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
    */
   public static $modules = [
     'json_field',
-    'oe_webtools',
-    'oe_webtools_media',
-    'oe_media_webtools',
     'oe_media_demo',
   ];
 
