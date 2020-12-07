@@ -6,3 +6,23 @@ core: 8.x
 dependencies:
   - drupal:media
   - oe_webtools_media:oe_webtools_media
+
+config_devel:
+  install:
+    - core.entity_form_display.media.webtools_chart.default
+    - core.entity_form_display.media.webtools_map.default
+    - core.entity_form_display.media.webtools_op_publication_list.default
+    - core.entity_form_display.media.webtools_social_feed.default
+    - core.entity_view_display.media.webtools_chart.default
+    - core.entity_view_display.media.webtools_map.default
+    - core.entity_view_display.media.webtools_op_publication_list.default
+    - core.entity_view_display.media.webtools_social_feed.default
+    - field.field.media.webtools_chart.oe_media_webtools
+    - field.field.media.webtools_map.oe_media_webtools
+    - field.field.media.webtools_op_publication_list.oe_media_webtools
+    - field.field.media.webtools_social_feed.oe_media_webtools
+    - field.storage.media.oe_media_webtools
+    - media.type.webtools_chart
+    - media.type.webtools_map
+    - media.type.webtools_op_publication_list
+    - media.type.webtools_social_feed
