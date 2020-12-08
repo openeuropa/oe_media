@@ -31,9 +31,11 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
 
     // If we already have a json string, we get the widget id to set it as
     // default value.
-    if ($items[$delta]->getValue()) {
-      $values = Json::decode($items[$delta]->getValue()['value']);
-      $element['value']['#default_value'] = $values['widgetId'];
+    if ($items[$delta]->getString()) {
+      $values = Json::decode($items[$delta]->getString());
+      if ($values) {
+        $element['value']['#default_value'] = $values['widgetId'];
+      }
     }
 
     $element['value']['#type'] = 'number';
@@ -60,11 +62,9 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    $target_bundle = $field_definition->getTargetBundle();
-
     if (!parent::isApplicable($field_definition) ||
       $field_definition->getTargetEntityTypeId() !== 'media' ||
-      $target_bundle !== 'webtools_op_publication_list') {
+      $field_definition->getTargetBundle() !== 'webtools_op_publication_list') {
       return FALSE;
     }
     return TRUE;

@@ -39,6 +39,20 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
     $this->getSession()->getPage()->pressButton('Save');
     $this->assertSession()->pageTextContains('Webtools op publication list Publication list has been created.');
 
+    // Assert value is massaged and stored properly.
+    /** @var \Drupal\Core\Entity\EntityStorageInterface $media_storage */
+    $media_storage = \Drupal::service('entity_type.manager')->getStorage('media');
+    $existing_media = $media_storage->loadMultiple();
+    $this->assertCount(1, $existing_media);
+    /** @var \Drupal\media\MediaInterface $media */
+    $media = reset($existing_media);
+    $stored_value = $media->get('oe_media_webtools')->first()->getString();
+    $this->assertEquals('{ "service": "opwidget", "widgetId": "6313" }', $stored_value);
+
+    // Assert the value is properly formatted when editing the media.
+    $this->drupalGet($media->toUrl('edit-form'));
+    $this->assertSession()->fieldValueEquals('Webtools OP Publication lists snippet', '6313');
+
     // Create a node and reference the created media.
     $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->fillField('Title', 'Node with Publication list media');
