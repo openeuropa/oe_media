@@ -40,7 +40,7 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
 
     $element['value']['#type'] = 'number';
     $element['value']['#min'] = 0;
-    $element['value']['#description'] = $this->t('Enter the widget id of the snippet generated in <a href="https://op.europa.eu/en/my-widgets" target="_blank">OP Website</a>.');
+    $element['value']['#description'] = $this->t('Enter the widget id of the snippet generated on the <a href="https://op.europa.eu/en/my-widgets" target="_blank">OP Website</a>.');
 
     return $element;
   }
@@ -64,7 +64,8 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
     if (!parent::isApplicable($field_definition) ||
       $field_definition->getTargetEntityTypeId() !== 'media' ||
-      $field_definition->getTargetBundle() !== 'webtools_op_publication_list') {
+      $field_definition->getTargetBundle() !== 'webtools_op_publication_list'
+    ) {
       return FALSE;
     }
     return TRUE;
