@@ -52,7 +52,10 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
     $values = parent::massageFormValues($values, $form, $form_state);
     foreach ($values as $delta => &$item_values) {
       $id = $item_values['value'];
-      $item_values['value'] = '{ "service": "opwidget", "widgetId": "' . $id . '" }';
+      $item_values['value'] = Json::encode([
+        'service' => 'opwidget',
+        'widgetId' => $id,
+      ]);
     }
 
     return $values;
