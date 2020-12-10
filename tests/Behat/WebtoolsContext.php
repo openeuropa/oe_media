@@ -68,7 +68,7 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feed) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|social feed|op publication list) "([^"]*)" on the page$/
    */
   public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
