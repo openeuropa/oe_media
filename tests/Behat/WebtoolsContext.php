@@ -75,6 +75,7 @@ class WebtoolsContext extends RawDrupalContext {
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
       'social feed' => 'webtools_social_feed',
+      'op publication list' => 'webtools_op_publication_list',
     ];
 
     $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([

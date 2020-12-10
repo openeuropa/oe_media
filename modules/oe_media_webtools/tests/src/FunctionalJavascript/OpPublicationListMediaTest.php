@@ -33,7 +33,7 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
     $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
     $this->drupalGet('media/add/webtools_op_publication_list');
 
-    $this->assertSession()->pageTextContains('Enter the widget id of the snippet generated in OP Website.');
+    $this->assertSession()->pageTextContains('Enter the widget id of the snippet generated on the OP Website.');
     $this->getSession()->getPage()->fillField('Name', 'Publication list');
     $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '6313');
     $this->getSession()->getPage()->pressButton('Save');
