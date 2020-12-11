@@ -7,9 +7,6 @@ The OpenEuropa Media Webtools module provides the following media types:
 * Webtools social feed
 * Webtools OP Publication list
 
-The module also provides a custom field widget `OP Publication List ID` which converts the given id
-into a json snippet.
-
 #### Usage
 
 In order to use Webtools media, create a json snippet in the Webtools wizard (link found in field help text)
