@@ -12,9 +12,7 @@ use Drupal\Tests\media\FunctionalJavascript\MediaSourceTestBase;
 class OpPublicationListMediaTest extends MediaSourceTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   public static $modules = [
     'json_field',
@@ -35,7 +33,7 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
 
     $this->assertSession()->pageTextContains('Enter the widget id of the snippet generated on the OP Website.');
     $this->getSession()->getPage()->fillField('Name', 'Publication list');
-    $this->getSession()->getPage()->fillField('Webtools OP Publication lists snippet', '6313');
+    $this->getSession()->getPage()->fillField('Webtools OP Publication list ID', '6313');
     $this->getSession()->getPage()->pressButton('Save');
     $this->assertSession()->pageTextContains('Webtools op publication list Publication list has been created.');
 
@@ -47,11 +45,11 @@ class OpPublicationListMediaTest extends MediaSourceTestBase {
     /** @var \Drupal\media\MediaInterface $media */
     $media = reset($existing_media);
     $stored_value = $media->get('oe_media_webtools')->first()->getString();
-    $this->assertEquals('{ "service": "opwidget", "widgetId": "6313" }', $stored_value);
+    $this->assertEquals('{"service":"opwidget","widgetId":"6313"}', $stored_value);
 
     // Assert the value is properly formatted when editing the media.
     $this->drupalGet($media->toUrl('edit-form'));
-    $this->assertSession()->fieldValueEquals('Webtools OP Publication lists snippet', '6313');
+    $this->assertSession()->fieldValueEquals('Webtools OP Publication list ID', '6313');
 
     // Create a node and reference the created media.
     $this->drupalGet('node/add/oe_media_demo');

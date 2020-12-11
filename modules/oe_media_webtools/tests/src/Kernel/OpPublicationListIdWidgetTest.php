@@ -13,11 +13,9 @@ use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 class OpPublicationListIdWidgetTest extends MediaTestBase {
 
   /**
-   * Modules to install.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'json_field',
     'media',
