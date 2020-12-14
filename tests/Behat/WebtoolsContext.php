@@ -59,6 +59,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools OP publication list reference field.
+   *
+   * Fills the field with a reference to a webtools OP publication list media.
+   *
+   * @param string $title
+   *   The webtools social feed title.
+   *
+   * @Given I reference the Webtools OP publication list :title
+   */
+  public function assertReferenceWebtoolsOpPublicationList(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_op[0][target_id]', $title);
+  }
+
+  /**
    * Checks that the Webtools JSON is present on the page.
    *
    * Asserts the presence regardless of the Javascript availability.

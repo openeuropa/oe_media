@@ -41,7 +41,7 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
     $element['value']['#title'] = $this->t('Webtools OP Publication list ID');
     $element['value']['#type'] = 'number';
     $element['value']['#min'] = 0;
-    $element['value']['#description'] = $this->t('Enter the widget id of the snippet generated on the <a href="https://op.europa.eu/en/my-widgets" target="_blank">OP Website</a>.');
+    $element['value']['#description'] = $this->t('Enter the widget id of the snippet generated on the <a href="@op_widget_url" target="_blank">OP Website</a>.', ['@op_widget_url' => 'https://op.europa.eu/en/my-widgets']);
 
     return $element;
   }
