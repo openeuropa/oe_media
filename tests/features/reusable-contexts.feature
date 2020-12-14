@@ -4,6 +4,7 @@ Feature: Reusable Behat context
   As a developer
   I want to make sure that they work as expected.
 
+  @av_portal
   Scenario: I can create media using Behat steps
     Given am on homepage
     And the following AV Portal photos:
