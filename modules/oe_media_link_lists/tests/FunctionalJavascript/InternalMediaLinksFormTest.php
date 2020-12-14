@@ -26,6 +26,7 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     'oe_media_avportal',
     'oe_media_webtools',
     'oe_media_iframe',
+    'composite_reference',
   ];
 
   /**
