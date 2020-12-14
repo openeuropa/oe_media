@@ -44,6 +44,16 @@ class OEmbedClientMiddleware {
   ];
 
   /**
+   * The list of hosts where thumbnails are retrieved from.
+   *
+   * @var array
+   */
+  protected $thumbnailHosts = [
+    'i.ytimg.com',
+    'i.vimeocdn.com',
+  ];
+
+  /**
    * OEmbedClientMiddleware constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
@@ -90,6 +100,13 @@ class OEmbedClientMiddleware {
           }
           // Return empty response if oembed json in fixtures is not available.
           return new FulfilledPromise(new Response());
+        }
+
+        // Getting the thumbnail.
+        if (in_array($uri->getHost(), $this->thumbnailHosts)) {
+          $thumbnail = file_get_contents(drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png');
+          $response = new Response(200, [], $thumbnail);
+          return new FulfilledPromise($response);
         }
 
         // Otherwise, no intervention. We defer to the handler stack.
