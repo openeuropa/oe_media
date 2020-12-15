@@ -24,6 +24,7 @@
         "instaclick/php-webdriver": "^1.4.5",
         "openeuropa/behat-transformation-context": "~0.1",
         "openeuropa/code-review": "~1.5.0",
+        "drupal/composite_reference": "~1.0-alpha2",
         "openeuropa/drupal-core-require-dev": "^8.7",
         "openeuropa/task-runner": "~1.0@beta",
         "openeuropa/oe_link_lists": "dev-master",

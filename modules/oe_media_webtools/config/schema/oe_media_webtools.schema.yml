@@ -1,0 +1,3 @@
+field.widget.settings.oe_media_op_publication_lists_id:
+  type: field.widget.settings.string_textfield
+  label: 'OP Publication List ID'

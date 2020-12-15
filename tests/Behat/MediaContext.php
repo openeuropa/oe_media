@@ -104,6 +104,20 @@ class MediaContext extends RawDrupalContext {
   }
 
   /**
+   * Navigates to the edit page of a media entity.
+   *
+   * @param string $name
+   *   The title of the media.
+   *
+   * @When (I )go to the :name media edit page
+   * @When (I )visit the :name media edit page
+   */
+  public function visitMediaEditPage(string $name): void {
+    $media = $this->getMediaByName($name);
+    $this->visitPath($media->toUrl('edit-form')->toString());
+  }
+
+  /**
    * Creates media documents with the specified file names.
    *
    * Usage example:

@@ -59,6 +59,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools OP publication list reference field.
+   *
+   * Fills the field with a reference to a webtools OP publication list media.
+   *
+   * @param string $title
+   *   The webtools social feed title.
+   *
+   * @Given I reference the Webtools OP publication list :title
+   */
+  public function assertReferenceWebtoolsOpPublicationList(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_op[0][target_id]', $title);
+  }
+
+  /**
    * Checks that the Webtools JSON is present on the page.
    *
    * Asserts the presence regardless of the Javascript availability.
@@ -68,13 +82,14 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feed) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|social feed|op publication list) "([^"]*)" on the page$/
    */
   public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
       'social feed' => 'webtools_social_feed',
+      'op publication list' => 'webtools_op_publication_list',
     ];
 
     $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([
