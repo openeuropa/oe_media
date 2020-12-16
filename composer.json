@@ -34,7 +34,8 @@
         "nikic/php-parser": "^3.1.5",
         "symfony/browser-kit": "~3.0||~4.0",
         "drupal/config_devel": "^1.7",
-        "twig/twig": "^1.40"
+        "twig/twig": "^1.40",
+        "drupal/composite_reference": "^1.0@alpha"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
