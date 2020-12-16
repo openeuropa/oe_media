@@ -11,6 +11,8 @@ The following types of Media (bundles) are currently available:
 * Documents (local)
 * Remote videos (supports Youtube, Vimeo, Daily Motion)
 * AV Portal videos and photos
+* Video iframes
+* Iframes
 
 Additionally, there is a demo module inside that exposes a content type and a generic Entity Browser meant to demonstrate the usage of Media with content.
 
