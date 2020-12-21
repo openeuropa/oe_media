@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.oe_media_iframe_ratio
+    - media.type.iframe
+  module:
+    - options
+id: media.iframe.oe_media_iframe_ratio
+field_name: oe_media_iframe_ratio
+entity_type: media
+bundle: iframe
+label: Ratio
+description: 'If no ratio is chosen, the width and height specified in the iframe will be used.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

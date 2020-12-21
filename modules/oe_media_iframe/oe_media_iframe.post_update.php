@@ -7,6 +7,9 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Config\FileStorage;
+use Drupal\Component\Utility\Crypt;
+
 /**
  * Add thumbnail field to media types using iframe source.
  */
@@ -109,4 +112,67 @@ function oe_media_iframe_post_update_00002(): void {
 function oe_media_iframe_post_update_00003(): void {
   $field = \Drupal::service('entity_type.manager')->getStorage('field_storage_config')->load('media.oe_media_iframe_ratio');
   $field->setTranslatable(TRUE)->save();
+}
+
+/**
+ * Create Iframe media.
+ */
+function oe_media_iframe_post_update_00004(): void {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00004_create_media_iframe');
+  $config_data = $file_storage->read('media.type.iframe');
+
+  // Create Iframe media if it isn't exist.
+  $media_type_storage = \Drupal::entityTypeManager()->getStorage('media_type');
+  $media_type = $media_type_storage->load($config_data['id']);
+  if (!$media_type) {
+    $config_data['_core']['default_config_hash'] = Crypt::hashBase64(serialize($config_data));
+    $media_type_storage->create($config_data)->save();
+  }
+}
+
+/**
+ * Create Iframe media fields.
+ */
+function oe_media_iframe_post_update_00005(): void {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00005_create_fields');
+
+  $configs = [
+    'field.field.media.iframe.oe_media_iframe',
+    'field.field.media.iframe.oe_media_iframe_ratio',
+    'field.field.media.iframe.oe_media_iframe_thumbnail',
+  ];
+  $config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  // Create fields if they do not exist.
+  foreach ($configs as $config) {
+    $config_data = $file_storage->read($config);
+    if (!$config_storage->load($config_data['id'])) {
+      $config_data['_core']['default_config_hash'] = Crypt::hashBase64(serialize($config_data));
+      $config_storage->create($config_data)->save();
+    }
+  }
+}
+
+/**
+ * Create form and display views for Iframe media.
+ */
+function oe_media_iframe_post_update_00006(): void {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00006_create_displays');
+
+  // Form display configuration to create.
+  $form_display_values = $file_storage->read('core.entity_form_display.media.iframe.default');
+  $entity_form_display_storage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
+  $form_display = $entity_form_display_storage->load($form_display_values['id']);
+  if (!$form_display) {
+    $form_display_values['_core']['default_config_hash'] = Crypt::hashBase64(serialize($form_display_values));
+    $entity_form_display_storage->create($form_display_values)->save();
+  }
+
+  // View display configuration to create.
+  $view_display_values = $file_storage->read('core.entity_view_display.media.iframe.default');
+  $entity_view_display_storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+  $view_display = $entity_view_display_storage->load($view_display_values['id']);
+  if (!$view_display) {
+    $view_display_values['_core']['default_config_hash'] = Crypt::hashBase64(serialize($view_display_values));
+    $entity_view_display_storage->create($view_display_values)->save();
+  }
 }
