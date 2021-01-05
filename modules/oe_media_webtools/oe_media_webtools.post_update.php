@@ -7,6 +7,7 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldConfig;
 
 /**
@@ -35,5 +36,21 @@ function oe_media_webtools_post_update_00001() {
 
   if (!empty($modified)) {
     return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
+  }
+}
+
+/**
+ * Install OP Publication List media type.
+ */
+function oe_media_webtools_post_update_00002() {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_webtools') . '/config/post_updates/00002_install_op_publication_list');
+  $config_names = [
+    'media.type.webtools_op_publication_list',
+    'field.field.media.webtools_op_publication_list.oe_media_webtools',
+    'core.entity_form_display.media.webtools_op_publication_list.default',
+    'core.entity_view_display.media.webtools_op_publication_list.default',
+  ];
+  foreach ($config_names as $name) {
+    _oe_media_import_config_from_file($name, $file_storage, TRUE, FALSE);
   }
 }
