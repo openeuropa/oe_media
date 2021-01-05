@@ -197,7 +197,7 @@ function media_media_presave(MediaInterface $media) {
  * @param bool $update_if_exists
  *   If the configuration entity should be updated if found. Defaults to TRUE.
  */
-function _oe_media_import_config_from_file(string $name, StorageInterface $storage, bool $create_if_missing = TRUE, bool $update_if_exists = TRUE) {
+function _oe_media_import_config_from_file(string $name, StorageInterface $storage, bool $create_if_missing = TRUE, bool $update_if_exists = TRUE): void {
   $config_manager = \Drupal::service('config.manager');
   $entity_type_manager = \Drupal::entityTypeManager();
 
