@@ -90,9 +90,15 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->fieldExists('Name');
     $this->assertSession()->fieldExists('Image');
     $this->assertSession()->fieldNotExists('Media AV Portal Photo');
-    $this->getSession()->getPage()->fillField('Name', 'Test image');
+
+    // Toggle tabs, assert the bundle remains the same.
+    $this->getSession()->getPage()->clickLink('Register AV Portal video');
+    $this->assertSession()->fieldNotExists('Bundle');
+    $this->getSession()->getPage()->clickLink('Media creation form');
+    $bundle = $this->assertSession()->fieldValueEquals('Bundle', 'Image');
 
     // Create a file for image media.
+    $this->getSession()->getPage()->fillField('Name', 'Test image');
     $file = current($this->getTestFiles('image'));
     $image_file_path = \Drupal::service('file_system')->realpath($file->uri);
     $this->getSession()->getPage()->attachFileToField('Image', $image_file_path);
