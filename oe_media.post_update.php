@@ -106,3 +106,93 @@ function oe_media_post_update_00002(array &$sandbox) {
     return t('All the existing document media entities have been set to local files.');
   }
 }
+
+/**
+ * Update document media translations to set a file type.
+ *
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ */
+function oe_media_post_update_00003(&$sandbox) {
+  // If the file field is translatable, we need to make
+  // the field type and remote file fields translatable too.
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_config_storage = $entity_type_manager->getStorage('field_config');
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field_instance */
+  $field_instance = $field_config_storage->load('media.document.oe_media_file');
+  if ($field_instance->isTranslatable()) {
+    $field_ids = [
+      'media.document.oe_media_file_type',
+      'media.document.oe_media_remote_file',
+    ];
+    foreach ($field_ids as $field_id) {
+      $field_instance = $field_config_storage->load($field_id);
+      $field_instance->setTranslatable(TRUE);
+      $field_instance->save();
+    }
+  }
+
+  $field_instance->setTranslatable(TRUE);
+  $field_instance->save();
+
+  $media_storage = \Drupal::entityTypeManager()->getStorage('media');
+  if (!isset($sandbox['total'])) {
+    $query = $media_storage->getQuery();
+    $query->condition('bundle', 'document');
+    $document_ids = $query->execute();
+    if (empty($document_ids)) {
+      // We don't have to do anything if there are no document media entities.
+      $sandbox['#finished'] = 1;
+      return t('There are no Document media entities to update.');
+    }
+
+    $sandbox['current'] = 0;
+    $sandbox['documents_per_batch'] = 5;
+    $sandbox['document_ids'] = $document_ids;
+    $sandbox['total'] = count($sandbox['document_ids']);
+    $sandbox['updated'] = 0;
+  }
+
+  $ids = array_slice($sandbox['document_ids'], $sandbox['current'], $sandbox['documents_per_batch']);
+  $documents_to_update = $media_storage->loadMultiple($ids);
+
+  /** @var \Drupal\media\MediaInterface $media */
+  foreach ($documents_to_update as $media) {
+    $changed = FALSE;
+    if (!$media->isTranslatable()) {
+      continue;
+    }
+    foreach ($media->getTranslationLanguages(FALSE) as $langcode => $language) {
+      $translation = $media->getTranslation($langcode);
+      if (!$translation->get('oe_media_file_type')->isEmpty()) {
+        // If we already have a value, we move on.
+        continue;
+      }
+
+      // Otherwise, we need to determine what kind of document it is.
+      if (!$translation->get('oe_media_remote_file')->isEmpty()) {
+        // If we have a remote file, we mark it as remote.
+        $translation->set('oe_media_file_type', 'remote');
+        $changed = TRUE;
+        continue;
+      }
+
+      // Otherwise, we default to local.
+      $translation->set('oe_media_file_type', 'local');
+      $changed = TRUE;
+    }
+
+    if ($changed) {
+      $media->save();
+      $sandbox['updated']++;
+    }
+
+    $sandbox['current']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['total']) ? 1 : ($sandbox['current'] / $sandbox['total']);
+
+  if ($sandbox['#finished'] === 1) {
+    return t('A total number of @count document media entities have had their translations updated.', ['@count' => $sandbox['updated']]);
+  }
+}
