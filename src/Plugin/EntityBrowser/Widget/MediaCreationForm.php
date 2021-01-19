@@ -108,6 +108,8 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
         'wrapper' => $id,
       ],
       '#default_value' => $form_state->get('media_bundle'),
+      '#empty_option' => $this->t('- Select -'),
+      '#empty_value' => '_none',
     ];
 
     $form['entity_form'] = [

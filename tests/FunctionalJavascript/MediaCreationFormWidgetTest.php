@@ -55,12 +55,12 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->selectExists('Bundle');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertEquals([
-      '- Select -' => '- Select -',
       'av_portal_photo' => 'AV Portal Photo',
       'av_portal_video' => 'AV Portal Video',
       'document' => 'Document',
       'image' => 'Image',
       'remote_video' => 'Remote video',
+      '_none' => '- Select -',
     ], $this->getOptions($select_field));
     // Assert that the bundle field is required.
     $this->assertSession()->elementAttributeContains('css', 'select#edit-media-bundle', 'required', 'required');
@@ -77,7 +77,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->getSession()->getPage()->clickLink('Media creation form');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertEquals([
-      '- Select -' => '- Select -',
+      '_none' => '- Select -',
       'av_portal_photo' => 'AV Portal Photo',
       'image' => 'Image',
     ], $this->getOptions($select_field));
@@ -91,11 +91,21 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->fieldExists('Image');
     $this->assertSession()->fieldNotExists('Media AV Portal Photo');
 
+    // Toggle the bundle field none option.
+    $this->getSession()->getPage()->selectFieldOption('Bundle', '- Select -');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->fieldNotExists('Name');
+    $this->assertSession()->fieldNotExists('Image');
+
     // Toggle tabs, assert the bundle remains the same.
+    $this->getSession()->getPage()->selectFieldOption('Bundle', 'Image');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertSession()->fieldExists('Name');
+    $this->assertSession()->fieldExists('Image');
     $this->getSession()->getPage()->clickLink('Register AV Portal video');
     $this->assertSession()->fieldNotExists('Bundle');
     $this->getSession()->getPage()->clickLink('Media creation form');
-    $bundle = $this->assertSession()->fieldValueEquals('Bundle', 'Image');
+    $this->assertSession()->fieldValueEquals('Bundle', 'Image');
 
     // Create a file for image media.
     $this->getSession()->getPage()->fillField('Name', 'Test image');
