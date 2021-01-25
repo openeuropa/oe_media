@@ -1,13 +1,31 @@
-# Change Log
+# Changelog
+
+## [1.11.0](https://github.com/openeuropa/oe_media/tree/1.11.0) (2021-01-25)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.1...1.11.0)
+
+**Merged pull requests:**
+
+- EWPP-584: Media iframe [\#154](https://github.com/openeuropa/oe_media/pull/154) ([yenyasinn](https://github.com/yenyasinn))
+- EWPP-629: Fix select none. [\#153](https://github.com/openeuropa/oe_media/pull/153) ([drishu](https://github.com/drishu))
+- EWPP-629: Prevent selection loss of media bundle. [\#150](https://github.com/openeuropa/oe_media/pull/150) ([drishu](https://github.com/drishu))
+- EWPP-529: Replace scaffold library. [\#149](https://github.com/openeuropa/oe_media/pull/149) ([sergepavle](https://github.com/sergepavle))
+- EWPP-419: Install OP publication list media type on update. [\#147](https://github.com/openeuropa/oe_media/pull/147) ([imanoleguskiza](https://github.com/imanoleguskiza))
+- EWPP-441: Create assertion for Text with Featured media pattern [\#144](https://github.com/openeuropa/oe_media/pull/144) ([yenyasinn](https://github.com/yenyasinn))
+- EWPP-586: Mock oEmbed thumbnail requests [\#143](https://github.com/openeuropa/oe_media/pull/143) ([sergepavle](https://github.com/sergepavle))
+- EWPP-417: Creates new Webtools OP Publication List media type. [\#138](https://github.com/openeuropa/oe_media/pull/138) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.10.1](https://github.com/openeuropa/oe_media/tree/1.10.1) (2020-12-04)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.0...1.10.1)
 
 **Merged pull requests:**
 
+- Update changelog for release 1.10.1. [\#142](https://github.com/openeuropa/oe_media/pull/142) ([brummbar](https://github.com/brummbar))
 - EWPP-0000: Add missing dependency to drupal:options. [\#140](https://github.com/openeuropa/oe_media/pull/140) ([brummbar](https://github.com/brummbar))
 
 ## [1.10.0](https://github.com/openeuropa/oe_media/tree/1.10.0) (2020-12-03)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.9.0...1.10.0)
 
 **Merged pull requests:**
