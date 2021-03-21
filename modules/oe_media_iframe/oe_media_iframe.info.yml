@@ -3,7 +3,6 @@ description: 'Provides media types with iframe as media source.'
 package: OpenEuropa
 
 type: module
-core: 8.x
 core_version_requirement: ^8 || ^9
 
 dependencies:

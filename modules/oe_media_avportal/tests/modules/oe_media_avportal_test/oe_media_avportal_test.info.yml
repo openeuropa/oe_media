@@ -1,5 +1,4 @@
 name: OpenEuropa Media AV Portal Test
-core: 8.x
 core_version_requirement: ^8 || ^9
 type: module
 dependencies:
