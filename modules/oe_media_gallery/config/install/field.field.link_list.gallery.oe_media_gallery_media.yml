@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.link_list.oe_media_gallery_media
+    - media.type.av_portal_photo
+    - media.type.av_portal_video
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video_iframe
+    - oe_link_lists.link_list_type.gallery
+id: link_list.gallery.oe_media_gallery_media
+field_name: oe_media_gallery_media
+entity_type: link_list
+bundle: gallery
+label: Media
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      av_portal_photo: av_portal_photo
+      av_portal_video: av_portal_video
+      image: image
+      remote_video: remote_video
+      video_iframe: video_iframe
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: image
+field_type: entity_reference
