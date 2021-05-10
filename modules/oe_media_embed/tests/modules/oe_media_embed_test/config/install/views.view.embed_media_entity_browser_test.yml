@@ -12,7 +12,7 @@ description: ''
 tag: ''
 base_table: media_field_data
 base_field: mid
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 display:
   default:
     display_plugin: default

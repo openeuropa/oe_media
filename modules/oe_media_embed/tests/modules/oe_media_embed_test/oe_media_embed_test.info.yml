@@ -1,6 +1,6 @@
 name: OE Media Embed Test
 description: Test module for OE Media Embed
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 type: module
 package: Testing
 

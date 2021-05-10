@@ -2,7 +2,7 @@ name: OpenEuropa Media Embed
 description: Provides the embed functionality of the media types
 package: OpenEuropa
 type: module
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 dependencies:
   - drupal:views
   - media_avportal:media_avportal

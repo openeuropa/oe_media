@@ -17,7 +17,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\media\MediaInterface;
-use Drupal\oe_media\DocumentMediaFormHandler;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
 
@@ -141,7 +140,7 @@ function oe_media_form_media_form_alter(&$form, FormStateInterface $form_state, 
   // Alter only the Document media type.
   $bundle = $form_state->getFormObject()->getEntity()->bundle();
   if ($bundle === 'document') {
-    /** @var DocumentMediaFormHandler $handler */
+    /** @var \Drupal\oe_media\DocumentMediaFormHandler $handler */
     $handler = \Drupal::service('oe_media.document_media_form_handler');
     $handler->formAlter($form, $form_state);
   }
@@ -154,7 +153,7 @@ function oe_media_inline_entity_form_entity_form_alter(array &$entity_form, Form
   /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
   $entity = $entity_form['#entity'];
   if ($entity instanceof MediaInterface && $entity->bundle() === 'document') {
-    /** @var DocumentMediaFormHandler $handler */
+    /** @var \Drupal\oe_media\DocumentMediaFormHandler $handler */
     $handler = \Drupal::service('oe_media.document_media_form_handler');
     $handler->formAlter($entity_form, $form_state);
   }
@@ -175,7 +174,7 @@ function media_media_presave(MediaInterface $media) {
     $type = $media->get('oe_media_file_type')->value;
     $clear_map = [
       'remote' => 'oe_media_file',
-      'local' => 'oe_media_remote_file'
+      'local' => 'oe_media_remote_file',
     ];
 
     if (isset($clear_map[$type])) {
