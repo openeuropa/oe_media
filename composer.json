@@ -10,15 +10,15 @@
         "drupal/core": "^8.9 || ^9",
         "drupal/entity_browser": "^2.5",
         "drupal/inline_entity_form": "^1.0-rc9",
-        "drupal/media_avportal": "^1.0-beta11",
+        "drupal/media_avportal": "1.x-dev",
         "drupal/embed": "^1.4",
         "drupal/file_link": "^2.0.6"
     },
     "require-dev": {
         "composer/installers": "~1.5",
         "drush/drush": "~10.3",
-        "drupal/json_field": "1.0-rc3",
-        "drupaltest/behat-traits": "~0.1",
+        "drupal/json_field": "1.x-dev",
+        "drupaltest/behat-traits": "dev-GH-6",
         "drupal/core-composer-scaffold": "^8.9 || ^9",
         "guzzlehttp/guzzle": "~6.3",
         "instaclick/php-webdriver": "^1.4.7",
@@ -26,14 +26,14 @@
         "openeuropa/code-review": "~1.6",
         "openeuropa/drupal-core-require-dev": "^8.9 || ^9",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
-        "openeuropa/oe_link_lists": "dev-master",
-        "openeuropa/oe_webtools": "dev-master",
+        "openeuropa/oe_link_lists": "dev-EWPP-908",
+        "openeuropa/oe_webtools": "dev-EWPP-916",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "^7 || ^8",
         "nikic/php-parser": "^3.1.5",
-        "symfony/browser-kit": "~3.0||~4.0",
+        "symfony/browser-kit": "~3.0 || ~4.0",
         "drupal/config_devel": "^1.7",
-        "twig/twig": "^1.40",
+        "twig/twig": "^1.40 || ^2.12",
         "drupal/composite_reference": "^1.0@alpha"
     },
     "scripts": {
@@ -59,6 +59,9 @@
             "Drupal\\Tests\\oe_link_lists_manual_source\\": "./build/modules/contrib/oe_link_lists/modules/oe_link_lists_manual_source/tests/"
         }
     },
+    "_readme": [
+        "Using the dev branch of media_avportal until the new release is made because it needs to be able to pull its latest composer.json changes."
+    ],
     "extra": {
         "composer-exit-on-patch-failure": true,
         "enable-patching": true,
