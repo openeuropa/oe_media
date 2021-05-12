@@ -9,10 +9,10 @@
         "php": ">=7.3",
         "drupal/core": "^8.9 || ^9",
         "drupal/entity_browser": "^2.5",
-        "drupal/inline_entity_form": "^1.0-rc9",
+        "drupal/inline_entity_form": "^1.0",
         "drupal/media_avportal": "1.x-dev",
         "drupal/embed": "^1.4",
-        "drupal/file_link": "^2.0.6"
+        "drupal/file_link": "^2.0.3"
     },
     "require-dev": {
         "composer/installers": "~1.5",
