@@ -12,7 +12,12 @@ use Drupal\field\Entity\FieldConfig;
 /**
  * Implements hook_install().
  */
-function oe_media_link_lists_install() {
+function oe_media_link_lists_install($is_syncing) {
+  // If we are installing from config, we bail out.
+  if ($is_syncing) {
+    return;
+  }
+
   // Allow manual links field to reference internal_media bundle.
   /** @var \Drupal\Core\Field\FieldConfigInterface $field */
   $field = FieldConfig::load('link_list.manual.links');
