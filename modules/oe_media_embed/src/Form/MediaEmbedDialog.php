@@ -268,7 +268,7 @@ class MediaEmbedDialog extends FormBase {
     /** @var \Drupal\Core\Entity\EntityInterface $entity */
     $entity = $form_state->get('entity');
 
-    $form['#title'] = $this->t('Review selected @type', ['@type' => $entity->getEntityType()->getLowercaseLabel()]);
+    $form['#title'] = $this->t('Review selected @type', ['@type' => $entity->getEntityType()->getSingularLabel()]);
 
     $form['selection'] = [
       '#markup' => $entity->label(),
