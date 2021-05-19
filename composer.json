@@ -17,7 +17,7 @@
     "require-dev": {
         "composer/installers": "~1.5",
         "drush/drush": "~10.3",
-        "drupal/json_field": "1.x-dev",
+        "drupal/json_field": "~1.0-rc4",
         "drupaltest/behat-traits": "dev-GH-6",
         "drupal/core-composer-scaffold": "^8.9 || ^9",
         "guzzlehttp/guzzle": "~6.3",
@@ -27,7 +27,7 @@
         "openeuropa/drupal-core-require-dev": "^8.9 || ^9",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "openeuropa/oe_link_lists": "dev-master",
-        "openeuropa/oe_webtools": "dev-EWPP-916",
+        "openeuropa/oe_webtools": "dev-master",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "^7 || ^8",
         "nikic/php-parser": "^3.1.5",
@@ -60,7 +60,8 @@
         }
     },
     "_readme": [
-        "Using the dev branch of media_avportal until the new release is made because it needs to be able to pull its latest composer.json changes."
+        "Using the dev branch of media_avportal until the new release is made because it needs to be able to pull its latest composer.json changes.",
+        "We use the drupaltest/behat-traits feature branch until it gets merged and the package is ready for Drupal 9."
     ],
     "extra": {
         "composer-exit-on-patch-failure": true,
