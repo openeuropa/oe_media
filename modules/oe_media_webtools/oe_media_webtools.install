@@ -12,10 +12,10 @@ declare(strict_types = 1);
  *
  * Activate media webtools embed.
  */
-function oe_media_webtools_install() {
+function oe_media_webtools_install($is_syncing) {
   if (\Drupal::moduleHandler()->moduleExists('oe_media_embed')) {
     // If we are installing from config, we bail out.
-    if (\Drupal::isConfigSyncing() === TRUE) {
+    if ($is_syncing) {
       return;
     }
 

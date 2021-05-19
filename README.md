@@ -61,6 +61,24 @@ composer install
 * Customize build settings by copying `runner.yml.dist` to `runner.yml` and
 changing relevant values, like your database credentials.
 
+This will also:
+- Symlink the theme in  `./build/modules/custom/oe_media` so that it's available for the test site
+- Setup Drush and Drupal's settings using values from `./runner.yml.dist`.
+- Setup PHPUnit and Behat configuration files using values from `./runner.yml.dist`
+
+**Please note:** project files and directories are symlinked within the test site by using the
+[OpenEuropa Task Runner's Drupal project symlink](https://github.com/openeuropa/task-runner-drupal-project-symlink)
+command.
+
+If you add a new file or directory in the root of the project, you need to re-run `drupal:site-setup` in order to make
+sure they are correctly symlinked.
+
+If you don't want to re-run a full site setup for that, you can simply run:
+
+```
+$ ./vendor/bin/run drupal:symlink-project
+```
+
 * Install test site by running:
 
 ```bash

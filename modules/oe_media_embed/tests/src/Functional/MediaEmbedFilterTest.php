@@ -22,7 +22,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $format = FilterFormat::create([
