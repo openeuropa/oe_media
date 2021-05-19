@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a filter to convert PURL into internal urls/aliases.
  *
  * @Filter(
- *   id = "media_embed",
+ *   id = "oe_media_embed",
  *   title = @Translation("Embeds media entities using the oEmbed format"),
  *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
  * )

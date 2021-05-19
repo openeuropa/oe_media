@@ -29,7 +29,7 @@ class MediaEmbedFilterTest extends MediaEmbedTestBase {
       'format' => 'format_with_embed',
       'name' => 'Format with embed',
       'filters' => [
-        'media_embed' => [
+        'oe_media_embed' => [
           'status' => 1,
         ],
       ],
