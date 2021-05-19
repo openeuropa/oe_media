@@ -1,5 +1,5 @@
-name: OpenEuropa Media Webtools
-description: Provides embeddable webtools media types.
+name: 'OpenEuropa Media Webtools'
+description: 'Provides embeddable webtools media types.'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9

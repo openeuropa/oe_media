@@ -1,5 +1,5 @@
-name: OpenEuropa Media Embed
-description: Provides the embed functionality of the media types
+name: 'OpenEuropa Media Embed'
+description: 'Provides the embed functionality of the media types'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9

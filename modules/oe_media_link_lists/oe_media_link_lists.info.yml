@@ -1,5 +1,5 @@
-name: OpenEuropa Media Link Lists
-description: Provides internal media support for manual link lists.
+name: 'OpenEuropa Media Link Lists'
+description: 'Provides internal media support for manual link lists.'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9

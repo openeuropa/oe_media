@@ -1,5 +1,5 @@
-name: OpenEuropa Media AV Portal
-description: Integrates the OpenEuropa Media module with the AV Portal service.
+name: 'OpenEuropa Media AV Portal'
+description: 'Integrates the OpenEuropa Media module with the AV Portal service.'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9

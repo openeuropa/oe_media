@@ -47,8 +47,10 @@ class MediaEmbedDialogTest extends MediaEmbedTestBase {
     $this->assertSession()->statusCodeEquals(200);
 
     // Ensure form structure of the 'select' step and submit form.
-    $this->assertFieldByXPath($this->constructFieldXpath('name', 'entity_id'), '');
-    $this->assertFieldByXPath('//input[contains(@class, "button--primary")]', 'Next');
+    $field = $this->getSession()->getPage()->findField('entity_id');
+    $this->assertEquals('', $field->getValue());
+    $field = $this->getSession()->getPage()->find('xpath', '//input[contains(@class, "button--primary")]');
+    $this->assertEquals('Next', $field->getValue());
   }
 
 }

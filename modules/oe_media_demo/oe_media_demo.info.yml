@@ -1,5 +1,5 @@
-name: OpenEuropa Media Demo
-description: Demo module for the OpenEuropa media project.
+name: 'OpenEuropa Media Demo'
+description: 'Demo module for the OpenEuropa media project.'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9

@@ -30,7 +30,7 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->container->get('module_installer')->install(['oe_media_avportal_test']);

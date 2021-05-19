@@ -26,7 +26,7 @@
         "openeuropa/code-review": "~1.6",
         "openeuropa/drupal-core-require-dev": "^8.9 || ^9",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
-        "openeuropa/oe_link_lists": "dev-EWPP-908",
+        "openeuropa/oe_link_lists": "dev-master",
         "openeuropa/oe_webtools": "dev-EWPP-916",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "^7 || ^8",

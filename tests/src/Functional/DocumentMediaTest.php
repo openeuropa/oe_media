@@ -35,7 +35,7 @@ class DocumentMediaTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
   }
@@ -88,22 +88,22 @@ class DocumentMediaTest extends BrowserTestBase {
     ], $this->getOptions($select_field));
 
     // Assert fields validation.
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
     $this->assertSession()->pageTextContains('File Type field is required.');
 
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Local');
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
     $this->assertSession()->pageTextContains('The document is configured to be local, please upload a local file.');
     // Attach a file, then remove it.
     $this->getSession()->getPage()->attachFileToField('File', drupal_get_path('module', 'oe_media') . '/tests/fixtures/sample.pdf');
-    $this->drupalPostForm(NULL, [], t('Upload'));
+    $this->submitForm([], 'Upload');
     $this->getSession()->getPage()->pressButton('Remove');
     // Assert the file field keeps the required state.
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
     $this->assertSession()->pageTextContains('The document is configured to be local, please upload a local file.');
 
     $this->getSession()->getPage()->selectFieldOption('File Type', 'Remote');
-    $this->drupalPostForm(NULL, [], 'Save');
+    $this->submitForm([], 'Save');
     $this->assertSession()->pageTextContains('The document is configured to be remote, please reference a remote file.');
   }
 

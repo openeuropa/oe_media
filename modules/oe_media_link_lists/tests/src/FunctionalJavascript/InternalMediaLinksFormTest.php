@@ -114,7 +114,7 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     $this->getSession()->getPage()->pressButton('Save');
 
     // Assert the values have been overridden.
-    $this->assertLink('Internal document');
+    $this->assertSession()->linkExistsExact('Internal document');
     $link_list = $this->getLinkListByTitle('Test internal media links', TRUE);
     /** @var \Drupal\oe_link_lists_manual_source\Entity\LinkListLinkInterface $link */
     $link = $link_list->get('links')->first()->entity;
