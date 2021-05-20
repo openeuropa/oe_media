@@ -5,6 +5,9 @@ dependencies:
     - oe_media_iframe
 name: 'Iframe media'
 format: oe_media_iframe
+# Set a higher weight than core "plain_text" format to avoid this format to be used as default.
+# @see filter_default_format()
+# @see \Drupal\filter\Element\TextFormat::processFormat()
 weight: 11
 filters:
   filter_html:
