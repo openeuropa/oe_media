@@ -5,7 +5,7 @@ dependencies:
     - oe_media_iframe
 name: 'Iframe media'
 format: oe_media_iframe
-weight: 0
+weight: 11
 filters:
   filter_html:
     id: filter_html

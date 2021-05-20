@@ -176,3 +176,17 @@ function oe_media_iframe_post_update_00006(): void {
     $entity_view_display_storage->create($view_display_values)->save();
   }
 }
+
+/**
+ * Place Iframe media format after Plain text format.
+ */
+function oe_media_iframe_post_update_00007(): void {
+  /** @var \Drupal\filter\FilterFormatInterface $format */
+  $oe_media_iframe_format = \Drupal::entityTypeManager()->getStorage('filter_format')->load('oe_media_iframe');
+  $plain_text_format = \Drupal::entityTypeManager()->getStorage('filter_format')->load('plain_text');
+
+  if ($oe_media_iframe_format && $plain_text_format) {
+    $weight = (int) $plain_text_format->get('weight');
+    $oe_media_iframe_format->set('weight', ++$weight)->save();
+  }
+}
