@@ -37,7 +37,7 @@ function oe_media_embed_post_update_00002(): void {
   foreach ($available_formats as $available_format) {
     $filters = $available_format->get('filters');
     foreach ($filters as $filter_id => $filter) {
-      if ($filter['provider'] == 'oe_media_embed' && $filter['id'] === 'media_embed') {
+      if ($filter['provider'] === 'oe_media_embed' && $filter['id'] === 'media_embed') {
         $filter['id'] = 'oe_media_embed';
         $filters['oe_media_embed'] = $filter;
         continue;
