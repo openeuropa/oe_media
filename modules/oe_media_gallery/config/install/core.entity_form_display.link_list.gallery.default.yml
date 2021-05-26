@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.link_list.gallery.oe_media_gallery_media
+    - oe_link_lists.link_list_type.gallery
+  module:
+    - oe_link_lists
+_core:
+  default_config_hash: gchzKpv_QHt_aJVYnn50ALtcpw4IkQjxw-lBk3emW1g
+id: link_list.gallery.default
+targetEntityType: link_list
+bundle: gallery
+mode: default
+content:
+  administrative_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  configuration:
+    type: link_list_configuration
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  oe_media_gallery_media:
+    weight: 3
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 5
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

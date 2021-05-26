@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: gallery
+label: 'Media Gallery'
+configurable_link_source_plugins: true
+auto_link_source: ''

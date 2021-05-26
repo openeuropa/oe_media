@@ -1,0 +1,9 @@
+name: 'OpenEuropa Media Gallery Test'
+description: 'Test module for OpenEuropa Media Gallery.'
+package: Testing
+
+type: module
+core_version_requirement: ^8.9 || ^9
+
+dependencies:
+  - oe_media_gallery:oe_media_gallery

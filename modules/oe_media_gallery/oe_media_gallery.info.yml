@@ -1,0 +1,10 @@
+name: 'OpenEuropa Media gallery'
+description: 'Provides media gallery link list bundle and source plugins.'
+package: OpenEuropa
+
+type: module
+core_version_requirement: ^8.9 || ^9
+
+dependencies:
+  - oe_link_lists:oe_link_lists
+  - oe_media:oe_media
