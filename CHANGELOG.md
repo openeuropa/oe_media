@@ -1,11 +1,28 @@
-# Changelog
+# Change Log
+
+## [1.12.0](https://github.com/openeuropa/oe_media/tree/1.12.0) (2021-06-15)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.11.0...1.12.0)
+
+**Closed issues:**
+
+- Drupal 9 support [\#160](https://github.com/openeuropa/oe_media/issues/160)
+- Performance issue with oe\_media\_media\_access [\#159](https://github.com/openeuropa/oe_media/issues/159)
+- Attempt to create a field oe\_media\_webtools that does not exist on entity type media. [\#158](https://github.com/openeuropa/oe_media/issues/158)
+- audio files [\#156](https://github.com/openeuropa/oe_media/issues/156)
+
+**Merged pull requests:**
+
+- EWPP-1112: Place Iframe media format after Plain text format. [\#165](https://github.com/openeuropa/oe_media/pull/165) ([yenyasinn](https://github.com/yenyasinn))
+- EWPP-912: Drupal 9 compatibility fixes. [\#163](https://github.com/openeuropa/oe_media/pull/163) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-902: Media gallery submodule. [\#162](https://github.com/openeuropa/oe_media/pull/162) ([upchuk](https://github.com/upchuk))
+- EWPP-721: Update xdebug configuration. [\#157](https://github.com/openeuropa/oe_media/pull/157) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.11.0](https://github.com/openeuropa/oe_media/tree/1.11.0) (2021-01-25)
-
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.1...1.11.0)
 
 **Merged pull requests:**
 
+- Release-1.11.0: Update changelog. [\#155](https://github.com/openeuropa/oe_media/pull/155) ([nagyad](https://github.com/nagyad))
 - EWPP-584: Media iframe [\#154](https://github.com/openeuropa/oe_media/pull/154) ([yenyasinn](https://github.com/yenyasinn))
 - EWPP-629: Fix select none. [\#153](https://github.com/openeuropa/oe_media/pull/153) ([drishu](https://github.com/drishu))
 - EWPP-629: Prevent selection loss of media bundle. [\#150](https://github.com/openeuropa/oe_media/pull/150) ([drishu](https://github.com/drishu))
