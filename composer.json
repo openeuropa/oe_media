@@ -10,7 +10,7 @@
         "drupal/core": "^8.9 || ^9",
         "drupal/entity_browser": "^2.5",
         "drupal/inline_entity_form": "~1.0-rc9",
-        "drupal/media_avportal": "1.x-dev",
+        "drupal/media_avportal": "^1.0-beta12",
         "drupal/embed": "^1.3",
         "drupal/file_link": "^2.0.3"
     },
@@ -61,7 +61,6 @@
         }
     },
     "_readme": [
-        "Using the dev branch of media_avportal until the new release is made because it needs to be able to pull its latest composer.json changes.",
         "We use the drupaltest/behat-traits feature branch until it gets merged and the package is ready for Drupal 9."
     ],
     "extra": {
