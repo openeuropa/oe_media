@@ -1,0 +1,7 @@
+media.source.javascript_asset:
+  type: media.source.field_aware
+  label: 'Javascript asset media source configuration'
+  mapping:
+    thumbnails_directory:
+      type: uri
+      label: 'URI of thumbnail storage directory'
