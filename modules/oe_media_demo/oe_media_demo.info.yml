@@ -8,6 +8,7 @@ dependencies:
   - oe_media:oe_media
   - oe_media:oe_media_avportal
   - oe_media:oe_media_iframe
+  - oe_media:oe_media_js_asset
   - oe_media:oe_media_webtools
 
 config_devel:
@@ -20,6 +21,7 @@ config_devel:
     - field.field.node.oe_media_demo.field_oe_demo_document_media
     - field.field.node.oe_media_demo.field_oe_demo_iframe
     - field.field.node.oe_media_demo.field_oe_demo_image_media
+    - field.field.node.oe_media_demo.field_oe_demo_js_asset
     - field.field.node.oe_media_demo.field_oe_demo_media_browser
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_video_iframe
@@ -32,6 +34,7 @@ config_devel:
     - field.storage.node.field_oe_demo_iframe
     - field.storage.node.field_oe_demo_image_media
     - field.storage.node.field_oe_demo_media_browser
+    - field.storage.node.field_oe_demo_js_asset
     - field.storage.node.field_oe_demo_remote_video_media
     - field.storage.node.field_oe_demo_video_iframe
     - field.storage.node.field_oe_demo_webtools_chart
