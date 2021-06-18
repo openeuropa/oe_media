@@ -10,6 +10,7 @@ dependencies:
 
 config_devel:
   install:
+    - core.entity_view_display.media.javascript_asset.default
     - field.storage.media.oe_media_js_asset_url
     - field.field.media.javascript_asset.oe_media_js_asset_url
     - core.entity_form_display.media.javascript_asset.default
