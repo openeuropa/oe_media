@@ -1,0 +1,7 @@
+environments:
+  acceptance:
+    label: Acceptance
+    url: ''
+  production:
+    label: Production
+    url: ''

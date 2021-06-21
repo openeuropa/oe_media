@@ -7,11 +7,11 @@ namespace Drupal\Tests\oe_media_js_asset\Functional;
 use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
 
 /**
- * Tests javascript asset media.
+ * Tests JavaScript asset media.
  *
  * @group oe_media_js_asset
  */
-class JavascriptAssetTest extends MediaFunctionalTestBase {
+class JavaScriptAssetTest extends MediaFunctionalTestBase {
 
   /**
    * {@inheritdoc}
@@ -26,7 +26,7 @@ class JavascriptAssetTest extends MediaFunctionalTestBase {
   protected $defaultTheme = 'stark';
 
   /**
-   * Tests the javascript asset media item.
+   * Tests the JavaScript asset media item.
    */
   public function testJavascriptAssetMediaItem(): void {
     $user = $this->createUser([], '', TRUE);
@@ -35,22 +35,22 @@ class JavascriptAssetTest extends MediaFunctionalTestBase {
     $this->drupalGet('/media/add/javascript_asset');
     $this->assertSession()->fieldExists('Name');
     $this->assertSession()->fieldExists('Environment');
-    $this->assertSession()->fieldExists('Javascript relative path');
+    $this->assertSession()->fieldExists('JavaScript relative path');
 
     $page = $this->getSession()->getPage();
-    $page->fillField('Name', 'First javascript asset');
+    $page->fillField('Name', 'First JavaScript asset');
     $page->selectFieldOption('Environment', 'Acceptance');
-    $page->fillField('Javascript relative path', '/somejavascript.js');
+    $page->fillField('JavaScript relative path', '/somejavascript.js');
     $page->pressButton('Save');
 
-    $this->assertSession()->pageTextContains('Javascript asset First javascript asset has been created.');
+    $this->assertSession()->pageTextContains('JavaScript asset First JavaScript asset has been created.');
 
     // Load the media and assert for field values.
-    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => 'First javascript asset']);
+    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => 'First JavaScript asset']);
     $media = reset($media);
-    $this->assertEquals('First javascript asset', $media->label());
-    $this->assertEquals('https://acceptance.europa.eu/webassets', $media->get('oe_media_js_asset_url')->environment);
-    $this->assertEquals('/somejavascript.js', $media->get('oe_media_js_asset_url')->relative_path);
+    $this->assertEquals('First JavaScript asset', $media->label());
+    $this->assertEquals('acceptance', $media->get('oe_media_js_asset_url')->environment);
+    $this->assertEquals('/somejavascript.js', $media->get('oe_media_js_asset_url')->path);
   }
 
 }

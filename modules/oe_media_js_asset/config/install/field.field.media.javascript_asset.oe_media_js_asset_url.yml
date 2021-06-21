@@ -10,11 +10,11 @@ id: media.javascript_asset.oe_media_js_asset_url
 field_name: oe_media_js_asset_url
 entity_type: media
 bundle: javascript_asset
-label: 'Javascript asset URL'
+label: 'JavaScript asset URL'
 description: ''
 required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: javascript_asset_url
+field_type: oe_media_js_asset_url

@@ -1,5 +1,5 @@
-name: 'OpenEuropa Media Javascript Asset'
-description: 'Provides the javascript media type and javascript asset url field type.'
+name: OpenEuropa Media JavaScript asset
+description: Provides the JS media type and JS asset url field type.
 package: OpenEuropa
 
 type: module
@@ -14,3 +14,4 @@ config_devel:
     - field.field.media.javascript_asset.oe_media_js_asset_url
     - core.entity_form_display.media.javascript_asset.default
     - media.type.javascript_asset
+    - oe_media_js_asset.settings

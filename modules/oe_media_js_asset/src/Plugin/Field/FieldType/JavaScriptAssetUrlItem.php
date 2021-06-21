@@ -9,17 +9,17 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Plugin implementation of the 'javascript_asset_url' field type.
+ * Plugin implementation of the 'oe_media_js_asset_url' field type.
  *
  * @FieldType(
- *   id = "javascript_asset_url",
- *   label = @Translation("Javascript asset url"),
+ *   id = "oe_media_js_asset_url",
+ *   label = @Translation("JavaScript asset url"),
  *   module = "oe_media_js_asset",
- *   description = @Translation("Stores the javascript asset media url."),
- *   default_widget = "javascript_asset_url"
+ *   description = @Translation("Stores the JS asset media url."),
+ *   default_widget = "oe_media_js_asset_url"
  * )
  */
-class JavascriptAssetUrlItem extends FieldItemBase {
+class JavaScriptAssetUrlItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
@@ -28,14 +28,14 @@ class JavascriptAssetUrlItem extends FieldItemBase {
     return [
       'columns' => [
         'environment' => [
-          'description' => 'Environment the javascript asset is fetched from.',
+          'description' => 'Environment the JavaScript asset is fetched from.',
           'type' => 'varchar',
           'length' => 255,
         ],
-        'relative_path' => [
-          'description' => 'The relative path of the javascript asset.',
+        'path' => [
+          'description' => 'The relative path of the JavaScript asset.',
           'type' => 'varchar',
-          'length' => 1024,
+          'length' => 2024,
         ],
       ],
     ];
@@ -46,7 +46,7 @@ class JavascriptAssetUrlItem extends FieldItemBase {
    */
   public function isEmpty() {
     $env = $this->get('environment')->getValue();
-    $path = $this->get('relative_path')->getValue();
+    $path = $this->get('path')->getValue();
 
     return $env === NULL || $env === '' || $path === NULL || $path === '';
   }
@@ -57,8 +57,8 @@ class JavascriptAssetUrlItem extends FieldItemBase {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties['environment'] = DataDefinition::create('string')
       ->setLabel(t('Environment'));
-    $properties['relative_path'] = DataDefinition::create('string')
-      ->setLabel(t('Javascript relative path'));
+    $properties['path'] = DataDefinition::create('string')
+      ->setLabel(t('JavaScript relative path'));
 
     return $properties;
   }

@@ -4,8 +4,8 @@ dependencies:
   module:
     - oe_media_js_asset
 id: javascript_asset
-label: 'Javascript asset'
-description: 'Remote javascript from production or acceptance server.'
+label: 'JavaScript asset'
+description: 'Remote JavaScript from production or acceptance server.'
 source: javascript_asset
 queue_thumbnail_downloads: false
 new_revision: false

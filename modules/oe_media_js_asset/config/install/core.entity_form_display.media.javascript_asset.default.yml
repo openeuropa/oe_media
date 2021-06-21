@@ -1,4 +1,3 @@
-uuid: 3dabe1e9-fa5a-48a9-bafc-ef1ffb84e976
 langcode: en
 status: true
 dependencies:
@@ -27,7 +26,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   oe_media_js_asset_url:
-    type: javascript_asset_url
+    type: oe_media_js_asset_url
     weight: 1
     region: content
     settings: {  }

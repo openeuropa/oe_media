@@ -12,7 +12,7 @@ use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
  *
  * @group oe_media_js_asset
  */
-class JavascriptAssetUrlWidgetTest extends MediaFunctionalTestBase {
+class JavaScriptAssetUrlWidgetTest extends MediaFunctionalTestBase {
 
   use MediaTypeCreationTrait;
 
@@ -37,21 +37,21 @@ class JavascriptAssetUrlWidgetTest extends MediaFunctionalTestBase {
     $this->assertSession()->fieldExists('Environment');
     $this->assertSession()->optionExists('Environment', 'Production');
     $this->assertSession()->optionExists('Environment', 'Acceptance');
-    $this->assertSession()->fieldExists('Javascript relative path');
+    $this->assertSession()->fieldExists('JavaScript relative path');
 
     // Add the relative path without '/' and assert the form error.
     $page = $this->getSession()->getPage();
-    $page->fillField('Name', 'First javascript asset');
+    $page->fillField('Name', 'First JavaScript asset');
     $page->selectFieldOption('Environment', 'Acceptance');
-    $page->fillField('Javascript relative path', '');
+    $page->fillField('JavaScript relative path', '');
     $page->pressButton('Save');
 
     $this->assertSession()->pageTextContains('Manually entered paths should start with: /');
 
-    $page->fillField('Javascript relative path', '/somejavascript.js');
+    $page->fillField('JavaScript relative path', '/somejavascript.js');
     $page->pressButton('Save');
 
-    $this->assertSession()->pageTextContains('Javascript asset First javascript asset has been created.');
+    $this->assertSession()->pageTextContains('JavaScript asset First JavaScript asset has been created.');
   }
 
 }

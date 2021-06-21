@@ -9,16 +9,16 @@ use Drupal\media\MediaSourceBase;
 use Drupal\media\MediaTypeInterface;
 
 /**
- * Javascript media source.
+ * JavaScript media source.
  *
  * @MediaSource(
  *   id = "javascript_asset",
- *   label = @Translation("Javascript asset"),
- *   description = @Translation("Use javascript asset url as source for media entities."),
+ *   label = @Translation("JavaScript asset"),
+ *   description = @Translation("Use JavaScript asset url as source for media entities."),
  *   allowed_field_types = {"javascript_asset_url"}
  * )
  */
-class JavascriptAsset extends MediaSourceBase {
+class JavaScriptAsset extends MediaSourceBase {
 
   /**
    * {@inheritdoc}
@@ -32,7 +32,7 @@ class JavascriptAsset extends MediaSourceBase {
    */
   public function prepareViewDisplay(MediaTypeInterface $type, EntityViewDisplayInterface $display) {
     $display->setComponent($this->getSourceFieldDefinition($type)->getName(), [
-      'type' => 'javascript_asset',
+      'type' => 'oe_media_js_asset_url',
     ]);
   }
 
