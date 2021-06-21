@@ -55,9 +55,9 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
   }
 
   /**
-   * Form element validation handler for the 'relative_path' element.
+   * Form element validation handler for the 'path' element.
    */
-  public static function validateRelativePathElement($element, FormStateInterface $form_state, $form): void {
+  public static function validatePathElement($element, FormStateInterface $form_state, $form): void {
     if (!empty($element['#value']) && substr($element['#value'], 0, 1) !== '/') {
       $form_state->setError($element, t('Manually entered paths should start with: /'));
     }
@@ -86,7 +86,7 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
     $element['asset_url']['path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('JavaScript relative path'),
-      '#element_validate' => [[get_called_class(), 'validateRelativePathElement']],
+      '#element_validate' => [[get_called_class(), 'validatePathElement']],
       '#maxlength' => 2048,
       '#default_value' => !$item->isEmpty() ? $item->path : '',
     ];
@@ -110,7 +110,7 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
   }
 
   /**
-   * Get the allowed environment field options from env settings.
+   * Get the allowed environment field options from config settings.
    *
    * @return array
    *   The allowed values for the environment field.

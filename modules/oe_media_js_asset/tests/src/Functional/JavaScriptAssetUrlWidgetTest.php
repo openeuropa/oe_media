@@ -43,7 +43,7 @@ class JavaScriptAssetUrlWidgetTest extends MediaFunctionalTestBase {
     $page = $this->getSession()->getPage();
     $page->fillField('Name', 'First JavaScript asset');
     $page->selectFieldOption('Environment', 'Acceptance');
-    $page->fillField('JavaScript relative path', '');
+    $page->fillField('JavaScript relative path', 'somejavascript.js');
     $page->pressButton('Save');
 
     $this->assertSession()->pageTextContains('Manually entered paths should start with: /');
