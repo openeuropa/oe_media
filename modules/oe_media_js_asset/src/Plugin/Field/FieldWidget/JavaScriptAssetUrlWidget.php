@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\oe_media_js_asset\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -55,15 +56,6 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
   }
 
   /**
-   * Form element validation handler for the 'path' element.
-   */
-  public static function validatePathElement($element, FormStateInterface $form_state, $form): void {
-    if (!empty($element['#value']) && substr($element['#value'], 0, 1) !== '/') {
-      $form_state->setError($element, t('Manually entered paths should start with: /'));
-    }
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
@@ -79,19 +71,28 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Environment'),
       '#default_value' => !$item->isEmpty() ? $item->environment : '',
-      '#maxlength' => 255,
       '#options' => $this->getEnvironmentOptions(),
     ];
 
     $element['asset_url']['path'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('JavaScript relative path'),
+      '#title' => $this->t('Path'),
+      '#description' => $this->t('A relative path to the JS asset. It should always start with a "/" character.'),
       '#element_validate' => [[get_called_class(), 'validatePathElement']],
       '#maxlength' => 2048,
       '#default_value' => !$item->isEmpty() ? $item->path : '',
     ];
 
     return $element;
+  }
+
+  /**
+   * Form element validation handler for the 'path' element.
+   */
+  public static function validatePathElement($element, FormStateInterface $form_state, $form): void {
+    if (!empty($element['#value']) && substr($element['#value'], 0, 1) !== '/' && !UrlHelper::isValid($element['#value'], TRUE)) {
+      $form_state->setError($element, t('Paths should start with: /'));
+    }
   }
 
   /**
@@ -110,7 +111,7 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
   }
 
   /**
-   * Get the allowed environment field options from config settings.
+   * Get the available environment options from config settings.
    *
    * @return array
    *   The allowed values for the environment field.

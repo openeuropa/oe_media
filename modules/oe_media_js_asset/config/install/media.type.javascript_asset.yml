@@ -10,7 +10,6 @@ source: javascript_asset
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:
-  thumbnails_directory: 'public://media_avportal_thumbnails'
   source_field: oe_media_js_asset_url
 field_map:
   title: name

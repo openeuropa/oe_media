@@ -35,7 +35,7 @@ class JavaScriptAssetUrlItem extends FieldItemBase {
         'path' => [
           'description' => 'The relative path of the JavaScript asset.',
           'type' => 'varchar',
-          'length' => 2024,
+          'length' => 2028,
         ],
       ],
     ];
