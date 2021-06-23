@@ -22,8 +22,8 @@ class JavaScriptAssetTest extends JavaScriptAssetTestBase {
       'bundle' => 'javascript_asset',
       'oe_media_js_asset_url' => [
         'environment' => 'acceptance',
-        'path' => '/somejavascript.js'
-      ]
+        'path' => '/somejavascript.js',
+      ],
     ]);
     $js_asset->save();
 
