@@ -30,7 +30,7 @@ class JavaScriptAssetUrlWidgetTest extends JavaScriptAssetTestBase {
     $page->fillField('Path', 'somejavascript.js');
     $page->pressButton('Save');
 
-    $this->assertSession()->pageTextContains('Paths should start with: /');
+    $this->assertSession()->pageTextContains('Path should start with: /');
 
     $page->fillField('Path', '/somejavascript.js');
     $page->pressButton('Save');
