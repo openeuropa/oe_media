@@ -90,7 +90,7 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
    * Form element validation handler for the 'path' element.
    */
   public static function validatePathElement($element, FormStateInterface $form_state, $form): void {
-    if (!empty($element['#value']) && substr($element['#value'], 0, 1) !== '/' && !UrlHelper::isValid($element['#value'], TRUE)) {
+    if (!empty($element['#value']) && substr($element['#value'], 0, 1) !== '/') {
       $form_state->setError($element, t('Path should start with: /'));
     }
   }
