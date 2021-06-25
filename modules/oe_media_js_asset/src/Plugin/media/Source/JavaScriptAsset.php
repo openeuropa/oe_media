@@ -15,7 +15,7 @@ use Drupal\media\MediaTypeInterface;
  *   id = "javascript_asset",
  *   label = @Translation("JavaScript asset"),
  *   description = @Translation("Use JavaScript asset url as source for media entities."),
- *   allowed_field_types = {"javascript_asset_url"}
+ *   allowed_field_types = {"oe_media_js_asset_url"}
  * )
  */
 class JavaScriptAsset extends MediaSourceBase {

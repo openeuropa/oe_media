@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\oe_media_js_asset\Functional;
 
 /**
- * Tests the javascript_asset_url widget.
+ * Tests the oe_media_js_asset_url widget.
  *
  * @group oe_media_js_asset
  */
