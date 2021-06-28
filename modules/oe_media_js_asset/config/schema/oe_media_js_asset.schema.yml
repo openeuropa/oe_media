@@ -1,0 +1,25 @@
+media.source.oe_media_js_asset:
+  type: media.source.field_aware
+  label: 'JavaScript asset media source configuration'
+  mapping:
+    thumbnails_directory:
+      type: uri
+      label: 'URI of thumbnail storage directory'
+
+oe_media_js_asset.settings:
+  type: config_object
+  label: 'JavaScript asset settings'
+  mapping:
+    environments:
+      type: sequence
+      label: 'Available environments'
+      sequence:
+        type: mapping
+        label: 'Environment ID'
+        mapping:
+          label:
+            type: string
+            label: 'Environment label'
+          url:
+            type: string
+            label: 'Environment URL'
