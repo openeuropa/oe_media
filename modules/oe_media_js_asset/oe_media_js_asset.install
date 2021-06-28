@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Contains installation hooks.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_install().
+ */
+function oe_media_js_asset_install() {
+  $config = \Drupal::configFactory()->getEditable('embed.button.media');
+  if ($settings = $config->get('type_settings.media_types')) {
+    $setting['javascript_asset'] = 'javascript_asset';
+    $config->set('type_settings.media_types', array_merge($settings, $setting))
+      ->save();
+  }
+}
