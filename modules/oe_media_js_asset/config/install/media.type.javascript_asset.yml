@@ -6,7 +6,7 @@ dependencies:
 id: javascript_asset
 label: 'JavaScript asset'
 description: 'Remote JavaScript from production or acceptance server.'
-source: javascript_asset
+source: oe_media_js_asset
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:

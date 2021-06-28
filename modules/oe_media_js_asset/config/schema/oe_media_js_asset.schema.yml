@@ -1,4 +1,4 @@
-media.source.javascript_asset:
+media.source.oe_media_js_asset:
   type: media.source.field_aware
   label: 'JavaScript asset media source configuration'
   mapping:
