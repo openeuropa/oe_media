@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains installation hooks.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_install().
+ */
+function oe_media_demo_install() {
+  // Add demo allowed options for JS asset environments.
+  $config = \Drupal::configFactory()->getEditable('oe_media_js_asset.settings');
+  $environments = [
+    'acceptance' => [
+      'label' => 'Acceptance',
+      'url' => 'https://acceptance.ec.europa.eu/assets',
+    ],
+    'production' => [
+      'label' => 'Production',
+      'url' => 'https://ec.europa.eu/assets',
+    ],
+  ];
+  $config->set('environments', $environments);
+  $config->save();
+}

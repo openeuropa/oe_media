@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_oe_demo_js_asset
+    - media.type.javascript_asset
+    - node.type.oe_media_demo
+id: node.oe_media_demo.field_oe_demo_js_asset
+field_name: field_oe_demo_js_asset
+entity_type: node
+bundle: oe_media_demo
+label: 'Javascript asset'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      javascript_asset: javascript_asset
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

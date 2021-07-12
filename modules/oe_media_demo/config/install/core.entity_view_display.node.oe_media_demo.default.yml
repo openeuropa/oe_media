@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_iframe
     - field.field.node.oe_media_demo.field_oe_demo_image_media
     - field.field.node.oe_media_demo.field_oe_demo_images_browser
+    - field.field.node.oe_media_demo.field_oe_demo_js_asset
     - field.field.node.oe_media_demo.field_oe_demo_media_browser
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_video_iframe
@@ -78,6 +79,15 @@ content:
       link: false
     third_party_settings: {  }
     region: content
+  field_oe_demo_js_asset:
+    type: entity_reference_entity_view
+    weight: 14
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
   field_oe_demo_media_browser:
     type: entity_reference_entity_view
     weight: 2
