@@ -101,16 +101,17 @@ class JavaScriptAssetUrlFormatter extends FormatterBase {
     $config = $this->configFactory->get('oe_media_js_asset.settings');
 
     foreach ($items as $delta => $item) {
-      $url = $config->get("environments.$item->environment.url");
-      $elements[$delta] = [
-        '#type' => 'html_tag',
-        '#tag' => 'script',
-        '#value' => '',
-        '#attributes' => [
-          'type' => 'application/json',
-          'src' => $url . $item->path,
-        ],
-      ];
+      if ($url = $config->get("environments.$item->environment.url")) {
+        $elements[$delta] = [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#value' => '',
+          '#attributes' => [
+            'type' => 'application/javascript',
+            'src' => $url . $item->path,
+          ],
+        ];
+      }
     }
 
     return $elements;

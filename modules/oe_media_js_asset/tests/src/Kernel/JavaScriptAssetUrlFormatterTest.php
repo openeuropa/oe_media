@@ -43,20 +43,6 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
   protected $fieldName;
 
   /**
-   * The display.
-   *
-   * @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface
-   */
-  protected $display;
-
-  /**
-   * The media type.
-   *
-   * @var \Drupal\media\MediaTypeInterface
-   */
-  protected $mediaType;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -80,12 +66,8 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
       'label' => 'Test JS asset',
       'source' => 'oe_media_js_asset',
     ]);
-
-    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', $media_type->id());
-    $this->display = $view_display;
     $source = $media_type->getSource();
     $this->fieldName = $source->getConfiguration()['source_field'];
-    $this->mediaType = $media_type;
   }
 
   /**
@@ -97,21 +79,47 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
         'label' => 'Acceptance',
         'url' => 'https://acceptance.europa.eu/webassets',
       ],
+      'production' => [
+        'label' => 'Production',
+        'url' => 'https://europa.eu/webassets',
+      ],
     ];
     $config = \Drupal::configFactory()->getEditable('oe_media_js_asset.settings');
     $config->set('environments', $environments)->save();
 
-    $entity = \Drupal::entityTypeManager()->getStorage('media')->create([
-      'bundle' => $this->mediaType->id(),
+    $media_storage = \Drupal::entityTypeManager()->getStorage('media');
+    $entity = $media_storage->create([
+      'bundle' => 'test_js_asset',
       'name' => 'Test JS asset media',
       'status' => TRUE,
     ]);
-    $entity->{$this->fieldName}->environment = 'acceptance';
+    $entity->{$this->fieldName}->environment = 'environment';
     $entity->{$this->fieldName}->path = '/somejavascript.js';
 
-    // Verify that the oe_media_js_asset_url format has been applied.
-    $this->renderEntityFields($entity, $this->display);
-    $this->assertRaw('<script type="application/json" src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
+    $view_display = \Drupal::service('entity_display.repository')->getViewDisplay('media', 'test_js_asset');
+    $this->renderEntityFields($entity, $view_display);
+    // The string should not be present because the given environment doesn't
+    // exists in the config.
+    $this->assertNoRaw('/somejavascript.js');
+
+    $entity->{$this->fieldName}->environment = 'acceptance';
+    $this->renderEntityFields($entity, $view_display);
+    $this->assertRaw('<script type="application/javascript" src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
+
+    // Assert multiple JS assets.
+    $entity->{$this->fieldName} = [
+      [
+        'environment' => 'acceptance',
+        'path' => '/somejavascript.js',
+      ],
+      [
+        'environment' => 'production',
+        'path' => '/somejavascript2.js',
+      ],
+    ];
+    $this->renderEntityFields($entity, $view_display);
+    $this->assertRaw('<script type="application/javascript" src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
+    $this->assertRaw('<script type="application/javascript" src="https://europa.eu/webassets/somejavascript2.js"></script>');
   }
 
   /**
