@@ -56,6 +56,24 @@ class JavaScriptAssetTest extends MediaKernelTestBase {
     $this->assertEquals('First JavaScript asset', $entity->label());
     $this->assertEquals('acceptance', $entity->get('oe_media_js_asset_url')->environment);
     $this->assertEquals('/somejavascript.js', $entity->get('oe_media_js_asset_url')->path);
+    $this->assertFalse($entity->get('oe_media_js_asset_url')->isEmpty());
+
+    // Test different cases when the field is considered as empty.
+    $entity->set('oe_media_js_asset_url', [
+      'environment' => '',
+      'path' => '/somejavascript.js',
+    ])->save();
+    $this->assertTrue($entity->get('oe_media_js_asset_url')->isEmpty());
+    $entity->set('oe_media_js_asset_url', [
+      'environment' => 'acceptance',
+      'path' => '',
+    ])->save();
+    $this->assertTrue($entity->get('oe_media_js_asset_url')->isEmpty());
+    $entity->set('oe_media_js_asset_url', [
+      'environment' => 'acceptance',
+      'path' => '',
+    ])->save();
+    $this->assertTrue($entity->get('oe_media_js_asset_url')->isEmpty());
   }
 
 }
