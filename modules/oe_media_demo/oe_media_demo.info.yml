@@ -7,6 +7,7 @@ dependencies:
   - drupal:media
   - oe_media:oe_media
   - oe_media:oe_media_avportal
+  - oe_media:oe_media_embed
   - oe_media:oe_media_iframe
   - oe_media:oe_media_js_asset
   - oe_media:oe_media_webtools
