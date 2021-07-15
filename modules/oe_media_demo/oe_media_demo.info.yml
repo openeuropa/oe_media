@@ -41,6 +41,5 @@ config_devel:
     - field.storage.node.field_oe_demo_webtools_map
     - field.storage.node.field_oe_demo_webtools_sfeed
     - node.type.oe_media_demo
-    - oe_media_js_asset.settings
     - views.view.av_portal_entity_browser
     - views.view.media_entity_browser

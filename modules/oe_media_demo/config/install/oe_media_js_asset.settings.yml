@@ -1,7 +1,0 @@
-environments:
-  acceptance:
-    label: Acceptance
-    url: 'https://acceptance.ec.europa.eu/assets'
-  production:
-    label: Production
-    url: 'https://ec.europa.eu/assets'
