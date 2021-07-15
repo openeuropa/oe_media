@@ -25,8 +25,9 @@ function oe_media_demo_install() {
   ];
   $config->set('environments', $environments);
   $config->save();
+
   $config = \Drupal::configFactory()->getEditable('embed.button.media');
   $settings = $config->get('type_settings.media_types');
-  $setting['javascript_asset'] = 'javascript_asset';
-  $config->set('type_settings.media_types', array_merge($settings, $setting))->save();
+  $settings['javascript_asset'] = 'javascript_asset';
+  $config->set('type_settings.media_types', $settings)->save();
 }
