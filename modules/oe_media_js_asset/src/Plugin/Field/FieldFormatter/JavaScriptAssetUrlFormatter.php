@@ -99,16 +99,17 @@ class JavaScriptAssetUrlFormatter extends FormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
     $config = $this->configFactory->get('oe_media_js_asset.settings');
+    $environments = $config->get('environments');
 
     foreach ($items as $delta => $item) {
-      if ($url = $config->get("environments.$item->environment.url")) {
+      if (!empty($environments[$item->environment]['url'])) {
         $elements[$delta] = [
           '#type' => 'html_tag',
           '#tag' => 'script',
           '#value' => '',
           '#attributes' => [
             'type' => 'application/javascript',
-            'src' => $url . $item->path,
+            'src' => $environments[$item->environment]['url'] . $item->path,
           ],
         ];
       }
