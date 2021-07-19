@@ -41,6 +41,10 @@ class JavaScriptAssetUrlWidgetTest extends JavaScriptAssetTestBase {
     $page->pressButton('Save');
 
     $this->assertSession()->pageTextContains('JavaScript asset First JavaScript asset has been created.');
+    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['name' => 'First JavaScript asset']);
+    $media = reset($media);
+    $this->assertEquals('acceptance', $media->get('oe_media_js_asset_url')->environment);
+    $this->assertEquals('/somejavascript.js', $media->get('oe_media_js_asset_url')->path);
   }
 
 }
