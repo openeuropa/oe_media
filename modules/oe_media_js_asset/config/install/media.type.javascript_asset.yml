@@ -5,7 +5,7 @@ dependencies:
     - oe_media_js_asset
 id: javascript_asset
 label: 'JavaScript asset'
-description: 'Remote JavaScript from production or acceptance server.'
+description: 'References JavaScript assets from from external environments.'
 source: oe_media_js_asset
 queue_thumbnail_downloads: false
 new_revision: false

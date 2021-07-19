@@ -13,9 +13,9 @@ use Drupal\Core\TypedData\DataDefinition;
  *
  * @FieldType(
  *   id = "oe_media_js_asset_url",
- *   label = @Translation("JavaScript asset url"),
+ *   label = @Translation("JavaScript asset URL"),
  *   module = "oe_media_js_asset",
- *   description = @Translation("Stores the JS asset media url."),
+ *   description = @Translation("Stores the JS asset media URL."),
  *   default_widget = "oe_media_js_asset_url"
  * )
  */
