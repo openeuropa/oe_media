@@ -70,7 +70,7 @@ class JavaScriptAssetUrlWidget extends WidgetBase {
     $element['asset_url']['environment'] = [
       '#type' => 'select',
       '#title' => $this->t('Environment'),
-      '#default_value' => !$item->isEmpty() ? $item->environment : '',
+      '#default_value' => !$item->isEmpty() ? $item->environment : NULL,
       '#options' => $this->getEnvironmentOptions(),
     ];
 
