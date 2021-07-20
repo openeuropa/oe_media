@@ -10,7 +10,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
- * Tests the field JS asset url formatter.
+ * Tests the field JS asset URL formatter.
  */
 class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
 
@@ -71,7 +71,7 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
   }
 
   /**
-   * Tests JavaScript asset url formatter output.
+   * Tests JavaScript asset URL formatter output.
    */
   public function testJavaScriptAssetUrlFormatter(): void {
     $environments = [
@@ -104,7 +104,7 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
 
     $entity->{$this->fieldName}->environment = 'acceptance';
     $this->renderEntityFields($entity, $view_display);
-    $this->assertRaw('<script type="application/javascript" src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
+    $this->assertRaw('<script src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
 
     // Assert multiple JS assets.
     $entity->{$this->fieldName} = [
@@ -118,8 +118,8 @@ class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
       ],
     ];
     $this->renderEntityFields($entity, $view_display);
-    $this->assertRaw('<script type="application/javascript" src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
-    $this->assertRaw('<script type="application/javascript" src="https://europa.eu/webassets/somejavascript2.js"></script>');
+    $this->assertRaw('<script src="https://acceptance.europa.eu/webassets/somejavascript.js"></script>');
+    $this->assertRaw('<script src="https://europa.eu/webassets/somejavascript2.js"></script>');
   }
 
   /**

@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @FieldFormatter(
  *   id = "oe_media_js_asset_url",
  *   label = @Translation("JavaScript asset URL"),
- *   description = @Translation("Renders the JavaScript asset url for media entities."),
+ *   description = @Translation("Renders the JavaScript asset URL for media entities."),
  *   field_types = {
  *     "oe_media_js_asset_url"
  *   }
@@ -108,7 +108,6 @@ class JavaScriptAssetUrlFormatter extends FormatterBase {
           '#tag' => 'script',
           '#value' => '',
           '#attributes' => [
-            'type' => 'application/javascript',
             'src' => $environments[$item->environment]['url'] . $item->path,
           ],
         ];
