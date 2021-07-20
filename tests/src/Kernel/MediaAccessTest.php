@@ -44,7 +44,10 @@ class MediaAccessTest extends MediaKernelTestBase {
 
     $this->installConfig(['oe_media']);
 
-    $this->currentUser = $this->setUpCurrentUser(['username' => 'test'], ['access media overview', 'view media']);
+    $this->currentUser = $this->setUpCurrentUser(
+      ['username' => 'test'],
+      ['access media overview', 'view media']
+    );
   }
 
   /**

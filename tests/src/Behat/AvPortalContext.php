@@ -22,7 +22,10 @@ class AvPortalContext extends RawDrupalContext {
    * @beforeScenario @av_portal
    */
   public function enableTestModule(BeforeScenarioScope $scope): void {
-    \Drupal::service('module_installer')->install(['media_avportal_mock', 'oe_media_avportal_test']);
+    \Drupal::service('module_installer')->install([
+      'media_avportal_mock',
+      'oe_media_avportal_test',
+    ]);
   }
 
   /**
@@ -34,7 +37,10 @@ class AvPortalContext extends RawDrupalContext {
    * @afterScenario @av_portal
    */
   public function disableTestModule(AfterScenarioScope $scope): void {
-    \Drupal::service('module_installer')->uninstall(['media_avportal_mock', 'oe_media_avportal_test']);
+    \Drupal::service('module_installer')->uninstall([
+      'media_avportal_mock',
+      'oe_media_avportal_test',
+    ]);
   }
 
   /**

@@ -116,10 +116,16 @@ class CKEditorIntegrationTest extends MediaEmbedTestBase {
       ->getStorage('media')
       ->loadMultiple();
 
-    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dimage_teaser"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[1]->uuid(), '@title' => $media[1]->label()]);
+    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dimage_teaser"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', [
+      '@uuid' => $media[1]->uuid(),
+      '@title' => $media[1]->label(),
+    ]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
 
-    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dembed"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', ['@uuid' => $media[2]->uuid(), '@title' => $media[2]->label()]);
+    $element = new FormattableMarkup('<p data-oembed="https://oembed.ec.europa.eu?url=https%3A//data.ec.europa.eu/ewp/media/@uuid%3Fview_mode%3Dembed"><a href="https://data.ec.europa.eu/ewp/media/@uuid">@title</a></p>', [
+      '@uuid' => $media[2]->uuid(),
+      '@title' => $media[2]->label(),
+    ]);
     $this->assertContains($element->__toString(), $this->getSession()->getPage()->getHtml());
   }
 
