@@ -196,7 +196,10 @@ class MediaEmbedDialog extends FormBase {
     $form['#title'] = $this->t('Select Media to embed');
 
     if ($this->entityBrowser) {
-      $this->eventDispatcher->addListener(Events::REGISTER_JS_CALLBACKS, [$this, 'registerJsCallback']);
+      $this->eventDispatcher->addListener(
+        Events::REGISTER_JS_CALLBACKS,
+        [$this, 'registerJsCallback']
+      );
       $form['entity_browser'] = [
         '#type' => 'entity_browser',
         '#entity_browser' => $this->entityBrowser->id(),
@@ -402,7 +405,9 @@ class MediaEmbedDialog extends FormBase {
    *   The current state of the form.
    */
   public function validateSelectStep(array $form, FormStateInterface $form_state): void {
-    if (($form_state->hasValue(['entity_browser', 'entities'])) && (count($form_state->getValue(['entity_browser', 'entities'])) > 0)) {
+    if (($form_state->hasValue(['entity_browser', 'entities'])) &&
+      (count($form_state->getValue(['entity_browser', 'entities'])) > 0)
+    ) {
       $id = $form_state->getValue(['entity_browser', 'entities', 0])->id();
       $element = $form['entity_browser'];
     }
@@ -695,12 +700,15 @@ class MediaEmbedDialog extends FormBase {
         $media_type = $media_type_storage->load($entity->bundle());
         $form_element['data-entity-view-mode-link'] = [
           '#type' => 'link',
-          '#title' => $this->t('Manage @media view modes', ['@media' => $media_type->label()]),
+          '#title' => $this->t(
+            'Manage @media view modes',
+            ['@media' => $media_type->label()]
+          ),
           '#url' => Url::fromRoute('entity.entity_view_display.' . $entity->getEntityTypeId() . '.default', [
             'media_type' => $entity->bundle(),
           ]),
           '#attributes' => ['target' => '_blank'],
-        ];;
+        ];
       }
 
       return $form_element;
