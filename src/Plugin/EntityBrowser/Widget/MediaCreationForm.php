@@ -120,7 +120,9 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
     $bundle = $form_state->get('media_bundle');
     if ($bundle && isset($options[$bundle])) {
       // Pretend to be IEFs submit button.
-      $form['#submit'] = [['Drupal\inline_entity_form\ElementSubmit', 'trigger']];
+      $form['#submit'] = [
+        ['Drupal\inline_entity_form\ElementSubmit', 'trigger'],
+      ];
       $form['actions']['submit']['#ief_submit_trigger'] = TRUE;
       $form['actions']['submit']['#ief_submit_trigger_all'] = TRUE;
 
