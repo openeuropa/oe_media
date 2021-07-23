@@ -103,7 +103,8 @@ class Media extends EmbedTypeBase implements ContainerFactoryPluginInterface {
         },
         // Filter out both modal and standalone forms as they don't work.
         array_filter($browsers, function (EntityBrowserInterface $browser) {
-          return !in_array($browser->getDisplay()->getPluginId(), ['modal', 'standalone'], TRUE);
+          $plugin_ids = ['modal', 'standalone'];
+          return !in_array($browser->getDisplay()->getPluginId(), $plugin_ids, TRUE);
         })
       );
       $options = ['_none' => $this->t('None (autocomplete)')] + $browsers;

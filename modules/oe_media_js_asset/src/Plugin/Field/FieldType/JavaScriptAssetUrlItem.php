@@ -16,7 +16,8 @@ use Drupal\Core\TypedData\DataDefinition;
  *   label = @Translation("JavaScript asset URL"),
  *   module = "oe_media_js_asset",
  *   description = @Translation("Stores the JS asset media URL."),
- *   default_widget = "oe_media_js_asset_url"
+ *   default_widget = "oe_media_js_asset_url",
+ *   default_formatter = "oe_media_js_asset_url"
  * )
  */
 class JavaScriptAssetUrlItem extends FieldItemBase {
