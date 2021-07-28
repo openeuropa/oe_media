@@ -196,10 +196,10 @@ class MediaEmbedDialog extends FormBase {
     $form['#title'] = $this->t('Select Media to embed');
 
     if ($this->entityBrowser) {
-      $this->eventDispatcher->addListener(
-        Events::REGISTER_JS_CALLBACKS,
-        [$this, 'registerJsCallback']
-      );
+      $this->eventDispatcher->addListener(Events::REGISTER_JS_CALLBACKS, [
+        $this,
+        'registerJsCallback',
+      ]);
       $form['entity_browser'] = [
         '#type' => 'entity_browser',
         '#entity_browser' => $this->entityBrowser->id(),
@@ -405,9 +405,13 @@ class MediaEmbedDialog extends FormBase {
    *   The current state of the form.
    */
   public function validateSelectStep(array $form, FormStateInterface $form_state): void {
-    if (($form_state->hasValue(['entity_browser', 'entities'])) &&
-      (count($form_state->getValue(['entity_browser', 'entities'])) > 0)
-    ) {
+    if (($form_state->hasValue([
+      'entity_browser',
+      'entities',
+    ])) && (count($form_state->getValue([
+      'entity_browser',
+      'entities',
+    ])) > 0)) {
       $id = $form_state->getValue(['entity_browser', 'entities', 0])->id();
       $element = $form['entity_browser'];
     }
