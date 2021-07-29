@@ -6,6 +6,8 @@ namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\TestFileCreationTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\user\Entity\Role;
 
 /**
  * Tests the media creation form entity browser widget.
@@ -13,6 +15,7 @@ use Drupal\Tests\TestFileCreationTrait;
 class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
   use TestFileCreationTrait;
+  use UserCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -31,11 +34,24 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
   protected $defaultTheme = 'stark';
 
   /**
+   * The currently logged in user.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $currentUser;
+
+  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
-    $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
+    $permissions = [
+      'access media_entity_browser entity browser pages',
+      'create oe_media_demo content',
+      'view the administration theme',
+    ];
+    $this->currentUser = $this->drupalCreateUser($permissions);
+    $this->drupalLogin($this->currentUser);
   }
 
   /**
@@ -49,9 +65,43 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $media_browser_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    // The user doesn't have access to create any of the media bundles so the
+    // tab should not be available.
+    $this->assertFalse($this->getSession()->getPage()->hasLink('Media creation form'));
+
+    // Grant authenticated role permission to create Iframe media.
+    $role = Role::load('authenticated');
+    $this->grantPermissions($role, ['create iframe media']);
+    $this->getSession()->reload();
+    $this->getSession()->getPage()->pressButton('Media browser field');
+    $media_browser_field->pressButton('Select entities');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    // The user has access to create Iframe media so the tab is visible but no
+    // bundles can be created.
+    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->assertFalse($this->getSession()->getPage()->hasSelect('Bundle'));
+    $this->assertSession()->pageTextContains('You cannot create any of the media bundles available in the current field.');
+
+    // Grant the authenticated role additional permissions to create media
+    // bundles.
+    $permissions = [
+      'create av_portal_photo media',
+      'create av_portal_video media',
+      'create document media',
+      'create image media',
+      'create remote_video media',
+      'edit own image media',
+    ];
+    $this->grantPermissions($role, $permissions);
+    $this->getSession()->reload();
+    $this->getSession()->getPage()->pressButton('Media browser field');
+    $media_browser_field->pressButton('Select entities');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
     $this->getSession()->getPage()->clickLink('Media creation form');
     // Assert that the bundle select field exists and contains only the allowed
-    // target bundles.
+    // target bundles (Note: Iframe should not be available).
     $this->assertSession()->selectExists('Bundle');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertEquals([
