@@ -88,29 +88,43 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       $bundles = array_intersect_key($bundles, $target_bundles);
     }
 
+    // The only media bundles available in the select will be the ones the user
+    // can create.
+    $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
     $options = [];
     foreach ($bundles as $bundle => $info) {
-      $options[$bundle] = $info['label'];
+      $access = $media_access_control_handler->createAccess($bundle, NULL, [], TRUE)->isAllowed();
+      if ($access) {
+        $options[$bundle] = $info['label'];
+      }
     }
 
     $id = Html::getId('media_entity_form_wrapper');
 
-    $form['media_bundle'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Bundle'),
-      '#options' => $options,
-      '#required' => TRUE,
-      '#executes_submit_callback' => TRUE,
-      '#limit_validation_errors' => [['media_bundle']],
-      '#submit' => [[static::class, 'changeMediaBundle']],
-      '#ajax' => [
-        'callback' => [static::class, 'ajaxUpdateMediaForm'],
-        'wrapper' => $id,
-      ],
-      '#default_value' => $form_state->get('media_bundle'),
-      '#empty_option' => $this->t('- Select -'),
-      '#empty_value' => '_none',
-    ];
+    if (!empty($options)) {
+      $form['media_bundle'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Bundle'),
+        '#options' => $options,
+        '#required' => TRUE,
+        '#executes_submit_callback' => TRUE,
+        '#limit_validation_errors' => [['media_bundle']],
+        '#submit' => [[static::class, 'changeMediaBundle']],
+        '#ajax' => [
+          'callback' => [static::class, 'ajaxUpdateMediaForm'],
+          'wrapper' => $id,
+        ],
+        '#default_value' => $form_state->get('media_bundle'),
+        '#empty_option' => $this->t('- Select -'),
+        '#empty_value' => '_none',
+      ];
+    }
+    else {
+      $form['no_media_bundles'] = [
+        '#type' => 'markup',
+        '#markup' => $this->t('You cannot create any of the media bundles available in the current field.'),
+      ];
+    }
 
     $form['entity_form'] = [
       '#type' => 'container',
@@ -192,6 +206,39 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       });
       $this->selectEntities($entities, $form_state);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function access() {
+    // We cannot get the field's target bundles so we need to check the create
+    // access on all the available media bundles.
+    $bundles = $this->entityTypeBundleInfo->getBundleInfo('media');
+    $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
+    $has_create_access = [];
+    $no_create_access = [];
+    foreach ($bundles as $bundle => $info) {
+      $access = $media_access_control_handler->createAccess($bundle, NULL, [], TRUE);
+      // Save the AccessResultInterface object in separated arrays according
+      // to its result as we need to return an object.
+      if ($access->isAllowed()) {
+        $has_create_access[] = $access;
+      }
+      else {
+        $no_create_access[] = $access;
+      }
+    }
+
+    // If the user has create access to at least one of the media bundles we
+    // allow access to the entity browser tab.
+    if (!empty($has_create_access)) {
+      return $has_create_access[0];
+    }
+
+    // We hide the tab if the user doesn't have create access to any of the
+    // media bundles.
+    return $no_create_access[0];
   }
 
 }
