@@ -6,7 +6,6 @@ namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\TestFileCreationTrait;
-use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\Entity\Role;
 
 /**
@@ -15,7 +14,6 @@ use Drupal\user\Entity\Role;
 class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
   use TestFileCreationTrait;
-  use UserCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -34,30 +32,17 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
   protected $defaultTheme = 'stark';
 
   /**
-   * The currently logged in user.
-   *
-   * @var \Drupal\user\UserInterface
+   * Tests the media creation form entity browser widget.
    */
-  protected $currentUser;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
+  public function testMediaCreationForm(): void {
     $permissions = [
       'access media_entity_browser entity browser pages',
       'create oe_media_demo content',
       'view the administration theme',
     ];
-    $this->currentUser = $this->drupalCreateUser($permissions);
-    $this->drupalLogin($this->currentUser);
-  }
+    $user = $this->drupalCreateUser($permissions);
+    $this->drupalLogin($user);
 
-  /**
-   * Tests the media creation form entity browser widget.
-   */
-  public function testMediaCreationForm(): void {
     $this->drupalGet('node/add/oe_media_demo');
 
     $this->getSession()->getPage()->pressButton('Media browser field');
@@ -67,7 +52,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
     // The user doesn't have access to create any of the media bundles so the
     // tab should not be available.
-    $this->assertFalse($this->getSession()->getPage()->hasLink('Media creation form'));
+    $this->assertSession()->linkNotExists('Media creation form');
 
     // Grant authenticated role permission to create Iframe media.
     $role = Role::load('authenticated');
@@ -78,17 +63,17 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
     // The user has access to create Iframe media so the tab is visible but no
-    // bundles can be created.
+    // bundles can be created, as the iframe media cannot be referenced by the
+    // field.
     $this->getSession()->getPage()->clickLink('Media creation form');
-    $this->assertFalse($this->getSession()->getPage()->hasSelect('Bundle'));
-    $this->assertSession()->pageTextContains('You cannot create any of the media bundles available in the current field.');
+    $this->assertSession()->fieldNotExists('Bundle');
+    $this->assertSession()->pageTextContains('You cannot create any of the media bundles referenceable by the current field.');
 
     // Grant the authenticated role additional permissions to create media
     // bundles.
     $permissions = [
       'create av_portal_photo media',
       'create av_portal_video media',
-      'create document media',
       'create image media',
       'create remote_video media',
       'edit own image media',
@@ -101,9 +86,28 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
     $this->getSession()->getPage()->clickLink('Media creation form');
     // Assert that the bundle select field exists and contains only the allowed
-    // target bundles (Note: Iframe should not be available).
+    // target bundles (Note: Document and Iframe should not be available as the
+    // user is missing the create permission for the document bundle and Iframe
+    // cannot be referenced).
     $this->assertSession()->selectExists('Bundle');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
+    $this->assertEquals([
+      'av_portal_photo' => 'AV Portal Photo',
+      'av_portal_video' => 'AV Portal Video',
+      'image' => 'Image',
+      'remote_video' => 'Remote video',
+      '_none' => '- Select -',
+    ], $this->getOptions($select_field));
+
+    // Grant permission to create document media and assert the field now
+    // contains all the allowed target bundles.
+    $this->grantPermissions($role, ['create document media']);
+    $this->getSession()->reload();
+    $this->getSession()->getPage()->pressButton('Media browser field');
+    $media_browser_field->pressButton('Select entities');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->getSession()->getPage()->clickLink('Media creation form');
     $this->assertEquals([
       'av_portal_photo' => 'AV Portal Photo',
       'av_portal_video' => 'AV Portal Video',
