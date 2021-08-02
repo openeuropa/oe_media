@@ -6,6 +6,7 @@ namespace Drupal\oe_media\Plugin\EntityBrowser\Widget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -93,7 +94,7 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
     $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
     $options = [];
     foreach ($bundles as $bundle => $info) {
-      $access = $media_access_control_handler->createAccess($bundle, NULL, [], TRUE)->isAllowed();
+      $access = $media_access_control_handler->createAccess($bundle);
       if ($access) {
         $options[$bundle] = $info['label'];
       }
@@ -101,30 +102,31 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
 
     $id = Html::getId('media_entity_form_wrapper');
 
-    if (!empty($options)) {
-      $form['media_bundle'] = [
-        '#type' => 'select',
-        '#title' => $this->t('Bundle'),
-        '#options' => $options,
-        '#required' => TRUE,
-        '#executes_submit_callback' => TRUE,
-        '#limit_validation_errors' => [['media_bundle']],
-        '#submit' => [[static::class, 'changeMediaBundle']],
-        '#ajax' => [
-          'callback' => [static::class, 'ajaxUpdateMediaForm'],
-          'wrapper' => $id,
-        ],
-        '#default_value' => $form_state->get('media_bundle'),
-        '#empty_option' => $this->t('- Select -'),
-        '#empty_value' => '_none',
-      ];
-    }
-    else {
+    if (empty($options)) {
       $form['no_media_bundles'] = [
         '#type' => 'markup',
-        '#markup' => $this->t('You cannot create any of the media bundles available in the current field.'),
+        '#markup' => $this->t('You cannot create any of the media bundles referenceable by the current field.'),
       ];
+
+      return $form;
     }
+
+    $form['media_bundle'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Bundle'),
+      '#options' => $options,
+      '#required' => TRUE,
+      '#executes_submit_callback' => TRUE,
+      '#limit_validation_errors' => [['media_bundle']],
+      '#submit' => [[static::class, 'changeMediaBundle']],
+      '#ajax' => [
+        'callback' => [static::class, 'ajaxUpdateMediaForm'],
+        'wrapper' => $id,
+      ],
+      '#default_value' => $form_state->get('media_bundle'),
+      '#empty_option' => $this->t('- Select -'),
+      '#empty_value' => '_none',
+    ];
 
     $form['entity_form'] = [
       '#type' => 'container',
@@ -212,33 +214,25 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
    * {@inheritdoc}
    */
   public function access() {
-    // We cannot get the field's target bundles so we need to check the create
+    // We cannot get the field's target bundles, so we need to check the create
     // access on all the available media bundles.
     $bundles = $this->entityTypeBundleInfo->getBundleInfo('media');
-    $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
-    $has_create_access = [];
-    $no_create_access = [];
+    $access_handler = $this->entityTypeManager->getAccessControlHandler('media');
+    // The users have access to this widget if they have create access to at
+    // least one media bundle.
+    $access = AccessResult::neutral();
     foreach ($bundles as $bundle => $info) {
-      $access = $media_access_control_handler->createAccess($bundle, NULL, [], TRUE);
-      // Save the AccessResultInterface object in separated arrays according
-      // to its result as we need to return an object.
-      if ($access->isAllowed()) {
-        $has_create_access[] = $access;
+      $create_access = $access_handler->createAccess($bundle, NULL, [], TRUE);
+      // Do not merge forbidden results, as it would cause the final result to
+      // be forbidden too. Keep only the cacheability information.
+      if (!$create_access->isForbidden()) {
+        $access = $access->orIf($create_access);
       }
       else {
-        $no_create_access[] = $access;
+        $access->addCacheableDependency($create_access);
       }
     }
-
-    // If the user has create access to at least one of the media bundles we
-    // allow access to the entity browser tab.
-    if (!empty($has_create_access)) {
-      return $has_create_access[0];
-    }
-
-    // We hide the tab if the user doesn't have create access to any of the
-    // media bundles.
-    return $no_create_access[0];
+    return $access;
   }
 
 }
