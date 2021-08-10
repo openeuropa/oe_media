@@ -6,6 +6,7 @@ namespace Drupal\oe_media\Plugin\EntityBrowser\Widget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -88,12 +89,27 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       $bundles = array_intersect_key($bundles, $target_bundles);
     }
 
+    // The only media bundles available in the select will be the ones the user
+    // can create.
+    $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
     $options = [];
     foreach ($bundles as $bundle => $info) {
-      $options[$bundle] = $info['label'];
+      $access = $media_access_control_handler->createAccess($bundle);
+      if ($access) {
+        $options[$bundle] = $info['label'];
+      }
     }
 
     $id = Html::getId('media_entity_form_wrapper');
+
+    if (empty($options)) {
+      $form['no_media_bundles'] = [
+        '#type' => 'markup',
+        '#markup' => $this->t('You cannot create any of the media bundles referenceable by the current field.'),
+      ];
+
+      return $form;
+    }
 
     $form['media_bundle'] = [
       '#type' => 'select',
@@ -192,6 +208,31 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       });
       $this->selectEntities($entities, $form_state);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function access() {
+    // We cannot get the field's target bundles, so we need to check the create
+    // access on all the available media bundles.
+    $bundles = $this->entityTypeBundleInfo->getBundleInfo('media');
+    $access_handler = $this->entityTypeManager->getAccessControlHandler('media');
+    // The users have access to this widget if they have create access to at
+    // least one media bundle.
+    $access = AccessResult::neutral();
+    foreach ($bundles as $bundle => $info) {
+      $create_access = $access_handler->createAccess($bundle, NULL, [], TRUE);
+      // Do not merge forbidden results, as it would cause the final result to
+      // be forbidden too. Keep only the cacheability information.
+      if (!$create_access->isForbidden()) {
+        $access = $access->orIf($create_access);
+      }
+      else {
+        $access->addCacheableDependency($create_access);
+      }
+    }
+    return $access;
   }
 
 }
