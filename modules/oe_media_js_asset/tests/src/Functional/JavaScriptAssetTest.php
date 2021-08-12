@@ -56,6 +56,10 @@ class JavaScriptAssetTest extends JavaScriptAssetTestBase {
     $page->pressButton('Save');
 
     $this->assertSession()->pageTextContains('Javascript asset First JavaScript asset has been updated.');
+    $this->drupalGet($media->toUrl());
+    $this->assertEquals('First JavaScript asset', $assert_session->fieldExists('Name')->getValue());
+    $this->assertEquals('/somejavascript.js', $assert_session->fieldExists('Path')->getValue());
+    $this->assertEquals('production', $assert_session->fieldExists('Environment')->getValue());
   }
 
 }
