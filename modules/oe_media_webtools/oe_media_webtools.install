@@ -20,7 +20,7 @@ function oe_media_webtools_install($is_syncing) {
     }
 
     $config = \Drupal::configFactory()->getEditable('embed.button.media');
-    if ($settings = $config->get('type_settings.media_types')) {
+    if ($settings = $config->get('type_settings.bundles')) {
       // Get all webtools media types.
       $webtools_media_types = [];
       $media_types = \Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple();
@@ -31,7 +31,7 @@ function oe_media_webtools_install($is_syncing) {
       }
 
       // Add the Webtools media type to embed button media.
-      $config->set('type_settings.media_types', array_merge($settings, $webtools_media_types))->save();
+      $config->set('type_settings.bundles', array_merge($settings, $webtools_media_types))->save();
     }
   }
 }
@@ -55,8 +55,8 @@ function oe_media_webtools_uninstall() {
     }
 
     // Remove the Webtools media type from embed button media.
-    $settings = $config->get('type_settings.media_types');
+    $settings = $config->get('type_settings.bundles');
     $settings = array_diff_key($settings, $webtools_media_types);
-    $config->set('type_settings.media_types', $settings)->save();
+    $config->set('type_settings.bundles', $settings)->save();
   }
 }
