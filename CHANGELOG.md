@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.13.0](https://github.com/openeuropa/oe_media/tree/1.13.0) (2021-08-16)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.12.0...1.13.0)
+
+**Merged pull requests:**
+
+- EWPP-1355: Media creation form entity browser widget doesn't take into account permissions. [\#175](https://github.com/openeuropa/oe_media/pull/175) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-1288: Code style fixes. [\#171](https://github.com/openeuropa/oe_media/pull/171) ([upchuk](https://github.com/upchuk))
+- EWPP-1124: Change filter plugin id to avoid collision with core plugins. [\#164](https://github.com/openeuropa/oe_media/pull/164) ([imanoleguskiza](https://github.com/imanoleguskiza))
+
 ## [1.12.0](https://github.com/openeuropa/oe_media/tree/1.12.0) (2021-06-15)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.11.0...1.12.0)
 
@@ -12,6 +21,7 @@
 
 **Merged pull requests:**
 
+- Release 1.12.0 [\#166](https://github.com/openeuropa/oe_media/pull/166) ([brummbar](https://github.com/brummbar))
 - EWPP-1112: Place Iframe media format after Plain text format. [\#165](https://github.com/openeuropa/oe_media/pull/165) ([yenyasinn](https://github.com/yenyasinn))
 - EWPP-912: Drupal 9 compatibility fixes. [\#163](https://github.com/openeuropa/oe_media/pull/163) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-902: Media gallery submodule. [\#162](https://github.com/openeuropa/oe_media/pull/162) ([upchuk](https://github.com/upchuk))

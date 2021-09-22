@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install functions for OpenEuropa Media Embed module.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\embed\Entity\EmbedButton;
+
+/**
+ * Implements hook_install().
+ */
+function oe_media_embed_install($is_syncing) {
+  if ($is_syncing) {
+    return;
+  }
+
+  // Set the icon onto the shipped embed button.
+  /** @var \Drupal\embed\EmbedButtonInterface $button */
+  $button = EmbedButton::load('media');
+  $icon = EmbedButton::convertImageToEncodedData(drupal_get_path('module', 'oe_media_embed') . '/embed.png');
+  $button->set('icon', $icon);
+  $button->save();
+}

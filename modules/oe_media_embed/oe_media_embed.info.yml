@@ -1,5 +1,5 @@
 name: 'OpenEuropa Media Embed'
-description: 'Provides the embed functionality of the media types'
+description: 'Provides the embed functionality of the media types. This is a legacy module as the main logic has been moved to oe_oembed.'
 package: OpenEuropa
 type: module
 core_version_requirement: ^8.9 || ^9
@@ -8,3 +8,4 @@ dependencies:
   - media_avportal:media_avportal
   - embed:embed
   - drupal:ckeditor
+  - oe_oembed:oe_oembed
