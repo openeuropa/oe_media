@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.javascript_asset.oe_media_js_asset_url
+    - media.type.javascript_asset
+  module:
+    - oe_media_js_asset
+id: media.javascript_asset.default
+targetEntityType: media
+bundle: javascript_asset
+mode: default
+content:
+  name:
+    type: string
+    weight: 0
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  oe_media_js_asset_url:
+    type: oe_media_js_asset_url
+    weight: 1
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  thumbnail: true
+  uid: true

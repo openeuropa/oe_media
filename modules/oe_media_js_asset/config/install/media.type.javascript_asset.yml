@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_media_js_asset
+id: javascript_asset
+label: 'JavaScript asset'
+description: 'References JavaScript assets from from external environments.'
+source: oe_media_js_asset
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: oe_media_js_asset_url
+field_map: {}
