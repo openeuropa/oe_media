@@ -1,15 +1,33 @@
-# Change Log
+# Changelog
+
+## [1.14.0](https://github.com/openeuropa/oe_media/tree/1.14.0) (2021-09-27)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.13.0...1.14.0)
+
+**Merged pull requests:**
+
+- Update epic EWPP-844: Javascript asset [\#179](https://github.com/openeuropa/oe_media/pull/179) ([upchuk](https://github.com/upchuk))
+- EWPP-884: Remove field mapping. [\#177](https://github.com/openeuropa/oe_media/pull/177) ([hernani](https://github.com/hernani))
+- EWPP-844: Epic update with master. [\#176](https://github.com/openeuropa/oe_media/pull/176) ([nagyad](https://github.com/nagyad))
+- EWPP-844: Update epic ewpp 844 javascript asset. [\#174](https://github.com/openeuropa/oe_media/pull/174) ([sergepavle](https://github.com/sergepavle))
+- \[EPIC\] EWPP-844: Javascript asset [\#172](https://github.com/openeuropa/oe_media/pull/172) ([brummbar](https://github.com/brummbar))
+- EWPP-1300: Using the OE OEmbed component. [\#170](https://github.com/openeuropa/oe_media/pull/170) ([upchuk](https://github.com/upchuk))
+- \[EWPP-844\] EWPP-846: Create formatter for JavaScript asset media. [\#168](https://github.com/openeuropa/oe_media/pull/168) ([nagyad](https://github.com/nagyad))
+- \[EWPP-844\] EWPP-845: Create Javascript asset media type and source. [\#167](https://github.com/openeuropa/oe_media/pull/167) ([nagyad](https://github.com/nagyad))
 
 ## [1.13.0](https://github.com/openeuropa/oe_media/tree/1.13.0) (2021-08-16)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.12.0...1.13.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.13.0 [\#178](https://github.com/openeuropa/oe_media/pull/178) ([brummbar](https://github.com/brummbar))
 - EWPP-1355: Media creation form entity browser widget doesn't take into account permissions. [\#175](https://github.com/openeuropa/oe_media/pull/175) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-1288: Code style fixes. [\#171](https://github.com/openeuropa/oe_media/pull/171) ([upchuk](https://github.com/upchuk))
 - EWPP-1124: Change filter plugin id to avoid collision with core plugins. [\#164](https://github.com/openeuropa/oe_media/pull/164) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.12.0](https://github.com/openeuropa/oe_media/tree/1.12.0) (2021-06-15)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.11.0...1.12.0)
 
 **Closed issues:**
@@ -28,6 +46,7 @@
 - EWPP-721: Update xdebug configuration. [\#157](https://github.com/openeuropa/oe_media/pull/157) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.11.0](https://github.com/openeuropa/oe_media/tree/1.11.0) (2021-01-25)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.1...1.11.0)
 
 **Merged pull requests:**
@@ -75,7 +94,9 @@
 - EWPP-0000: Update changelog for release 1.9.0. [\#129](https://github.com/openeuropa/oe_media/pull/129) ([brummbar](https://github.com/brummbar))
 - EPIC video iframe media v2 [\#128](https://github.com/openeuropa/oe_media/pull/128) ([brummbar](https://github.com/brummbar))
 - EWPP-292: HTML filtering issue with video iframe field. [\#127](https://github.com/openeuropa/oe_media/pull/127) ([brummbar](https://github.com/brummbar))
+- Epic video iframe media v2 update [\#126](https://github.com/openeuropa/oe_media/pull/126) ([brummbar](https://github.com/brummbar))
 - EWPP-32: Add createMediaRemoteVideo to MediaContext. [\#121](https://github.com/openeuropa/oe_media/pull/121) ([drishu](https://github.com/drishu))
+- Update epic [\#120](https://github.com/openeuropa/oe_media/pull/120) ([brummbar](https://github.com/brummbar))
 - EWPP-84: Add thumbnail field to iframe media source. [\#118](https://github.com/openeuropa/oe_media/pull/118) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-82: Allow to configure a text format for the video iframe source. [\#117](https://github.com/openeuropa/oe_media/pull/117) ([sergepavle](https://github.com/sergepavle))
 
@@ -208,7 +229,6 @@
 
 - Update CHANGELOG.md for release 1.0.0-beta5. [\#56](https://github.com/openeuropa/oe_media/pull/56) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - OPENEUROPA-2031: Upgrade path for the document private file system. [\#55](https://github.com/openeuropa/oe_media/pull/55) ([upchuk](https://github.com/upchuk))
-- OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
 
@@ -218,6 +238,7 @@
 
 - Update CHANGELOG.md for release 1.0.0-beta4. [\#54](https://github.com/openeuropa/oe_media/pull/54) ([ademarco](https://github.com/ademarco))
 - OPENEUROPA-1914: Media embed filter plugin. [\#53](https://github.com/openeuropa/oe_media/pull/53) ([upchuk](https://github.com/upchuk))
+- OPENEUROPA-1946: \[oe\_media\] Document media type should use the private file system. [\#52](https://github.com/openeuropa/oe_media/pull/52) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1945: Update allowed file extensions. [\#51](https://github.com/openeuropa/oe_media/pull/51) ([sergepavle](https://github.com/sergepavle))
 - OPENEUROPA-1911: Create the oEmbed WYSIWYG embed plugin [\#50](https://github.com/openeuropa/oe_media/pull/50) ([upchuk](https://github.com/upchuk))
 
