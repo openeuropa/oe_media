@@ -28,7 +28,7 @@
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "openeuropa/oe_link_lists": "^0.11",
         "openeuropa/oe_webtools": "^1.13",
-        "openeuropa/oe_oembed": "dev-master",
+        "openeuropa/oe_oembed": "~0.1.0",
         "drupal/drupal-extension": "~4.0",
         "phpunit/phpunit": "^7 || ^8",
         "nikic/php-parser": "^3.1.5",
