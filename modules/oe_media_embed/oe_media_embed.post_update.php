@@ -125,3 +125,10 @@ function oe_media_embed_post_update_00003(): void {
     }
   }
 }
+
+/**
+ * Remove old oe_media_embed.settings.
+ */
+function oe_media_embed_post_update_00004(): void {
+  \Drupal::configFactory()->getEditable('oe_media_embed.settings')->delete();
+}
