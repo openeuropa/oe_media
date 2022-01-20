@@ -136,18 +136,34 @@ function oe_media_iframe_post_update_00004(): void {
 function oe_media_iframe_post_update_00005(): void {
   $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00005_create_fields');
 
-  $configs = [
-    'field.field.media.iframe.oe_media_iframe',
-    'field.field.media.iframe.oe_media_iframe_ratio',
-    'field.field.media.iframe.oe_media_iframe_thumbnail',
+  // The following fields might be missing in the 'iframe' media bundle.
+  $field_names = [
+    'oe_media_iframe',
+    'oe_media_iframe_ratio',
+    'oe_media_iframe_thumbnail',
   ];
-  $config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
-  // Create fields if they do not exist.
-  foreach ($configs as $config) {
-    $config_data = $file_storage->read($config);
-    if (!$config_storage->load($config_data['id'])) {
-      $config_data['_core']['default_config_hash'] = Crypt::hashBase64(serialize($config_data));
-      $config_storage->create($config_data)->save();
+
+  // Create field storages, if they don't exist.
+  /** @var \Drupal\field\FieldStorageConfigStorage $field_storage_config_storage */
+  $field_storage_config_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_names as $field_name) {
+    $field_storage_config_data = $file_storage->read('field.storage.media.' . $field_name);
+    if (!$field_storage_config_storage->load($field_storage_config_data['id'])) {
+      $field_storage_config_data['_core']['default_config_hash'] = Crypt::hashBase64(
+        serialize($field_storage_config_data));
+      $field_storage_config_storage->create($field_storage_config_data)->save();
+    }
+  }
+
+  // Create field instances, if they don't exist.
+  /** @var \Drupal\field\FieldStorageConfigStorage $field_config_storage */
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_names as $field_name) {
+    $field_config_data = $file_storage->read('field.field.media.iframe.' . $field_name);
+    if (!$field_config_storage->load($field_config_data['id'])) {
+      $field_config_data['_core']['default_config_hash'] = Crypt::hashBase64(
+        serialize($field_config_data));
+      $field_config_storage->create($field_config_data)->save();
     }
   }
 }
