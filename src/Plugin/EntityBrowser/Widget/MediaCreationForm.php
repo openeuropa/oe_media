@@ -118,9 +118,9 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       '#required' => TRUE,
       '#executes_submit_callback' => TRUE,
       '#limit_validation_errors' => [['media_bundle']],
-      '#submit' => [[static::class, 'changeMediaBundle']],
+      '#submit' => [[$this, 'changeMediaBundle']],
       '#ajax' => [
-        'callback' => [static::class, 'ajaxUpdateMediaForm'],
+        'callback' => [$this, 'ajaxUpdateMediaForm'],
         'wrapper' => $id,
       ],
       '#default_value' => $form_state->get('media_bundle'),
