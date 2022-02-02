@@ -16,6 +16,7 @@ services:
   web:
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     environment:
+      - COMPOSERVER=--2
       - DOCUMENT_ROOT=/test/oe_media
   mysql:
     image: registry.fpfis.eu/fpfis/sql:percona-5.7
@@ -41,17 +42,17 @@ pipeline:
     volumes:
       - /cache:/cache
     commands:
-      - composer install --ansi --no-suggest --no-progress
+      - composer self-update --2
+      - composer install --ansi --no-progress
 
   composer-update-lowest:
-    group: prepare-update
+    group: prepare
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     volumes:
       - /cache:/cache
     commands:
-      # @todo remove "composer install" step once the following issue is fixed.
-      # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
-      - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
+      - composer self-update --2
+      - composer update --prefer-lowest --prefer-stable --ansi --no-progress
     when:
       matrix:
         COMPOSER_BOUNDARY: lowest
@@ -59,6 +60,7 @@ pipeline:
   site-install:
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     commands:
+      - while ! mysqladmin ping -h mysql --silent; do sleep 1; done
       - ./vendor/bin/run drupal:site-install
 
   grumphp:
