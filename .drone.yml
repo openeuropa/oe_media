@@ -44,6 +44,9 @@ pipeline:
     commands:
       - composer self-update --2
       - composer install --ansi --no-progress
+    when:
+      matrix:
+        COMPOSER_BOUNDARY: highest
 
   composer-update-lowest:
     group: prepare
