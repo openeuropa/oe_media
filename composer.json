@@ -15,6 +15,7 @@
         "drupal/file_link": "^2.0.3"
     },
     "require-dev": {
+        "behat/behat": "^3.10",
         "composer/installers": "~1.5",
         "drush/drush": "~10.3",
         "drupal/json_field": "~1.0-rc4",
@@ -72,6 +73,7 @@
         }
     },
     "_readme": [
+        "Explicit requirement of behat module due to PHP8 compatibility.",
         "We use the drupaltest/behat-traits feature branch until it gets merged and the package is ready for Drupal 9.",
         "Explicit requirement for egulias/email-validator due to https://www.drupal.org/project/drupal/issues/3061074#comment-14300579. It can be removed when Drupal core 9.2 support is droppped."
     ],

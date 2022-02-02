@@ -3,7 +3,7 @@ description: 'Provides media gallery link list bundle and source plugins.'
 package: OpenEuropa
 
 type: module
-core_version_requirement: ^8.9 || ^9
+core_version_requirement: ^9.2
 
 dependencies:
   - oe_link_lists:oe_link_lists

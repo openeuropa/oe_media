@@ -2,7 +2,7 @@ name: 'OpenEuropa Media Link Lists'
 description: 'Provides internal media support for manual link lists.'
 package: OpenEuropa
 type: module
-core_version_requirement: ^8.9 || ^9
+core_version_requirement: ^9.2
 dependencies:
   - drupal:media
   - oe_link_lists:oe_link_lists_manual_source

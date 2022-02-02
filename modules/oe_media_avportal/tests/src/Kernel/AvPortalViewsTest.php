@@ -69,7 +69,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[1];
     $this->assertEquals('I-163308', $row->ref);
     $this->assertEquals(' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews', $row->title);
-    $this->assertContains('media/images/icons/no-thumbnail.png', $row->thumbnail);
+    $this->assertStringContainsString('media/images/icons/no-thumbnail.png', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
     $view = Views::getView('av_portal_test');
@@ -113,7 +113,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[1];
     $this->assertEquals('P-039321/00-05', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertContains('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-937559.jpg', $row->thumbnail);
+    $this->assertStringContainsString('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-937559.jpg', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
     $view = Views::getView('av_portal_test');
@@ -157,7 +157,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[1];
     $this->assertEquals('I-163308', $row->ref);
     $this->assertEquals(' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews', $row->title);
-    $this->assertContains('media/images/icons/no-thumbnail.png', $row->thumbnail);
+    $this->assertStringContainsString('media/images/icons/no-thumbnail.png', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
     $view = Views::getView('av_portal_test');
