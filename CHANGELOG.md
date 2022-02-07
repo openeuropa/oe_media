@@ -1,11 +1,21 @@
 # Changelog
 
+## [1.15.0](https://github.com/openeuropa/oe_media/tree/1.15.0) (2022-02-07)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.14.0...1.15.0)
+
+**Merged pull requests:**
+
+- EWPP-1911: Update to PHP7.4/8.0 [\#185](https://github.com/openeuropa/oe_media/pull/185) ([hernani](https://github.com/hernani))
+- EWPP-1775: \[oe\_media\] Configuration was not removed [\#183](https://github.com/openeuropa/oe_media/pull/183) ([mferran-europe](https://github.com/mferran-europe))
+
 ## [1.14.0](https://github.com/openeuropa/oe_media/tree/1.14.0) (2021-09-27)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.13.0...1.14.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.14.0. [\#180](https://github.com/openeuropa/oe_media/pull/180) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - Update epic EWPP-844: Javascript asset [\#179](https://github.com/openeuropa/oe_media/pull/179) ([upchuk](https://github.com/upchuk))
 - EWPP-884: Remove field mapping. [\#177](https://github.com/openeuropa/oe_media/pull/177) ([hernani](https://github.com/hernani))
 - EWPP-844: Epic update with master. [\#176](https://github.com/openeuropa/oe_media/pull/176) ([nagyad](https://github.com/nagyad))
