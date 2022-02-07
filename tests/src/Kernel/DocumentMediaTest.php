@@ -81,7 +81,7 @@ class DocumentMediaTest extends MediaTestBase {
     $violations = $media->validate();
     $messages = [];
     foreach ($violations as $violation) {
-      $messages[] = $violation->getMessage();
+      $messages[] = $violation->getMessage()->__toString();
     }
     $this->assertContains($violation_message, $messages);
   }

@@ -1,5 +1,5 @@
 name: 'OpenEuropa Media AV Portal Test'
-core_version_requirement: ^8.9 || ^9
+core_version_requirement: ^9.2
 type: module
 dependencies:
   - media_avportal:media_avportal_mock
