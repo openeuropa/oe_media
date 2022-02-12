@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - oe_webtools_media
+id: webtools_generic
+label: 'Webtools generic'
+description: 'Generic media type for webtools.'
+source: webtools
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: oe_media_webtools
+  widget_type: generic
+field_map: {  }

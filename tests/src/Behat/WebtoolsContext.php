@@ -31,6 +31,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools generic reference field.
+   *
+   * Fills the field with a reference to a webtools generic media.
+   *
+   * @param string $title
+   *   The webtools generic media title.
+   *
+   * @Given I reference the Webtools generic :title
+   */
+  public function assertReferenceWebtoolGeneric(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_generic[0][target_id]', $title);
+  }
+
+  /**
    * Fills in the Demo content Webtools map reference field.
    *
    * Fills the field with a reference to a webtools map media.
@@ -82,7 +96,7 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feed|op publication list) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|social feed|op publication list|generic) "([^"]*)" on the page$/
    */
   public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
@@ -90,6 +104,7 @@ class WebtoolsContext extends RawDrupalContext {
       'chart' => 'webtools_chart',
       'social feed' => 'webtools_social_feed',
       'op publication list' => 'webtools_op_publication_list',
+      'generic' => 'webtools_generic',
     ];
 
     $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([
