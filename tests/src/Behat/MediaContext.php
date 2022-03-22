@@ -189,6 +189,40 @@ class MediaContext extends RawDrupalContext {
   }
 
   /**
+   * Creates media AVPortal video with the specified URLs.
+   *
+   * Usage example:
+   *
+   * Given the following AV Portal videos:
+   *   | url   |
+   *   | url 1 |
+   *   |  ...  |
+   *
+   * @Given the following AV Portal video(s):
+   */
+  public function createMediaAvPortalVideo(TableNode $table): void {
+    /** @var \Drupal\media_avportal\Plugin\media\Source\MediaAvPortalSourceInterface $media_source */
+    $media_source = \Drupal::entityTypeManager()
+      ->getStorage('media_type')
+      ->load('av_portal_video')
+      ->getSource();
+
+    // Retrieve the url table from the test scenario.
+    foreach ($table->getColumnsHash() as $hash) {
+      $media = \Drupal::entityTypeManager()
+        ->getStorage('media')->create([
+          'bundle' => 'av_portal_video',
+          'oe_media_avportal_video' => $media_source->transformUrlToReference($hash['url']),
+          'status' => 1,
+        ]);
+      $media->save();
+
+      // Store for cleanup.
+      $this->media[] = $media;
+    }
+  }
+
+  /**
    * Creates media AVPortal photos with the specified URLs.
    *
    * Usage example:
