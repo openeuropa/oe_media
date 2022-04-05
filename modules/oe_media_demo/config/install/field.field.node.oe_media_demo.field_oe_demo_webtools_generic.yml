@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_oe_demo_webtools_generic
+    - media.type.webtools_generic
+    - node.type.oe_media_demo
+id: node.oe_media_demo.field_oe_demo_webtools_generic
+field_name: field_oe_demo_webtools_generic
+entity_type: node
+bundle: oe_media_demo
+label: 'Webtools generic'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      webtools_generic: webtools_generic
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

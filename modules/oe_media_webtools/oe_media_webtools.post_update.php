@@ -54,3 +54,19 @@ function oe_media_webtools_post_update_00002() {
     _oe_media_import_config_from_file($name, $file_storage, TRUE, FALSE);
   }
 }
+
+/**
+ * Install Webtools Generic media type.
+ */
+function oe_media_webtools_post_update_00003() {
+  $storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_webtools') . '/config/post_updates/00003_install_webtools_generic');
+  $config_names = [
+    'media.type.webtools_generic',
+    'field.field.media.webtools_generic.oe_media_webtools',
+    'core.entity_form_display.media.webtools_generic.default',
+    'core.entity_view_display.media.webtools_generic.default',
+  ];
+  foreach ($config_names as $name) {
+    _oe_media_import_config_from_file($name, $storage, TRUE, FALSE);
+  }
+}

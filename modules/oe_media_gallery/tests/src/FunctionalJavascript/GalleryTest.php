@@ -120,6 +120,8 @@ class GalleryTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('View mode');
     $this->getSession()->getPage()->selectFieldOption('View mode', 'Full content');
+    $this->getSession()->getPage()->selectFieldOption('No results behaviour', 'Hide');
+    $this->assertSession()->assertWaitOnAjaxRequest();
 
     // Select the media entities.
     $this->getSession()->getPage()->fillField('oe_media_gallery_media[0][target_id]', $this->imageMedia->label() . ' (' . $this->imageMedia->id() . ')');
