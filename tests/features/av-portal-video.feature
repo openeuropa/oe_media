@@ -19,6 +19,9 @@ Feature: AV Portal video.
   @javascript @av_portal @cleanup:media
   Scenario: The node adding form should contain an entity browser widget with the possibility to add new and reuse existing AV Portal video.
     Given I am logged in as a user with the "create oe_media_demo content,create av_portal_video media,access media_entity_browser entity browser pages" permission
+    And the following AV Portal video:
+      | url                                                |
+      | https://audiovisual.ec.europa.eu/en/video/I-163162 |
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
@@ -36,10 +39,10 @@ Feature: AV Portal video.
     When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "View"
-    And I select the "Midday press briefing from 25/10/2018" media entity in the entity browser modal window
+    And I select the "Economic and Financial Affairs Council - Arrivals" media entity in the entity browser modal window
     And I press the "Select entities" button
     And I press the "Save" button
-    Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
+    Then I should see the AV Portal video " Economic and Financial Affairs Council - Arrivals"
 
     When I visit "the demo content creation page"
     And I fill in "Title" with "Media demo"

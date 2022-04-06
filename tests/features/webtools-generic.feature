@@ -17,7 +17,7 @@ Feature: Webtools generic.
     When I fill in "Name" with "Share button"
     And I fill in "Webtools snippet" with "{\"service\": \"map\"}"
     And I press "Save"
-    Then I should see the error message "Service from the snippet is in the blacklist of Generic widget."
+    Then I should see the error message "This service is supported by a dedicated asset type or feature, please use that instead."
 
     When I fill in "Webtools snippet" with "{\"service\": \"share\",\"icon\": true,\"selection\": false,\"shortenurl\": true}"
     And I press "Save"
