@@ -1,11 +1,21 @@
 # Changelog
 
+## [1.16.0](https://github.com/openeuropa/oe_media/tree/1.16.0) (2022-04-11)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.15.0...1.16.0)
+
+**Merged pull requests:**
+
+- EWPP-2023: Add a Behat step to create av portal videos programmatically. [\#188](https://github.com/openeuropa/oe_media/pull/188) ([yenyasinn](https://github.com/yenyasinn))
+- EWPP-1715: Create the Generic Webtools media type. [\#187](https://github.com/openeuropa/oe_media/pull/187) ([yenyasinn](https://github.com/yenyasinn))
+
 ## [1.15.0](https://github.com/openeuropa/oe_media/tree/1.15.0) (2022-02-07)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.14.0...1.15.0)
 
 **Merged pull requests:**
 
+- EWPP-0000: Prepare for 1.15.0 release. [\#186](https://github.com/openeuropa/oe_media/pull/186) ([hernani](https://github.com/hernani))
 - EWPP-1911: Update to PHP7.4/8.0 [\#185](https://github.com/openeuropa/oe_media/pull/185) ([hernani](https://github.com/hernani))
 - EWPP-1775: \[oe\_media\] Configuration was not removed [\#183](https://github.com/openeuropa/oe_media/pull/183) ([mferran-europe](https://github.com/mferran-europe))
 
