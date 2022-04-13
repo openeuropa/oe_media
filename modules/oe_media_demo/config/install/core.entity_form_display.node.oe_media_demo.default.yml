@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_video_iframe
     - field.field.node.oe_media_demo.field_oe_demo_webtools_chart
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_countdown
     - field.field.node.oe_media_demo.field_oe_demo_webtools_generic
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_op
@@ -35,87 +36,87 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_ief_document_media:
+    type: inline_entity_form_complex
     weight: 19
+    region: content
     settings:
       form_mode: default
-      revision: false
       override_labels: false
       label_singular: ''
       label_plural: ''
-      collapsible: false
-      collapsed: false
       allow_new: true
       allow_existing: false
       match_operator: CONTAINS
       allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
     third_party_settings: {  }
-    type: inline_entity_form_complex
-    region: content
   field_oe_demo_av_portal_photo:
+    type: entity_reference_autocomplete
     weight: 10
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_av_portal_video:
+    type: entity_reference_autocomplete
     weight: 11
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_document_media:
+    type: entity_reference_autocomplete
     weight: 7
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_iframe:
+    type: entity_reference_autocomplete
     weight: 20
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_image_media:
+    type: entity_reference_autocomplete
     weight: 6
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_images_browser:
+    type: entity_browser_entity_reference
     weight: 18
+    region: content
     settings:
       entity_browser: media_entity_browser
       field_widget_display: label
       field_widget_edit: true
       field_widget_remove: true
-      selection_mode: selection_append
       field_widget_replace: false
       open: false
       field_widget_display_settings: {  }
+      selection_mode: selection_append
     third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
   field_oe_demo_js_asset:
     type: entity_reference_autocomplete
     weight: 21
@@ -127,48 +128,58 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_oe_demo_media_browser:
+    type: entity_browser_entity_reference
     weight: 9
+    region: content
     settings:
       entity_browser: media_entity_browser
       field_widget_display: label
       field_widget_edit: true
       field_widget_remove: true
-      selection_mode: selection_append
       field_widget_replace: false
       open: false
       field_widget_display_settings: {  }
+      selection_mode: selection_append
     third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
   field_oe_demo_remote_video_media:
+    type: entity_reference_autocomplete
     weight: 8
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_video_iframe:
+    type: entity_reference_autocomplete
     weight: 17
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_webtools_chart:
     type: entity_reference_autocomplete
     weight: 13
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_oe_demo_webtools_countdown:
+    type: entity_reference_autocomplete
+    weight: 26
+    region: content
+    settings:
+      match_operator: CONTAINS
       match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_oe_demo_webtools_generic:
     type: entity_reference_autocomplete
@@ -181,55 +192,55 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_oe_demo_webtools_map:
+    type: entity_reference_autocomplete
     weight: 12
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_webtools_op:
+    type: entity_reference_autocomplete
     weight: 16
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_oe_demo_webtools_sfeed:
     type: entity_reference_autocomplete
     weight: 15
     region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 3
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 5
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 4
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -242,11 +253,11 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 1
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
 hidden: {  }

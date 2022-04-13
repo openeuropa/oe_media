@@ -28,7 +28,7 @@
         "openeuropa/task-runner-drupal-project-symlink": "^1.0-beta5",
         "phpspec/prophecy-phpunit": "^2",
         "openeuropa/oe_link_lists": "^0.14",
-        "openeuropa/oe_webtools": "^1.17",
+        "openeuropa/oe_webtools": "dev-EWPP-1569",
         "openeuropa/oe_oembed": "~0.1.0",
         "drupal/drupal-extension": "~4.0",
         "egulias/email-validator": "^2.1.22 || ^3.0",
