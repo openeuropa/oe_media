@@ -133,8 +133,8 @@ class WebtoolsContext extends RawDrupalContext {
     $media = reset($media);
     // Run the escaping on the Json data.
     $snippet = Json::encode(Json::decode($media->get('oe_media_webtools')->value));
-    // Escape \ and ' for the xpath expression.
-    $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
+    // Escape ' for the xpath expression.
+    $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\'') . "']";
     // Assert presence of webtools JSON with enabled javascript.
     if (!$this->browserSupportsJavaScript()) {
       $this->assertSession()->elementsCount('xpath', $xpath_query, 1);
