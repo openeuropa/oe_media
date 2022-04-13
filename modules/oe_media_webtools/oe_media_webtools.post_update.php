@@ -70,3 +70,19 @@ function oe_media_webtools_post_update_00003() {
     _oe_media_import_config_from_file($name, $storage, TRUE, FALSE);
   }
 }
+
+/**
+ * Add Webtools countdown media type.
+ */
+function oe_media_webtools_post_update_00004() {
+  $storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_webtools') . '/config/post_updates/00004_webtools_countdown');
+  $config_names = [
+    'media.type.webtools_countdown',
+    'field.field.media.webtools_countdown.oe_media_webtools',
+    'core.entity_form_display.media.webtools_countdown.default',
+    'core.entity_view_display.media.webtools_countdown.default',
+  ];
+  foreach ($config_names as $name) {
+    _oe_media_import_config_from_file($name, $storage);
+  }
+}
