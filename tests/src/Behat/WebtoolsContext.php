@@ -40,7 +40,7 @@ class WebtoolsContext extends RawDrupalContext {
    *
    * @Given I reference the Webtools countdown :title
    */
-  public function assertReferenceWebtoolsCountdown(string $title): void {
+  public function referenceWebtoolsCountdown(string $title): void {
     $this->getSession()->getPage()->fillField('field_oe_demo_webtools_countdown[0][target_id]', $title);
   }
 
