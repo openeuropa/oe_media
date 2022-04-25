@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.webtools_countdown.oe_media_webtools
+    - media.type.webtools_countdown
+  module:
+    - oe_webtools
+id: media.webtools_countdown.default
+targetEntityType: media
+bundle: webtools_countdown
+mode: default
+content:
+  oe_media_webtools:
+    type: webtools_snippet
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true

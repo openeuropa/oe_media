@@ -31,6 +31,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools countdown reference field.
+   *
+   * Fills the field with a reference to a webtools countdown media.
+   *
+   * @param string $title
+   *   The webtools countdown title.
+   *
+   * @Given I reference the Webtools countdown :title
+   */
+  public function referenceWebtoolsCountdown(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_countdown[0][target_id]', $title);
+  }
+
+  /**
    * Fills in the Demo content Webtools generic reference field.
    *
    * Fills the field with a reference to a webtools generic media.
@@ -96,12 +110,13 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|social feed|op publication list|generic) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|countdown|social feed|op publication list|generic) "([^"]*)" on the page$/
    */
   public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
+      'countdown' => 'webtools_countdown',
       'social feed' => 'webtools_social_feed',
       'op publication list' => 'webtools_op_publication_list',
       'generic' => 'webtools_generic',
@@ -118,8 +133,8 @@ class WebtoolsContext extends RawDrupalContext {
     $media = reset($media);
     // Run the escaping on the Json data.
     $snippet = Json::encode(Json::decode($media->get('oe_media_webtools')->value));
-    // Escape \ and ' for the xpath expression.
-    $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\\\'') . "']";
+    // Escape ' for the xpath expression.
+    $xpath_query = "//script[@type='application/json'][.='" . addcslashes($snippet, '\'') . "']";
     // Assert presence of webtools JSON with enabled javascript.
     if (!$this->browserSupportsJavaScript()) {
       $this->assertSession()->elementsCount('xpath', $xpath_query, 1);

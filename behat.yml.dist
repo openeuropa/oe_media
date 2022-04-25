@@ -25,6 +25,7 @@ default:
               image creation: 'media/add/image'
               remote video selection: 'media/add/remote_video'
               Webtools chart creation: 'media/add/webtools_chart'
+              Webtools countdown creation: 'media/add/webtools_countdown'
               Webtools generic creation: 'media/add/webtools_generic'
               Webtools map creation: 'media/add/webtools_map'
               Webtools social feed creation: 'media/add/webtools_social_feed'

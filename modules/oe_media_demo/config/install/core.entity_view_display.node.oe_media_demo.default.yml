@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_remote_video_media
     - field.field.node.oe_media_demo.field_oe_demo_video_iframe
     - field.field.node.oe_media_demo.field_oe_demo_webtools_chart
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_countdown
     - field.field.node.oe_media_demo.field_oe_demo_webtools_generic
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_op
@@ -28,103 +29,112 @@ mode: default
 content:
   field_oe_demo_av_portal_photo:
     type: entity_reference_entity_view
-    weight: 5
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 5
     region: content
   field_oe_demo_av_portal_video:
     type: entity_reference_entity_view
-    weight: 6
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 6
     region: content
   field_oe_demo_document_media:
     type: entity_reference_entity_view
-    weight: 3
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 3
     region: content
   field_oe_demo_iframe:
     type: entity_reference_entity_view
-    weight: 14
-    region: content
     label: above
     settings:
-      link: true
       view_mode: default
+      link: true
     third_party_settings: {  }
+    weight: 14
+    region: content
   field_oe_demo_image_media:
     type: entity_reference_entity_view
-    weight: 1
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 1
     region: content
   field_oe_demo_images_browser:
     type: entity_reference_entity_view
-    weight: 13
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 13
     region: content
   field_oe_demo_js_asset:
     type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
     weight: 15
     region: content
-    label: above
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
   field_oe_demo_media_browser:
     type: entity_reference_entity_view
-    weight: 2
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 2
     region: content
   field_oe_demo_remote_video_media:
     type: entity_reference_entity_view
-    weight: 4
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 4
     region: content
   field_oe_demo_video_iframe:
     type: entity_reference_entity_view
-    weight: 11
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 11
     region: content
   field_oe_demo_webtools_chart:
     type: entity_reference_entity_view
-    weight: 8
-    region: content
     label: above
     settings:
-      link: true
       view_mode: default
+      link: true
     third_party_settings: {  }
+    weight: 8
+    region: content
+  field_oe_demo_webtools_countdown:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 16
+    region: content
   field_oe_demo_webtools_generic:
     type: entity_reference_entity_view
     label: above
@@ -136,35 +146,35 @@ content:
     region: content
   field_oe_demo_webtools_map:
     type: entity_reference_entity_view
-    weight: 7
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 7
     region: content
   field_oe_demo_webtools_op:
     type: entity_reference_entity_view
-    weight: 12
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 12
     region: content
   field_oe_demo_webtools_sfeed:
     type: entity_reference_entity_view
-    weight: 10
-    region: content
     label: above
     settings:
-      link: true
       view_mode: default
+      link: true
     third_party_settings: {  }
-  links:
-    weight: 0
+    weight: 10
     region: content
+  links:
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   field_ief_document_media: true
