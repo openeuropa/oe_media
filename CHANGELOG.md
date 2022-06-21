@@ -1,11 +1,20 @@
 # Changelog
 
+## [1.17.0](https://github.com/openeuropa/oe_media/tree/1.17.0) (2022-06-21)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.16.0...1.17.0)
+
+**Merged pull requests:**
+
+- EWPP-1570: Add Webtools countdown media type. [\#192](https://github.com/openeuropa/oe_media/pull/192) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.16.0](https://github.com/openeuropa/oe_media/tree/1.16.0) (2022-04-11)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.15.0...1.16.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.16.0. [\#191](https://github.com/openeuropa/oe_media/pull/191) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-2023: Add a Behat step to create av portal videos programmatically. [\#188](https://github.com/openeuropa/oe_media/pull/188) ([yenyasinn](https://github.com/yenyasinn))
 - EWPP-1715: Create the Generic Webtools media type. [\#187](https://github.com/openeuropa/oe_media/pull/187) ([yenyasinn](https://github.com/yenyasinn))
 
