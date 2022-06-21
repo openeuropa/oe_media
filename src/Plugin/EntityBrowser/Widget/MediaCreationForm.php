@@ -110,6 +110,27 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
 
       return $form;
     }
+    if (count($options) === 1) {
+      $form['entity_form'] = [
+        '#type' => 'container',
+        '#id' => $id,
+        'inline_entity_form' => [
+          '#type' => 'inline_entity_form',
+          '#op' => 'add',
+          '#entity_type' => 'media',
+          '#bundle' => array_keys($options)[0],
+          '#form_mode' => 'default',
+        ],
+      ];
+      // Pretend to be IEFs submit button.
+      $form['#submit'] = [
+        ['Drupal\inline_entity_form\ElementSubmit', 'trigger'],
+      ];
+      $form['actions']['submit']['#ief_submit_trigger'] = TRUE;
+      $form['actions']['submit']['#ief_submit_trigger_all'] = TRUE;
+
+      return $form;
+    }
 
     $form['media_bundle'] = [
       '#type' => 'select',
