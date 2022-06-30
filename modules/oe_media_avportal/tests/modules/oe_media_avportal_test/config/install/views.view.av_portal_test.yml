@@ -10,7 +10,6 @@ description: ''
 tag: ''
 base_table: avportal
 base_field: ''
-core_version_requirement: ^9.2
 display:
   default:
     display_plugin: default

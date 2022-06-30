@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.4",
-        "drupal/core": "^9.2",
+        "drupal/core": "^9.3",
         "drupal/entity_browser": "^2.5",
         "drupal/inline_entity_form": "~1.0-rc9",
         "drupal/media_avportal": "^1.0-beta13",
@@ -20,8 +20,9 @@
         "drush/drush": "~10.3",
         "drupal/json_field": "~1.0-rc4",
         "drupaltest/behat-traits": "^0.3",
-        "drupal/core-composer-scaffold": "^9.2",
-        "drupal/core-dev": "^9.2",
+        "drupal/core-composer-scaffold": "^9.3",
+        "drupal/core-dev": "^9.3",
+        "fabpot/goutte": "^3.3",
         "guzzlehttp/guzzle": "~6.3",
         "openeuropa/behat-transformation-context": "~0.1",
         "openeuropa/code-review": "^2.0",
@@ -31,7 +32,6 @@
         "openeuropa/oe_webtools": "dev-master",
         "openeuropa/oe_oembed": "~0.1.0",
         "drupal/drupal-extension": "~4.0",
-        "egulias/email-validator": "^2.1.22 || ^3.0",
         "nikic/php-parser": "^4.12.0",
         "instaclick/php-webdriver": "^1.4.7",
         "behat/mink-extension": "^2.3.1",
@@ -66,7 +66,7 @@
     "_readme": [
         "Explicit requirement of behat/behat module due to PHP8 compatibility.",
         "Explicit requirement of behat/mink-extension to assure lower compatibility.",
-        "Explicit requirement for egulias/email-validator due to https://www.drupal.org/project/drupal/issues/3061074#comment-14300579. It can be removed when Drupal core 9.2 support is droppped."
+        "Explicit minimum version requirement of fabpot/goutte due Drupal 9.3 compatibility."
     ],
     "extra": {
         "composer-exit-on-patch-failure": true,
