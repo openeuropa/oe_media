@@ -11,7 +11,7 @@ field_name: oe_media_webtools
 entity_type: media
 bundle: webtools_social_feed
 label: 'Webtools social feed snippet'
-description: 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://europa.eu/webtools/mgmt/wizard/" target="_blank">Webtools wizard</a>.'
+description: 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://europa.eu/webtools/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://europa.eu/webtools/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.'
 required: true
 translatable: false
 default_value: {  }
