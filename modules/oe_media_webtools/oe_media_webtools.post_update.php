@@ -86,3 +86,34 @@ function oe_media_webtools_post_update_00004() {
     _oe_media_import_config_from_file($name, $storage);
   }
 }
+
+/**
+ * Update Webtools media fields description to include the WCLOUD wizard link.
+ */
+function oe_media_webtools_post_update_00005() {
+  $original_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://europa.eu/webtools/mgmt/wizard/" target="_blank">Webtools wizard</a>.';
+  $new_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://europa.eu/webtools/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://europa.eu/webtools/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.';
+  $fields = [
+    'media.webtools_chart.oe_media_webtools',
+    'media.webtools_countdown.oe_media_webtools',
+    'media.webtools_generic.oe_media_webtools',
+    'media.webtools_map.oe_media_webtools',
+    'media.webtools_social_feed.oe_media_webtools',
+  ];
+  $modified = [];
+
+  foreach ($fields as $field) {
+    $field_config = FieldConfig::load($field);
+    // If the description has been customised by users, we don’t change it.
+    if ($original_description !== $field_config->get('description')) {
+      $modified[] = $field;
+      continue;
+    }
+    $field_config->setDescription($new_description);
+    $field_config->save();
+  }
+
+  if (!empty($modified)) {
+    return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
+  }
+}

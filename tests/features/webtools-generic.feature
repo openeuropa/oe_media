@@ -8,7 +8,8 @@ Feature: Webtools generic.
   Scenario: Create and reference a Webtools generic.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_generic media" permission
     When I visit "the Webtools generic creation page"
-    And I press "Save"
+    Then I should see the text "Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard."
+    When I press "Save"
     Then I should see the following error messages:
       | error messages                     |
       | Name field is required             |
