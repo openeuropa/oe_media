@@ -162,7 +162,7 @@ function oe_media_inline_entity_form_entity_form_alter(array &$entity_form, Form
 /**
  * Implements hook_ENTITY_TYPE_presave() for the Media entity.
  */
-function media_media_presave(MediaInterface $media) {
+function oe_media_media_presave(MediaInterface $media) {
   if ($media->bundle() === 'document') {
     // Default the file type to local if one is not set.
     if ($media->get('oe_media_file_type')->isEmpty()) {
