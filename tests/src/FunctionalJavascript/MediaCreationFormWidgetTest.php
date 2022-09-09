@@ -170,7 +170,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('Name');
     $this->assertSession()->fieldExists('Image');
-    $this->getSession()->getPage()->clickLink('Register AV Portal video');
+    $this->getSession()->getPage()->clickLink('Add Image');
     $this->assertSession()->fieldNotExists('Bundle');
     $this->getSession()->getPage()->clickLink('Media creation form');
     $this->assertSession()->fieldValueEquals('Bundle', 'Image');

@@ -3,7 +3,7 @@ description: 'Provides media types with iframe as media source.'
 package: OpenEuropa
 
 type: module
-core_version_requirement: ^9.2
+core_version_requirement: ^9.3
 
 dependencies:
   - drupal:filter
