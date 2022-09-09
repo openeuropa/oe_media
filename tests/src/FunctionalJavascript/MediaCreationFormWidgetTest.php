@@ -69,12 +69,27 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->fieldNotExists('Bundle');
     $this->assertSession()->pageTextContains('You cannot create any of the media bundles referenceable by the current field.');
 
+    // Grant authenticated role permission to create image media.
+    $this->grantPermissions($role, ['create image media']);
+    $this->getSession()->reload();
+    $this->getSession()->getPage()->pressButton('Media browser field');
+    $media_browser_field->pressButton('Select entities');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->getSession()->getPage()->clickLink('Media creation form');
+    // Assert that the bundle select doesn't exist since the user would be able
+    // to create only image media entities, so the image media form is instead
+    // presented.
+    $this->assertSession()->fieldNotExists('Bundle');
+    $this->assertSession()->fieldExists('Name');
+    $this->assertSession()->fieldExists('Image');
+    $this->assertSession()->buttonExists('Save media');
+
     // Grant the authenticated role additional permissions to create media
     // bundles.
     $permissions = [
       'create av_portal_photo media',
       'create av_portal_video media',
-      'create image media',
       'create remote_video media',
       'edit own image media',
     ];
@@ -87,8 +102,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->getSession()->getPage()->clickLink('Media creation form');
     // Assert that the bundle select field exists and contains only the allowed
     // target bundles (Note: Document and Iframe should not be available as the
-    // user is missing the create permission for the document bundle and Iframe
-    // cannot be referenced).
+    // user is missing the create permission for these two bundles).
     $this->assertSession()->selectExists('Bundle');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertEquals([

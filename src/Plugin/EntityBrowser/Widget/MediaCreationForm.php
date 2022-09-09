@@ -7,6 +7,7 @@ namespace Drupal\oe_media\Plugin\EntityBrowser\Widget;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -91,11 +92,10 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
 
     // The only media bundles available in the select will be the ones the user
     // can create.
-    $media_access_control_handler = $this->entityTypeManager->getAccessControlHandler('media');
     $options = [];
     foreach ($bundles as $bundle => $info) {
-      $access = $media_access_control_handler->createAccess($bundle);
-      if ($access) {
+      $access = $this->checkCreateAccess($bundle);
+      if ($access->isAllowed()) {
         $options[$bundle] = $info['label'];
       }
     }
@@ -107,6 +107,27 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
         '#type' => 'markup',
         '#markup' => $this->t('You cannot create any of the media bundles referenceable by the current field.'),
       ];
+
+      return $form;
+    }
+    if (count($options) === 1) {
+      $form['entity_form'] = [
+        '#type' => 'container',
+        '#id' => $id,
+        'inline_entity_form' => [
+          '#type' => 'inline_entity_form',
+          '#op' => 'add',
+          '#entity_type' => 'media',
+          '#bundle' => array_keys($options)[0],
+          '#form_mode' => 'default',
+        ],
+      ];
+      // Pretend to be IEFs submit button.
+      $form['#submit'] = [
+        ['Drupal\inline_entity_form\ElementSubmit', 'trigger'],
+      ];
+      $form['actions']['submit']['#ief_submit_trigger'] = TRUE;
+      $form['actions']['submit']['#ief_submit_trigger_all'] = TRUE;
 
       return $form;
     }
@@ -217,12 +238,11 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
     // We cannot get the field's target bundles, so we need to check the create
     // access on all the available media bundles.
     $bundles = $this->entityTypeBundleInfo->getBundleInfo('media');
-    $access_handler = $this->entityTypeManager->getAccessControlHandler('media');
     // The users have access to this widget if they have create access to at
     // least one media bundle.
     $access = AccessResult::neutral();
     foreach ($bundles as $bundle => $info) {
-      $create_access = $access_handler->createAccess($bundle, NULL, [], TRUE);
+      $create_access = $this->checkCreateAccess($bundle);
       // Do not merge forbidden results, as it would cause the final result to
       // be forbidden too. Keep only the cacheability information.
       if (!$create_access->isForbidden()) {
@@ -233,6 +253,19 @@ class MediaCreationForm extends WidgetBase implements ContainerFactoryPluginInte
       }
     }
     return $access;
+  }
+
+  /**
+   * Checks access to create media entity for the specific bundle.
+   *
+   * @param string $bundle
+   *   The bundle ID.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   Returns access result object.
+   */
+  protected function checkCreateAccess(string $bundle): AccessResultInterface {
+    return $this->entityTypeManager->getAccessControlHandler('media')->createAccess($bundle, NULL, [], TRUE);
   }
 
 }
