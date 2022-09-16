@@ -1,11 +1,24 @@
 # Changelog
 
-## [1.18.0](https://github.com/openeuropa/oe_media/tree/1.18.0) (2022-07-29)
+## [1.19.0](https://github.com/openeuropa/oe_media/tree/1.19.0) (2022-09-16)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.18.0...1.19.0)
+
+**Merged pull requests:**
+
+- Update epic EWPP-2373 [\#202](https://github.com/openeuropa/oe_media/pull/202) ([upchuk](https://github.com/upchuk))
+- EWPP-2418: Update webtools media fields description to include WCLOUD wizard. [\#200](https://github.com/openeuropa/oe_media/pull/200) ([22Alexandra](https://github.com/22Alexandra))
+- EPIC-EWPP-2373: Media creation in editorial teams [\#197](https://github.com/openeuropa/oe_media/pull/197) ([hernani](https://github.com/hernani))
+- EWPP-2170: Adjust access checking in \Drupal\oe\_media\Plugin\EntityBrowser\Widget\MediaCreationForm class. [\#195](https://github.com/openeuropa/oe_media/pull/195) ([sergepavle](https://github.com/sergepavle))
+- EWPP-2277: No bundle selection for media creation form when only one option is available. [\#194](https://github.com/openeuropa/oe_media/pull/194) ([22Alexandra](https://github.com/22Alexandra))
+
+## [1.18.0](https://github.com/openeuropa/oe_media/tree/1.18.0) (2022-08-02)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.17.0...1.18.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.18.0. [\#201](https://github.com/openeuropa/oe_media/pull/201) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-2358: Drupal 9.4 support. [\#196](https://github.com/openeuropa/oe_media/pull/196) ([yenyasinn](https://github.com/yenyasinn))
 
 ## [1.17.0](https://github.com/openeuropa/oe_media/tree/1.17.0) (2022-06-22)
