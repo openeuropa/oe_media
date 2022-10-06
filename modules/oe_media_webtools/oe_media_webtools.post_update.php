@@ -104,6 +104,10 @@ function oe_media_webtools_post_update_00005() {
 
   foreach ($fields as $field) {
     $field_config = FieldConfig::load($field);
+    // If the field doesn't exist anymore, skip it.
+    if (!$field_config) {
+      continue;
+    }
     // If the description has been customised by users, we don’t change it.
     if ($original_description !== $field_config->get('description')) {
       $modified[] = $field;
