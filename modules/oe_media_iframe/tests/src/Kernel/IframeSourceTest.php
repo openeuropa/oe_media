@@ -39,9 +39,9 @@ class IframeSourceTest extends MediaKernelTestBase {
   }
 
   /**
-   * Tests logic related to the automated thumbnail field creation.
+   * Tests logic related to the automated custom fields creation.
    */
-  public function testThumbnailFieldCreation() {
+  public function testIframeSourceFieldsCreation() {
     /** @var \Drupal\media\MediaTypeInterface $type */
     $type = MediaType::create([
       'id' => 'test_iframe',
@@ -56,17 +56,35 @@ class IframeSourceTest extends MediaKernelTestBase {
     /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage */
     $field_storage = $field->getFieldStorageDefinition();
 
-    // Assert that the field storage is loaded correctly (or created if it
-    // doesn't exist).
+    // Assert that the thumbnail field storage is loaded correctly (or created
+    // if it doesn't exist).
     $this->assertSame('image', $field_storage->getType());
     $this->assertSame('oe_media_iframe_thumbnail', $field_storage->getName());
     $this->assertSame('media', $field_storage->getTargetEntityTypeId());
 
-    // Assert that the field is created correctly.
+    // Assert that the thumbnail field is created correctly.
     $this->assertSame('oe_media_iframe_thumbnail', $field->getName());
     $this->assertSame('image', $field->getType());
     $this->assertFalse($field->isRequired());
     $this->assertEquals('Iframe thumbnail', $field->label());
+    $this->assertSame('test_iframe', $field->getTargetBundle());
+
+    $field = FieldConfig::load('media.test_iframe.oe_media_iframe_title');
+    /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage */
+    $field_storage = $field->getFieldStorageDefinition();
+
+    // Assert that the field storage is loaded correctly (or created if it
+    // doesn't exist).
+    $this->assertSame('string', $field_storage->getType());
+    $this->assertSame('oe_media_iframe_title', $field_storage->getName());
+    $this->assertSame('media', $field_storage->getTargetEntityTypeId());
+
+    // Assert that the field is created correctly.
+    $this->assertSame('oe_media_iframe_title', $field->getName());
+    $this->assertSame('string', $field->getType());
+    $this->assertFalse($field->isRequired());
+    $this->assertEquals('Iframe title', $field->label());
+    $this->assertEquals('Providing an Iframe title value will replace the title value in the iframe html.', $field->getDescription());
     $this->assertSame('test_iframe', $field->getTargetBundle());
   }
 
