@@ -113,7 +113,13 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
         $media_title = $item->getEntity()->get('oe_media_iframe_title')->value;
       }
       if (isset($media_title)) {
-        $iframe = preg_replace("/title=[\"|']([^'\"]+)[\"|']*/", 'title="' . $media_title . '"', $item->value);
+        $match = preg_match("/title=[\"|']([^'\"]+)[\"|']*/", $item->value);
+        if ($match === 1) {
+          $iframe = preg_replace("/title=[\"|']([^'\"]+)[\"|']*/", 'title="' . $media_title . '"', $item->value);
+        }
+        else {
+          $iframe = str_replace('<iframe', "<iframe title=\"$media_title\"", $item->value);
+        }
       }
       if ($text_format) {
         $elements[$delta] = [

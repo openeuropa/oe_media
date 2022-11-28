@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\Component\Utility\Crypt;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\filter\Entity\FilterFormat;
 
 /**
  * Add thumbnail field to media types using iframe source.
@@ -175,4 +177,66 @@ function oe_media_iframe_post_update_00006(): void {
     $view_display_values['_core']['default_config_hash'] = Crypt::hashBase64(serialize($view_display_values));
     $entity_view_display_storage->create($view_display_values)->save();
   }
+}
+
+/**
+ * Add iframe title field to media types using iframe source.
+ */
+function oe_media_iframe_post_update_00007(): void {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $media_type_storage = $entity_type_manager->getStorage('media_type');
+  $iframe_types = $media_type_storage->loadByProperties(['source' => 'oe_media_iframe']);
+
+  $fields = \Drupal::service('entity_field.manager')->getFieldStorageDefinitions('media');
+  if (!isset($fields['oe_media_iframe_title'])) {
+    $storage = $entity_type_manager
+      ->getStorage('field_storage_config')
+      ->create([
+        'entity_type' => 'media',
+        'field_name' => 'oe_media_iframe_title',
+        'type' => 'string',
+      ]);
+    $storage->save();
+  }
+  else {
+    $storage = $fields['oe_media_iframe_title'];
+  }
+
+  foreach ($iframe_types as $type) {
+    $id = $type->id();
+    $field_config = FieldConfig::load("media.$id.oe_media_iframe_title");
+    if ($field_config) {
+      // If the current media type already has the field, we skip it.
+      continue;
+    }
+    $field = $entity_type_manager
+      ->getStorage('field_config')
+      ->create([
+        'field_storage' => $storage,
+        'bundle' => $type->id(),
+        'label' => 'Iframe title',
+        'description' => 'Providing an Iframe title value will replace the title value in the iframe html.',
+        'required' => FALSE,
+        'translatable' => FALSE,
+      ]);
+    $field->save();
+
+    // Update default form display to include the iframe title after name.
+    $form_display = $entity_type_manager->getStorage('entity_form_display')->load('media.' . $type->id() . '.default');
+    $name_component = $form_display->getComponent('name');
+    $title_field_weight = ($name_component && isset($name_component['weight'])) ? $name_component['weight'] + 1 : -40;
+    $form_display->setComponent('oe_media_iframe_title', [
+      'weight' => $title_field_weight,
+    ])->save();
+  }
+
+  // Allow title attribute for oe_media_iframe filter.
+  $format = FilterFormat::load('oe_media_iframe');
+  $filters = $format->get('filters');
+  if (!isset($filters['filter_html']) || str_contains($filters['filter_html']['settings']['allowed_html'], 'title')) {
+    return;
+  }
+  $filters['filter_html']['settings']['allowed_html'] = str_replace('>', ' title>', $filters['filter_html']['settings']['allowed_html']);
+  $format->set('filters', $filters);
+  $format->save();
 }
