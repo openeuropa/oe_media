@@ -1,11 +1,20 @@
 # Changelog
 
+## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.20.0...1.21.0)
+
+**Merged pull requests:**
+
+- EWPP-2832: Add Iframe title to media types using the Iframe source. [\#211](https://github.com/openeuropa/oe_media/pull/211) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.20.0](https://github.com/openeuropa/oe_media/tree/1.20.0) (2022-11-04)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.19.0...1.20.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.20.0. [\#207](https://github.com/openeuropa/oe_media/pull/207) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-2646: Ensure thumbnail alt is updated when media image alt is changed. [\#206](https://github.com/openeuropa/oe_media/pull/206) ([nagyad](https://github.com/nagyad))
 
 ## [1.19.0](https://github.com/openeuropa/oe_media/tree/1.19.0) (2022-09-16)
