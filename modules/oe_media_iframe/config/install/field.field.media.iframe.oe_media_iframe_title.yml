@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.oe_media_iframe_title
+    - media.type.iframe
+id: media.iframe.oe_media_iframe_title
+field_name: oe_media_iframe_title
+entity_type: media
+bundle: iframe
+label: 'Iframe title'
+description: 'Providing an Iframe title value will replace the title value in the iframe html.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

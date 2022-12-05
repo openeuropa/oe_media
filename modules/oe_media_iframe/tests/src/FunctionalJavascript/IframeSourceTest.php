@@ -45,9 +45,14 @@ class IframeSourceTest extends MediaSourceTestBase {
     // form.
     $this->drupalGet('/admin/structure/media/manage/iframe_source_test/form-display');
     $this->assertEquals('content', $assert_session->fieldExists('fields[field_media_oe_media_iframe][region]')->getValue());
+    $this->assertEquals('string_textfield', $assert_session->fieldExists('fields[oe_media_iframe_title][type]')->getValue());
     $this->assertEquals('oe_media_iframe_textarea', $assert_session->fieldExists('fields[field_media_oe_media_iframe][type]')->getValue());
     $this->assertEquals('content', $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][region]')->getValue());
     $this->assertEquals('image_image', $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][type]')->getValue());
+    // Iframe title field should be placed after the name field.
+    $name_field_weight = $assert_session->fieldExists('fields[name][weight]')->getValue();
+    $iframe_title_field_weight = $assert_session->fieldExists('fields[oe_media_iframe_title][weight]')->getValue();
+    $this->assertEquals((int) $iframe_title_field_weight, (int) $name_field_weight + 1);
     // The thumbnail field should be placed after the source field.
     $source_field_weight = $assert_session->fieldExists('fields[field_media_oe_media_iframe][weight]')->getValue();
     $thumbnail_field_weight = $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][weight]')->getValue();

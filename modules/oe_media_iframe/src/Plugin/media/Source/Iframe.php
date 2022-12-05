@@ -94,6 +94,31 @@ class Iframe extends MediaSourceBase {
         'translatable' => FALSE,
       ]);
     $field->save();
+    if (!isset($fields['oe_media_iframe_title'])) {
+      $storage = $this->entityTypeManager
+        ->getStorage('field_storage_config')
+        ->create([
+          'entity_type' => 'media',
+          'field_name' => 'oe_media_iframe_title',
+          'type' => 'string',
+        ]);
+      $storage->save();
+    }
+    else {
+      $storage = $fields['oe_media_iframe_title'];
+    }
+    /** @var \Drupal\field\FieldConfigInterface $field */
+    $field = $this->entityTypeManager
+      ->getStorage('field_config')
+      ->create([
+        'field_storage' => $storage,
+        'bundle' => $type->id(),
+        'label' => 'Iframe title',
+        'description' => 'Providing an Iframe title value will replace the title value in the iframe html.',
+        'required' => FALSE,
+        'translatable' => FALSE,
+      ]);
+    $field->save();
 
     return parent::createSourceField($type);
   }
@@ -103,6 +128,12 @@ class Iframe extends MediaSourceBase {
    */
   public function prepareFormDisplay(MediaTypeInterface $type, EntityFormDisplayInterface $display) {
     parent::prepareFormDisplay($type, $display);
+    // Place title field after the name field.
+    $name_component = $display->getComponent('name');
+    $title_field_weight = ($name_component && isset($name_component['weight'])) ? $name_component['weight'] + 1 : -40;
+    $display->setComponent('oe_media_iframe_title', [
+      'weight' => $title_field_weight,
+    ]);
     // Place thumbnail field after the source field.
     $source_component = $display->getComponent($this->getSourceFieldDefinition($type)->getName());
     $thumbnail_weight = ($source_component && isset($source_component['weight'])) ? $source_component['weight'] + 1 : -50;

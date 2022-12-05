@@ -108,10 +108,23 @@ class MediaIframeFormatter extends FormatterBase implements ContainerFactoryPlug
     $text_format = $media_type->getSource()->getConfiguration()['text_format'] ?? NULL;
 
     foreach ($items as $delta => $item) {
+      $media = $item->getEntity();
+      if ($media->hasField('oe_media_iframe_title') && !$media->get('oe_media_iframe_title')->isEmpty()) {
+        $media_title = $item->getEntity()->get('oe_media_iframe_title')->value;
+      }
+      if (isset($media_title)) {
+        $match = preg_match("/title=[\"|']([^'\"]+)[\"|']*/", $item->value);
+        if ($match === 1) {
+          $iframe = preg_replace("/title=[\"|']([^'\"]+)[\"|']*/", 'title="' . $media_title . '"', $item->value);
+        }
+        else {
+          $iframe = str_replace('<iframe', "<iframe title=\"$media_title\"", $item->value);
+        }
+      }
       if ($text_format) {
         $elements[$delta] = [
           '#type' => 'processed_text',
-          '#text' => $item->value,
+          '#text' => $iframe ?? $item->value,
           '#format' => $text_format,
         ];
 
