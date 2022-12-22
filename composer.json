@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "drupal/core": "^9.3",
         "drupal/entity_browser": "^2.5",
         "drupal/inline_entity_form": "~1.0-rc12",
