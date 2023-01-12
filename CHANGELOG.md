@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.1](https://github.com/openeuropa/oe_media/tree/1.21.1) (2023-01-12)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.0...1.21.1)
+
+**Merged pull requests:**
+
+- OEL-2150: Fix assumptions that all medias using image source are coming from oe\_media. [\#215](https://github.com/openeuropa/oe_media/pull/215) ([brummbar](https://github.com/brummbar))
+
 ## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.20.0...1.21.0)
