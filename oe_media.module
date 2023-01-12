@@ -166,11 +166,13 @@ function oe_media_inline_entity_form_entity_form_alter(array &$entity_form, Form
 function oe_media_media_presave(MediaInterface $media) {
   $source = $media->getSource();
   if ($source instanceof Image) {
+    $source_field_alt = $source->getMetadata($media, 'thumbnail_alt_value');
+
     // Ensure the image thumbnail alt is kept in sync with the image field alt.
     // Alt field is required, so we don't need to check if it's empty.
     // @see https://www.drupal.org/project/drupal/issues/3232414
-    if ($media->get('thumbnail')->alt !== $media->get('oe_media_image')->alt) {
-      $media->get('thumbnail')->alt = $media->get('oe_media_image')->alt;
+    if ($media->get('thumbnail')->alt !== $source_field_alt) {
+      $media->get('thumbnail')->alt = $source_field_alt;
     }
   }
 
