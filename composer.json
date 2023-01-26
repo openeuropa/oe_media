@@ -8,7 +8,7 @@
     "require": {
         "php": ">=7.4",
         "drupal/core": "^9.3",
-        "drupal/entity_browser": "^2.5",
+        "drupal/entity_browser": "^2.9",
         "drupal/inline_entity_form": "~1.0-rc12",
         "drupal/media_avportal": "^1.0-beta13",
         "drupal/embed": "^1.3",
