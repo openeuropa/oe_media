@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.21.2](https://github.com/openeuropa/oe_media/tree/1.21.2) (2023-01-31)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.1...1.21.2)
+
+**Merged pull requests:**
+
+- EWPP-2982: Upgrade entity_browser version to 2.9 [\#220](https://github.com/openeuropa/oe_media/pull/220) ([nagyad](https://github.com/nagyad))
+
 ## [1.21.1](https://github.com/openeuropa/oe_media/tree/1.21.1) (2023-01-12)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.0...1.21.1)
 
