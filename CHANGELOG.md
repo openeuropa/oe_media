@@ -1,11 +1,42 @@
 # Changelog
 
-## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
+## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-03)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.2...1.22.0)
 
+**Closed issues:**
+
+- oe\_media\_webtools\_post\_update\_00005\(\) ERROR on openeuropa/oe\_media upgrade to v1.19 [\#204](https://github.com/openeuropa/oe_media/issues/204)
+
+**Merged pull requests:**
+
+- ISSUE-204: Make sure the field exists before updating its description. [\#205](https://github.com/openeuropa/oe_media/pull/205) ([22Alexandra](https://github.com/22Alexandra))
+
+## [1.21.2](https://github.com/openeuropa/oe_media/tree/1.21.2) (2023-01-31)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.1...1.21.2)
+
+**Fixed bugs:**
+
+- Code in hook\_media\_presave\(\) is executed for all media types. [\#209](https://github.com/openeuropa/oe_media/issues/209)
+
+**Merged pull requests:**
+
+- EWPP-2932: Fix media\_avportal version. [\#219](https://github.com/openeuropa/oe_media/pull/219) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-2932: Update dependencies dev branches. [\#218](https://github.com/openeuropa/oe_media/pull/218) ([22Alexandra](https://github.com/22Alexandra))
+
+## [1.21.1](https://github.com/openeuropa/oe_media/tree/1.21.1) (2023-01-12)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.0...1.21.1)
+
+**Merged pull requests:**
+
+- OEL-2115: Update to PHP 8.1 [\#214](https://github.com/openeuropa/oe_media/pull/214) ([brummbar](https://github.com/brummbar))
+- OEL-2150: Fix assumptions that all medias using image source are coming from oe\_media. [\#213](https://github.com/openeuropa/oe_media/pull/213) ([brummbar](https://github.com/brummbar))
+
+## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.20.0...1.21.0)
 
 **Merged pull requests:**
 
+- Prepare release 1.21.0. [\#212](https://github.com/openeuropa/oe_media/pull/212) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-2832: Add Iframe title to media types using the Iframe source. [\#211](https://github.com/openeuropa/oe_media/pull/211) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.20.0](https://github.com/openeuropa/oe_media/tree/1.20.0) (2022-11-04)
