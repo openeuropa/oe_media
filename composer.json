@@ -35,7 +35,7 @@
         "openeuropa/behat-transformation-context": "^0.2",
         "openeuropa/code-review": "^2.0.0-alpha6",
         "openeuropa/oe_link_lists": "^0.20",
-        "openeuropa/oe_oembed": "dev-master as 0.6.0",
+        "openeuropa/oe_oembed": "^0.6",
         "openeuropa/oe_webtools": "^1.21.1",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0-beta6",
         "phpspec/prophecy-phpunit": "^2",
