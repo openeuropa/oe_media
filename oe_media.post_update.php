@@ -46,7 +46,7 @@ function oe_media_post_update_00001(array &$sandbox) {
   // Create the new fields.
   $entity_type_manager = \Drupal::entityTypeManager();
   $config_manager = \Drupal::service('config.manager');
-  $storage = new FileStorage(drupal_get_path('module', 'oe_media') . '/config/post_updates/00001_remote_file');
+  $storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media') . '/config/post_updates/00001_remote_file');
   $field_configs = [
     'field.storage.media.oe_media_file_type',
     'field.storage.media.oe_media_remote_file',

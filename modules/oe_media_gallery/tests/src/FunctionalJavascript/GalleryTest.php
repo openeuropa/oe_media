@@ -57,7 +57,10 @@ class GalleryTest extends WebDriverTestBase {
     parent::setUp();
 
     // Create an image and a remote video media.
-    $image = file_save_data(file_get_contents(drupal_get_path('module', 'oe_media') . '/tests/fixtures/example_1.jpeg'), 'public://example_1.jpeg');
+    $image = \Drupal::service('file.repository')->writeData(
+      file_get_contents(\Drupal::service('extension.list.module')->getPath('oe_media') . '/tests/fixtures/example_1.jpeg'),
+      'public://example_1.jpeg'
+    );
     $image->setPermanent();
     $image->save();
 

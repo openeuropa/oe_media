@@ -16,7 +16,10 @@ class DocumentMediaTest extends MediaTestBase {
    * Tests that the correct field keeps the value depending on the type.
    */
   public function testDocumentMediaValues(): void {
-    $this->container->get('file_system')->copy(drupal_get_path('module', 'oe_media') . '/tests/fixtures/sample.pdf', 'public://sample.pdf');
+    $this->container->get('file_system')->copy(
+      \Drupal::service('extension.list.module')->getPath('oe_media') . '/tests/fixtures/sample.pdf',
+      'public://sample.pdf'
+    );
     $file = File::create([
       'uri' => 'public://sample.pdf',
     ]);

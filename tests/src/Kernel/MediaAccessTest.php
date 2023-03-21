@@ -21,7 +21,7 @@ class MediaAccessTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'views',
     'oe_media',
     'file_link',
@@ -39,7 +39,7 @@ class MediaAccessTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp($import_test_views = TRUE) {
+  protected function setUp($import_test_views = TRUE): void {
     parent::setUp();
 
     $this->installConfig(['oe_media']);

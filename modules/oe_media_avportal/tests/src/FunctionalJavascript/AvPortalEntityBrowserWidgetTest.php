@@ -14,7 +14,7 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'node',
     'views',
     'oe_media_avportal',

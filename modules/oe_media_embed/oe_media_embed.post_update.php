@@ -80,7 +80,7 @@ function oe_media_embed_post_update_00003(): void {
     // Set the default icon if the button doesn't already use a specific one.
     $icon = $button->get('icon');
     if (!$icon) {
-      $path = drupal_get_path('module', 'oe_media_embed') . '/embed.png';
+      $path = \Drupal::service('extension.list.module')->getPath('oe_media_embed') . '/embed.png';
       $icon = EmbedButton::convertImageToEncodedData($path);
       $button->set('icon', $icon);
     }

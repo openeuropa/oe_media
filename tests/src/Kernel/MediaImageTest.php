@@ -16,7 +16,7 @@ class MediaImageTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'oe_media',
     'file_link',
     'link',
@@ -26,7 +26,7 @@ class MediaImageTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installConfig(['oe_media']);

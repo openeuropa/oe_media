@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_oembed_mock;
 
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Event used to collect the mocked JSON data.

@@ -19,7 +19,7 @@ class IframeWidgetTest extends MediaFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'oe_media_iframe',
   ];
 
@@ -31,7 +31,7 @@ class IframeWidgetTest extends MediaFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->createMediaType('oe_media_iframe', [

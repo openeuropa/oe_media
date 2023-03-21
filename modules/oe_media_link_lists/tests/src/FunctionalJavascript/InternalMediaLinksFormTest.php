@@ -41,7 +41,7 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     parent::setUp();
 
     // Create a pdf file.
-    $file_path = drupal_get_path('module', 'oe_media') . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'sample.pdf';
+    $file_path = \Drupal::service('extension.list.module')->getPath('oe_media') . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'sample.pdf';
     \Drupal::service('file_system')->copy($file_path, 'public://sample.pdf');
     $file = File::create(['uri' => 'public://sample.pdf']);
     $file->save();

@@ -14,7 +14,7 @@ class IframeSourceTest extends MediaSourceTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'oe_media_iframe',
   ];
 

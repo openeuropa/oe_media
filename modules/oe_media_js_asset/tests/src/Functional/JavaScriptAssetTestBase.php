@@ -16,7 +16,7 @@ class JavaScriptAssetTestBase extends MediaFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'oe_media_js_asset',
   ];
 

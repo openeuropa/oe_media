@@ -14,7 +14,7 @@ class JavaScriptAssetTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'filter',
     'oe_media',
     'oe_media_js_asset',
