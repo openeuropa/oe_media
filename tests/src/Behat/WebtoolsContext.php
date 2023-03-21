@@ -4,17 +4,16 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\oe_media\Behat;
 
+use Behat\Mink\Exception\DriverException;
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Drupal\Component\Serialization\Json;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
-use DrupalTest\BehatTraits\Traits\BrowserCapabilityDetectionTrait;
 use PHPUnit\Framework\Assert;
 
 /**
  * Behat context for Webtools.
  */
 class WebtoolsContext extends RawDrupalContext {
-
-  use BrowserCapabilityDetectionTrait;
 
   /**
    * Fills in the Demo content Webtools chart reference field.
@@ -160,6 +159,38 @@ JS;
     @$doc->loadHTML($raw_html);
     $xpath = new \DOMXpath($doc);
     Assert::assertCount(1, $xpath->query($xpath_query));
+  }
+
+  /**
+   * Checks whether the browser supports JavaScript.
+   *
+   * @see https://github.com/drupaltest/behat-traits/blob/8.x-1.x/src/Traits/BrowserCapabilityDetectionTrait.php
+   *
+   * @return bool
+   *   Returns TRUE when the browser environment supports executing JavaScript
+   *   code, for example because the test is running in Selenium or PhantomJS.
+   */
+  protected function browserSupportsJavaScript(): bool {
+    $driver = $this->getSession()->getDriver();
+    try {
+      if (!$driver->isStarted()) {
+        $driver->start();
+      }
+    }
+    catch (DriverException $e) {
+      throw new \RuntimeException('Could not start webdriver.', 0, $e);
+    }
+
+    try {
+      $driver->executeScript('return;');
+      return TRUE;
+    }
+    catch (UnsupportedDriverActionException $e) {
+      return FALSE;
+    }
+    catch (DriverException $e) {
+      throw new \RuntimeException('Could not execute JavaScript.', 0, $e);
+    }
   }
 
 }
