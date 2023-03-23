@@ -64,7 +64,7 @@ class DrupalContext extends RawDrupalContext {
    * @When I select the :media_name media (entity )in the entity browser modal window
    */
   public function selectMediaInEntityBrowser(string $name): void {
-    $xpath = '//div[@class and contains(concat(" ", normalize-space(@class), " "), " views-row ")]';
+    $xpath = '//div[@class and contains(concat(" ", normalize-space(@class), " "), " views-view-grid__item ")]';
     $xpath .= '[.//div[@class and contains(concat(" ", normalize-space(@class), " "), " views-field-name ")]';
     $xpath .= '/div[@class and contains(concat(" ", normalize-space(@class), " "), " media-info ")]';
     // The last text node contains the media name.
