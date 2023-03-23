@@ -10,11 +10,11 @@ declare(strict_types = 1);
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
  *
  * Alter the link list widget configuration for the Media Gallery bundle.
  */
-function oe_media_gallery_field_widget_link_list_configuration_form_alter(&$element, FormStateInterface $form_state, $context) {
+function oe_media_gallery_field_widget_single_element_link_list_configuration_form_alter(&$element, FormStateInterface $form_state, $context) {
   if ($context['items']->getEntity()->bundle() !== 'gallery') {
     return;
   }
