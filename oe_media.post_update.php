@@ -79,7 +79,7 @@ function oe_media_post_update_00002(array &$sandbox) {
   if (!isset($sandbox['total'])) {
     $query = $media_storage->getQuery();
     $query->condition('bundle', 'document');
-    $document_ids = $query->execute();
+    $document_ids = $query->accessCheck(FALSE)->execute();
     if (empty($document_ids)) {
       // We don't have to do anything if there are no document media entities.
       $sandbox['#finished'] = 1;

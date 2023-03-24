@@ -18,6 +18,7 @@ function oe_media_embed_post_update_00001(): void {
   $available_view_display_ids = \Drupal::entityQuery('entity_view_display')
     ->condition('targetEntityType', 'media')
     ->condition('status', TRUE)
+    ->accessCheck(FALSE)
     ->execute();
   $available_view_displays = EntityViewDisplay::loadMultiple($available_view_display_ids);
   /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
