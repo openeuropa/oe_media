@@ -41,6 +41,8 @@ class OEmbedMockEvent extends Event {
   /**
    * AvPortalMockEvent constructor.
    *
+   * @todo The $request parameter is not used and will be removed from 2.x.
+   *
    * @param \Psr\Http\Message\RequestInterface $request
    *   The Guzzle request.
    * @param array $resources
