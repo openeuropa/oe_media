@@ -54,7 +54,7 @@ class OpPublicationListIdWidget extends StringTextfieldWidget {
     foreach ($values as $delta => &$item_values) {
       $id = $item_values['value'];
       $item_values['value'] = Json::encode([
-        'service' => 'opwidget',
+        'utility' => 'opwidget',
         'widgetId' => $id,
       ]);
     }
