@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_avportal\Plugin\views\query;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\media_avportal\AvPortalClientFactory;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
@@ -38,6 +39,13 @@ class AVPortalQuery extends QueryPluginBase {
   protected $config;
 
   /**
+   * The module extension list.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $moduleExtensionList;
+
+  /**
    * AV Portal query constructor.
    *
    * @param array $configuration
@@ -50,11 +58,22 @@ class AVPortalQuery extends QueryPluginBase {
    *   The AV Portal client factory.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
+   * @param \Drupal\Core\Extension\ModuleExtensionList|null $moduleExtensionList
+   *   The module extension list.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory, ModuleExtensionList $moduleExtensionList = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->clientFactory = $client_factory;
     $this->config = $config_factory->get('media_avportal.settings');
+
+    // @codingStandardsIgnoreStart
+    if (!$moduleExtensionList) {
+      @trigger_error('Calling ' . __METHOD__ . ' without the $moduleExtensionList argument is deprecated in 1.23.0 and will be required in 2.0.0.', E_USER_DEPRECATED);
+      $moduleExtensionList = \Drupal::service('extension.list.module');
+    }
+    // @codingStandardsIgnoreEnd
+
+    $this->moduleExtensionList = $moduleExtensionList;
   }
 
   /**
@@ -66,7 +85,8 @@ class AVPortalQuery extends QueryPluginBase {
       $plugin_id,
       $plugin_definition,
       $container->get('media_avportal.client_factory'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('extension.list.module')
     );
   }
 
@@ -187,7 +207,7 @@ class AVPortalQuery extends QueryPluginBase {
       $row['ref'] = $resource->getRef();
       $row['title'] = $resource->getTitle();
       $row['type'] = $resource->getType();
-      $row['thumbnail'] = $resource->getThumbnailUrl() ?? drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png';
+      $row['thumbnail'] = $resource->getThumbnailUrl() ?? $this->moduleExtensionList->getPath('media') . '/images/icons/no-thumbnail.png';
 
       if (in_array($resource->getType(), ['PHOTO', 'REPORTAGE'])) {
         $row['thumbnail'] = $this->config->get('photos_base_uri') . $row['thumbnail'];

@@ -344,7 +344,10 @@ class MediaContext extends RawDrupalContext {
    *   File entity object.
    */
   protected function createFileEntity(string $file_name): FileInterface {
-    $file = file_save_data(file_get_contents($this->getMinkParameter('files_path') . $file_name), 'public://' . basename($file_name));
+    $file = \Drupal::service('file.repository')->writeData(
+      file_get_contents($this->getMinkParameter('files_path') . $file_name),
+      'public://' . basename($file_name)
+    );
     $file->setPermanent();
     $file->save();
 
@@ -406,8 +409,8 @@ class MediaContext extends RawDrupalContext {
     $media = reset($medias);
 
     $source_field = $media->get($media->getSource()->getConfiguration()['source_field']);
-    $file_url = file_create_url($source_field->entity->getFileUri());
-    $this->visitPath(file_url_transform_relative($file_url));
+    $file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($source_field->entity->getFileUri());
+    $this->visitPath(\Drupal::service('file_url_generator')->transformRelative($file_url));
   }
 
 }

@@ -72,7 +72,7 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   foreach ($field_referenced_to_media as $field_name) {
     $query->condition($field_name, $entity->id());
   }
-  $ids = $query->execute();
+  $ids = $query->accessCheck()->execute();
 
   if (!$ids) {
     return AccessResult::neutral()->addCacheableDependency($cache);

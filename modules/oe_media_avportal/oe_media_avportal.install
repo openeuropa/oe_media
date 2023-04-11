@@ -16,7 +16,7 @@ use Drupal\views\Entity\View;
 function oe_media_avportal_update_8001(&$sandbox): void {
   $view = View::load('av_portal_entity_browsers');
   if (!$view) {
-    $storage = new FileStorage(drupal_get_path('module', 'oe_media_avportal') . '/config/install');
+    $storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_avportal') . '/config/install');
     $view = View::create($storage->read('views.view.av_portal_entity_browsers'));
     $view->save();
   }

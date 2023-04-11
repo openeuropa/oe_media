@@ -16,7 +16,7 @@ class IframeSourceTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'filter',
     'oe_media',
     'oe_media_iframe',
@@ -28,7 +28,7 @@ class IframeSourceTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installConfig([

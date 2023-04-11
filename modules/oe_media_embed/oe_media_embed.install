@@ -20,7 +20,7 @@ function oe_media_embed_install($is_syncing) {
   // Set the icon onto the shipped embed button.
   /** @var \Drupal\embed\EmbedButtonInterface $button */
   $button = EmbedButton::load('media');
-  $icon = EmbedButton::convertImageToEncodedData(drupal_get_path('module', 'oe_media_embed') . '/embed.png');
+  $icon = EmbedButton::convertImageToEncodedData(\Drupal::service('extension.list.module')->getPath('oe_media_embed') . '/embed.png');
   $button->set('icon', $icon);
   $button->save();
 }

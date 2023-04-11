@@ -79,7 +79,7 @@ class InternalMediaLinksResolverSubscriber implements EventSubscriberInterface {
     // as we don't have a field to map to the teaser. Modules that add fields
     // to the media can subscribe to this event and fill in the teaser.
     $resolver_event = new EntityValueResolverEvent($referenced_media);
-    $this->eventDispatcher->dispatch(EntityValueResolverEvent::NAME, $resolver_event);
+    $this->eventDispatcher->dispatch($resolver_event, EntityValueResolverEvent::NAME);
     $link = $resolver_event->getLink();
     $link->addCacheableDependency($referenced_media);
 
@@ -93,7 +93,7 @@ class InternalMediaLinksResolverSubscriber implements EventSubscriberInterface {
 
     // Dispatch an event to allow others to perform overrides on the link.
     $override_event = new EntityValueOverrideResolverEvent($referenced_media, $link_entity, $link);
-    $this->eventDispatcher->dispatch(EntityValueOverrideResolverEvent::NAME, $override_event);
+    $this->eventDispatcher->dispatch($override_event, EntityValueOverrideResolverEvent::NAME);
     $event->setLink($override_event->getLink());
     $event->stopPropagation();
   }

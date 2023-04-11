@@ -27,7 +27,7 @@ class AvPortalMockEventSubscriber implements EventSubscriberInterface {
    */
   public function setMockResources(AvPortalMockEvent $event): void {
     $resources = $event->getResources();
-    foreach (glob(drupal_get_path('module', 'oe_media_avportal_test') . '/responses/resources/*.json') as $file) {
+    foreach (glob(\Drupal::service('extension.list.module')->getPath('oe_media_avportal_test') . '/responses/resources/*.json') as $file) {
       $ref = str_replace('.json', '', basename($file));
       $resources[$ref] = file_get_contents($file);
     }

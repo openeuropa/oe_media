@@ -21,7 +21,7 @@ class MediaAccessTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'views',
     'oe_media',
     'file_link',
@@ -39,7 +39,7 @@ class MediaAccessTest extends MediaKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp($import_test_views = TRUE) {
+  protected function setUp($import_test_views = TRUE): void {
     parent::setUp();
 
     $this->installConfig(['oe_media']);
@@ -78,13 +78,9 @@ class MediaAccessTest extends MediaKernelTestBase {
     // The current user should not have access to the unpublished media.
     $this->assertFalse($media->access('view', $this->currentUser));
 
-    // The view filter responsible for the media status is introduced only in
-    // Drupal 8.8.
-    if (version_compare(\Drupal::VERSION, '8.8.0', '>=')) {
-      $view = Views::getView('media');
-      $this->executeView($view, 'media_page_list');
-      $this->assertCount(0, $view->result);
-    }
+    $view = Views::getView('media');
+    $this->executeView($view, 'media_page_list');
+    $this->assertCount(0, $view->result);
 
     // Give the user the role to view any unpublished media.
     /** @var \Drupal\user\RoleInterface $role */
@@ -97,13 +93,9 @@ class MediaAccessTest extends MediaKernelTestBase {
     // permission.
     $this->assertTrue($media->access('view', $this->currentUser));
 
-    if (version_compare(\Drupal::VERSION, '8.8.0', '>=')) {
-      // Again, the View filter is introduced in 8.8 so only then does the new
-      // permission take effect on the filter.
-      $view = Views::getView('media');
-      $this->executeView($view, 'media_page_list');
-      $this->assertCount(1, $view->result);
-    }
+    $view = Views::getView('media');
+    $this->executeView($view, 'media_page_list');
+    $this->assertCount(1, $view->result);
   }
 
   /**

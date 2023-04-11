@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\oe_media_oembed_mock;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -30,6 +31,13 @@ class OEmbedClientMiddleware {
    * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
+
+  /**
+   * The module extension list.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $moduleExtensionList;
 
   /**
    * The list of allowed providers.
@@ -60,10 +68,21 @@ class OEmbedClientMiddleware {
    *   The config factory.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher.
+   * @param \Drupal\Core\Extension\ModuleExtensionList|null $moduleExtensionList
+   *   The module extension list.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher) {
+  public function __construct(ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher, ModuleExtensionList $moduleExtensionList = NULL) {
     $this->config = $configFactory->get('media.settings');
     $this->eventDispatcher = $eventDispatcher;
+
+    // @codingStandardsIgnoreStart
+    if (!$moduleExtensionList) {
+      @trigger_error('Calling ' . __METHOD__ . ' without the $moduleExtensionList argument is deprecated in 1.23.0 and will be required in 2.0.0.', E_USER_DEPRECATED);
+      $moduleExtensionList = \Drupal::service('extension.list.module');
+    }
+    // @codingStandardsIgnoreEnd
+
+    $this->moduleExtensionList = $moduleExtensionList;
   }
 
   /**
@@ -78,7 +97,7 @@ class OEmbedClientMiddleware {
 
         // oEmbed providers.
         if ($uri->__toString() === $this->config->get('oembed_providers_url')) {
-          $providers = file_get_contents(drupal_get_path('module', 'oe_media_oembed_mock') . '/responses/providers.json');
+          $providers = file_get_contents($this->moduleExtensionList->getPath('oe_media_oembed_mock') . '/responses/providers.json');
           $response = new Response(200, [], $providers);
           return new FulfilledPromise($response);
         }
@@ -89,7 +108,7 @@ class OEmbedClientMiddleware {
           $event = new OEmbedMockEvent($request);
           // Transfer allowed providers.
           $event->setProviders(array_keys($this->allowedProviders));
-          $event = $this->eventDispatcher->dispatch(OEmbedMockEvent::OEMBED_MOCK_EVENT, $event);
+          $event = $this->eventDispatcher->dispatch($event, OEmbedMockEvent::OEMBED_MOCK_EVENT);
           // Get provider name from current url of request.
           $provider = array_search($uri->getHost(), $this->allowedProviders);
           $ref = $this->getResourceId($uri, $provider);
@@ -104,7 +123,7 @@ class OEmbedClientMiddleware {
 
         // Getting the thumbnail.
         if (in_array($uri->getHost(), $this->thumbnailHosts)) {
-          $thumbnail = file_get_contents(drupal_get_path('module', 'media') . '/images/icons/no-thumbnail.png');
+          $thumbnail = file_get_contents($this->moduleExtensionList->getPath('media') . '/images/icons/no-thumbnail.png');
           $response = new Response(200, [], $thumbnail);
           return new FulfilledPromise($response);
         }

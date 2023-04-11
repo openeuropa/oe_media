@@ -40,7 +40,7 @@ class VideoIframeTest extends WebDriverTestBase {
     $page->fillField('Name', 'EBS');
     $page->fillField('Iframe', '<iframe src=\"http://web:8080/tests/fixtures/example.html\" width=\"800\" height=\"600\" frameborder=\"0\"><a href=\"#\">invalid</a></iframe><script type=\"text/javascript\">alert(\'no js\')</script>');
     // Upload an image as thumbnail.
-    $page->attachFileToField('Iframe thumbnail', drupal_get_path('module', 'oe_media') . '/tests/fixtures/example_1.jpeg');
+    $page->attachFileToField('Iframe thumbnail', \Drupal::service('extension.list.module')->getPath('oe_media') . '/tests/fixtures/example_1.jpeg');
     $this->assertSession()->waitForField('Alternative text');
     $page->fillField('Alternative text', 'thumbnail');
     $page->pressButton('Save');

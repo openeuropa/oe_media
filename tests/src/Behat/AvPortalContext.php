@@ -121,10 +121,10 @@ class AvPortalContext extends RawDrupalContext {
    * @When I select the avportal item with the title :title
    */
   public function iSelectAvPortalItemByTitle(string $title): void {
-    $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-col ')]";
+    $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-view-grid__item ')]";
     $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-title ')][contains(string(.), '$title')]]";
     $xpath .= "//input[@type='checkbox']";
-    $this->getSession()->getPage()->find('xpath', $xpath)->check();
+    $this->assertSession()->elementExists('xpath', $xpath)->check();
   }
 
 }

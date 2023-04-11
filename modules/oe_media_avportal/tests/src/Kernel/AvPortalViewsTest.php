@@ -18,7 +18,7 @@ class AvPortalViewsTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'media',
     'user',
     'image',
@@ -34,7 +34,7 @@ class AvPortalViewsTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp($import_test_views = TRUE) {
+  protected function setUp($import_test_views = TRUE): void {
     parent::setUp();
 
     $this->installConfig(['media']);

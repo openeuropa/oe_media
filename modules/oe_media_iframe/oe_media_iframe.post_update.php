@@ -120,7 +120,7 @@ function oe_media_iframe_post_update_00003(): void {
  * Create Iframe media.
  */
 function oe_media_iframe_post_update_00004(): void {
-  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00004_create_media_iframe');
+  $file_storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_iframe') . '/config/post_updates/00004_create_media_iframe');
   $config_data = $file_storage->read('media.type.iframe');
 
   // Create Iframe media if it isn't exist.
@@ -136,7 +136,7 @@ function oe_media_iframe_post_update_00004(): void {
  * Create Iframe media fields.
  */
 function oe_media_iframe_post_update_00005(): void {
-  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00005_create_fields');
+  $file_storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_iframe') . '/config/post_updates/00005_create_fields');
 
   $configs = [
     'field.field.media.iframe.oe_media_iframe',
@@ -158,7 +158,7 @@ function oe_media_iframe_post_update_00005(): void {
  * Create form and display views for Iframe media.
  */
 function oe_media_iframe_post_update_00006(): void {
-  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_iframe') . '/config/post_updates/00006_create_displays');
+  $file_storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_iframe') . '/config/post_updates/00006_create_displays');
 
   // Form display configuration to create.
   $form_display_values = $file_storage->read('core.entity_form_display.media.iframe.default');

@@ -151,7 +151,7 @@ abstract class GalleryLinkSourceBase extends LinkSourcePluginBase implements Con
     $links = new LinkCollection();
     foreach ($media_entities as $media_entity) {
       $event = new EntityValueResolverEvent($media_entity);
-      $this->eventDispatcher->dispatch(EntityValueResolverEvent::NAME, $event);
+      $this->eventDispatcher->dispatch($event, EntityValueResolverEvent::NAME);
       $link = $event->getLink();
       $link->addCacheableDependency($media_entity);
       $links->add($link);

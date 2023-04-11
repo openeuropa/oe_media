@@ -43,7 +43,7 @@ function oe_media_webtools_post_update_00001() {
  * Install OP Publication List media type.
  */
 function oe_media_webtools_post_update_00002() {
-  $file_storage = new FileStorage(drupal_get_path('module', 'oe_media_webtools') . '/config/post_updates/00002_install_op_publication_list');
+  $file_storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_webtools') . '/config/post_updates/00002_install_op_publication_list');
   $config_names = [
     'media.type.webtools_op_publication_list',
     'field.field.media.webtools_op_publication_list.oe_media_webtools',
