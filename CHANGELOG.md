@@ -1,6 +1,13 @@
-# Changelog
+# Change Log
 
-## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-03)
+## [1.23.0](https://github.com/openeuropa/oe_media/tree/1.23.0) (2023-04-11)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.22.0...1.23.0)
+
+**Merged pull requests:**
+
+- EWPP-3006: Drupal 10 compatibility. [\#223](https://github.com/openeuropa/oe_media/pull/223) ([brummbar](https://github.com/brummbar))
+
+## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-06)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.2...1.22.0)
 
 **Closed issues:**
@@ -9,6 +16,7 @@
 
 **Merged pull requests:**
 
+- Prepare changelog for release 1.22.0 [\#222](https://github.com/openeuropa/oe_media/pull/222) ([brummbar](https://github.com/brummbar))
 - ISSUE-204: Make sure the field exists before updating its description. [\#205](https://github.com/openeuropa/oe_media/pull/205) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.21.2](https://github.com/openeuropa/oe_media/tree/1.21.2) (2023-01-31)
