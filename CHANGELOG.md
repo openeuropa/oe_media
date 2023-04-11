@@ -1,10 +1,18 @@
 # Change Log
 
+## [1.23.1](https://github.com/openeuropa/oe_media/tree/1.23.1) (2023-04-11)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.0...1.23.1)
+
+**Merged pull requests:**
+
+- EWPP-3006: Fix oe\_webtools version. [\#226](https://github.com/openeuropa/oe_media/pull/226) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.23.0](https://github.com/openeuropa/oe_media/tree/1.23.0) (2023-04-11)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.22.0...1.23.0)
 
 **Merged pull requests:**
 
+- Prepare changelog for release 1.23.0 [\#225](https://github.com/openeuropa/oe_media/pull/225) ([brummbar](https://github.com/brummbar))
 - EWPP-3006: Drupal 10 compatibility. [\#223](https://github.com/openeuropa/oe_media/pull/223) ([brummbar](https://github.com/brummbar))
 
 ## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-06)
