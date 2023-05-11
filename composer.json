@@ -30,7 +30,7 @@
         "openeuropa/code-review": "^2.0.0-alpha6",
         "openeuropa/oe_link_lists": "^0.22",
         "openeuropa/oe_oembed": "~0.7.0",
-        "openeuropa/oe_webtools": "^1.22",
+        "openeuropa/oe_webtools": "^1.23",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0-beta6",
         "phpspec/prophecy-phpunit": "^2",
         "symfony/phpunit-bridge": "^6.2"
