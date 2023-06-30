@@ -7,8 +7,8 @@
 
 declare(strict_types = 1);
 
-use Drupal\Core\Config\FileStorage;
 use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\filter\Entity\FilterFormat;
 
