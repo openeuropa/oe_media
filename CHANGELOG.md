@@ -1,13 +1,24 @@
-# Change Log
+# Changelog
+
+## [1.24.0](https://github.com/openeuropa/oe_media/tree/1.24.0) (2023-06-30)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.1...1.24.0)
+
+**Merged pull requests:**
+
+- EWPP-2775: Replace 'service' by 'utility' for opwidget. [\#224](https://github.com/openeuropa/oe_media/pull/224) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.23.1](https://github.com/openeuropa/oe_media/tree/1.23.1) (2023-04-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.0...1.23.1)
 
 **Merged pull requests:**
 
+- Prepare changelog for release 1.23.1 [\#227](https://github.com/openeuropa/oe_media/pull/227) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-3006: Fix oe\_webtools version. [\#226](https://github.com/openeuropa/oe_media/pull/226) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.23.0](https://github.com/openeuropa/oe_media/tree/1.23.0) (2023-04-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.22.0...1.23.0)
 
 **Merged pull requests:**
@@ -16,6 +27,7 @@
 - EWPP-3006: Drupal 10 compatibility. [\#223](https://github.com/openeuropa/oe_media/pull/223) ([brummbar](https://github.com/brummbar))
 
 ## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-06)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.2...1.22.0)
 
 **Closed issues:**
@@ -28,6 +40,7 @@
 - ISSUE-204: Make sure the field exists before updating its description. [\#205](https://github.com/openeuropa/oe_media/pull/205) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.21.2](https://github.com/openeuropa/oe_media/tree/1.21.2) (2023-01-31)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.1...1.21.2)
 
 **Fixed bugs:**
@@ -40,6 +53,7 @@
 - EWPP-2932: Update dependencies dev branches. [\#218](https://github.com/openeuropa/oe_media/pull/218) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.21.1](https://github.com/openeuropa/oe_media/tree/1.21.1) (2023-01-12)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.0...1.21.1)
 
 **Merged pull requests:**
@@ -48,6 +62,7 @@
 - OEL-2150: Fix assumptions that all medias using image source are coming from oe\_media. [\#213](https://github.com/openeuropa/oe_media/pull/213) ([brummbar](https://github.com/brummbar))
 
 ## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.20.0...1.21.0)
 
 **Merged pull requests:**
