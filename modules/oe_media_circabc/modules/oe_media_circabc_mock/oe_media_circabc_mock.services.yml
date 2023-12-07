@@ -1,0 +1,6 @@
+services:
+  oe_media_circabc_mock.middleware:
+    class: Drupal\oe_media_circabc_mock\CircaBcMiddleware
+    arguments: ['@extension.path.resolver']
+    tags:
+      - { name: http_client_middleware }
