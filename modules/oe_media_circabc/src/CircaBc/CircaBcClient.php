@@ -132,6 +132,103 @@ class CircaBcClient implements CircaBcClientInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function query(string $uuid, string $langcode = NULL, string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult {
+    $endpoint = $this->config['url'] . '/service/circabc/files';
+    $query = [
+      'node' => $uuid,
+      'page' => $page,
+      'limit' => $limit,
+    ];
+    if ($langcode) {
+      $query['language'] = $langcode;
+    }
+    if ($query_string) {
+      $query['q'] = $query_string;
+    }
+
+    $url = Url::fromUri($endpoint, [
+      'query' => $query,
+    ])->toString();
+
+    try {
+      $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+      $response = $this->httpClient->request('GET', $url, [
+        'headers' => [
+          'Authorization' => $auth,
+        ],
+      ]);
+      if ($response->getStatusCode() !== 200) {
+        $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+
+        return new CircaBcDocumentResult();
+      }
+    }
+    catch (\Exception $exception) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($exception->getMessage());
+
+      return new CircaBcDocumentResult();
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    if (!$content) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+      return new CircaBcDocumentResult();
+    }
+
+    $documents = [];
+    foreach ($content['data'] as $document_values) {
+      $documents[] = new CircaBcDocument($document_values);
+    }
+
+    return new CircaBcDocumentResult($documents, $content['total']);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getInterestGroups(): array {
+    $url = $this->config['url'] . '/service/circabc/categories/' . $this->config['category'] . '/groups';
+
+    try {
+      $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+      $response = $this->httpClient->request('GET', $url, [
+        'headers' => [
+          'Authorization' => $auth,
+        ],
+      ]);
+      if ($response->getStatusCode() !== 200) {
+        $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+
+        return [];
+      }
+    }
+    catch (\Exception $exception) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($exception->getMessage());
+
+      return [];
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    if (!$content) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+      return [];
+    }
+
+    $groups = [];
+    foreach ($content as $values) {
+      $groups[] = [
+        'uuid' => $values['id'],
+        'name' => $values['name'],
+        'data' => $values,
+      ];
+    }
+
+    return $groups;
+  }
+
+  /**
    * Extracts the UUID from the URL.
    *
    * @param string $url

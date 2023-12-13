@@ -1,0 +1,62 @@
+[
+    {
+        "id": "85a095a8-aacb-4ae2-9f67-c90a789e353e",
+        "name": "Group 1",
+        "title": {
+            "en": "Group 1"
+        },
+        "description": {
+            "en": "Group 1"
+        },
+        "contact": {},
+        "libraryId": "",
+        "newsgroupId": "",
+        "informationId": "",
+        "eventId": "",
+        "isPublic": false,
+        "isRegistered": false,
+        "allowApply": "",
+        "permissions": {},
+        "logoUrl": ""
+    },
+    {
+        "id": "9f2e8cb7-0306-4d52-b34a-1befc6647746",
+        "name": "Group 2",
+        "title": {
+            "en": "Group 2"
+        },
+        "description": {
+            "en": "Group 2"
+        },
+        "contact": {},
+        "libraryId": "",
+        "newsgroupId": "",
+        "informationId": "",
+        "eventId": "",
+        "isPublic": false,
+        "isRegistered": false,
+        "allowApply": "",
+        "permissions": {},
+        "logoUrl": ""
+    },
+    {
+        "id": "c67d6b08-2cc4-4fe4-a5a4-80ec44eacb1a",
+        "name": "Group 3",
+        "title": {
+            "en": "Group 3"
+        },
+        "description": {
+            "en": "Group 3"
+        },
+        "contact": {},
+        "libraryId": "",
+        "newsgroupId": "",
+        "informationId": "",
+        "eventId": "",
+        "isPublic": false,
+        "isRegistered": false,
+        "allowApply": "",
+        "permissions": {},
+        "logoUrl": ""
+    }
+]
