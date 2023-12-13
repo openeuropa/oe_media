@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\oe_media_circabc_mock;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Extension\ExtensionPathResolver;
+use Drupal\oe_media_circabc_mock\Controller\MockController;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -33,6 +35,8 @@ class CircaBcMiddleware {
 
   /**
    * Invoked method that returns a promise.
+   *
+   * @SuppressWarnings(PHPMD.CyclomaticComplexity)
    */
   public function __invoke() {
     return function ($handler) {
@@ -65,6 +69,21 @@ class CircaBcMiddleware {
 
             return new FulfilledPromise($response);
           }
+        }
+
+        if (str_starts_with($path, '/circabc-ewpp/service/circabc/categories/') && str_ends_with($path, '/groups')) {
+          $filename = $test_module_path . '/fixtures/interest_groups.json';
+          if (file_exists($filename)) {
+            $response = new Response(200, [], file_get_contents($filename));
+
+            return new FulfilledPromise($response);
+          }
+        }
+
+        if ($path === '/circabc-ewpp/service/circabc/files') {
+          $response = (new MockController())->files(UrlHelper::parse($url)['query']);
+          $response = new Response(200, [], $response->getContent());
+          return new FulfilledPromise($response);
         }
 
         // Otherwise, no intervention. We defer to the handler stack.

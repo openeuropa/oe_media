@@ -39,4 +39,31 @@ interface CircaBcClientInterface {
    */
   public function fillTranslations(CircaBcDocument $document): void;
 
+  /**
+   * Queries for documents.
+   *
+   * @param string $uuid
+   *   The category or interest group UUID.
+   * @param string|null $langcode
+   *   The langcode.
+   * @param string|null $query_string
+   *   A keyword for search.
+   * @param int $page
+   *   The pager page.
+   * @param int $limit
+   *   The pager limit.
+   *
+   * @return \Drupal\oe_media_circabc\CircaBc\CircaBcDocumentResult
+   *   The results.
+   */
+  public function query(string $uuid, string $langcode = NULL, string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult;
+
+  /**
+   * Loads the available interest groups.
+   *
+   * @return array
+   *   The interest group data.
+   */
+  public function getInterestGroups(): array;
+
 }
