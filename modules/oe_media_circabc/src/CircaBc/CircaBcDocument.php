@@ -21,7 +21,7 @@ class CircaBcDocument {
    *
    * @var \Drupal\oe_media_circabc\CircaBc\CircaBcDocument[]
    */
-  protected $translations;
+  protected $translations = [];
 
   /**
    * Constructs a CircaBcDocument.
@@ -70,7 +70,8 @@ class CircaBcDocument {
    *   The langcode.
    */
   public function getLangcode(): string {
-    return $this->data['properties']['locale'];
+    // In case the value is in the format en_EN.
+    return substr($this->data['properties']['locale'], 0, 2);
   }
 
   /**
@@ -85,6 +86,17 @@ class CircaBcDocument {
   }
 
   /**
+   * Gets the description of the document in the document langcode.
+   *
+   * @return string
+   *   The title.
+   */
+  public function getDescription(): string {
+    $langcode = $this->getLangcode();
+    return $this->data['description'][$langcode] ?? '';
+  }
+
+  /**
    * Gets a specific property by name.
    *
    * @param string $name
@@ -94,7 +106,7 @@ class CircaBcDocument {
    *   The value.
    */
   public function getProperty(string $name): string|array {
-    return $this->data['properties'][$name];
+    return $this->data['properties'][$name] ?? '';
   }
 
   /**
@@ -110,10 +122,10 @@ class CircaBcDocument {
   /**
    * Gets a translation document by language.
    *
-   * @return \Drupal\oe_media_circabc\CircaBc\CircaBcDocument
+   * @return \Drupal\oe_media_circabc\CircaBc\CircaBcDocument|null
    *   The translation.
    */
-  public function getTranslation(string $langcode): ?array {
+  public function getTranslation(string $langcode): ?CircaBcDocument {
     return $this->translations[$langcode] ?? NULL;
   }
 
@@ -132,6 +144,16 @@ class CircaBcDocument {
       }
       $this->translations[$doc->getLangcode()] = $doc;
     }
+  }
+
+  /**
+   * Determines whether the document is multilingual.
+   *
+   * @return bool
+   *   Whether the document is multilingual.
+   */
+  public function isMultilingual(): bool {
+    return $this->getProperty('multilingual') === 'true';
   }
 
 }

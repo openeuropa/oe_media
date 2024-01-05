@@ -7,7 +7,6 @@
 
 declare(strict_types=1);
 
-use Drupal\Core\TypedData\TranslationStatusInterface;
 use Drupal\media\MediaInterface;
 
 /**
@@ -41,59 +40,21 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
     throw new \Exception('Missing UUID');
   }
 
-  /** @var \Drupal\oe_media_circabc\CircaBcDocument $document */
+  /** @var \Drupal\oe_media_circabc\CircaBc\CircaBcDocument $document */
   $document = \Drupal::service('oe_media_circabc.client')->getDocumentByUuid($uuid);
   if (!$document) {
     throw new \Exception('There was a problem retrieving the CircaBC document');
   }
+
+  if (!in_array($document->getLangcode(), array_keys(\Drupal::languageManager()->getLanguages()))) {
+    throw new \Exception(sprintf('The CircaBC document has an incorrect language code: %s', $document->getLangcode()));
+  }
+
   if ($document->getLangcode() !== $media->language()->getId() && $media->isNew()) {
     $media->set('langcode', _oe_media_circabc_get_drupal_langcode($document->getLangcode()));
   }
 
-  $field_item = $media->get('oe_media_circabc_reference')->get(0);
-  $field_item->size = $document->getProperty('size');
-  $field_item->mime = $document->getProperty('mimetype');
-  $field_item->filename = $document->getFileName();
-  $title = $document->getTitle();
-  if ($title && $title != "") {
-    $media->set('name', $title);
-  }
-
-  // Handle translations.
-  if (!$media->isTranslatable() || !\Drupal::languageManager()->isMultilingual()) {
-    // Bail out if the media itself is not translatable or the site is not
-    // even multilingual.
-    return;
-  }
-
-  \Drupal::service('oe_media_circabc.client')->fillTranslations($document);
-  foreach ($document->getTranslations() as $langcode => $document_translation) {
-    $drupal_langcode = _oe_media_circabc_get_drupal_langcode($langcode);
-    // Skip the language in case we are saving as part of a translation delete.
-    if ($media->getTranslationStatus($drupal_langcode) === TranslationStatusInterface::TRANSLATION_REMOVED) {
-      continue;
-    }
-
-    if (!\Drupal::languageManager()->getLanguage($drupal_langcode)) {
-      // The language could be disabled.
-      continue;
-    }
-    $media_translation = $media->hasTranslation($drupal_langcode) ? $media->getTranslation($drupal_langcode) : $media->addTranslation($drupal_langcode, $media->toArray());
-    if ($media->getFieldDefinition('oe_media_circabc_reference')->isTranslatable()) {
-      $translation_field_item = $media_translation->get('oe_media_circabc_reference');
-      $translation_field_item->uuid = $document_translation->getUuid();
-      $translation_field_item->size = $document_translation->getProperty('size');
-      $translation_field_item->mime = $document_translation->getProperty('mimetype');
-      $translation_field_item->filename = $document_translation->getFileName();
-    }
-
-    if ($media->getFieldDefinition('name')->isTranslatable()) {
-      $title = $document_translation->getTitle();
-      if ($title && $title != "") {
-        $media_translation->set('name', $title);
-      }
-    }
-  }
+  \Drupal::service('oe_media_circabc.document_mapper')->mapDocumentMedia($document, $media);
 }
 
 /**
