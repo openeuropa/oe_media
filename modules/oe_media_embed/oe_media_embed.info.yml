@@ -7,5 +7,4 @@ dependencies:
   - drupal:views
   - media_avportal:media_avportal
   - embed:embed
-  - drupal:ckeditor
   - oe_oembed:oe_oembed
