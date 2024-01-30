@@ -26,6 +26,7 @@
         "drupal/json_field": "^1.1",
         "drush/drush": "^11.1",
         "mikey179/vfsstream": "^1.6",
+        "nikic/php-parser": "^4.18",
         "openeuropa/behat-transformation-context": "^0.2",
         "openeuropa/code-review": "^2.0.0-alpha6",
         "openeuropa/oe_link_lists": "^0.22",
@@ -76,7 +77,10 @@
             "locations": {
                 "web-root": "./build"
             }
-        }
+        },
+        "_readme": [
+            "Explicit requirement of nikic/php-parser as ^5.0 generates GrumPHP Parser issues."
+        ]
     },
     "config": {
         "allow-plugins": {
