@@ -183,7 +183,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->waitForField('Alternative text');
     $this->getSession()->getPage()->fillField('Alternative text', 'img alt');
     $this->getSession()->getPage()->pressButton('Save media');
-    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->switchToWindow($this->getSession()->getWindowName());
     $this->assertSession()->pageTextContains('Test image');
     $this->assertSession()->buttonExists('Remove');
     $this->assertSession()->buttonExists('Edit');

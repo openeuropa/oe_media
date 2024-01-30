@@ -27,6 +27,7 @@ Feature: AV Portal photo.
     When I click "Add AV Portal Photo"
     And I fill in "Media AV Portal Photo" with "https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15"
     And I press the "Save entity" button
+    And I switch to main window
     And I press the "Save" button
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
@@ -38,6 +39,7 @@ Feature: AV Portal photo.
     When I click "View"
     And I select the "Euro with miniature figurines" media entity in the entity browser modal window
     And I press the "Select entities" button
+    And I switch to main window
     And I press the "Save" button
     Then I should see the AV Portal photo "Euro with miniature figurines" with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg"
 
@@ -53,5 +55,6 @@ Feature: AV Portal photo.
     Then I should see "Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania"
     When I select the avportal item with the title 'Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania'
     And I press the "Select entities" button
+    And I switch to main window
     And I press the "Save" button
     Then I should see the AV Portal photo 'Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania' with source "//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-615406.jpg"

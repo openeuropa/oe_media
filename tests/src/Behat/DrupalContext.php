@@ -168,6 +168,16 @@ class DrupalContext extends RawDrupalContext {
   }
 
   /**
+   * Switches to the iframe of a specific entity browser modal window.
+   *
+   * @Then I switch to main window
+   */
+  public function iSwitchToMainWindow(): void {
+    $name = $this->getSession()->getWindowName();
+    $this->getSession()->switchToWindow($name);
+  }
+
+  /**
    * Retrieves a node by its title.
    *
    * @param string $title
