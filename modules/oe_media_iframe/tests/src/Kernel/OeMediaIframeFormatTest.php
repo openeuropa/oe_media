@@ -74,9 +74,7 @@ class OeMediaIframeFormatTest extends KernelTestBase {
       'iframe with all existing iframe attributes' => [
         // Lang and dir attributes are always allowed.
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate></iframe>',
-        // The xml:lang attribute gets duplicated due to
-        // https://www.drupal.org/node/1333730.
-        'expected' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" title="" xml:lang="" xml:lang=""></iframe>',
+        'expected' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" title=""></iframe>',
       ],
       'iframe with invalid attribute' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" invalid-attribute="with random value"></iframe>',
