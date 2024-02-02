@@ -45,6 +45,7 @@ Feature: Remote video media entities.
     And I press "Save entity"
     And I wait for AJAX to finish
     And I switch to main window
+    And I wait for the text "<title>"
     Then I should see the text "<title>"
     And I should see the button "Remove"
     When I press "Save"
@@ -64,6 +65,7 @@ Feature: Remote video media entities.
     And I press "Select entities"
     And I wait for AJAX to finish
     And I switch to main window
+    And I wait for the text "<title>"
     Then I should see the text "<title>"
     And I should see the button "Remove"
     When I press "Save"

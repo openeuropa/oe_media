@@ -8,7 +8,7 @@
     "require": {
         "php": ">=8.1",
         "cweagans/composer-patches": "^1.7",
-        "drupal/core": "10.1.8",
+        "drupal/core": "^10",
         "drupal/embed": "^1.5",
         "drupal/entity_browser": "^2.5",
         "drupal/file_link": "^2.1",
@@ -56,7 +56,8 @@
             "Drupal\\Tests\\oe_media\\": "./tests/src",
             "Drupal\\Tests\\oe_media_embed\\": "./modules/oe_media_embed/tests/src",
             "Drupal\\Tests\\oe_link_lists\\": "./build/modules/contrib/oe_link_lists/tests/src",
-            "Drupal\\Tests\\oe_link_lists_manual_source\\": "./build/modules/contrib/oe_link_lists/modules/oe_link_lists_manual_source/tests/src"
+            "Drupal\\Tests\\oe_link_lists_manual_source\\": "./build/modules/contrib/oe_link_lists/modules/oe_link_lists_manual_source/tests/src",
+            "Drupal\\FunctionalJavascriptTests\\": "./build/core/tests/Drupal/FunctionalJavascriptTests"
         }
     },
     "extra": {

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\oe_media\Behat;
 
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Exception\ResponseTextException;
 use Drupal\Core\Url;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Drupal\node\NodeInterface;
@@ -175,6 +176,36 @@ class DrupalContext extends RawDrupalContext {
   public function iSwitchToMainWindow(): void {
     $name = $this->getSession()->getWindowName();
     $this->getSession()->switchToWindow($name);
+  }
+
+  /**
+   * Waits for some text to appear on the page.
+   *
+   * Note that the text asserted is case-insensitive.
+   *
+   * @param string $text
+   *   The text to wait for.
+   *
+   * @Then I wait for the text :text
+   */
+  public function waitForText(string $text): void {
+    $page = $this->getSession()->getPage();
+    $timeout = $this->getMinkParameter('ajax_timeout');
+
+    $assert_session = $this->assertSession();
+    $result = $page->waitFor($timeout, function () use ($assert_session, $text): bool {
+      try {
+        $assert_session->pageTextContains($text);
+        return TRUE;
+      }
+      catch (ResponseTextException $exception) {
+        return FALSE;
+      }
+    });
+
+    if (!$result) {
+      throw new \Exception(sprintf('The text "%s" was not found on the page after %d seconds.', $text, $timeout));
+    }
   }
 
   /**
