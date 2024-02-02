@@ -25,6 +25,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AVPortalQuery extends QueryPluginBase {
 
   /**
+   * The query where group.
+   *
+   * @var array
+   */
+  protected $where;
+
+  /**
+   * The total number of rows in the query.
+   *
+   * @var int
+   */
+  protected $total_rows;
+
+  /**
    * AV Portal client factory.
    *
    * @var \Drupal\media_avportal\AvPortalClientFactory
