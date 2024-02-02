@@ -64,6 +64,7 @@ class OeMediaIframeFormatTest extends KernelTestBase {
    * @todo Remove the version dependent assertions once we drop D10.1 support.
    */
   protected function providerTestFormat(): array {
+    // In D10.2 empty HTML attributes are rendered without assignment (="").
     $higher_core_version = (bool) version_compare(\Drupal::VERSION, '10.2', '>');
     return [
       'complex HTML' => [
