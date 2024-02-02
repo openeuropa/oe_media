@@ -29,14 +29,16 @@ class AVPortalQuery extends QueryPluginBase {
    *
    * @var array
    */
-  protected $where;
+  public $where;
 
   /**
    * The total number of rows in the query.
    *
    * @var int
+   *
+   * phpcs:disable Drupal.NamingConventions.ValidVariableName.LowerCamelName
    */
-  protected $total_rows;
+  public $total_rows;
 
   /**
    * AV Portal client factory.
@@ -74,18 +76,18 @@ class AVPortalQuery extends QueryPluginBase {
    *   The config factory.
    * @param \Drupal\Core\Extension\ModuleExtensionList|null $moduleExtensionList
    *   The module extension list.
+   *
+   *  phpcs:disable Drupal.Semantics.FunctionTriggerError.TriggerErrorTextLayoutRelaxed
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory, ModuleExtensionList $moduleExtensionList = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->clientFactory = $client_factory;
     $this->config = $config_factory->get('media_avportal.settings');
 
-    // @codingStandardsIgnoreStart
     if (!$moduleExtensionList) {
       @trigger_error('Calling ' . __METHOD__ . ' without the $moduleExtensionList argument is deprecated in 1.23.0 and will be required in 2.0.0.', E_USER_DEPRECATED);
       $moduleExtensionList = \Drupal::service('extension.list.module');
     }
-    // @codingStandardsIgnoreEnd
 
     $this->moduleExtensionList = $moduleExtensionList;
   }
