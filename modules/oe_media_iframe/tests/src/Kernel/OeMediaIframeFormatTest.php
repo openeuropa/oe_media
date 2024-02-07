@@ -60,8 +60,12 @@ class OeMediaIframeFormatTest extends KernelTestBase {
    *
    * @return array
    *   A list of scenarios.
+   *
+   * @todo Remove the version dependent assertions once we drop D10.1 support.
    */
   protected function providerTestFormat(): array {
+    // In D10.2 empty HTML attributes are rendered without assignment (="").
+    $higher_core_version = (bool) version_compare(\Drupal::VERSION, '10.2', '>');
     return [
       'complex HTML' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0"><a href="#">invalid</a></iframe><script type="text/javascript">alert(\'no js\')</script><p>Lorem</p><div>ipsum</div><strong>dolor</strong><em>sit</em>amet, consectetur adipiscing elit',
@@ -69,14 +73,16 @@ class OeMediaIframeFormatTest extends KernelTestBase {
       ],
       'EbS Live embed code' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" id="videoplayer" width="852" height="480" title="" frameborder="0" scrolling="no" webkitAllowFullScreen="true" mozallowfullscreen="true" allowFullScreen="true"></iframe>',
-        'expected' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="852" height="480" title="" frameborder="0" scrolling="no" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>',
+        'expected' => $higher_core_version
+          ? '<iframe src="http://web:8080/tests/fixtures/example.html" width="852" height="480" title frameborder="0" scrolling="no" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>'
+          : '<iframe src="http://web:8080/tests/fixtures/example.html" width="852" height="480" title="" frameborder="0" scrolling="no" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>',
       ],
       'iframe with all existing iframe attributes' => [
         // Lang and dir attributes are always allowed.
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allow allowfullscreen allowpaymentrequest csp importance loading referrerpolicy sandbox srcdoc mozallowfullscreen webkitAllowFullScreen scrolling accesskey autocapitalize class contenteditable data-test data-test2 dir draggable dropzone exportparts hidden id inputmode is itemid itemprop itemref itemscope itemtype lang part slot spellcheck style tabindex title translate></iframe>',
-        // The xml:lang attribute gets duplicated due to
-        // https://www.drupal.org/node/1333730.
-        'expected' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" title="" xml:lang="" xml:lang=""></iframe>',
+        'expected' => $higher_core_version
+          ? '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen importance loading referrerpolicy sandbox mozallowfullscreen webkitallowfullscreen scrolling lang title></iframe>'
+          : '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" allowfullscreen="" importance="" loading="" referrerpolicy="" sandbox="" mozallowfullscreen="" webkitallowfullscreen="" scrolling="" lang="" title="" xml:lang="" xml:lang=""></iframe>',
       ],
       'iframe with invalid attribute' => [
         'html' => '<iframe src="http://web:8080/tests/fixtures/example.html" width="800" height="600" frameborder="0" invalid-attribute="with random value"></iframe>',

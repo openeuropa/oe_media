@@ -63,14 +63,12 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
     $this->assertEmpty($entity_type_manager->getStorage('media')->loadMultiple());
     $this->getSession()->getPage()->checkField('entity_browser_select[I-163308]');
     $this->getSession()->getPage()->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSingleMediaEntity($media_title);
 
     // Make the same selection again and make sure the entity gets reused.
     $this->drupalGet('/entity-browser/iframe/av_portal_entity_browser_test');
     $this->getSession()->getPage()->checkField('entity_browser_select[I-163308]');
     $this->getSession()->getPage()->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSingleMediaEntity($media_title);
   }
 

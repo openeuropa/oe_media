@@ -78,7 +78,7 @@ class GalleryTest extends WebDriverTestBase {
 
     $this->videoMedia = Media::create([
       'bundle' => 'remote_video',
-      'oe_media_oembed_video' => 'https://www.youtube.com/watch?v=1-g73ty9v04',
+      'oe_media_oembed_video' => 'https://www.youtube.com/watch?v=OkPW9mK5Vw8',
     ]);
     $this->videoMedia->save();
 

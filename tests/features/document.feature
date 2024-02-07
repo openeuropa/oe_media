@@ -92,6 +92,7 @@ Feature: Document media entities.
     And I should not see the text "URL"
     And I attach the file "sample.pdf" to "File"
     And I press the "Save entity" button
+    And I switch to main window
     And I press the "Save" button
     Then I should see the link "sample.pdf"
 
@@ -103,5 +104,6 @@ Feature: Document media entities.
     When I click "View"
     And I select the "Media document" media entity in the entity browser modal window
     And I press the "Select entities" button
+    And I switch to main window
     And I press the "Save" button
     Then I should see the link "sample.pdf"

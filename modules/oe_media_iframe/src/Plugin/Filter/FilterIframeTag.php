@@ -60,7 +60,12 @@ class FilterIframeTag extends FilterBase {
       $iframe->removeChild($node);
     }
 
-    $result->setProcessedText($dom->saveXML($iframe));
+    // Since the text can come with multiple iframes and other HTML entities
+    // which we don't want to include in the processed markup, we take only the
+    // modified iframe and import it in a new HTML document.
+    $new_dom = Html::load($dom->saveHTML($iframe));
+
+    $result->setProcessedText(Html::serialize($new_dom));
 
     return $result;
   }

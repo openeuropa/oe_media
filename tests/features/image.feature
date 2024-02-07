@@ -44,6 +44,8 @@ Feature: Image media entities.
     And I fill in "Alternative text" with "Symfonycon Lisbon"
     And I press "Save entity"
     And I wait for AJAX to finish
+    And I switch to main window
+    And I wait for the text "OpenEuropa team members at Symfonycon Lisbon"
     Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
     And I should see the button "Remove"
     When I press "Save"
@@ -62,6 +64,8 @@ Feature: Image media entities.
     When I select the "OpenEuropa team members at Symfonycon Lisbon" media in the entity browser modal window
     And I press "Select entities"
     And I wait for AJAX to finish
+    And I switch to main window
+    And I wait for the text "OpenEuropa team members at Symfonycon Lisbon"
     Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
     And I should see the button "Remove"
     When I press "Save"
