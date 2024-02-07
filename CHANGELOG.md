@@ -1,11 +1,27 @@
 # Changelog
 
+## [1.25.0](https://github.com/openeuropa/oe_media/tree/1.25.0) (2024-02-07)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.24.0...1.25.0)
+
+**Closed issues:**
+
+- Remove CKEditor4 dependency from oe\_media\_embed module [\#233](https://github.com/openeuropa/oe_media/issues/233)
+- Update oe\_oembed module to 0.8.0 [\#229](https://github.com/openeuropa/oe_media/issues/229)
+- Dependency on openeuropa/media\_avportal needs to be updated [\#193](https://github.com/openeuropa/oe_media/issues/193)
+
+**Merged pull requests:**
+
+- EWPP-4015: Support D10.2 and drop D9. [\#236](https://github.com/openeuropa/oe_media/pull/236) ([nagyad](https://github.com/nagyad))
+- EWPP-3846: Remove CKEditor4 dependency. [\#235](https://github.com/openeuropa/oe_media/pull/235) ([nagyad](https://github.com/nagyad))
+
 ## [1.24.0](https://github.com/openeuropa/oe_media/tree/1.24.0) (2023-06-30)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.1...1.24.0)
 
 **Merged pull requests:**
 
+- Release-1.24.0: Update changelog. [\#228](https://github.com/openeuropa/oe_media/pull/228) ([nagyad](https://github.com/nagyad))
 - EWPP-2775: Replace 'service' by 'utility' for opwidget. [\#224](https://github.com/openeuropa/oe_media/pull/224) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.23.1](https://github.com/openeuropa/oe_media/tree/1.23.1) (2023-04-11)
