@@ -60,15 +60,21 @@ class FilterIframeTagTest extends UnitTestCase {
       ],
       'nested tags' => [
         '<iframe src="http://example.com"><a href="http://dangerous-domain.example">Click here!</a>Please enable iframes in your browser.</iframe>',
-        $higher_core_version ? '<iframe src="http://example.com">&lt;a href="http://dangerous-domain.example"&gt;Click here!&lt;/a&gt;Please enable iframes in your browser.</iframe>' : '<iframe src="http://example.com">Please enable iframes in your browser.</iframe>',
+        $higher_core_version
+          ? '<iframe src="http://example.com">&lt;a href="http://dangerous-domain.example"&gt;Click here!&lt;/a&gt;Please enable iframes in your browser.</iframe>'
+          : '<iframe src="http://example.com">Please enable iframes in your browser.</iframe>',
       ],
       'nested iframes' => [
         '<iframe src="http://example.com/first"><iframe src="http://example.com/second">Inner content.</iframe>Useful content.</iframe>',
-        $higher_core_version ? '<iframe src="http://example.com/first">&lt;iframe src="http://example.com/second"&gt;Inner content.</iframe>' : '<iframe src="http://example.com/first">Useful content.</iframe>',
+        $higher_core_version
+          ? '<iframe src="http://example.com/first">&lt;iframe src="http://example.com/second"&gt;Inner content.</iframe>'
+          : '<iframe src="http://example.com/first">Useful content.</iframe>',
       ],
       'multiple text content' => [
         '<iframe src="http://example.com">First node <strong>remove</strong> second node <em>remove</em>.</iframe>',
-        $higher_core_version ? '<iframe src="http://example.com">First node &lt;strong&gt;remove&lt;/strong&gt; second node &lt;em&gt;remove&lt;/em&gt;.</iframe>' : '<iframe src="http://example.com">First node  second node .</iframe>',
+        $higher_core_version
+          ? '<iframe src="http://example.com">First node &lt;strong&gt;remove&lt;/strong&gt; second node &lt;em&gt;remove&lt;/em&gt;.</iframe>'
+          : '<iframe src="http://example.com">First node  second node .</iframe>',
       ],
       'extra HTML content with iframe' => [
         'Lorem ipsum dolor sit amet<iframe src="http://example.com"></iframe><p>Consectetur adipiscing elit</p>Ut finibus vulputate fringilla.',

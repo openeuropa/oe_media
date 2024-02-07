@@ -43,6 +43,8 @@ class AVPortalQuery extends QueryPluginBase {
   /**
    * AV Portal client factory.
    *
+   * phpcs:enable Drupal.NamingConventions.ValidVariableName.LowerCamelName
+   *
    * @var \Drupal\media_avportal\AvPortalClientFactory
    */
   protected $clientFactory;
