@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.26.0](https://github.com/openeuropa/oe_media/tree/1.26.0) (2024-02-08)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.25.0...1.26.0)
+
+**Merged pull requests:**
+
+- EWPP-4015: Allow composer-patches v2. [\#239](https://github.com/openeuropa/oe_media/pull/239) ([nagyad](https://github.com/nagyad))
+
 ## [1.25.0](https://github.com/openeuropa/oe_media/tree/1.25.0) (2024-02-07)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.24.0...1.25.0)
@@ -12,6 +20,7 @@
 
 **Merged pull requests:**
 
+- Release-1.25.0: Update changelog. [\#238](https://github.com/openeuropa/oe_media/pull/238) ([nagyad](https://github.com/nagyad))
 - EWPP-4015: Support D10.2 and drop D9. [\#236](https://github.com/openeuropa/oe_media/pull/236) ([nagyad](https://github.com/nagyad))
 - EWPP-3846: Remove CKEditor4 dependency. [\#235](https://github.com/openeuropa/oe_media/pull/235) ([nagyad](https://github.com/nagyad))
 
