@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media\Kernel;
 
@@ -107,7 +107,7 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[0];
     $this->assertEquals('P-039321/00-04', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertEquals('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-225309.jpg', $row->thumbnail);
+    $this->assertEquals('https://ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-225309.jpg', $row->thumbnail);
 
     // Assert the second result from the mock.
     $row = $view->result[1];

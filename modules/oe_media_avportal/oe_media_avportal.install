@@ -5,7 +5,7 @@
  * Install file for OpenEuropa Media AV Portal.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\views\Entity\View;

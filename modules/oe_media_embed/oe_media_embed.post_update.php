@@ -5,7 +5,7 @@
  * Post update functions for OpenEuropa Media Embed module.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\embed\Entity\EmbedButton;
