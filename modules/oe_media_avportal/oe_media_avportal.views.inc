@@ -5,7 +5,7 @@
  * Views hook implementations for OpenEuropa Media AV Portal.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Implements hook_views_data().

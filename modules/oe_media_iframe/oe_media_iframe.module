@@ -5,7 +5,7 @@
  * OpenEuropa Media iframe module.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\media\MediaInterface;
