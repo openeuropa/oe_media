@@ -48,9 +48,25 @@ function oe_media_circabc_requirements($phase) {
       'severity' => $configured ? REQUIREMENT_INFO : REQUIREMENT_ERROR,
     ];
     if ($configured) {
+      $settings = Settings::get('circabc');
       $requirements['circabc_url'] = [
         'title' => t('CircaBC URL'),
-        'value' => Settings::get('circabc')['url'],
+        'value' => $settings['url'] ?? 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_category'] = [
+        'title' => t('CircaBC category'),
+        'value' => $settings['category'] ?? 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_username'] = [
+        'title' => t('CircaBC username'),
+        'value' => $settings['username'] ? 'Set' : 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_password'] = [
+        'title' => t('CircaBC password'),
+        'value' => $settings['password'] ? 'Set' : 'Not set',
         'severity' => REQUIREMENT_INFO,
       ];
     }

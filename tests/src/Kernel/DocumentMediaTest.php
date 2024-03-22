@@ -20,6 +20,8 @@ class DocumentMediaTest extends MediaTestBase {
     // also with this module enabled.
     'oe_media_circabc',
     'oe_media_circabc_mock',
+    'views',
+    'entity_browser',
   ];
 
   /**

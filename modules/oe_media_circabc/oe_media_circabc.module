@@ -114,3 +114,22 @@ function _oe_media_circabc_get_drupal_langcode(string $langcode): string {
 
   return $langcode;
 }
+
+/**
+ * Returns the CircaBC langcode from a Drupal langcode.
+ *
+ * In CircaBC, we only have the EU languages so the only exception is PT.
+ *
+ * @param string $langcode
+ *   The Drupal langcode.
+ *
+ * @return string
+ *   The CircaBC langcode.
+ */
+function _oe_media_circabc_get_circabc_langcode(string $langcode): string {
+  if ($langcode === 'pt-pt') {
+    return 'pt';
+  }
+
+  return $langcode;
+}

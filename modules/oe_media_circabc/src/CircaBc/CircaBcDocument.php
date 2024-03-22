@@ -81,7 +81,7 @@ class CircaBcDocument {
    */
   public function getTitle(): string {
     $langcode = $this->getLangcode();
-    return $this->data['title'][$langcode];
+    return $this->data['title'][$langcode] ?? '';
   }
 
   /**
