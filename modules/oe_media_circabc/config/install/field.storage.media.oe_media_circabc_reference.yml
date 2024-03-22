@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - oe_media_circabc
+id: media.oe_media_circabc_reference
+field_name: oe_media_circabc_reference
+entity_type: media
+type: oe_media_circabc_circabc_reference
+settings: {  }
+module: oe_media_circabc
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -57,14 +57,6 @@ class DocumentMediaConstraintValidator extends ConstraintValidator implements Co
     }
 
     $file_type = $value->get('oe_media_file_type')->value;
-    $required_map = [
-      'local' => 'oe_media_file',
-      'remote' => 'oe_media_remote_file',
-    ];
-    $message_map = [
-      'local' => $constraint->messageMissingFile,
-      'remote' => $constraint->messageMissingRemoteFile,
-    ];
 
     if (!$file_type) {
       $this->context->buildViolation($constraint->messageMissingFileType)
@@ -74,11 +66,40 @@ class DocumentMediaConstraintValidator extends ConstraintValidator implements Co
       return;
     }
 
-    if ($value->get($required_map[$file_type])->isEmpty()) {
-      $this->context->buildViolation($message_map[$file_type])
-        ->atPath($required_map[$file_type])
+    if ($value->get($this->getRequiredFieldMap()[$file_type])->isEmpty()) {
+      $this->context->buildViolation($this->getMessageMap($constraint)[$file_type])
+        ->atPath($this->getRequiredFieldMap()[$file_type])
         ->addViolation();
     }
+  }
+
+  /**
+   * The map of required fields.
+   *
+   * @return array
+   *   The field map.
+   */
+  protected function getRequiredFieldMap(): array {
+    return [
+      'local' => 'oe_media_file',
+      'remote' => 'oe_media_remote_file',
+    ];
+  }
+
+  /**
+   * The map of messages fields.
+   *
+   * @param \Symfony\Component\Validator\Constraint $constraint
+   *   The constraint.
+   *
+   * @return array
+   *   The field map.
+   */
+  protected function getMessageMap(Constraint $constraint): array {
+    return [
+      'local' => $constraint->messageMissingFile,
+      'remote' => $constraint->messageMissingRemoteFile,
+    ];
   }
 
 }

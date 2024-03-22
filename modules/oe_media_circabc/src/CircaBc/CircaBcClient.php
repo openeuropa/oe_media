@@ -1,0 +1,161 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Drupal\oe_media_circabc\CircaBc;
+
+use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
+use GuzzleHttp\ClientInterface;
+
+/**
+ * The client that connects with CircaBC.
+ */
+class CircaBcClient implements CircaBcClientInterface {
+
+  /**
+   * The HTTP client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected ClientInterface $httpClient;
+
+  /**
+   * The logger channel factory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   */
+  protected $loggerChannelFactory;
+
+  /**
+   * The circaBC config.
+   *
+   * @var array
+   */
+  protected $config = [];
+
+  /**
+   * Static cache of document calls.
+   *
+   * @var array
+   */
+  protected $cache = [];
+
+  /**
+   * Constructs a CircaBcClient.
+   *
+   * @param \GuzzleHttp\ClientInterface $http_client
+   *   The HTTP client.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerChannelFactory
+   *   The logger channel factory.
+   */
+  public function __construct(ClientInterface $http_client, LoggerChannelFactoryInterface $loggerChannelFactory) {
+    $this->httpClient = $http_client;
+    $this->config = Settings::get('circabc', []);
+    $this->loggerChannelFactory = $loggerChannelFactory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDocumentByUrl(string $url): ?CircaBcDocument {
+    $uuid = $this->extractUuidFromUrl($url);
+    if ($uuid == "") {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error(sprintf('The URL %s does not contain a valid CircaBC document reference.', $url));
+      return NULL;
+    }
+
+    return $this->getDocumentByUuid($uuid);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDocumentByUuid(string $uuid): ?CircaBcDocument {
+    if (isset($this->cache[$uuid])) {
+      return $this->cache[$uuid];
+    }
+
+    if (!isset($this->config['url'])) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error('The CircaBC URL is not configured');
+      return NULL;
+    }
+
+    $endpoint = $this->config['url'] . '/service/circabc/nodes/' . $uuid;
+    $url = Url::fromUri($endpoint, [
+      'query' => [
+        'guest' => "true",
+      ],
+    ])->toString();
+    try {
+      $response = $this->httpClient->request('GET', $url);
+      if ($response->getStatusCode() !== 200) {
+        $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+
+        return NULL;
+      }
+    }
+    catch (\Exception $exception) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($exception->getMessage());
+      return NULL;
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    if (!$content) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+      return NULL;
+    }
+    $document = new CircaBcDocument($content);
+    $this->cache[$document->getUuid()] = $document;
+    return $document;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fillTranslations(CircaBcDocument $document): void {
+    $endpoint = $this->config['url'] . '/service/circabc/content/' . $document->getUuid() . '/translations';
+    $url = Url::fromUri($endpoint, [
+      'query' => [
+        'guest' => "true",
+      ],
+    ])->toString();
+    $response = $this->httpClient->request('GET', $url);
+    if ($response->getStatusCode() !== 200) {
+      return;
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    $document->setTranslations($content['translations']);
+  }
+
+  /**
+   * Extracts the UUID from the URL.
+   *
+   * @param string $url
+   *   The URL.
+   *
+   * @return string
+   *   The UUID.
+   */
+  protected function extractUuidFromUrl(string $url): string {
+    $parsed = parse_url($url);
+    $parts = explode('/', $parsed['path']);
+    if (!$parts) {
+      return '';
+    }
+    array_pop($parts);
+    if (!$parts) {
+      return '';
+    }
+    $uuid = end($parts);
+    if (!Uuid::isValid($uuid)) {
+      return '';
+    }
+
+    return $uuid;
+  }
+
+}

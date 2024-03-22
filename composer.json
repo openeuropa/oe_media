@@ -55,6 +55,7 @@
         "psr-4": {
             "Drupal\\Tests\\oe_media\\": "./tests/src",
             "Drupal\\Tests\\oe_media_embed\\": "./modules/oe_media_embed/tests/src",
+            "Drupal\\Tests\\oe_media_circabc\\": "./modules/oe_media_circabc/tests/src",
             "Drupal\\Tests\\oe_link_lists\\": "./build/modules/contrib/oe_link_lists/tests/src",
             "Drupal\\Tests\\oe_link_lists_manual_source\\": "./build/modules/contrib/oe_link_lists/modules/oe_link_lists_manual_source/tests/src",
             "Drupal\\FunctionalJavascriptTests\\": "./build/core/tests/Drupal/FunctionalJavascriptTests"

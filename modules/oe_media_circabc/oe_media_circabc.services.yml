@@ -1,0 +1,4 @@
+services:
+  oe_media_circabc.client:
+    class: Drupal\oe_media_circabc\CircaBc\CircaBcClient
+    arguments: ['@http_client', '@logger.factory']

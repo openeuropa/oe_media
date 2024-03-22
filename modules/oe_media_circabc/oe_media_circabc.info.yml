@@ -1,0 +1,9 @@
+name: 'OpenEuropa Media CircaBC'
+description: 'Integrates the OpenEuropa Media module with the CircaBC service.'
+package: OpenEuropa
+type: module
+core_version_requirement: ^10
+dependencies:
+  - oe_media:oe_media
+  - views:views
+

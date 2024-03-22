@@ -13,6 +13,27 @@ use Drupal\media\MediaInterface;
 class DocumentMediaTest extends MediaTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $modules = [
+    // Enable also these modules to assert that the tests in this class work
+    // also with this module enabled.
+    'oe_media_circabc',
+    'oe_media_circabc_mock',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    parent::setUp();
+
+    $this->installConfig([
+      'oe_media_circabc',
+    ]);
+  }
+
+  /**
    * Tests that the correct field keeps the value depending on the type.
    */
   public function testDocumentMediaValues(): void {
