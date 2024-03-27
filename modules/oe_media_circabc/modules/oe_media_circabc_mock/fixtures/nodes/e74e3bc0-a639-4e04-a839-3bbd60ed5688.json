@@ -11,8 +11,9 @@
         "locale": "en",
         "content": "contentUrl=store://2023/10/25/7/55/b8524c7c-3dea-4a62-a038-69f0ebf6c39b.bin|mimetype=application/pdf|size=3028|encoding=UTF-8|locale=en_GB_|id=2895",
         "security_ranking": "PUBLIC",
+        "issue_date": "2023-12-06T19:04Z",
         "translations": "2",
-        "modified": "2023-10-25T05:55Z",
+        "modified": "2023-10-26T05:55Z",
         "keyword": "[]",
         "locked": "false",
         "store-identifier": "SpacesStore",
@@ -36,7 +37,9 @@
         "mimetype": "application/pdf",
         "mimetypeName": "Adobe PDF Document",
         "status": "FINAL",
-        "node-dbid": "4630"
+        "node-dbid": "4630",
+        "resourceType": "http://publications.europa.eu/resource/authority/resource-type/GLOSSARY",
+        "subject": "http://data.europa.eu/uxp/det_851"
     },
     "title": {
         "de": "",
@@ -64,7 +67,32 @@
         "ro": "",
         "nl": ""
     },
-    "description": {},
+    "description": {
+        "de": "",
+        "fi": "",
+        "pt": "",
+        "bg": "",
+        "lt": "",
+        "lv": "",
+        "hr": "",
+        "fr": "",
+        "hu": "",
+        "sk": "",
+        "sl": "",
+        "ga": "",
+        "sv": "",
+        "mt": "",
+        "el": "",
+        "en": "<p>Test sample file description</p>",
+        "it": "",
+        "es": "",
+        "et": "",
+        "cs": "",
+        "pl": "",
+        "da": "",
+        "ro": "",
+        "nl": ""
+    },
     "permissions": {
         "LibAccess": "ALLOWED"
     },
