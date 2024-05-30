@@ -15,7 +15,7 @@ bundle: document
 mode: default
 content:
   oe_media_file_type:
-    weight: 1
+    weight: 0
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -30,7 +30,7 @@ content:
     region: content
   name:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60

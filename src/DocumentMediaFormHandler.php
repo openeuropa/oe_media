@@ -14,6 +14,16 @@ use Drupal\media\MediaForm;
 class DocumentMediaFormHandler {
 
   /**
+   * A map of the types of document and the file they get stored in.
+   *
+   * @var string[]
+   */
+  protected $documentTypesMap = [
+    'local' => 'oe_media_file',
+    'remote' => 'oe_media_remote_file',
+  ];
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -85,16 +95,16 @@ class DocumentMediaFormHandler {
       $form['oe_media_file_type']['#access'] = FALSE;
 
       // And if that's the case, we need to ensure that we only show the file
-      // field (remote or local) where there is value in in the original media.
+      // field where there is value in the original media.
       $file_type = $media->getUntranslated()->get('oe_media_file_type')->value;
-      $hide_map = [
-        'local' => 'oe_media_remote_file',
-        'remote' => 'oe_media_file',
-      ];
+      foreach ($this->documentTypesMap as $type => $field_name) {
+        if ($type == $file_type) {
+          continue;
+        }
 
-      $to_hide = $hide_map[$file_type];
-      if (isset($form[$to_hide])) {
-        $form[$to_hide]['#access'] = FALSE;
+        if (isset($form[$field_name])) {
+          $form[$field_name]['#access'] = FALSE;
+        }
       }
 
       return;
