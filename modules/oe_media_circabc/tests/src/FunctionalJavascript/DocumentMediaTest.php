@@ -10,6 +10,7 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
+use Drupal\views\Entity\View;
 
 /**
  * Provides tests methods for document media bundle.
@@ -36,6 +37,8 @@ class DocumentMediaTest extends WebDriverTestBase {
     'options',
     'content_translation',
     'language',
+    'views',
+    'options',
   ];
 
   /**
@@ -55,6 +58,18 @@ class DocumentMediaTest extends WebDriverTestBase {
         'circabc' => [
           'url' => (object) [
             'value' => 'https://example.com/circabc-ewpp',
+            'required' => TRUE,
+          ],
+          'category' => (object) [
+            'value' => '1111',
+            'required' => TRUE,
+          ],
+          'username' => (object) [
+            'value' => 'username',
+            'required' => TRUE,
+          ],
+          'password' => (object) [
+            'value' => 'password',
             'required' => TRUE,
           ],
         ],
@@ -280,6 +295,69 @@ class DocumentMediaTest extends WebDriverTestBase {
     $this->assertEquals('3028', $reference['size']);
     $this->assertEquals('application/pdf', $reference['mime']);
     $this->assertEquals('sample_pdf_FR.pdf', $reference['filename']);
+  }
+
+  /**
+   * Tests CircaBC Entity Browser widget that is based on Views.
+   */
+  public function testCircaBcEntityBrowserWidget(): void {
+    // Visit the iframe of the Entity Browser.
+    $this->drupalGet('/entity-browser/modal/circabc');
+    $this->assertCount(2, $this->getSession()->getPage()->findAll('css', '.views-col'));
+
+    // Assert the exposed filters.
+    $this->assertSession()->fieldExists('Search');
+    $this->assertSession()->fieldExists('Interest group');
+    $this->assertSession()->fieldExists('Language');
+
+    $this->getSession()->getPage()->selectFieldOption('Language', 'All');
+    $this->getSession()->getPage()->pressButton('Apply');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->assertCount(4, $this->getSession()->getPage()->findAll('css', '.views-col'));
+
+    // We have 0 pager items.
+    $elements = $this->xpath('//ul[contains(@class, :class)]/li', [':class' => 'pager__items']);
+    $this->assertCount(0, $elements);
+
+    // Edit the view and set a pager of 2.
+    $view = View::load('circabc_entity_browser');
+    $view->getDisplay('default')['display_options']['pager']['options']['items_per_page'] = 2;
+    $view->save();
+    $this->drupalGet('/entity-browser/modal/circabc');
+    $this->getSession()->getPage()->selectFieldOption('Language', 'All');
+    $this->getSession()->getPage()->pressButton('Apply');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $elements = $this->xpath('//ul[contains(@class, :class)]/li', [':class' => 'pager__items']);
+    $this->assertCount(4, $elements);
+
+    $entity_type_manager = $this->container->get('entity_type.manager');
+    $media_title = 'Test sample file';
+
+    // Make a selection and make sure the entity gets created.
+    $this->assertEmpty($entity_type_manager->getStorage('media')->loadMultiple());
+    $this->getSession()->getPage()->checkField('entity_browser_select[e74e3bc0-a639-4e04-a839-3bbd60ed5688]');
+    $this->getSession()->getPage()->pressButton('Select entities');
+    $this->assertSingleMediaEntity($media_title);
+
+    // Make the same selection again and make sure the entity gets reused.
+    $this->drupalGet('/entity-browser/modal/circabc');
+    $this->getSession()->getPage()->checkField('entity_browser_select[e74e3bc0-a639-4e04-a839-3bbd60ed5688]');
+    $this->getSession()->getPage()->pressButton('Select entities');
+    $this->assertSingleMediaEntity($media_title);
+  }
+
+  /**
+   * Asserts that only a single Media entity with the given title was created.
+   *
+   * @param string $title
+   *   The media title.
+   */
+  protected function assertSingleMediaEntity(string $title): void {
+    $entity_type_manager = $this->container->get('entity_type.manager');
+    $entities = $entity_type_manager->getStorage('media')->loadMultiple();
+    $this->assertCount(1, $entities);
+    $media = reset($entities);
+    $this->assertEquals($title, trim($media->label()));
   }
 
 }

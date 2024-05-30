@@ -7,7 +7,10 @@ namespace Drupal\Tests\oe_media_circabc\Kernel;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\oe_media_circabc\Plugin\views\query\CircaBcQuery;
 use Drupal\Tests\oe_media\Kernel\MediaTestBase;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Views;
 
 /**
  * Tests the document media type.
@@ -22,8 +25,11 @@ class DocumentMediaTest extends MediaTestBase {
     // also with this module enabled.
     'oe_media_circabc',
     'oe_media_circabc_mock',
+    'oe_media_circabc_test',
     'language',
     'content_translation',
+    'views',
+    'entity_browser',
   ];
 
   /**
@@ -32,17 +38,21 @@ class DocumentMediaTest extends MediaTestBase {
   protected function setUp(): void {
     parent::setUp();
 
+    $settings = Settings::getInstance() ? Settings::getAll() : [];
+    $settings['circabc'] = [
+      'url' => 'https://example.com/circabc-ewpp',
+      'category' => '1111',
+      'username' => 'test',
+      'password' => 'test',
+    ];
+    new Settings($settings);
+
     $this->installConfig([
       'oe_media_circabc',
       'language',
       'content_translation',
+      'entity_browser',
     ]);
-
-    $settings = Settings::getInstance() ? Settings::getAll() : [];
-    $settings['circabc'] = [
-      'url' => 'https://example.com/circabc-ewpp',
-    ];
-    new Settings($settings);
 
     ConfigurableLanguage::createFromLangcode('fr')->save();
     ConfigurableLanguage::createFromLangcode('pt-pt')->save();
@@ -195,6 +205,121 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertEquals('application/pdf', $reference['mime']);
     $this->assertEquals('sample_pdf.pdf', $reference['filename']);
     $this->assertEquals('Test sample file', $translation->label());
+  }
+
+  /**
+   * Tests the CircaBC view query plugin.
+   */
+  public function testCircaBcView(): void {
+    $view = Views::getView('circabc_entity_browser');
+
+    $expected = [
+      'Test sample file',
+      'Another doc',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['language' => 'fr']);
+    $expected = [
+      'Test sample file FR',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['language' => 'pt-pt']);
+    $expected = [
+      'Test sample file PT',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['interest_group' => '85a095a8-aacb-4ae2-9f67-c90a789e353e']);
+    $expected = [
+      'In different group',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['search' => 'sample']);
+    $expected = [
+      'Test sample file',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['language' => 'All']);
+    $expected = [
+      'Test sample file',
+      'Another doc',
+      'Test sample file FR',
+      'Test sample file PT',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['language' => 'All', 'search' => 'sample']);
+    $expected = [
+      'Test sample file',
+      'Test sample file FR',
+      'Test sample file PT',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setItemsPerPage(2);
+    $view->setExposedInput(['language' => 'All']);
+    $expected = [
+      'Test sample file',
+      'Another doc',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setItemsPerPage(2);
+    $view->setCurrentPage(1);
+    $view->setExposedInput(['language' => 'All']);
+    $expected = [
+      'Test sample file FR',
+      'Test sample file PT',
+    ];
+    $this->assertViewResults($view, $expected);
+  }
+
+  /**
+   * Executes a View.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view to execute.
+   * @param string $display_id
+   *   The display id.
+   *
+   * @internal param string $display The display id*   The display id
+   */
+  protected function executeView(ViewExecutable $view, string $display_id): void {
+    $view->setDisplay($display_id);
+    $view->initQuery();
+    $view->preExecute();
+    $view->execute();
+  }
+
+  /**
+   * Asserts the view results.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view.
+   * @param array $expected
+   *   The expected results.
+   */
+  protected function assertViewResults(ViewExecutable $view, array $expected) {
+    $this->executeView($view, 'entity_browser_1');
+    $this->assertInstanceOf(CircaBcQuery::class, $view->query, 'Wrong query plugin used in the view.');
+    $this->assertCount(count($expected), $view->result);
+    $actual = [];
+    foreach ($view->result as $result) {
+      $actual[] = $result->title;
+    }
+    $this->assertEquals($expected, $actual);
   }
 
 }

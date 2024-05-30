@@ -1,0 +1,7 @@
+name: 'OpenEuropa Media CircaBC Test'
+description: 'Tests the OpenEuropa Media CircaBC module.'
+package: Testing
+type: module
+core_version_requirement: ^10
+dependencies:
+  - oe_media:oe_media_circabc

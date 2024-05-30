@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.circabc_entity_browser
+  module:
+    - views
+name: circabc
+label: CircaBC
+display: modal
+display_configuration:
+  width: '1200'
+  height: '800'
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  9da43ffc-e2f6-4064-8979-5b69770ae496:
+    id: circabc_search
+    uuid: 9da43ffc-e2f6-4064-8979-5b69770ae496
+    label: 'CircaBC Search'
+    weight: 2
+    settings:
+      submit_text: 'Select entities'
+      auto_select: false
+      view: circabc_entity_browser
+      view_display: entity_browser_1

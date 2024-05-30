@@ -1,0 +1,6 @@
+oe_media_circabc_mock.files:
+  path: '/circabc-mock/files'
+  defaults:
+    _controller: '\Drupal\oe_media_circabc_mock\Controller\MockController::files'
+  requirements:
+    _permission: 'access content'
