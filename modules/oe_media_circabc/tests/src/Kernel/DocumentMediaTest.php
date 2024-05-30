@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media_circabc\Kernel;
 
 use Drupal\Core\Site\Settings;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\oe_media_circabc\Plugin\views\query\CircaBcQuery;
@@ -98,6 +99,8 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertEquals('application/pdf', $reference['mime']);
     $this->assertEquals('sample_pdf.pdf', $reference['filename']);
     $this->assertEquals('Test sample file', $media->label());
+    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
 
     // Assert the translations (no translations as the media is not
     // translatable).
@@ -131,6 +134,8 @@ class DocumentMediaTest extends MediaTestBase {
     $media_storage->resetCache();
     /** @var \Drupal\media\MediaInterface $media */
     $media = $media_storage->load($media->id());
+    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
     $french = $media->getTranslation('fr');
     $this->assertEquals('Test sample file FR', $french->label());
     $reference = $french->get('oe_media_circabc_reference')->first()->getValue();
@@ -138,6 +143,10 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertEquals('3028', $reference['size']);
     $this->assertEquals('application/pdf', $reference['mime']);
     $this->assertEquals('sample_pdf_FR.pdf', $reference['filename']);
+    $this->assertTrue($media->getFieldDefinition('created')->isTranslatable());
+    $this->assertTrue($media->getFieldDefinition('changed')->isTranslatable());
+    $this->assertEquals('2023-10-23T05:55:00', (new \DateTime())->setTimestamp((int) $french->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-27T08:05:00', (new \DateTime())->setTimestamp((int) $french->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
 
     $portuguese = $media->getTranslation('pt-pt');
     $this->assertEquals('Test sample file PT', $portuguese->label());
@@ -284,6 +293,33 @@ class DocumentMediaTest extends MediaTestBase {
       'Test sample file PT',
     ];
     $this->assertViewResults($view, $expected);
+  }
+
+  /**
+   * Tests that also non multilingual docs can be pulled.
+   */
+  public function testNonMultilingualDocument(): void {
+    \Drupal::service('content_translation.manager')->setEnabled('media', 'document', TRUE);
+    $media_storage = $this->container->get('entity_type.manager')->getStorage('media');
+    $media = $media_storage->create([
+      'name' => 'a document media',
+      'bundle' => 'document',
+      'oe_media_file_type' => 'circabc',
+      'oe_media_circabc_reference' => [
+        'uuid' => '664e3bc0-a639-4e04-a839-3bbd60ed5600',
+      ],
+    ]);
+    $media->save();
+
+    $media_storage->resetCache();
+    /** @var \Drupal\media\MediaInterface $media */
+    $media = $media_storage->load($media->id());
+    $reference = $media->get('oe_media_circabc_reference')->first()->getValue();
+    $this->assertEquals('664e3bc0-a639-4e04-a839-3bbd60ed5600', $reference['uuid']);
+
+    // Assert the translations (no translations as the media is not
+    // translatable).
+    $this->assertCount(0, $media->getTranslationLanguages(FALSE));
   }
 
   /**
