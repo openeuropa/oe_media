@@ -1,0 +1,7 @@
+services:
+  oe_media_circabc.client:
+    class: Drupal\oe_media_circabc\CircaBc\CircaBcClient
+    arguments: ['@http_client', '@logger.factory']
+  oe_media_circabc.document_mapper:
+    class: Drupal\oe_media_circabc\CircaBcMediaMapper
+    arguments: ['@language_manager', '@oe_media_circabc.client', '@event_dispatcher']

@@ -10,12 +10,14 @@ use Behat\Gherkin\Node\TableNode;
 use Drupal\DrupalExtension\Context\ConfigContext;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Drupal\file\FileInterface;
-use Drupal\media\MediaInterface;
+use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 
 /**
  * Context to related to media testing.
  */
 class MediaContext extends RawDrupalContext {
+
+  use MediaTestTrait;
 
   /**
    * Keep track of medias so they can be cleaned up.
@@ -355,32 +357,6 @@ class MediaContext extends RawDrupalContext {
     $this->files[] = $file;
 
     return $file;
-  }
-
-  /**
-   * Retrieves a media entity by its name.
-   *
-   * @param string $name
-   *   The media name.
-   *
-   * @return \Drupal\media\MediaInterface
-   *   The media entity.
-   */
-  protected function getMediaByName(string $name): MediaInterface {
-    $storage = \Drupal::entityTypeManager()->getStorage('media');
-    $media = $storage->loadByProperties([
-      'name' => $name,
-    ]);
-
-    if (!$media) {
-      throw new \Exception("Could not find media with name '$name'.");
-    }
-
-    if (count($media) > 1) {
-      throw new \Exception("Multiple medias with name '$name' found.");
-    }
-
-    return reset($media);
   }
 
   /**

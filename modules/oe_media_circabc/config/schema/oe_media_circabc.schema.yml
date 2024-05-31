@@ -1,0 +1,39 @@
+field.value.oe_media_circabc_circabc_reference:
+  type: mapping
+  label: Default value
+  mapping:
+    uuid:
+      type: uuid
+      label: UUID
+    size:
+      type: integer
+      label: Size
+    mime:
+      type: string
+      label: Mime type
+    filename:
+      type: string
+      label: File name
+
+field.widget.settings.oe_media_circabc_default_widget:
+  type: field.widget.settings.string_textfield
+
+views.query.circabc:
+  type: views_query
+  label: 'CircaBC query'
+
+views.filter.circabc_text_search:
+  type: views.filter.string
+  label: 'CircaBC Full text Search'
+
+views.filter.circabc_language:
+  type: views.filter.language
+  label: 'CircaBC Language'
+
+entity_browser.browser.widget.circabc_search:
+  type: entity_browser.browser.widget.view
+  label: 'CircaBC widget configuration'
+
+views.filter.circabc_interest_group:
+  type: views.filter.in_operator
+  label: 'CircaBC Interest Groups'

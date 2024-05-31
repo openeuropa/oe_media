@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * The install file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Site\Settings;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Implements hook_install().
+ */
+function oe_media_circabc_install() {
+  // Configure the document file type field to allow also CircaBC types.
+  $field = FieldStorageConfig::load('media.oe_media_file_type');
+  $allowed = $field->getSetting('allowed_values');
+  $allowed['circabc'] = 'CircaBC';
+  $field->setSetting('allowed_values', $allowed);
+  $field->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function oe_media_circabc_uninstall() {
+  $field = FieldStorageConfig::load('media.oe_media_file_type');
+  $allowed = $field->getSetting('allowed_values');
+  if (isset($allowed['circabc'])) {
+    unset($allowed['circabc']);
+  }
+  $field->setSetting('allowed_values', $allowed);
+  $field->save();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function oe_media_circabc_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $configured = Settings::get('circabc', FALSE) !== FALSE;
+    $requirements['circabc'] = [
+      'title' => t('CircaBC configuration'),
+      'value' => $configured ? t('Set') : t('Not set'),
+      'severity' => $configured ? REQUIREMENT_INFO : REQUIREMENT_ERROR,
+    ];
+    if ($configured) {
+      $settings = Settings::get('circabc');
+      $requirements['circabc_url'] = [
+        'title' => t('CircaBC URL'),
+        'value' => $settings['url'] ?? 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_category'] = [
+        'title' => t('CircaBC category'),
+        'value' => $settings['category'] ?? 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_username'] = [
+        'title' => t('CircaBC username'),
+        'value' => $settings['username'] ? 'Set' : 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+      $requirements['circabc_password'] = [
+        'title' => t('CircaBC password'),
+        'value' => $settings['password'] ? 'Set' : 'Not set',
+        'severity' => REQUIREMENT_INFO,
+      ];
+    }
+  }
+
+  return $requirements;
+}
