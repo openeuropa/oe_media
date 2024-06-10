@@ -1,11 +1,26 @@
 # Changelog
 
+## [1.27.0](https://github.com/openeuropa/oe_media/tree/1.27.0) (2024-06-10)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.26.0...1.27.0)
+
+**Merged pull requests:**
+
+- EPIC EWPP-3720: CircaBC [\#244](https://github.com/openeuropa/oe_media/pull/244) ([upchuk](https://github.com/upchuk))
+- EWPP-4280: Update webtools fields description to use the new cloud URL. [\#242](https://github.com/openeuropa/oe_media/pull/242) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-0000: Fix coding standards. [\#241](https://github.com/openeuropa/oe_media/pull/241) ([upchuk](https://github.com/upchuk))
+- EWPP-3839: CircaBC value mapper. [\#232](https://github.com/openeuropa/oe_media/pull/232) ([upchuk](https://github.com/upchuk))
+- EWPP-3722: CircaBC entity browser. [\#231](https://github.com/openeuropa/oe_media/pull/231) ([upchuk](https://github.com/upchuk))
+- EWPP-3721: CircaBC integration. [\#230](https://github.com/openeuropa/oe_media/pull/230) ([upchuk](https://github.com/upchuk))
+- EWPP-0000: Fix return type for AVPortalSearch::getMediaEntityFromRef\(\) method. [\#189](https://github.com/openeuropa/oe_media/pull/189) ([sergepavle](https://github.com/sergepavle))
+
 ## [1.26.0](https://github.com/openeuropa/oe_media/tree/1.26.0) (2024-02-08)
 
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.25.0...1.26.0)
 
 **Merged pull requests:**
 
+- Release-1.26.0: Udpate changelog. [\#240](https://github.com/openeuropa/oe_media/pull/240) ([nagyad](https://github.com/nagyad))
 - EWPP-4015: Allow composer-patches v2. [\#239](https://github.com/openeuropa/oe_media/pull/239) ([nagyad](https://github.com/nagyad))
 
 ## [1.25.0](https://github.com/openeuropa/oe_media/tree/1.25.0) (2024-02-07)
