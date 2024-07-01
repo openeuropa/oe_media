@@ -57,7 +57,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // Grant authenticated role permission to create Iframe media.
     $role = Role::load('authenticated');
     $this->grantPermissions($role, ['create iframe media']);
-    $this->getSession()->reload();
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->pressButton('Media browser field');
     $media_browser_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -71,7 +71,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     // Grant authenticated role permission to create image media.
     $this->grantPermissions($role, ['create image media']);
-    $this->getSession()->reload();
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->pressButton('Media browser field');
     $media_browser_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -94,7 +94,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
       'edit own image media',
     ];
     $this->grantPermissions($role, $permissions);
-    $this->getSession()->reload();
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->pressButton('Media browser field');
     $media_browser_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -116,7 +116,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // Grant permission to create document media and assert the field now
     // contains all the allowed target bundles.
     $this->grantPermissions($role, ['create document media']);
-    $this->getSession()->reload();
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->pressButton('Media browser field');
     $media_browser_field->pressButton('Select entities');
     $this->assertSession()->assertWaitOnAjaxRequest();
@@ -136,7 +136,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     // Assert that only the allowed target bundles are present on a different
     // field.
-    $this->getSession()->reload();
+    $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->pressButton('Images browser field');
     $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-images-browser');
     $image_field->pressButton('Select entities');
