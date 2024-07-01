@@ -34,7 +34,6 @@ services:
 
 pipeline:
   composer-change-patch:
-    group: warmup
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     volumes:
       - /cache:/cache
@@ -47,7 +46,6 @@ pipeline:
         CORE_VERSION: "10.2.0"
 
   composer-install:
-    group: prepare
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     volumes:
       - /cache/${DRONE_REPO_NAME}:/cache
