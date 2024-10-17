@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media_iframe\Unit;
 
-use Drupal\oe_media_iframe\Plugin\Filter\FilterIframeTag;
 use Drupal\Tests\UnitTestCase;
+use Drupal\oe_media_iframe\Plugin\Filter\FilterIframeTag;
 
 /**
  * Tests the filter_iframe_tag filter plugin.

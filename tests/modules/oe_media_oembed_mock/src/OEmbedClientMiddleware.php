@@ -71,7 +71,7 @@ class OEmbedClientMiddleware {
    * @param \Drupal\Core\Extension\ModuleExtensionList|null $moduleExtensionList
    *   The module extension list.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher, ModuleExtensionList $moduleExtensionList = NULL) {
+  public function __construct(ConfigFactoryInterface $configFactory, EventDispatcherInterface $eventDispatcher, ?ModuleExtensionList $moduleExtensionList = NULL) {
     $this->config = $configFactory->get('media.settings');
     $this->eventDispatcher = $eventDispatcher;
 

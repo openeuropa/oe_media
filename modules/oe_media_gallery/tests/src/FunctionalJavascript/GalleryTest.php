@@ -6,8 +6,8 @@ namespace Drupal\Tests\oe_media_gallery\FunctionalJavascript;
 
 use Behat\Mink\Element\NodeElement;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
-use Drupal\media\Entity\Media;
 use Drupal\Tests\oe_link_lists\Traits\LinkListTestTrait;
+use Drupal\media\Entity\Media;
 
 /**
  * Tests the Gallery link list bundle.

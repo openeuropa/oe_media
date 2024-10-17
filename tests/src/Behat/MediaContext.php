@@ -9,8 +9,8 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use Drupal\DrupalExtension\Context\ConfigContext;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
-use Drupal\file\FileInterface;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
+use Drupal\file\FileInterface;
 
 /**
  * Context to related to media testing.

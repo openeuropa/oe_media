@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media_iframe\Kernel;
 
+use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\media\Entity\MediaType;
-use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 
 /**
  * Tests iframe media source.
