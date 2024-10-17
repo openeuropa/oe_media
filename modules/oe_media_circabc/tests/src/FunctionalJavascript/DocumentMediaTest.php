@@ -9,6 +9,7 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\file\Entity\File;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\views\Entity\View;
 
@@ -344,6 +345,75 @@ class DocumentMediaTest extends WebDriverTestBase {
     $this->getSession()->getPage()->checkField('entity_browser_select[e74e3bc0-a639-4e04-a839-3bbd60ed5688]');
     $this->getSession()->getPage()->pressButton('Select entities');
     $this->assertSingleMediaEntity($media_title);
+  }
+
+  /**
+   * Tests that we can switch from local or remote to CircaBC.
+   */
+  public function testSwitchToCircaBc(): void {
+    $this->container->get('file_system')->copy(
+      \Drupal::service('extension.list.module')
+        ->getPath('oe_media') . '/tests/fixtures/sample.pdf',
+      'public://sample.pdf'
+    );
+
+    $this->container->get('file_system')->copy(
+      \Drupal::service('extension.list.module')
+        ->getPath('oe_media') . '/tests/fixtures/sample.pdf',
+      'public://sample_2.pdf'
+    );
+
+    $file_one = File::create([
+      'uri' => 'public://sample.pdf',
+    ]);
+    $file_one->save();
+
+    $file_two = File::create([
+      'uri' => 'public://sample_2.pdf',
+    ]);
+    $file_two->save();
+
+    $media_storage = $this->container->get('entity_type.manager')->getStorage('media');
+
+    /** @var \Drupal\media\MediaInterface $media */
+    $local_media = $media_storage->create([
+      'name' => 'a document media',
+      'bundle' => 'document',
+      'oe_media_file_type' => 'local',
+      'oe_media_file' => $file_one,
+    ]);
+    $local_media->addTranslation('fr', ['oe_media_file' => $file_two] + $local_media->toArray());
+    $local_media->save();
+
+    $this->drupalGet($local_media->toUrl('edit-form'));
+    $this->getSession()->getPage()->selectFieldOption('File Type', 'CircaBC');
+    $this->getSession()->getPage()->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $this->getSession()->getPage()->pressButton('Save');
+    $media_storage->resetCache();
+    $local_media = $media_storage->load($local_media->id());
+    $this->assertEquals('circabc', $local_media->get('oe_media_file_type')->value);
+    $this->assertTrue($local_media->get('oe_media_file')->isEmpty());
+    $this->assertTrue($local_media->getTranslation('fr')->get('oe_media_file')->isEmpty());
+
+    /** @var \Drupal\media\MediaInterface $media */
+    $remote_media = $media_storage->create([
+      'name' => 'a document media',
+      'bundle' => 'document',
+      'oe_media_file_type' => 'remote',
+      'oe_media_remote_file' => 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    ]);
+    $remote_media->addTranslation('fr', ['oe_media_remote_file' => 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy-fr.pdf'] + $remote_media->toArray());
+    $remote_media->save();
+
+    $this->drupalGet($remote_media->toUrl('edit-form'));
+    $this->getSession()->getPage()->selectFieldOption('File Type', 'CircaBC');
+    $this->getSession()->getPage()->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $this->getSession()->getPage()->pressButton('Save');
+    $media_storage->resetCache();
+    $remote_media = $media_storage->load($remote_media->id());
+    $this->assertEquals('circabc', $remote_media->get('oe_media_file_type')->value);
+    $this->assertTrue($remote_media->get('oe_media_remote_file')->isEmpty());
+    $this->assertTrue($remote_media->getTranslation('fr')->get('oe_media_remote_file')->isEmpty());
   }
 
   /**
