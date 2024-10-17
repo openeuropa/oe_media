@@ -81,7 +81,7 @@ class AVPortalQuery extends QueryPluginBase {
    *
    *  phpcs:disable Drupal.Semantics.FunctionTriggerError.TriggerErrorTextLayoutRelaxed
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory, ModuleExtensionList $moduleExtensionList = NULL) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AvPortalClientFactory $client_factory, ConfigFactoryInterface $config_factory, ?ModuleExtensionList $moduleExtensionList = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->clientFactory = $client_factory;
     $this->config = $config_factory->get('media_avportal.settings');
@@ -122,7 +122,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @return string
    *   Table alias name.
    */
-  public function ensureTable(string $table, string $relationship = NULL): string {
+  public function ensureTable(string $table, ?string $relationship = NULL): string {
     return '';
   }
 
@@ -144,7 +144,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @return string
    *   The field name.
    */
-  public function addField(string $table, string $field = NULL, string $alias = NULL, array $params = []): string {
+  public function addField(string $table, ?string $field = NULL, ?string $alias = NULL, array $params = []): string {
     return $field;
   }
 
@@ -249,7 +249,7 @@ class AVPortalQuery extends QueryPluginBase {
    * @param string $operator
    *   The condition operator.
    */
-  public function addWhere(int $group = 0, string $field = NULL, $value = NULL, string $operator = NULL): void {
+  public function addWhere(int $group = 0, ?string $field = NULL, $value = NULL, ?string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }
