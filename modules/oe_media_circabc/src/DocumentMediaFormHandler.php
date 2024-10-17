@@ -86,8 +86,10 @@ class DocumentMediaFormHandler extends OriginalDocumentMediaFormHandler {
           'select[name="' . $name . '"]' => ['value' => 'circabc'],
         ],
       ],
-      // We can only reference a document when creating media.
-      '#access' => $media->isNew(),
+      // We can only reference a document when creating media or when the
+      // existing media is not of the type CircaBC (so we allow users to
+      // switch from local or remote to CircaBC).
+      '#access' => $media->isNew() || $media->get('oe_media_file_type')->value !== 'circabc',
       // In case we are in a IEF context in which we don't yet save the media
       // before reopening the edit form.
       '#default_value' => $form_state->get('oe_media_circa_bc_ief_url') ?? '',
