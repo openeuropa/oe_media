@@ -72,9 +72,9 @@ class CircaBcMediaMapper {
     }
 
     // Set the created and changed dates.
-    $created = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document->getProperty('created'));
+    $created = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document->getProperty('created'), new \DateTimeZone('UTC'));
     $media->setCreatedTime($created->getTimestamp());
-    $changed = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document->getProperty('modified'));
+    $changed = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document->getProperty('modified'), new \DateTimeZone('UTC'));
     $media->setChangedTime($changed->getTimestamp());
 
     // Handle translations.
@@ -137,12 +137,12 @@ class CircaBcMediaMapper {
 
       // Set the created and changed dates if they are translatable.
       if ($media->getFieldDefinition('created')->isTranslatable()) {
-        $created = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document_translation->getProperty('created'));
+        $created = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document_translation->getProperty('created'), new \DateTimeZone('UTC'));
         $media_translation->setCreatedTime($created->getTimestamp());
       }
 
-      if ($media->getFieldDefinition('created')->isTranslatable()) {
-        $changed = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document_translation->getProperty('modified'));
+      if ($media->getFieldDefinition('changed')->isTranslatable()) {
+        $changed = \DateTime::createFromFormat('Y-m-d\TH:iZ', $document_translation->getProperty('modified'), new \DateTimeZone('UTC'));
         $media_translation->setChangedTime($changed->getTimestamp());
       }
     }
