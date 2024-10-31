@@ -99,8 +99,8 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertEquals('application/pdf', $reference['mime']);
     $this->assertEquals('sample_pdf.pdf', $reference['filename']);
     $this->assertEquals('Test sample file', $media->label());
-    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
-    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
 
     // Assert the translations (no translations as the media is not
     // translatable).
@@ -134,8 +134,8 @@ class DocumentMediaTest extends MediaTestBase {
     $media_storage->resetCache();
     /** @var \Drupal\media\MediaInterface $media */
     $media = $media_storage->load($media->id());
-    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
-    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-25T05:55:00', (new \DateTime())->setTimestamp((int) $media->getCreatedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-26T05:55:00', (new \DateTime())->setTimestamp((int) $media->getChangedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
     $french = $media->getTranslation('fr');
     $this->assertEquals('Test sample file FR', $french->label());
     $reference = $french->get('oe_media_circabc_reference')->first()->getValue();
@@ -145,8 +145,8 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertEquals('sample_pdf_FR.pdf', $reference['filename']);
     $this->assertTrue($media->getFieldDefinition('created')->isTranslatable());
     $this->assertTrue($media->getFieldDefinition('changed')->isTranslatable());
-    $this->assertEquals('2023-10-23T05:55:00', (new \DateTime())->setTimestamp((int) $french->getCreatedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
-    $this->assertEquals('2023-10-27T08:05:00', (new \DateTime())->setTimestamp((int) $french->getChangedTime())->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-23T05:55:00', (new \DateTime())->setTimestamp((int) $french->getCreatedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
+    $this->assertEquals('2023-10-27T08:05:00', (new \DateTime())->setTimestamp((int) $french->getChangedTime())->setTimezone(new \DateTimeZone('UTC'))->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT));
 
     $portuguese = $media->getTranslation('pt-pt');
     $this->assertEquals('Test sample file PT', $portuguese->label());
