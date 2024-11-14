@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media_link_lists\FunctionalJavascript;
 
+use Drupal\Tests\oe_link_lists_manual_source\FunctionalJavascript\ManualLinkListTestBase;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
 use Drupal\media\MediaInterface;
 use Drupal\oe_link_lists\DefaultLink;
-use Drupal\Tests\oe_link_lists_manual_source\FunctionalJavascript\ManualLinkListTestBase;
 
 /**
  * Tests the manual internal media links.

@@ -137,7 +137,7 @@ abstract class GalleryLinkSourceBase extends LinkSourcePluginBase implements Con
   /**
    * {@inheritdoc}
    */
-  public function getLinks(int $limit = NULL, int $offset = 0): LinkCollectionInterface {
+  public function getLinks(?int $limit = NULL, int $offset = 0): LinkCollectionInterface {
     $links = new LinkCollection();
     $ids = $this->configuration['media'];
     if (!$ids) {
