@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media\Kernel;
 
+use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
-use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 
 /**
  * Tests image media.

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media\Kernel;
 
-use Drupal\media\Entity\Media;
 use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\media\Entity\Media;
 use Drupal\user\Entity\Role;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;

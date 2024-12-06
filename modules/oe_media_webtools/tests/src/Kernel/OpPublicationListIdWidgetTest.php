@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media_webtools\Kernel;
 
-use Drupal\oe_media_webtools\Plugin\Field\FieldWidget\OpPublicationListIdWidget;
 use Drupal\Tests\oe_media\Kernel\MediaTestBase;
+use Drupal\oe_media_webtools\Plugin\Field\FieldWidget\OpPublicationListIdWidget;
 
 /**
  * Tests the 'OP Publication List ID' field widget.

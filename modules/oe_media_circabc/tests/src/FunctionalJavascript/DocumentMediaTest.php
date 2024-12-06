@@ -6,10 +6,10 @@ namespace Drupal\Tests\oe_media_circabc\FunctionalJavascript;
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\views\Entity\View;
 
 /**

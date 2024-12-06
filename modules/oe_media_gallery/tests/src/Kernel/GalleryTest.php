@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Drupa\Tests\oe_media_gallery\Kernel;
 
+use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 use Drupal\media\Entity\Media;
 use Drupal\media\MediaInterface;
 use Drupal\oe_link_lists\Entity\LinkList;
 use Drupal\oe_link_lists\EntityAwareLinkInterface;
-use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 
 /**
  * Tests the Gallery link list type.

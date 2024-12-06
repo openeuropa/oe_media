@@ -56,7 +56,7 @@ interface CircaBcClientInterface {
    * @return \Drupal\oe_media_circabc\CircaBc\CircaBcDocumentResult
    *   The results.
    */
-  public function query(string $uuid, string $langcode = NULL, string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult;
+  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult;
 
   /**
    * Loads the available interest groups.

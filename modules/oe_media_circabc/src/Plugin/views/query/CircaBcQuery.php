@@ -92,7 +92,7 @@ class CircaBcQuery extends QueryPluginBase {
    * @return string
    *   Table alias name.
    */
-  public function ensureTable(string $table, string $relationship = NULL): string {
+  public function ensureTable(string $table, ?string $relationship = NULL): string {
     return '';
   }
 
@@ -114,7 +114,7 @@ class CircaBcQuery extends QueryPluginBase {
    * @return string
    *   The field name.
    */
-  public function addField(string $table, string $field = NULL, string $alias = NULL, array $params = []): string {
+  public function addField(string $table, ?string $field = NULL, ?string $alias = NULL, array $params = []): string {
     return $field;
   }
 
@@ -217,7 +217,7 @@ class CircaBcQuery extends QueryPluginBase {
    * @param string|null $operator
    *   The condition operator.
    */
-  public function addWhere(int $group = 0, string $field = NULL, $value = NULL, string $operator = NULL): void {
+  public function addWhere(int $group = 0, ?string $field = NULL, $value = NULL, ?string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }

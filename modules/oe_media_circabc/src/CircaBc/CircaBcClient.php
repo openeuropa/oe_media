@@ -134,7 +134,7 @@ class CircaBcClient implements CircaBcClientInterface {
   /**
    * {@inheritdoc}
    */
-  public function query(string $uuid, string $langcode = NULL, string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult {
+  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult {
     $endpoint = $this->config['url'] . '/service/circabc/files';
     $query = [
       'node' => $uuid,
