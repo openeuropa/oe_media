@@ -4,7 +4,7 @@ The OpenEuropa Media Webtools module provides the following media types:
 
 * Webtools chart
 * Webtools map
-* Webtools social feed
+* Webtools social feed - Deprecated (the service is no longer supported by Webtools)
 * Webtools OP Publication list
 
 #### Usage

@@ -4,8 +4,8 @@ dependencies:
   module:
     - oe_webtools_media
 id: webtools_social_feed
-label: 'Webtools social feed'
-description: 'Media type for Webtools social feed'
+label: 'Webtools social feed - Deprecated'
+description: 'Media type for Webtools social feed - The Webtools smk service is no longer supported.'
 source: webtools
 queue_thumbnail_downloads: false
 new_revision: false

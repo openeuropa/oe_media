@@ -156,3 +156,18 @@ function oe_media_webtools_post_update_00006() {
     return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
   }
 }
+
+/**
+ * Mark the Webtools social feed media as deprecated.
+ */
+function oe_media_webtools_post_update_00007(): void {
+  /** @var \Drupal\media\MediaTypeInterface $media_type */
+  $media_type = \Drupal::entityTypeManager()->getStorage('media_type')->load('webtools_social_feed');
+  if ($media_type->get('label') === 'Webtools social feed') {
+    $media_type->set('label', 'Webtools social feed - Deprecated');
+  }
+  if ($media_type->get('description') === 'Media type for Webtools social feed') {
+    $media_type->set('description', 'Media type for Webtools social feed - The Webtools smk service is no longer supported.');
+  }
+  $media_type->save();
+}
