@@ -54,6 +54,18 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
     $media->set('langcode', _oe_media_circabc_get_drupal_langcode($document->getLangcode()));
   }
 
+  // Clear the remote or local field values in case the user switched from a
+  // local or remote media to CircaBC.
+  foreach ($media->getTranslationLanguages(TRUE) as $language) {
+    $translation = $media->getTranslation($language->getId());
+    if (!$translation->get('oe_media_file')->isEmpty()) {
+      $translation->set('oe_media_file', []);
+    }
+    if (!$translation->get('oe_media_remote_file')->isEmpty()) {
+      $translation->set('oe_media_remote_file', []);
+    }
+  }
+
   \Drupal::service('oe_media_circabc.document_mapper')->mapDocumentMedia($document, $media);
 }
 
