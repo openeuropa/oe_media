@@ -1,7 +1,18 @@
-# Changelog
+# Change Log
 
-## [1.27.0](https://github.com/openeuropa/oe_media/tree/1.27.0) (2024-06-10)
+## [1.28.0](https://github.com/openeuropa/oe_media/tree/1.28.0) (2024-12-16)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.27.0...1.28.0)
 
+**Merged pull requests:**
+
+- EWPP-4909: Add lang attribute to OP Publication List ID widget. [\#255](https://github.com/openeuropa/oe_media/pull/255) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-4861: Fixing CircaBC date timezone mapping. [\#254](https://github.com/openeuropa/oe_media/pull/254) ([upchuk](https://github.com/upchuk))
+- EWPP-4838: Allow to switch from local/remote to circabc. [\#253](https://github.com/openeuropa/oe_media/pull/253) ([upchuk](https://github.com/upchuk))
+- EWPP-4546: Remove composer-change-patch task from .drone.yml. [\#250](https://github.com/openeuropa/oe_media/pull/250) ([22Alexandra](https://github.com/22Alexandra))
+- OEL-3034: Drop support for core 10.1. [\#249](https://github.com/openeuropa/oe_media/pull/249) ([AaronGilMartinez](https://github.com/AaronGilMartinez))
+- OEL-3034: Update to Drupal 10.3 [\#248](https://github.com/openeuropa/oe_media/pull/248) ([AaronGilMartinez](https://github.com/AaronGilMartinez))
+
+## [1.27.0](https://github.com/openeuropa/oe_media/tree/1.27.0) (2024-06-11)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.26.0...1.27.0)
 
 **Merged pull requests:**
