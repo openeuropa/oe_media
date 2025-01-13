@@ -81,7 +81,7 @@ class MockController extends ControllerBase {
     // Apply filters.
     if (isset($query['q'])) {
       $keywords = $query['q'];
-      $files = array_filter($files, function ($file_data) use ($keywords, $language) {
+      $files = array_filter($files, function ($file_data) use ($keywords) {
         $locale = $file_data['properties']['locale'];
         return str_contains($file_data['name'], $keywords) ||  str_contains($file_data['title'][$locale], $keywords);
       });

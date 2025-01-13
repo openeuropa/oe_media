@@ -6,6 +6,7 @@ namespace Drupal\oe_media_circabc\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 
 /**
  * Plugin implementation of the 'oe_media_circabc_default' formatter.
@@ -33,7 +34,7 @@ class CircaBcFileLink extends FormatterBase {
           '#title' => $item->filename,
           '#url' => $item->getFileUrl(),
         ],
-        '#size' => format_size($item->size),
+        '#size' => ByteSizeMarkup::create((int) $item->size, $langcode),
         '#format' => $item->mime,
       ];
 

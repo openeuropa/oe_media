@@ -134,6 +134,7 @@ class CircaBcQuery extends QueryPluginBase {
   public function execute(ViewExecutable $view) {
     // Page the query.
     $limit = 10;
+    $offset = 0;
     if (!empty($this->limit) || !empty($this->offset)) {
       // We can't have an offset without a limit, so provide a very large limit
       // instead.
