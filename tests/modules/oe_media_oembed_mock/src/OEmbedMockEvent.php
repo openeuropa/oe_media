@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\oe_media_oembed_mock;
 
-use Psr\Http\Message\RequestInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
@@ -39,16 +38,12 @@ class OEmbedMockEvent extends Event {
   protected $providers;
 
   /**
-   * AvPortalMockEvent constructor.
+   * OEmbedMockEvent constructor.
    *
-   * @todo The $request parameter is not used and will be removed from 2.x.
-   *
-   * @param \Psr\Http\Message\RequestInterface $request
-   *   The Guzzle request.
    * @param array $resources
    *   The resources JSON data.
    */
-  public function __construct(RequestInterface $request, array $resources = []) {
+  public function __construct(array $resources = []) {
     $this->resources = $resources;
   }
 

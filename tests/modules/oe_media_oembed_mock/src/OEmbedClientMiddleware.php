@@ -105,7 +105,7 @@ class OEmbedClientMiddleware {
         // Getting oEmbed json from fixtures.
         if (in_array($uri->getHost(), $this->allowedProviders)) {
           // Dispatch event to gather the JSON data for responses.
-          $event = new OEmbedMockEvent($request);
+          $event = new OEmbedMockEvent();
           // Transfer allowed providers.
           $event->setProviders(array_keys($this->allowedProviders));
           $event = $this->eventDispatcher->dispatch($event, OEmbedMockEvent::OEMBED_MOCK_EVENT);
@@ -130,7 +130,7 @@ class OEmbedClientMiddleware {
 
         // Otherwise, no intervention. We defer to the handler stack.
         return $handler($request, $options)
-          ->then(function (ResponseInterface $response) use ($request) {
+          ->then(function (ResponseInterface $response) {
             return $response;
           });
       };
