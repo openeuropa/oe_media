@@ -11,6 +11,7 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\StringTextfieldWidget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\entity_browser\EntityBrowserFormInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -96,13 +97,15 @@ class OpPublicationListIdWidget extends StringTextfieldWidget implements Contain
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-    if (!$form_state->getFormObject()->getEntity()->isDefaultTranslation()) {
-      $lang = $form_state->getFormObject()->getEntity()->getUntranslated()->language()->getId();
-    }
-    elseif ($form_state->hasValue('langcode') && isset($form_state->getValue('langcode')[0]['value'])) {
-      $language_code = $form_state->getValue('langcode')[0]['value'];
-      if ($language_code !== 'und' && $language_code !== 'zxx' && $this->languageManager->getLanguage($language_code)) {
-        $lang = $language_code;
+    if (!$form_state->getFormObject() instanceof EntityBrowserFormInterface) {
+      if (!$form_state->getFormObject()->getEntity()->isDefaultTranslation()) {
+        $lang = $form_state->getFormObject()->getEntity()->getUntranslated()->language()->getId();
+      }
+      elseif ($form_state->hasValue('langcode') && isset($form_state->getValue('langcode')[0]['value'])) {
+        $language_code = $form_state->getValue('langcode')[0]['value'];
+        if ($language_code !== 'und' && $language_code !== 'zxx' && $this->languageManager->getLanguage($language_code)) {
+          $lang = $language_code;
+        }
       }
     }
     $values = parent::massageFormValues($values, $form, $form_state);
