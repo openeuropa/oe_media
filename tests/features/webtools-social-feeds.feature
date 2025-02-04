@@ -8,7 +8,8 @@ Feature: Webtools social feeds.
   Scenario: Create and reference a Webtools social feeds.
     Given I am logged in as a user with the "create oe_media_demo content,create webtools_social_feed media" permission
     When I visit "the Webtools social feed creation page"
-    Then I should see the text "Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard."
+    Then I should see the heading "Add Webtools social feed - Deprecated"
+    And I should see the text "Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard."
     When I press "Save"
     Then I should see the following error messages:
       | error messages                                 |
@@ -18,15 +19,12 @@ Feature: Webtools social feeds.
     When I fill in "Name" with "Spokepersons"
     And I fill in "Webtools social feed snippet" with "{\"service\": \"charts\"}"
     And I press "Save"
-    Then I should see the error message "Invalid Webtools Social feed snippet."
+    Then I should see the following error message:
+      | error messages                                    |
+      | The service "social_feed" is no longer supported. |
 
     When I fill in "Webtools social feed snippet" with "{\"service\":\"smk\",\"type\":\"list\",\"slug\":\"ec-spokespersons\"}"
     And I press "Save"
-    Then I should see the success message "Webtools social feed Spokepersons has been created."
-
-    When I visit "the demo content creation page"
-    And I reference the Webtools social feed "Spokepersons"
-    And I fill in "Title" with "My demo node"
-    And I press "Save"
-    Then I should see the success message "OpenEuropa Media Demo My demo node has been created."
-    And I should see the Webtools social feed "Spokepersons" on the page
+    Then I should see the following error message:
+      | error messages                                    |
+      | The service "social_feed" is no longer supported. |
