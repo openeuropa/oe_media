@@ -1,10 +1,19 @@
 # Change Log
 
+## [1.30.0](https://github.com/openeuropa/oe_media/tree/1.30.0) (2025-02-11)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.29.0...1.30.0)
+
+**Merged pull requests:**
+
+- EWPP-5114: Set the OP Publication language to auto for entity browser forms. [\#259](https://github.com/openeuropa/oe_media/pull/259) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-4984: Mark the Webtools social feed media as deprecated. [\#256](https://github.com/openeuropa/oe_media/pull/256) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.29.0](https://github.com/openeuropa/oe_media/tree/1.29.0) (2025-01-28)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.28.0...1.29.0)
 
 **Merged pull requests:**
 
+- Release-1.29.0: Update changelog. [\#260](https://github.com/openeuropa/oe_media/pull/260) ([nagyad](https://github.com/nagyad))
 - EWPP-4991: Ensure PHP8.3 compatibility. [\#258](https://github.com/openeuropa/oe_media/pull/258) ([nagyad](https://github.com/nagyad))
 
 ## [1.28.0](https://github.com/openeuropa/oe_media/tree/1.28.0) (2024-12-16)
