@@ -83,11 +83,6 @@
                 "type:drupal-module"
             ]
         },
-        "patches": {
-            "openeuropa/oe_webtools": {
-                "latest-master": "https://github.com/openeuropa/oe_webtools/compare/1.35.0...master.diff"
-            }
-        },
         "drupal-scaffold": {
             "locations": {
                 "web-root": "./build"
