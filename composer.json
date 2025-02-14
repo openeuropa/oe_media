@@ -8,10 +8,10 @@
     "require": {
         "php": ">=8.1",
         "drupal/core": "^10.3 || ^11",
-        "drupal/embed": "^1.5",
-        "drupal/entity_browser": "^2.5",
+        "drupal/embed": "^1.10",
+        "drupal/entity_browser": "^2.12",
         "drupal/file_link": "^2.1",
-        "drupal/inline_entity_form": "~1.0-rc12",
+        "drupal/inline_entity_form": "^3.0@RC",
         "drupal/media_avportal": "^1.2"
     },
     "require-dev": {
@@ -31,7 +31,7 @@
         "openeuropa/code-review-drupal": "^1.0.0-alpha",
         "openeuropa/oe_link_lists": "^0.22",
         "openeuropa/oe_oembed": "~0.7.0",
-        "openeuropa/oe_webtools": "^1.23",
+        "openeuropa/oe_webtools": "dev-EWPP-4629",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
         "symfony/phpunit-bridge": "^6.4"
@@ -44,6 +44,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/openeuropa/oe_webtools.git"
         },
         {
             "type": "git",
