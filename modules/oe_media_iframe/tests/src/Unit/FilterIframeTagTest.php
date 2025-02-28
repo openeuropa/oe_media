@@ -40,7 +40,7 @@ class FilterIframeTagTest extends UnitTestCase {
    * @return array
    *   The test data.
    */
-  public function processDataProvider(): array {
+  public static function processDataProvider(): array {
     return [
       'single iframe' => [
         '<iframe src="http://example.com" width="800" height="600" allowFullScreen="true"></iframe>',
