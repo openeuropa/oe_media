@@ -10,9 +10,9 @@
         "drupal/core": "^10 || ^11",
         "drupal/embed": "^1.10",
         "drupal/entity_browser": "^2.12",
-        "drupal/file_link": "^2.1",
+        "drupal/file_link": "^2.2",
         "drupal/inline_entity_form": "~3.0-rc20",
-        "drupal/media_avportal": "^1.2"
+        "drupal/media_avportal": "dev-3431855-automated-drupal-11"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7 | ^2.0",
@@ -28,8 +28,8 @@
         "nikic/php-parser": "^4.18",
         "openeuropa/behat-transformation-context": "^0.2",
         "openeuropa/code-review-drupal": "^1.0.0-alpha",
-        "openeuropa/oe_link_lists": "^0.22",
-        "openeuropa/oe_oembed": "~0.7.0",
+        "openeuropa/oe_link_lists": "^1.8",
+        "openeuropa/oe_oembed": "dev-EWPP-4603",
         "openeuropa/oe_webtools": "dev-EWPP-4629",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
@@ -42,7 +42,15 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.drupal.org/8"
+            "url": "https://packages.drupal.org/8",
+            "exclude": [
+                "drupal/media_avportal"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://git.drupalcode.org/issue/media_avportal-3431855.git",
+            "reference": "b42bb389c92c54a22f4df52cc63def412df0f2c4"
         },
         {
             "type": "git",
