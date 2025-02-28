@@ -17,7 +17,6 @@
     "require-dev": {
         "cweagans/composer-patches": "^1.7 | ^2.0",
         "composer/installers": "~1.5",
-        "drupal/ckeditor": "^1.0",
         "drupal/composite_reference": "^2.2",
         "drupal/config_devel": "^1.9",
         "drupal/core-composer-scaffold": "^10 || ^11",
