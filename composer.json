@@ -10,9 +10,10 @@
         "drupal/core": "^10 || ^11",
         "drupal/embed": "^1.10",
         "drupal/entity_browser": "^2.12",
-        "drupal/file_link": "^2.1",
+        "drupal/file_link": "dev-3430560-automated-drupal-11",
         "drupal/inline_entity_form": "^3.0@RC",
-        "drupal/media_avportal": "^1.2"
+        "drupal/media_avportal": "dev-3431855-automated-drupal-11",
+        "drupal/remote_stream_wrapper": "dev-d11-compatibility#5e9eb8d290f78f69464ab01ed374439992985811"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7 | ^2.0",
@@ -28,8 +29,8 @@
         "nikic/php-parser": "^4.18",
         "openeuropa/behat-transformation-context": "^0.2",
         "openeuropa/code-review-drupal": "^1.0.0-alpha",
-        "openeuropa/oe_link_lists": "^0.22",
-        "openeuropa/oe_oembed": "~0.7.0",
+        "openeuropa/oe_link_lists": "dev-EWPP-4628",
+        "openeuropa/oe_oembed": "dev-EWPP-4603",
         "openeuropa/oe_webtools": "dev-EWPP-4629",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
@@ -42,7 +43,22 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.drupal.org/8"
+            "url": "https://packages.drupal.org/8",
+            "exclude": [
+                "drupal/file_link",
+                "drupal/media_avportal",
+                "drupal/remote_stream_wrapper"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://git.drupalcode.org/issue/file_link-3430560.git",
+            "reference": "e919bf13b4a14ac0bb1504bcbd04a80504466bb4"
+        },
+        {
+            "type": "git",
+            "url": "https://git.drupalcode.org/issue/media_avportal-3431855.git",
+            "reference": "6218c335d297b13e4496c92308fcd5986edda04b"
         },
         {
             "type": "git",
@@ -51,6 +67,19 @@
         {
             "type": "git",
             "url": "https://github.com/openeuropa/code-review-drupal.git"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupal/remote_stream_wrapper",
+                "version": "dev-d11-compatibility",
+                "type": "drupal-module",
+                "source": {
+                    "type": "git",
+                    "url": "https://git.drupalcode.org/issue/remote_stream_wrapper-3434168.git",
+                    "reference": "5e9eb8d290f78f69464ab01ed374439992985811"
+                }
+            }
         }
     ],
     "autoload": {
