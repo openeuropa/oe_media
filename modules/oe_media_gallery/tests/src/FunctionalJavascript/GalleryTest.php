@@ -132,7 +132,7 @@ class GalleryTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->getPage()->fillField('oe_media_gallery_media[1][target_id]', $this->videoMedia->label() . ' (' . $this->videoMedia->id() . ')');
     $this->getSession()->getPage()->pressButton('Save');
-    $this->assertSession()->pageTextContains('Saved the The admin title Link list.');
+    $this->assertSession()->pageTextContains('Created the The admin title Link list.');
 
     /** @var \Behat\Mink\Element\NodeElement[] $items */
     $items = $this->getSession()->getPage()->findAll('css', 'main ul li');
