@@ -30,7 +30,7 @@ services:
   # @link https://github.com/elgalu/docker-selenium/issues/20
   selenium:
     # Newer Selenium Chrome images are not supported at the moment by behat/mink-selenium2-driver.
-    image: selenium/standalone-chrome:4.1.3-20220405
+    image: selenium/standalone-chrome:4.1.3
     environment:
     - DISPLAY=:99
     - SCREEN_WIDTH=1440
