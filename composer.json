@@ -10,7 +10,7 @@
         "drupal/core": "^10 || ^11",
         "drupal/embed": "^1.10",
         "drupal/entity_browser": "^2.12",
-        "drupal/file_link": "dev-3430560-automated-drupal-11",
+        "drupal/file_link": "^2.2",
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/media_avportal": "dev-3431855-automated-drupal-11",
         "drupal/remote_stream_wrapper": "dev-d11-compatibility#5e9eb8d290f78f69464ab01ed374439992985811"
@@ -43,15 +43,9 @@
             "type": "composer",
             "url": "https://packages.drupal.org/8",
             "exclude": [
-                "drupal/file_link",
                 "drupal/media_avportal",
                 "drupal/remote_stream_wrapper"
             ]
-        },
-        {
-            "type": "git",
-            "url": "https://git.drupalcode.org/issue/file_link-3430560.git",
-            "reference": "e919bf13b4a14ac0bb1504bcbd04a80504466bb4"
         },
         {
             "type": "git",
