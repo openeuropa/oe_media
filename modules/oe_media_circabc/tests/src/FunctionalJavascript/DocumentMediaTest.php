@@ -146,7 +146,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     $this->getSession()->getPage()->pressButton('Save');
     $this->assertSession()->pageTextContains('Node with remote file');
     $link = $page->findLink('sample_pdf.pdf');
-    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/file.bin', $link->getAttribute('href'));
+    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/download', $link->getAttribute('href'));
 
     // Load the media and assert the data.
     $media = $this->getMediaByName('Test sample file');
@@ -249,7 +249,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     $page->pressButton('Save');
     $this->assertSession()->pageTextContains('OpenEuropa Media Demo Test node has been created.');
     $link = $page->findLink('sample_pdf.pdf');
-    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/file.bin', $link->getAttribute('href'));
+    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/download', $link->getAttribute('href'));
     $this->assertSession()->pageTextContains('application/pdf, 2.96 KB');
 
     // Edit the node and assert the edit for inside IEF of the document.
@@ -280,7 +280,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     $page->pressButton('Save');
     $this->assertSession()->pageTextContains('OpenEuropa Media Demo Test node has been updated.');
     $link = $page->findLink('sample_pdf.pdf');
-    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/file.bin', $link->getAttribute('href'));
+    $this->assertEquals('https://example.com/circabc-ewpp/d/d/workspace/SpacesStore/e74e3bc0-a639-4e04-a839-3bbd60ed5688/download', $link->getAttribute('href'));
     $this->assertSession()->pageTextContains('application/pdf, 2.96 KB');
 
     // Load the media and assert the values.
