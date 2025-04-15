@@ -1,10 +1,18 @@
 # Change Log
 
+## [1.31.0](https://github.com/openeuropa/oe_media/tree/1.31.0) (2025-04-15)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.1...1.31.0)
+
+**Merged pull requests:**
+
+- EWPP-5209: Update inline_entity_form to 3.x. [\#261](https://github.com/openeuropa/oe_media/pull/261) ([nagyad](https://github.com/nagyad))
+
 ## [1.30.1](https://github.com/openeuropa/oe_media/tree/1.30.1) (2025-02-12)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.0...1.30.1)
 
 **Merged pull requests:**
 
+- Release-1.30.1: Update changelog. [\#264](https://github.com/openeuropa/oe_media/pull/264) ([nagyad](https://github.com/nagyad))
 - Remove dev-dependency patching from composer. [\#263](https://github.com/openeuropa/oe_media/pull/263) ([nagyad](https://github.com/nagyad))
 
 ## [1.30.0](https://github.com/openeuropa/oe_media/tree/1.30.0) (2025-02-12)
