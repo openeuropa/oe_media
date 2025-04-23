@@ -74,6 +74,6 @@ Feature: Remote video media entities.
 
     Examples:
       | url                                         | title                            |
+      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
       | https://www.youtube.com/watch?v=1-g73ty9v04 | Energy, let's save it!           |
       | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
-      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
