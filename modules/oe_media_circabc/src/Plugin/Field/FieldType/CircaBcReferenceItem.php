@@ -38,7 +38,7 @@ class CircaBcReferenceItem extends FieldItemBase {
    *   The URL object.
    */
   public function getFileUrl(): Url {
-    return Url::fromUri(Settings::get('circabc')['url'] . '/d/d/workspace/SpacesStore/' . $this->get('uuid')->getValue() . '/file.bin');
+    return Url::fromUri(Settings::get('circabc')['url'] . '/d/d/workspace/SpacesStore/' . $this->get('uuid')->getValue() . '/download');
   }
 
   /**
