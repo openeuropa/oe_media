@@ -1,11 +1,20 @@
 # Change Log
 
+## [1.31.1](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.31.0...1.31.1)
+
+**Merged pull requests:**
+
+- EWPP-5484: Run the behat scenario with the dailymotion video first. [\#271](https://github.com/openeuropa/oe_media/pull/271) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-5474: Adapt CIRCABC download URL. [\#270](https://github.com/openeuropa/oe_media/pull/270) ([gorsky87](https://github.com/gorsky87))
+
 ## [1.31.0](https://github.com/openeuropa/oe_media/tree/1.31.0) (2025-04-15)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.1...1.31.0)
 
 **Merged pull requests:**
 
-- EWPP-5209: Update inline_entity_form to 3.x. [\#261](https://github.com/openeuropa/oe_media/pull/261) ([nagyad](https://github.com/nagyad))
+- Release-1.31.0: Update changelog. [\#269](https://github.com/openeuropa/oe_media/pull/269) ([nagyad](https://github.com/nagyad))
+- EWPP-5209: Update inline\_entity\_form to 3.x. [\#261](https://github.com/openeuropa/oe_media/pull/261) ([nagyad](https://github.com/nagyad))
 
 ## [1.30.1](https://github.com/openeuropa/oe_media/tree/1.30.1) (2025-02-12)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.0...1.30.1)
