@@ -160,9 +160,14 @@ function oe_media_webtools_post_update_00006() {
 /**
  * Mark the Webtools social feed media as deprecated.
  */
-function oe_media_webtools_post_update_00007(): void {
+function oe_media_webtools_post_update_00007() {
   /** @var \Drupal\media\MediaTypeInterface $media_type */
   $media_type = \Drupal::entityTypeManager()->getStorage('media_type')->load('webtools_social_feed');
+
+  if (!$media_type) {
+    return sprintf('No media type registered for Webtools social feed.');
+  }
+
   if ($media_type->get('label') === 'Webtools social feed') {
     $media_type->set('label', 'Webtools social feed - Deprecated');
   }
