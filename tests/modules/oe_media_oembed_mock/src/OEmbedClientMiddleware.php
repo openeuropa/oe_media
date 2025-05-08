@@ -48,7 +48,7 @@ class OEmbedClientMiddleware {
     'youtube' => 'www.youtube.com',
     'vimeo' => 'vimeo.com',
     'dailymotion' => 'www.dailymotion.com',
-
+    'synthesia' => 'www.synthesia.io',
   ];
 
   /**
@@ -171,6 +171,14 @@ class OEmbedClientMiddleware {
       case 'dailymotion':
         // For example:
         // https://www.dailymotion.com/services/oembed?url=https://www.dailymotion.com/video/x6pa0tr
+        parse_str(parse_url($uri->__toString(), PHP_URL_QUERY), $parsed);
+        $video_id = substr(parse_url($parsed['url'] ?? '', PHP_URL_PATH), 7);
+
+        break;
+
+      case 'synthesia':
+        // For example:
+        // https://69jr5v75rc.execute-api.eu-west-1.amazonaws.com/prod/v2/oembed?url=https://share.synthesia.io/embeds/videos/92117fa2-9107-4871-827c-04eaaeddea58
         parse_str(parse_url($uri->__toString(), PHP_URL_QUERY), $parsed);
         $video_id = substr(parse_url($parsed['url'] ?? '', PHP_URL_PATH), 7);
 

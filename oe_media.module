@@ -28,7 +28,7 @@ use Drupal\views\ViewExecutable;
  * exposed by the OEmbed video source plugin.
  */
 function oe_media_media_source_info_alter(array &$sources): void {
-  $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion'];
+  $sources['oembed:video']['providers'] = ['YouTube', 'Vimeo', 'Dailymotion', 'Synthesia'];
 }
 
 /**
