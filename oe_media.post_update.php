@@ -11,6 +11,8 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\FieldStorageConfigInterface;
+use Drupal\media\Entity\MediaType;
+use Drupal\media\MediaTypeInterface;
 
 /**
  * Update allowed file extensions.
@@ -104,5 +106,20 @@ function oe_media_post_update_00002(array &$sandbox) {
 
   if ($sandbox['#finished'] === 1) {
     return t('All the existing document media entities have been set to local files.');
+  }
+}
+
+/**
+ * Enable synthesia for remote video media type.
+ */
+function oe_media_post_update_00003(array &$sandbox) {
+  $media_type = MediaType::load('remote_video');
+  if ($media_type instanceof MediaTypeInterface) {
+    $conf = $media_type->get('source_configuration');
+    if (!empty($conf['providers'])) {
+      $conf['providers'][] = 'Synthesia';
+      $media_type->set('source_configuration', $conf);
+      $media_type->save();
+    }
   }
 }
