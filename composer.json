@@ -12,9 +12,10 @@
         "drupal/entity_browser": "^2.5",
         "drupal/file_link": "^2.1",
         "drupal/inline_entity_form": "~3.0-rc20",
-        "drupal/media_avportal": "^1.2"
+        "drupal/media_avportal": "dev-3520968-remove-dependency-on-rsw as 1.11.0"
     },
     "require-dev": {
+        "behat/behat": "~3.16.0",
         "cweagans/composer-patches": "^1.7 | ^2.0",
         "composer/installers": "~1.5",
         "drupal/ckeditor": "^1.0",
@@ -43,7 +44,15 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.drupal.org/8"
+            "url": "https://packages.drupal.org/8",
+            "exclude": [
+                "drupal/media_avportal"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://git.drupalcode.org/issue/media_avportal-3520968.git",
+            "reference": "29e66d938a0f9bcd04cda47ac22c059e7fc5fb7f"
         },
         {
             "type": "git",
@@ -89,6 +98,7 @@
             }
         },
         "_readme": [
+            "Locking behat/behat on 3.16.* until we can have behat/behat 3.20.",
             "Explicit requirement of nikic/php-parser as ^5.0 generates GrumPHP Parser issues."
         ]
     },
