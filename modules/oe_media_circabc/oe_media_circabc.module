@@ -46,12 +46,13 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
     throw new \Exception('There was a problem retrieving the CircaBC document');
   }
 
-  if (!in_array($document->getLangcode(), array_keys(\Drupal::languageManager()->getLanguages()))) {
-    throw new \Exception(sprintf('The CircaBC document has an incorrect language code: %s', $document->getLangcode()));
+  $document_langcode = _oe_media_circabc_get_drupal_langcode($document->getLangcode());
+  if (!in_array($document_langcode, array_keys(\Drupal::languageManager()->getLanguages()))) {
+    throw new \Exception(sprintf('The CircaBC document has an incorrect language code: %s', $document_langcode));
   }
 
-  if ($document->getLangcode() !== $media->language()->getId() && $media->isNew()) {
-    $media->set('langcode', _oe_media_circabc_get_drupal_langcode($document->getLangcode()));
+  if ($document_langcode !== $media->language()->getId() && $media->isNew()) {
+    $media->set('langcode', $document_langcode);
   }
 
   // Clear the remote or local field values in case the user switched from a
