@@ -323,6 +323,30 @@ class DocumentMediaTest extends MediaTestBase {
   }
 
   /**
+   * Tests that CircaBC langcodes are transformed to Drupal format.
+   */
+  public function testCircaBcLangcodeTransformation(): void {
+    // Load a Portuguese document with "pt" langcode on CircaBC side.
+    $media_storage = $this->container->get('entity_type.manager')->getStorage('media');
+    $media = $media_storage->create([
+      'name' => 'a PT document media',
+      'bundle' => 'document',
+      'oe_media_file_type' => 'circabc',
+      'oe_media_circabc_reference' => [
+        // UUID is enough to start, it will pull all the rest of the data.
+        'uuid' => '6d634abd-fec1-452a-ae0b-62e4cf080506',
+      ],
+    ]);
+    $media->save();
+
+    // Expect the langcode to be "pt-pt" in Drupal.
+    $media_storage->resetCache();
+    /** @var \Drupal\media\MediaInterface $media */
+    $media = $media_storage->load($media->id());
+    $this->assertEquals('pt-pt', $media->language()->getId());
+  }
+
+  /**
    * Executes a View.
    *
    * @param \Drupal\views\ViewExecutable $view
