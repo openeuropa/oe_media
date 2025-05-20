@@ -12,7 +12,7 @@
         "drupal/entity_browser": "^2.12",
         "drupal/file_link": "^2.2",
         "drupal/inline_entity_form": "~3.0-rc20",
-        "drupal/media_avportal": "dev-3431855-automated-drupal-11"
+        "drupal/media_avportal": "^2.0@RC"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7 | ^2.0",
@@ -40,15 +40,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.drupal.org/8",
-            "exclude": [
-                "drupal/media_avportal"
-            ]
-        },
-        {
-            "type": "git",
-            "url": "https://git.drupalcode.org/issue/media_avportal-3431855.git",
-            "reference": "b42bb389c92c54a22f4df52cc63def412df0f2c4"
+            "url": "https://packages.drupal.org/8"
         },
         {
             "type": "git",
