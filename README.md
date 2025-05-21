@@ -22,6 +22,7 @@ The component provides a new permission called `view any unpublished media` whic
 
 **Table of contents:**
 
+- [Upgrade to 1.32.0](#upgrade-to-1320)
 - [Known issues](#known-issues)
 - [Development setup](#development-setup)
 - [Contributing](#contributing)
@@ -47,6 +48,14 @@ This will ensure the functionality kicks in.
 * The Daily Motion video URLs in the Remote video bundles need to have the HTTP scheme (not HTTPs).
 * The Daily Motion thumbnail URLs are typically without an extension so the local copy is not usable. This is fixed in [#3080666](https://www.drupal.org/project/drupal/issues/3080666) so if
 your version of Drupal core does not include that commit yet, you can apply the latest patch there.
+
+## Upgrade to `1.32.0`
+This version requires the version of Media AV Portal `2.0^RC`, which no longer depend on remote_stream_wrapper module.
+
+If you are upgrading using composer, you should composer require drupal/remote_stream_wrapper either before or after downloading the new oe_media version (`composer require drupal/remote_stream_wrapper:^2.1 -W`).
+If remote_stream_wrapper is not required by other modules or not used directly by your site, after you finish with updating oe_media module, you can then uninstall the remote_stream_wrapper module and remove the dependency once and for all.
+
+If you are still using manual downloads, just update oe_media module, uninstall remote_stream_wrapper and then feel free to delete it from your filesystem (only if not used by other modules).
 
 ## Development setup
 
