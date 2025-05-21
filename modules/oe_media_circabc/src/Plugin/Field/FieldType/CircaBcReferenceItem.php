@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace Drupal\oe_media_circabc\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\Url;
 
 /**
  * Defines the 'oe_media_circabc_circabc_reference' field type.
- *
- * @FieldType(
- *   id = "oe_media_circabc_circabc_reference",
- *   label = @Translation("CircaBC Reference"),
- *   category = @Translation("General"),
- *   default_widget = "oe_media_circabc_default_widget",
- *   default_formatter = "oe_media_circabc_default"
- * )
  */
+#[FieldType(
+  id: "oe_media_circabc_circabc_reference",
+  label: new TranslatableMarkup("CircaBC Reference"),
+  category: "general",
+  default_widget: "oe_media_circabc_default_widget",
+  default_formatter: "oe_media_circabc_default",
+)]
 class CircaBcReferenceItem extends FieldItemBase {
 
   /**
