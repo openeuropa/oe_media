@@ -29,8 +29,8 @@
         "openeuropa/behat-transformation-context": "^0.2",
         "openeuropa/code-review-drupal": "^1.0.0-alpha",
         "openeuropa/oe_link_lists": "^1.8",
-        "openeuropa/oe_oembed": "dev-EWPP-4603",
-        "openeuropa/oe_webtools": "dev-EWPP-4629",
+        "openeuropa/oe_oembed": "dev-master",
+        "openeuropa/oe_webtools": "dev-master",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0"
     },
     "scripts": {
