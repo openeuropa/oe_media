@@ -1,14 +1,26 @@
-# Change Log
+# Changelog
 
-## [1.31.1](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-02)
+## [1.32.0](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-21)
+
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.31.1...1.32.0)
+
+**Merged pull requests:**
+
+- EWPP-4630: Set dev-master on dev dependency. [\#276](https://github.com/openeuropa/oe_media/pull/276) ([nagyad](https://github.com/nagyad))
+- EWPP-4630: Drupal 11 Updates. [\#271](https://github.com/openeuropa/oe_media/pull/265) ([gorsky87](https://github.com/gorsky87))
+
+## [1.31.1](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-05)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.31.0...1.31.1)
 
 **Merged pull requests:**
 
+- Release-1.31.1: Update changelog. [\#272](https://github.com/openeuropa/oe_media/pull/272) ([nagyad](https://github.com/nagyad))
 - EWPP-5484: Run the behat scenario with the dailymotion video first. [\#271](https://github.com/openeuropa/oe_media/pull/271) ([22Alexandra](https://github.com/22Alexandra))
 - EWPP-5474: Adapt CIRCABC download URL. [\#270](https://github.com/openeuropa/oe_media/pull/270) ([gorsky87](https://github.com/gorsky87))
 
 ## [1.31.0](https://github.com/openeuropa/oe_media/tree/1.31.0) (2025-04-15)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.1...1.31.0)
 
 **Merged pull requests:**
@@ -17,6 +29,7 @@
 - EWPP-5209: Update inline\_entity\_form to 3.x. [\#261](https://github.com/openeuropa/oe_media/pull/261) ([nagyad](https://github.com/nagyad))
 
 ## [1.30.1](https://github.com/openeuropa/oe_media/tree/1.30.1) (2025-02-12)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.30.0...1.30.1)
 
 **Merged pull requests:**
@@ -25,6 +38,7 @@
 - Remove dev-dependency patching from composer. [\#263](https://github.com/openeuropa/oe_media/pull/263) ([nagyad](https://github.com/nagyad))
 
 ## [1.30.0](https://github.com/openeuropa/oe_media/tree/1.30.0) (2025-02-12)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.29.0...1.30.0)
 
 **Merged pull requests:**
@@ -34,6 +48,7 @@
 - EWPP-4984: Mark the Webtools social feed media as deprecated. [\#256](https://github.com/openeuropa/oe_media/pull/256) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.29.0](https://github.com/openeuropa/oe_media/tree/1.29.0) (2025-01-28)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.28.0...1.29.0)
 
 **Merged pull requests:**
@@ -42,6 +57,7 @@
 - EWPP-4991: Ensure PHP8.3 compatibility. [\#258](https://github.com/openeuropa/oe_media/pull/258) ([nagyad](https://github.com/nagyad))
 
 ## [1.28.0](https://github.com/openeuropa/oe_media/tree/1.28.0) (2024-12-16)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.27.0...1.28.0)
 
 **Merged pull requests:**
@@ -55,6 +71,7 @@
 - OEL-3034: Update to Drupal 10.3 [\#248](https://github.com/openeuropa/oe_media/pull/248) ([AaronGilMartinez](https://github.com/AaronGilMartinez))
 
 ## [1.27.0](https://github.com/openeuropa/oe_media/tree/1.27.0) (2024-06-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.26.0...1.27.0)
 
 **Merged pull requests:**
@@ -69,6 +86,7 @@
 - EWPP-0000: Fix return type for AVPortalSearch::getMediaEntityFromRef\(\) method. [\#189](https://github.com/openeuropa/oe_media/pull/189) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.26.0](https://github.com/openeuropa/oe_media/tree/1.26.0) (2024-02-08)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.25.0...1.26.0)
 
 **Merged pull requests:**
@@ -77,6 +95,7 @@
 - EWPP-4015: Allow composer-patches v2. [\#239](https://github.com/openeuropa/oe_media/pull/239) ([nagyad](https://github.com/nagyad))
 
 ## [1.25.0](https://github.com/openeuropa/oe_media/tree/1.25.0) (2024-02-07)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.24.0...1.25.0)
 
 **Closed issues:**
@@ -92,6 +111,7 @@
 - EWPP-3846: Remove CKEditor4 dependency. [\#235](https://github.com/openeuropa/oe_media/pull/235) ([nagyad](https://github.com/nagyad))
 
 ## [1.24.0](https://github.com/openeuropa/oe_media/tree/1.24.0) (2023-06-30)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.1...1.24.0)
 
 **Merged pull requests:**
@@ -100,6 +120,7 @@
 - EWPP-2775: Replace 'service' by 'utility' for opwidget. [\#224](https://github.com/openeuropa/oe_media/pull/224) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.23.1](https://github.com/openeuropa/oe_media/tree/1.23.1) (2023-04-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.23.0...1.23.1)
 
 **Merged pull requests:**
@@ -108,6 +129,7 @@
 - EWPP-3006: Fix oe\_webtools version. [\#226](https://github.com/openeuropa/oe_media/pull/226) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.23.0](https://github.com/openeuropa/oe_media/tree/1.23.0) (2023-04-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.22.0...1.23.0)
 
 **Merged pull requests:**
@@ -116,6 +138,7 @@
 - EWPP-3006: Drupal 10 compatibility. [\#223](https://github.com/openeuropa/oe_media/pull/223) ([brummbar](https://github.com/brummbar))
 
 ## [1.22.0](https://github.com/openeuropa/oe_media/tree/1.22.0) (2023-03-06)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.2...1.22.0)
 
 **Closed issues:**
@@ -125,9 +148,14 @@
 **Merged pull requests:**
 
 - Prepare changelog for release 1.22.0 [\#222](https://github.com/openeuropa/oe_media/pull/222) ([brummbar](https://github.com/brummbar))
+- EWPP-2932: Fix media\_avportal version. [\#219](https://github.com/openeuropa/oe_media/pull/219) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-2932: Update dependencies dev branches. [\#218](https://github.com/openeuropa/oe_media/pull/218) ([22Alexandra](https://github.com/22Alexandra))
+- OEL-2115: Update to PHP 8.1 [\#214](https://github.com/openeuropa/oe_media/pull/214) ([brummbar](https://github.com/brummbar))
+- OEL-2150: Fix assumptions that all medias using image source are coming from oe\_media. [\#213](https://github.com/openeuropa/oe_media/pull/213) ([brummbar](https://github.com/brummbar))
 - ISSUE-204: Make sure the field exists before updating its description. [\#205](https://github.com/openeuropa/oe_media/pull/205) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.21.2](https://github.com/openeuropa/oe_media/tree/1.21.2) (2023-01-31)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.1...1.21.2)
 
 **Fixed bugs:**
@@ -142,6 +170,7 @@
 - EWPP-2932: Update dependencies dev branches. [\#218](https://github.com/openeuropa/oe_media/pull/218) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.21.1](https://github.com/openeuropa/oe_media/tree/1.21.1) (2023-01-12)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.21.0...1.21.1)
 
 **Merged pull requests:**
@@ -152,6 +181,7 @@
 - OEL-2150: Fix assumptions that all medias using image source are coming from oe\_media. [\#213](https://github.com/openeuropa/oe_media/pull/213) ([brummbar](https://github.com/brummbar))
 
 ## [1.21.0](https://github.com/openeuropa/oe_media/tree/1.21.0) (2022-12-05)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.20.0...1.21.0)
 
 **Merged pull requests:**
@@ -160,6 +190,7 @@
 - EWPP-2832: Add Iframe title to media types using the Iframe source. [\#211](https://github.com/openeuropa/oe_media/pull/211) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.20.0](https://github.com/openeuropa/oe_media/tree/1.20.0) (2022-11-04)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.19.0...1.20.0)
 
 **Merged pull requests:**
@@ -168,6 +199,7 @@
 - EWPP-2646: Ensure thumbnail alt is updated when media image alt is changed. [\#206](https://github.com/openeuropa/oe_media/pull/206) ([nagyad](https://github.com/nagyad))
 
 ## [1.19.0](https://github.com/openeuropa/oe_media/tree/1.19.0) (2022-09-16)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.18.0...1.19.0)
 
 **Merged pull requests:**
@@ -177,8 +209,10 @@
 - EWPP-2418: Update webtools media fields description to include WCLOUD wizard. [\#200](https://github.com/openeuropa/oe_media/pull/200) ([22Alexandra](https://github.com/22Alexandra))
 - EPIC-EWPP-2373: Media creation in editorial teams [\#197](https://github.com/openeuropa/oe_media/pull/197) ([hernani](https://github.com/hernani))
 - EWPP-2170: Adjust access checking in \Drupal\oe\_media\Plugin\EntityBrowser\Widget\MediaCreationForm class. [\#195](https://github.com/openeuropa/oe_media/pull/195) ([sergepavle](https://github.com/sergepavle))
+- EWPP-2277: No bundle selection for media creation form when only one option is available. [\#194](https://github.com/openeuropa/oe_media/pull/194) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.18.0](https://github.com/openeuropa/oe_media/tree/1.18.0) (2022-08-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.17.0...1.18.0)
 
 **Merged pull requests:**
@@ -187,6 +221,7 @@
 - EWPP-2358: Drupal 9.4 support. [\#196](https://github.com/openeuropa/oe_media/pull/196) ([yenyasinn](https://github.com/yenyasinn))
 
 ## [1.17.0](https://github.com/openeuropa/oe_media/tree/1.17.0) (2022-06-22)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.16.0...1.17.0)
 
 **Merged pull requests:**
@@ -196,6 +231,7 @@
 - EWPP-1570: Add Webtools countdown media type. [\#192](https://github.com/openeuropa/oe_media/pull/192) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.16.0](https://github.com/openeuropa/oe_media/tree/1.16.0) (2022-04-11)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.15.0...1.16.0)
 
 **Merged pull requests:**
@@ -205,6 +241,7 @@
 - EWPP-1715: Create the Generic Webtools media type. [\#187](https://github.com/openeuropa/oe_media/pull/187) ([yenyasinn](https://github.com/yenyasinn))
 
 ## [1.15.0](https://github.com/openeuropa/oe_media/tree/1.15.0) (2022-02-07)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.14.0...1.15.0)
 
 **Merged pull requests:**
@@ -214,6 +251,7 @@
 - EWPP-1775: \[oe\_media\] Configuration was not removed [\#183](https://github.com/openeuropa/oe_media/pull/183) ([mferran-europe](https://github.com/mferran-europe))
 
 ## [1.14.0](https://github.com/openeuropa/oe_media/tree/1.14.0) (2021-09-27)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.13.0...1.14.0)
 
 **Merged pull requests:**
@@ -229,6 +267,7 @@
 - \[EWPP-844\] EWPP-845: Create Javascript asset media type and source. [\#167](https://github.com/openeuropa/oe_media/pull/167) ([nagyad](https://github.com/nagyad))
 
 ## [1.13.0](https://github.com/openeuropa/oe_media/tree/1.13.0) (2021-08-16)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.12.0...1.13.0)
 
 **Merged pull requests:**
@@ -239,6 +278,7 @@
 - EWPP-1124: Change filter plugin id to avoid collision with core plugins. [\#164](https://github.com/openeuropa/oe_media/pull/164) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.12.0](https://github.com/openeuropa/oe_media/tree/1.12.0) (2021-06-15)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.11.0...1.12.0)
 
 **Closed issues:**
@@ -257,6 +297,7 @@
 - EWPP-721: Update xdebug configuration. [\#157](https://github.com/openeuropa/oe_media/pull/157) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.11.0](https://github.com/openeuropa/oe_media/tree/1.11.0) (2021-01-25)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.1...1.11.0)
 
 **Merged pull requests:**
@@ -272,6 +313,7 @@
 - EWPP-417: Creates new Webtools OP Publication List media type. [\#138](https://github.com/openeuropa/oe_media/pull/138) ([22Alexandra](https://github.com/22Alexandra))
 
 ## [1.10.1](https://github.com/openeuropa/oe_media/tree/1.10.1) (2020-12-04)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.10.0...1.10.1)
 
 **Merged pull requests:**
@@ -280,6 +322,7 @@
 - EWPP-0000: Add missing dependency to drupal:options. [\#140](https://github.com/openeuropa/oe_media/pull/140) ([brummbar](https://github.com/brummbar))
 
 ## [1.10.0](https://github.com/openeuropa/oe_media/tree/1.10.0) (2020-12-03)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.9.0...1.10.0)
 
 **Merged pull requests:**
@@ -294,6 +337,7 @@
 - OPENEUROPA-2178: Media creation entity browser widget. [\#123](https://github.com/openeuropa/oe_media/pull/123) ([upchuk](https://github.com/upchuk))
 
 ## [1.9.0](https://github.com/openeuropa/oe_media/tree/1.9.0) (2020-10-08)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.8.0...1.9.0)
 
 **Merged pull requests:**
@@ -308,6 +352,7 @@
 - EWPP-82: Allow to configure a text format for the video iframe source. [\#117](https://github.com/openeuropa/oe_media/pull/117) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.8.0](https://github.com/openeuropa/oe_media/tree/1.8.0) (2020-08-06)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.7.0...1.8.0)
 
 **Merged pull requests:**
@@ -320,6 +365,7 @@
 - OPENEUROPA-3047: Deprecate oe\_media\_media\_access\(\). [\#110](https://github.com/openeuropa/oe_media/pull/110) ([nagyad](https://github.com/nagyad))
 
 ## [1.7.0](https://github.com/openeuropa/oe_media/tree/1.7.0) (2020-06-18)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.6.0...1.7.0)
 
 **Merged pull requests:**
@@ -332,6 +378,7 @@
 - OPENEUROPA-3295: Create the video iframe media type [\#106](https://github.com/openeuropa/oe_media/pull/106) ([brummbar](https://github.com/brummbar))
 
 ## [1.6.0](https://github.com/openeuropa/oe_media/tree/1.6.0) (2020-04-29)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.5.0...1.6.0)
 
 **Merged pull requests:**
@@ -341,6 +388,7 @@
 - OPENEUROPA-2792: Allow file creation step to give path with file name. [\#92](https://github.com/openeuropa/oe_media/pull/92) ([nagyad](https://github.com/nagyad))
 
 ## [1.5.0](https://github.com/openeuropa/oe_media/tree/1.5.0) (2020-04-08)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.4.0...1.5.0)
 
 **Merged pull requests:**
@@ -353,6 +401,7 @@
 - OPENEUROPA-3022: Drupal 8.8 upgrade & permission to view any unpublished media [\#93](https://github.com/openeuropa/oe_media/pull/93) ([upchuk](https://github.com/upchuk))
 
 ## [1.4.0](https://github.com/openeuropa/oe_media/tree/1.4.0) (2020-03-03)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.3.0...1.4.0)
 
 **Merged pull requests:**
@@ -363,6 +412,7 @@
 - OPENEUROPA-2416: Allow to define which view modes are embedable. [\#79](https://github.com/openeuropa/oe_media/pull/79) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.3.0](https://github.com/openeuropa/oe_media/tree/1.3.0) (2020-02-05)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.2.0...1.3.0)
 
 **Closed issues:**
@@ -379,6 +429,7 @@
 - OPENEUROPA-2313: Add caching of requests to AvPortal [\#80](https://github.com/openeuropa/oe_media/pull/80) ([brummbar](https://github.com/brummbar))
 
 ## [1.2.0](https://github.com/openeuropa/oe_media/tree/1.2.0) (2019-12-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.1.0...1.2.0)
 
 **Closed issues:**
@@ -396,6 +447,7 @@
 - OPENEUROPA-2258: Use PHP 7.2 in drone and docker image. [\#71](https://github.com/openeuropa/oe_media/pull/71) ([dxvargas](https://github.com/dxvargas))
 
 ## [1.1.0](https://github.com/openeuropa/oe_media/tree/1.1.0) (2019-09-23)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0...1.1.0)
 
 **Merged pull requests:**
@@ -408,6 +460,7 @@
 - Openeuropa 2131: Add new media types "Webtools map, chart, social feeds" [\#61](https://github.com/openeuropa/oe_media/pull/61) ([msnassar](https://github.com/msnassar))
 
 ## [1.0.0](https://github.com/openeuropa/oe_media/tree/1.0.0) (2019-08-23)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta5...1.0.0)
 
 **Merged pull requests:**
@@ -420,6 +473,7 @@
 - OPENEUROPA-1926: Adding helpful readmes. [\#57](https://github.com/openeuropa/oe_media/pull/57) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta5](https://github.com/openeuropa/oe_media/tree/1.0.0-beta5) (2019-07-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta4...1.0.0-beta5)
 
 **Merged pull requests:**
@@ -428,6 +482,7 @@
 - OPENEUROPA-2031: Upgrade path for the document private file system. [\#55](https://github.com/openeuropa/oe_media/pull/55) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta4](https://github.com/openeuropa/oe_media/tree/1.0.0-beta4) (2019-06-25)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta3...1.0.0-beta4)
 
 **Merged pull requests:**
@@ -439,6 +494,7 @@
 - OPENEUROPA-1911: Create the oEmbed WYSIWYG embed plugin [\#50](https://github.com/openeuropa/oe_media/pull/50) ([upchuk](https://github.com/upchuk))
 
 ## [1.0.0-beta3](https://github.com/openeuropa/oe_media/tree/1.0.0-beta3) (2019-05-24)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta2...1.0.0-beta3)
 
 **Merged pull requests:**
@@ -448,6 +504,7 @@
 - OPENEUROPA-1898: Revert value of standalone url option in oe\_media. [\#44](https://github.com/openeuropa/oe_media/pull/44) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.0.0-beta2](https://github.com/openeuropa/oe_media/tree/1.0.0-beta2) (2019-05-20)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.0.0-beta1...1.0.0-beta2)
 
 **Merged pull requests:**
@@ -457,6 +514,7 @@
 - OPENEUROPA-1897: Removed drone permission fix. [\#45](https://github.com/openeuropa/oe_media/pull/45) ([imanoleguskiza](https://github.com/imanoleguskiza))
 
 ## [1.0.0-beta1](https://github.com/openeuropa/oe_media/tree/1.0.0-beta1) (2019-05-15)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.4.0...1.0.0-beta1)
 
 **Merged pull requests:**
@@ -466,6 +524,7 @@
 - OPENEUROPA-1766: Update container on drone. [\#41](https://github.com/openeuropa/oe_media/pull/41) ([voidtek](https://github.com/voidtek))
 
 ## [0.4.0](https://github.com/openeuropa/oe_media/tree/0.4.0) (2019-05-02)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.3.0...0.4.0)
 
 **Merged pull requests:**
@@ -476,6 +535,7 @@
 - OPENEUROPA-1725: Fixing url used in tests. [\#36](https://github.com/openeuropa/oe_media/pull/36) ([hernani](https://github.com/hernani))
 
 ## [0.3.0](https://github.com/openeuropa/oe_media/tree/0.3.0) (2019-02-26)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.2.0...0.3.0)
 
 **Closed issues:**
@@ -489,6 +549,7 @@
 - OPENEUROPA-1656: Removing ctools dependency. [\#32](https://github.com/openeuropa/oe_media/pull/32) ([upchuk](https://github.com/upchuk))
 
 ## [0.2.0](https://github.com/openeuropa/oe_media/tree/0.2.0) (2019-02-21)
+
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/0.1.0...0.2.0)
 
 **Merged pull requests:**
@@ -527,4 +588,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
