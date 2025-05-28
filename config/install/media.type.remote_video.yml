@@ -13,6 +13,7 @@ source_configuration:
     - YouTube
     - Vimeo
     - Dailymotion
+    - Synthesia
   source_field: oe_media_oembed_video
 field_map:
   title: name
