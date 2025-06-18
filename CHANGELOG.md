@@ -1,16 +1,22 @@
-# Changelog
+# Change Log
 
-## [1.32.0](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-21)
+## [1.33.0](https://github.com/openeuropa/oe_media/tree/1.33.0) (2025-06-18)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.32.0...1.33.0)
 
+**Merged pull requests:**
+
+- EWPP-5556: Fix "pt-pt" langcode support in CircaBC. [\#275](https://github.com/openeuropa/oe_media/pull/275) ([intelektron](https://github.com/intelektron))
+
+## [1.32.0](https://github.com/openeuropa/oe_media/tree/1.32.0) (2025-05-21)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.31.1...1.32.0)
 
 **Merged pull requests:**
 
+- Release-1.32.0: Update changelog. [\#277](https://github.com/openeuropa/oe_media/pull/277) ([nagyad](https://github.com/nagyad))
 - EWPP-4630: Set dev-master on dev dependency. [\#276](https://github.com/openeuropa/oe_media/pull/276) ([nagyad](https://github.com/nagyad))
-- EWPP-4630: Drupal 11 Updates. [\#271](https://github.com/openeuropa/oe_media/pull/265) ([gorsky87](https://github.com/gorsky87))
+- EWPP-4630: Support D11 [\#265](https://github.com/openeuropa/oe_media/pull/265) ([gorsky87](https://github.com/gorsky87))
 
 ## [1.31.1](https://github.com/openeuropa/oe_media/tree/1.31.1) (2025-05-05)
-
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.31.0...1.31.1)
 
 **Merged pull requests:**
