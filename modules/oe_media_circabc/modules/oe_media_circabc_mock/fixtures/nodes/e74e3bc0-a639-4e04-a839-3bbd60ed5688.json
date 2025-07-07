@@ -39,7 +39,8 @@
         "status": "FINAL",
         "node-dbid": "4630",
         "resourceType": "http://publications.europa.eu/resource/authority/resource-type/GLOSSARY",
-        "subject": "[http://data.europa.eu/uxp/det_851, http://data.europa.eu/uxp/1005]"
+        "subject": "[http://data.europa.eu/uxp/det_851, http://data.europa.eu/uxp/1005]",
+        "contentOwner": "[http://publications.europa.eu/resource/authority/corporate-body/COMMU,http://publications.europa.eu/resource/authority/corporate-body/DIGIT]"
     },
     "title": {
         "de": "",
