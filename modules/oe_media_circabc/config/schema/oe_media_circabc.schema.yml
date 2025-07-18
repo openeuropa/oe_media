@@ -37,3 +37,7 @@ entity_browser.browser.widget.circabc_search:
 views.filter.circabc_interest_group:
   type: views.filter.in_operator
   label: 'CircaBC Interest Groups'
+
+views.filter.circabc_content_owner:
+  type: views.filter.equality
+  label: 'CircaBC Content Owner'
