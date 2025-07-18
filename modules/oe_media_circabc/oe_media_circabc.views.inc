@@ -60,6 +60,14 @@ function oe_media_circabc_views_data(): array {
     ],
   ];
 
+  $data['circabc']['content_owner'] = [
+    'title' => t('Content owner'),
+    'help' => t('Content owner'),
+    'filter' => [
+      'id' => 'circabc_content_owner',
+    ],
+  ];
+
   $data['circabc']['entity_browser_select'] = [
     'title' => t('Entity browser select form'),
     'help' => t('Form element that lets you use a view as a base to select entities in entity browser.'),
