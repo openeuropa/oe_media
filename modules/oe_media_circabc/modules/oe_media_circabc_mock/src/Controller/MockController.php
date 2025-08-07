@@ -86,6 +86,15 @@ class MockController extends ControllerBase {
         return str_contains($file_data['name'], $keywords) ||  str_contains($file_data['title'][$locale], $keywords);
       });
     }
+    if (isset($query['contentOwners'])) {
+      $content_owner = $query['contentOwners'];
+      $files = array_filter($files, function ($file_data) use ($content_owner) {
+        $content_owners_value = trim($file_data['properties']['contentOwner'] ?? '', '[]');
+        $content_owners_value = str_replace('http://publications.europa.eu/resource/authority/corporate-body/', '', $content_owners_value);
+        $content_owners_exploded = explode(',', $content_owners_value);
+        return in_array($content_owner, $content_owners_exploded);
+      });
+    }
 
     // For now, the total is the number of items returned, as we don't have a
     // pager.

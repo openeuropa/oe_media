@@ -250,6 +250,20 @@ class DocumentMediaTest extends MediaTestBase {
     $this->assertViewResults($view, $expected);
 
     $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['content_owner' => 'COMMU']);
+    $expected = [
+      'Test sample file',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
+    $view->setExposedInput(['content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/DIGIT']);
+    $expected = [
+      'Test sample file',
+    ];
+    $this->assertViewResults($view, $expected);
+
+    $view = Views::getView('circabc_entity_browser');
     $view->setExposedInput(['search' => 'sample']);
     $expected = [
       'Test sample file',
