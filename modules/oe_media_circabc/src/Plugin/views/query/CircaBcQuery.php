@@ -147,6 +147,7 @@ class CircaBcQuery extends QueryPluginBase {
     $uuid = Settings::get('circabc')['category'];
     $query_string = NULL;
     $langcode = NULL;
+    $content_owner = NULL;
 
     // Filter by full text search.
     foreach ($this->where as $where) {
@@ -166,10 +167,20 @@ class CircaBcQuery extends QueryPluginBase {
         if ($condition['field'] == 'interest_group') {
           $uuid = $condition['value'][0];
         }
+
+        if ($condition['field'] == 'content_owner') {
+          if (preg_match('/http:\/\/publications.europa.eu\/resource\/authority\/corporate-body\/([A-Z0-9_-]+)/', $condition['value'], $matches)) {
+            // If the content contains an URL, extract the term code.
+            $content_owner = $matches[1];
+          }
+          else {
+            $content_owner = $condition['value'];
+          }
+        }
       }
     }
 
-    $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $page, $limit);
+    $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $content_owner, $page, $limit);
     if ($results->getTotal() === 0) {
       return;
     }
