@@ -2420,6 +2420,22 @@
     ]
   },
   {
+    "provider_name": "Synthesia",
+    "provider_url": "https:\/\/www.synthesia.io",
+    "endpoints": [
+      {
+        "schemes": [
+          "https:\/\/share.synthesia.io\/*"
+        ],
+        "url": "https:\/\/69jr5v75rc.execute-api.eu-west-1.amazonaws.com\/prod\/v2\/oembed",
+        "formats": [
+          "json"
+        ],
+        "discovery": true
+      }
+    ]
+  },
+  {
     "provider_name": "Ted",
     "provider_url": "https:\/\/ted.com",
     "endpoints": [

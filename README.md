@@ -9,7 +9,7 @@ The following types of Media (bundles) are currently available:
 
 * Images (local)
 * Documents (local)
-* Remote videos (supports Youtube, Vimeo, Daily Motion)
+* Remote videos (supports Youtube, Vimeo, Daily Motion, Synthesia)
 * AV Portal videos and photos
 * Video iframes
 * Iframes

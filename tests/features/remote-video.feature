@@ -22,10 +22,11 @@ Feature: Remote video media entities.
     And I should see the embedded video player for "<url>"
 
     Examples:
-      | url                                         | title                            |
-      | https://www.youtube.com/watch?v=1-g73ty9v04 | Energy, let's save it!           |
-      | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
-      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
+      | url                                                                           | title                                                              |
+      | https://share.synthesia.io/embeds/videos/92117fa2-9107-4871-827c-04eaaeddea58 | Synthesia Integrations - Integration Page non-learning - WordPress |
+      | https://www.youtube.com/watch?v=1-g73ty9v04                                   | Energy, let's save it!                                             |
+      | https://vimeo.com/7073899                                                     | Drupal Rap Video - Schipulcon09                                    |
+      | https://www.dailymotion.com/video/x6pa0tr                                     | European Commission Fines Google                                   |
 
   @javascript @cleanup:node @cleanup:media @remote-video
   Scenario Outline: Remote videos can be added and referenced through the entity browser modal.
@@ -73,7 +74,8 @@ Feature: Remote video media entities.
     And I should see the embedded video player for "<url>"
 
     Examples:
-      | url                                         | title                            |
-      | https://www.dailymotion.com/video/x6pa0tr   | European Commission Fines Google |
-      | https://www.youtube.com/watch?v=1-g73ty9v04 | Energy, let's save it!           |
-      | https://vimeo.com/7073899                   | Drupal Rap Video - Schipulcon09  |
+      | url                                                                           | title                                                              |
+      | https://www.dailymotion.com/video/x6pa0tr                                     | European Commission Fines Google                                   |
+      | https://vimeo.com/7073899                                                     | Drupal Rap Video - Schipulcon09                                    |
+      | https://www.youtube.com/watch?v=1-g73ty9v04                                   | Energy, let's save it!                                             |
+      | https://share.synthesia.io/embeds/videos/92117fa2-9107-4871-827c-04eaaeddea58 | Synthesia Integrations - Integration Page non-learning - WordPress |
