@@ -309,6 +309,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     // Assert the exposed filters.
     $this->assertSession()->fieldExists('Search');
     $this->assertSession()->fieldExists('Interest group');
+    $this->assertSession()->fieldExists('Content owner');
     $this->assertSession()->fieldExists('Language');
 
     $this->getSession()->getPage()->selectFieldOption('Language', 'All');
