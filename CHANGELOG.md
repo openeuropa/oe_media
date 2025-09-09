@@ -1,10 +1,20 @@
 # Change Log
 
+## [1.34.0](https://github.com/openeuropa/oe_media/tree/1.34.0) (2025-09-09)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.33.0...1.34.0)
+
+**Merged pull requests:**
+
+- EWPP-5740: CircaBC Content Owner. [\#281](https://github.com/openeuropa/oe_media/pull/281) ([intelektron](https://github.com/intelektron))
+- EWPP-5768: Update to Drupal 10.5. [\#280](https://github.com/openeuropa/oe_media/pull/280) ([intelektron](https://github.com/intelektron))
+- EWPP-5739: Add contentOwner field to CircaBC fixture. [\#279](https://github.com/openeuropa/oe_media/pull/279) ([intelektron](https://github.com/intelektron))
+
 ## [1.33.0](https://github.com/openeuropa/oe_media/tree/1.33.0) (2025-06-18)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.32.0...1.33.0)
 
 **Merged pull requests:**
 
+- Release-1.33.0: Update changelog and docker PHP images. [\#278](https://github.com/openeuropa/oe_media/pull/278) ([nagyad](https://github.com/nagyad))
 - EWPP-5556: Fix "pt-pt" langcode support in CircaBC. [\#275](https://github.com/openeuropa/oe_media/pull/275) ([intelektron](https://github.com/intelektron))
 
 ## [1.32.0](https://github.com/openeuropa/oe_media/tree/1.32.0) (2025-05-21)
