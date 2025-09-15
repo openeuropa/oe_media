@@ -48,8 +48,8 @@ interface CircaBcClientInterface {
    *   The langcode.
    * @param string|null $query_string
    *   A keyword for search.
-   * @param string|null $content_owner
-   *   The content owner.
+   * @param array $filters
+   *   Additional filters to apply.
    * @param int $page
    *   The pager page.
    * @param int $limit
@@ -58,7 +58,7 @@ interface CircaBcClientInterface {
    * @return \Drupal\oe_media_circabc\CircaBc\CircaBcDocumentResult
    *   The results.
    */
-  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, ?string $content_owner = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult;
+  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, array $filters = [], int $page = 1, int $limit = 10): CircaBcDocumentResult;
 
   /**
    * Loads the available interest groups.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\oe_media_circabc\Plugin\views\query;
 
 use Drupal\Core\Site\Settings;
+use Drupal\oe_media_circabc\CircaBc\CircaBcClient;
 use Drupal\oe_media_circabc\CircaBc\CircaBcClientInterface;
 use Drupal\oe_media_circabc\CircaBc\CircaBcDocumentResult;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
@@ -146,8 +147,8 @@ class CircaBcQuery extends QueryPluginBase {
     // By default, the UUID is the category UUID across all interest groups.
     $uuid = Settings::get('circabc')['category'];
     $query_string = NULL;
+    $filters = [];
     $langcode = NULL;
-    $content_owner = NULL;
 
     // Filter by full text search.
     foreach ($this->where as $where) {
@@ -169,18 +170,14 @@ class CircaBcQuery extends QueryPluginBase {
         }
 
         if ($condition['field'] == 'content_owner') {
-          if (preg_match('/http:\/\/publications.europa.eu\/resource\/authority\/corporate-body\/([A-Z0-9_-]+)/', $condition['value'], $matches)) {
-            // If the content contains an URL, extract the term code.
-            $content_owner = $matches[1];
-          }
-          else {
-            $content_owner = $condition['value'];
-          }
+          // If the content contains an URL, extract the term code.
+          $is_url = preg_match('/http:\/\/publications.europa.eu\/resource\/authority\/corporate-body\/([A-Z0-9_-]+)/', $condition['value'], $matches);
+          $filters[CircaBcClient::FILTER_CONTENT_OWNERS] = [$is_url ? $matches[1] : $condition['value']];
         }
       }
     }
 
-    $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $content_owner, $page, $limit);
+    $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $filters, $page, $limit);
     if ($results->getTotal() === 0) {
       return;
     }

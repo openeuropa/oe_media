@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media_circabc\Kernel;
 
 use Drupal\Core\Site\Settings;
+use Drupal\oe_media_circabc\CircaBc\CircaBcClient;
 use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\field\Entity\FieldConfig;
@@ -358,6 +359,112 @@ class DocumentMediaTest extends MediaTestBase {
     /** @var \Drupal\media\MediaInterface $media */
     $media = $media_storage->load($media->id());
     $this->assertEquals('pt-pt', $media->language()->getId());
+  }
+
+  /**
+   * Tests the CircaBC client service.
+   */
+  public function testCircaBcClient(): void {
+    $client = \Drupal::service('oe_media_circabc.client');
+
+    // Test fetching a document by UUID.
+    $document = $client->getDocumentByUuid('e74e3bc0-a639-4e04-a839-3bbd60ed5688');
+    $this->assertNotNull($document);
+    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $document->getUuid());
+    $this->assertEquals('Test sample file', $document->getTitle());
+    $this->assertEquals('en', $document->getLangcode());
+
+    // Test fetching a non-existing document by UUID.
+    $document = $client->getDocumentByUuid('non-existing-uuid');
+    $this->assertNull($document);
+
+    // Test fetching a document by URL.
+    $document = $client->getDocumentByUrl('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/664e3bc0-a639-4e04-a839-3bbd60ed5600/details');
+    $this->assertNotNull($document);
+    $this->assertEquals('664e3bc0-a639-4e04-a839-3bbd60ed5600', $document->getUuid());
+    $this->assertEquals('Non multilingual', $document->getTitle());
+    $this->assertEquals('en', $document->getLangcode());
+
+    // Test fetching a non-existing document by URL.
+    $document = $client->getDocumentByUrl('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/non-existent-uuid/details');
+    $this->assertNull($document);
+
+    // Test fetching a document with invalid URL.
+    $document = $client->getDocumentByUrl('https://example.com/circabc-ewpp/ui/invalid-url');
+    $this->assertNull($document);
+
+    // Test fetching interest groups.
+    $groups = $client->getInterestGroups();
+    $this->assertNotEmpty($groups);
+    $this->assertEquals('85a095a8-aacb-4ae2-9f67-c90a789e353e', $groups[0]['uuid']);
+    $this->assertEquals('Group 1', $groups[0]['name']);
+
+    // Test querying documents.
+    $result = $client->query('1111', 'fr', 'sample', [], 1, 10);
+    $this->assertEquals(1, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(1, $documents);
+    $this->assertEquals('5d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
+    $this->assertEquals('Test sample file FR', $documents[0]->getTitle());
+    $this->assertEquals('fr', $documents[0]->getLangcode());
+
+    // Test querying documents with no results.
+    $result = $client->query('1111', 'de', 'non-existing-keyword', [], 1, 10);
+    $this->assertEquals(0, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(0, $documents);
+
+    // Test querying documents in a specific interest group.
+    $result = $client->query('85a095a8-aacb-4ae2-9f67-c90a789e353e', NULL, NULL, [], 1, 10);
+    $this->assertEquals(1, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(1, $documents);
+    $this->assertEquals('004e3bc0-a639-4e04-a839-3bbd60ed5600', $documents[0]->getUuid());
+    $this->assertEquals('In different group', $documents[0]->getTitle());
+
+    // Test querying documents with content owner filter.
+    $filters = [
+      CircaBcClient::FILTER_CONTENT_OWNERS => ['DIGIT', 'COMMU'],
+    ];
+    $result = $client->query('1111', NULL, NULL, $filters, 1, 10);
+    $this->assertEquals(1, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(1, $documents);
+    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
+    $this->assertEquals('Test sample file', $documents[0]->getTitle());
+
+    // Test querying documents with pagination.
+    $result = $client->query('1111', NULL, NULL, [], 1, 2);
+    $this->assertEquals(4, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(2, $documents);
+    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
+    $this->assertEquals('Another doc', $documents[1]->getTitle());
+
+    $result = $client->query('1111', NULL, NULL, [], 2, 2);
+    $this->assertEquals(4, $result->getTotal());
+    $documents = $result->getDocuments();
+    $this->assertCount(2, $documents);
+    $this->assertEquals('5d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
+    $this->assertEquals('Test sample file PT', $documents[1]->getTitle());
+
+    // Test querying for modification date.
+    $filter = [
+      CircaBcClient::FILTER_MODIFIED_FROM => new \Datetime('2023-10-26T12:55Z'),
+    ];
+    $result = $client->query('1111', NULL, NULL, $filter);
+    $documents = $result->getDocuments();
+    $this->assertCount(4, $documents);
+    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
+
+    $filter = [
+      CircaBcClient::FILTER_MODIFIED_FROM => new \Datetime('2023-12-06T20:04Z'),
+      CircaBcClient::FILTER_MODIFIED_TO => new \Datetime('2024-01-01T13:04Z'),
+    ];
+    $result = $client->query('1111', NULL, NULL, $filter);
+    $documents = $result->getDocuments();
+    $this->assertCount(3, $documents);
+    $this->assertEquals('8d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
   }
 
   /**
