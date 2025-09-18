@@ -304,7 +304,7 @@ class DocumentMediaTest extends WebDriverTestBase {
   public function testCircaBcEntityBrowserWidget(): void {
     // Visit the iframe of the Entity Browser.
     $this->drupalGet('/entity-browser/modal/circabc');
-    $this->assertCount(2, $this->getSession()->getPage()->findAll('css', '.views-col'));
+    $this->assertCount(3, $this->getSession()->getPage()->findAll('css', '.views-col'));
 
     // Assert the exposed filters.
     $this->assertSession()->fieldExists('Search');
@@ -315,7 +315,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     $this->getSession()->getPage()->selectFieldOption('Language', 'All');
     $this->getSession()->getPage()->pressButton('Apply');
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->assertCount(4, $this->getSession()->getPage()->findAll('css', '.views-col'));
+    $this->assertCount(5, $this->getSession()->getPage()->findAll('css', '.views-col'));
 
     // We have 0 pager items.
     $elements = $this->xpath('//ul[contains(@class, :class)]/li', [':class' => 'pager__items']);
@@ -330,7 +330,7 @@ class DocumentMediaTest extends WebDriverTestBase {
     $this->getSession()->getPage()->pressButton('Apply');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $elements = $this->xpath('//ul[contains(@class, :class)]/li', [':class' => 'pager__items']);
-    $this->assertCount(4, $elements);
+    $this->assertCount(5, $elements);
 
     $entity_type_manager = $this->container->get('entity_type.manager');
     $media_title = 'Test sample file';

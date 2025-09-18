@@ -226,6 +226,7 @@ class DocumentMediaTest extends MediaTestBase {
     $expected = [
       'Test sample file',
       'Another doc',
+      'Sample pdf',
     ];
     $this->assertViewResults($view, $expected);
 
@@ -268,6 +269,7 @@ class DocumentMediaTest extends MediaTestBase {
     $view->setExposedInput(['search' => 'sample']);
     $expected = [
       'Test sample file',
+      'Sample pdf',
     ];
     $this->assertViewResults($view, $expected);
 
@@ -276,6 +278,7 @@ class DocumentMediaTest extends MediaTestBase {
     $expected = [
       'Test sample file',
       'Another doc',
+      'Sample pdf',
       'Test sample file FR',
       'Test sample file PT',
     ];
@@ -285,6 +288,7 @@ class DocumentMediaTest extends MediaTestBase {
     $view->setExposedInput(['language' => 'All', 'search' => 'sample']);
     $expected = [
       'Test sample file',
+      'Sample pdf',
       'Test sample file FR',
       'Test sample file PT',
     ];
@@ -304,8 +308,8 @@ class DocumentMediaTest extends MediaTestBase {
     $view->setCurrentPage(1);
     $view->setExposedInput(['language' => 'All']);
     $expected = [
+      'Sample pdf',
       'Test sample file FR',
-      'Test sample file PT',
     ];
     $this->assertViewResults($view, $expected);
   }
@@ -435,35 +439,35 @@ class DocumentMediaTest extends MediaTestBase {
 
     // Test querying documents with pagination.
     $result = $client->query('1111', NULL, NULL, [], 1, 2);
-    $this->assertEquals(4, $result->getTotal());
+    $this->assertEquals(5, $result->getTotal());
     $documents = $result->getDocuments();
     $this->assertCount(2, $documents);
     $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
     $this->assertEquals('Another doc', $documents[1]->getTitle());
 
     $result = $client->query('1111', NULL, NULL, [], 2, 2);
-    $this->assertEquals(4, $result->getTotal());
+    $this->assertEquals(5, $result->getTotal());
     $documents = $result->getDocuments();
     $this->assertCount(2, $documents);
-    $this->assertEquals('5d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
-    $this->assertEquals('Test sample file PT', $documents[1]->getTitle());
+    $this->assertEquals('075cbd2b-b3c6-4e2f-a195-292af8980222', $documents[0]->getUuid());
+    $this->assertEquals('Test sample file FR', $documents[1]->getTitle());
 
     // Test querying for modification date.
     $filter = [
-      CircaBcClient::FILTER_MODIFIED_FROM => new \Datetime('2023-10-26T12:55Z'),
+      CircaBcClient::FILTER_MODIFIED_FROM => '2023-10-26',
+    ];
+    $result = $client->query('1111', NULL, NULL, $filter);
+    $documents = $result->getDocuments();
+    $this->assertCount(5, $documents);
+    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
+
+    $filter = [
+      CircaBcClient::FILTER_MODIFIED_FROM => '2023-12-06',
+      CircaBcClient::FILTER_MODIFIED_TO => '2024-01-01',
     ];
     $result = $client->query('1111', NULL, NULL, $filter);
     $documents = $result->getDocuments();
     $this->assertCount(4, $documents);
-    $this->assertEquals('e74e3bc0-a639-4e04-a839-3bbd60ed5688', $documents[0]->getUuid());
-
-    $filter = [
-      CircaBcClient::FILTER_MODIFIED_FROM => new \Datetime('2023-12-06T20:04Z'),
-      CircaBcClient::FILTER_MODIFIED_TO => new \Datetime('2024-01-01T13:04Z'),
-    ];
-    $result = $client->query('1111', NULL, NULL, $filter);
-    $documents = $result->getDocuments();
-    $this->assertCount(3, $documents);
     $this->assertEquals('8d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
   }
 

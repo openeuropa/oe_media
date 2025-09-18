@@ -21,16 +21,16 @@ class CircaBcClient implements CircaBcClientInterface {
   public const FILTER_CONTENT_OWNERS = 'content_owners';
 
   /**
-   * The filter array key for modification date "from", expects a \DateTime.
+   * The filter array key for modification date "from", expects a string.
    *
-   * It disregards the time part.
+   * The filter value should be in "Y-m-d" format.
    */
   public const FILTER_MODIFIED_FROM = 'date_from';
 
   /**
-   * The filter array key for modification date "to", expects a \DateTime.
+   * The filter array key for modification date "to", expects a string.
    *
-   * It disregards the time part.
+   * The filter value should be in "Y-m-d" format.
    */
   public const FILTER_MODIFIED_TO = 'date_to';
 
@@ -169,11 +169,11 @@ class CircaBcClient implements CircaBcClientInterface {
     if (!empty($filters[static::FILTER_CONTENT_OWNERS])) {
       $query['contentOwners'] = implode(',', $filters[static::FILTER_CONTENT_OWNERS]);
     }
-    if (!empty($filters[static::FILTER_MODIFIED_FROM]) && $filters[static::FILTER_MODIFIED_FROM] instanceof \DateTime) {
-      $query['from'] = $filters[static::FILTER_MODIFIED_FROM]->format('Y-m-d');
+    if (!empty($filters[static::FILTER_MODIFIED_FROM])) {
+      $query['from'] = $filters[static::FILTER_MODIFIED_FROM];
     }
-    if (!empty($filters[static::FILTER_MODIFIED_TO]) && $filters[static::FILTER_MODIFIED_TO] instanceof \DateTime) {
-      $query['to'] = $filters[static::FILTER_MODIFIED_TO]->format('Y-m-d');
+    if (!empty($filters[static::FILTER_MODIFIED_TO])) {
+      $query['to'] = $filters[static::FILTER_MODIFIED_TO];
     }
 
     $url = Url::fromUri($endpoint, [
