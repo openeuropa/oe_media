@@ -4,6 +4,7 @@ behat.yml
 build
 composer.lock
 grumphp.yml
+junit-export
 node_modules
 npm-debug.log
 package-lock.json
@@ -13,3 +14,4 @@ yarn.lock
 phpunit.xml
 docker-compose.*.yml
 /.gitattributes
+/recipes/
