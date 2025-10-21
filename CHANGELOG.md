@@ -1,4 +1,12 @@
-# Change Log
+# Changelog
+
+## [1.35.0](https://github.com/openeuropa/oe_media/tree/1.35.0) (2025-10-21)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.34.0...1.35.0)
+
+**Merged pull requests:**
+
+- EWPP-5949: Additional query date parameters for CircaBC. [\#283](https://github.com/openeuropa/oe_media/pull/283) ([intelektron](https://github.com/intelektron))
+- EWPP-6044: Support Gitlab CI. [\#284](https://github.com/openeuropa/oe_media/pull/284) ([sergepavle](https://github.com/sergepavle))
 
 ## [1.34.0](https://github.com/openeuropa/oe_media/tree/1.34.0) (2025-09-09)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.33.0...1.34.0)
