@@ -1,5 +1,5 @@
 {
-    "id": "e74e3bc0-a639-4e04-a839-3bbd60ed5688",
+    "id": "004e3bc0-a639-4e04-a839-3bbd60ed5600",
     "name": "doc_in_different_group.pdf",
     "type": "{http://www.alfresco.org/model/content/1.0}content",
     "service": "library",
@@ -20,7 +20,7 @@
         "owner": "test_user",
         "creator": "test_user",
         "autoVersion": "true",
-        "node-uuid": "e74e3bc0-a639-4e04-a839-3bbd60ed5688",
+        "node-uuid": "004e3bc0-a639-4e04-a839-3bbd60ed5600",
         "created": "2023-10-25T05:55Z",
         "author": "",
         "autoVersionOnUpdateProps": "false",

@@ -35,6 +35,7 @@ class MockController extends ControllerBase {
       'en' => [
         'e74e3bc0-a639-4e04-a839-3bbd60ed5688',
         '8d634abd-fec1-452a-ae0b-62e4cf080506',
+        '075cbd2b-b3c6-4e2f-a195-292af8980222',
       ],
       'fr' => [
         '5d634abd-fec1-452a-ae0b-62e4cf080506',
@@ -86,19 +87,41 @@ class MockController extends ControllerBase {
         return str_contains($file_data['name'], $keywords) ||  str_contains($file_data['title'][$locale], $keywords);
       });
     }
-    if (isset($query['contentOwners'])) {
-      $content_owner = $query['contentOwners'];
-      $files = array_filter($files, function ($file_data) use ($content_owner) {
+    if (!empty($query['contentOwners'])) {
+      $content_owner_filters = explode(',', $query['contentOwners']);
+      $files = array_filter($files, function ($file_data) use ($content_owner_filters) {
         $content_owners_value = trim($file_data['properties']['contentOwner'] ?? '', '[]');
         $content_owners_value = str_replace('http://publications.europa.eu/resource/authority/corporate-body/', '', $content_owners_value);
         $content_owners_exploded = explode(',', $content_owners_value);
-        return in_array($content_owner, $content_owners_exploded);
+        // The filter works as AND, so all content owners must be present.
+        foreach ($content_owner_filters as $content_owner_filter) {
+          if (!in_array($content_owner_filter, $content_owners_exploded)) {
+            return FALSE;
+          }
+        }
+        return TRUE;
+      });
+    }
+    if (isset($query['from'])) {
+      $from_date_string = $query['from'] . 'T00:00:00Z';
+      $from = new \DateTime($from_date_string);
+      $files = array_filter($files, function ($file_data) use ($from) {
+        $modified = new \DateTime($file_data['properties']['modified']);
+        return $modified >= $from;
+      });
+    }
+    if (isset($query['to'])) {
+      $to_date_string = $query['to'] . 'T23:59:59Z';
+      $to = new \DateTime($to_date_string);
+      $files = array_filter($files, function ($file_data) use ($to) {
+        $modified = new \DateTime($file_data['properties']['modified']);
+        return $modified <= $to;
       });
     }
 
     // For now, the total is the number of items returned, as we don't have a
     // pager.
-    $data['total'] = count($docs);
+    $data['total'] = count($files);
 
     // Limit and pager.
     if (isset($query['limit'])) {

@@ -16,6 +16,25 @@ use GuzzleHttp\ClientInterface;
 class CircaBcClient implements CircaBcClientInterface {
 
   /**
+   * The filter array key for content owners, expects an array of term IDs.
+   */
+  public const FILTER_CONTENT_OWNERS = 'content_owners';
+
+  /**
+   * The filter array key for modification date "from", expects a string.
+   *
+   * The filter value should be in "Y-m-d" format.
+   */
+  public const FILTER_MODIFIED_FROM = 'date_from';
+
+  /**
+   * The filter array key for modification date "to", expects a string.
+   *
+   * The filter value should be in "Y-m-d" format.
+   */
+  public const FILTER_MODIFIED_TO = 'date_to';
+
+  /**
    * The HTTP client.
    *
    * @var \GuzzleHttp\ClientInterface
@@ -134,7 +153,7 @@ class CircaBcClient implements CircaBcClientInterface {
   /**
    * {@inheritdoc}
    */
-  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, ?string $content_owner = NULL, int $page = 1, int $limit = 10): CircaBcDocumentResult {
+  public function query(string $uuid, ?string $langcode = NULL, ?string $query_string = NULL, array $filters = [], int $page = 1, int $limit = 10): CircaBcDocumentResult {
     $endpoint = $this->config['url'] . '/service/circabc/files';
     $query = [
       'node' => $uuid,
@@ -147,8 +166,14 @@ class CircaBcClient implements CircaBcClientInterface {
     if ($query_string) {
       $query['q'] = $query_string;
     }
-    if ($content_owner) {
-      $query['contentOwners'] = $content_owner;
+    if (!empty($filters[static::FILTER_CONTENT_OWNERS])) {
+      $query['contentOwners'] = implode(',', $filters[static::FILTER_CONTENT_OWNERS]);
+    }
+    if (!empty($filters[static::FILTER_MODIFIED_FROM])) {
+      $query['from'] = $filters[static::FILTER_MODIFIED_FROM];
+    }
+    if (!empty($filters[static::FILTER_MODIFIED_TO])) {
+      $query['to'] = $filters[static::FILTER_MODIFIED_TO];
     }
 
     $url = Url::fromUri($endpoint, [
