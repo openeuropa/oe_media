@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 use Drupal\Tests\TestFileCreationTrait;
 use Drupal\user\Entity\Role;
 
@@ -14,6 +15,7 @@ use Drupal\user\Entity\Role;
 class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
   use TestFileCreationTrait;
+  use MediaTestTrait;
 
   /**
    * {@inheritdoc}
@@ -111,7 +113,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
       'image' => 'Image',
       'remote_video' => 'Remote video',
       '_none' => '- Select -',
-    ], $this->getOptions($select_field));
+    ], $this->getSelectOptions($select_field));
 
     // Grant permission to create document media and assert the field now
     // contains all the allowed target bundles.
@@ -129,7 +131,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
       'image' => 'Image',
       'remote_video' => 'Remote video',
       '_none' => '- Select -',
-    ], $this->getOptions($select_field));
+    ], $this->getSelectOptions($select_field));
     // Assert that the bundle field is required.
     $this->assertSession()->elementAttributeContains('css', 'select#edit-media-bundle', 'required', 'required');
     $this->assertSession()->buttonExists('Save media');
@@ -148,7 +150,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
       '_none' => '- Select -',
       'av_portal_photo' => 'AV Portal Photo',
       'image' => 'Image',
-    ], $this->getOptions($select_field));
+    ], $this->getSelectOptions($select_field));
     $this->getSession()->getPage()->selectFieldOption('Bundle', 'AV Portal Photo');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('Media AV Portal Photo');
