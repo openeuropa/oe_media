@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media\Traits;
 
+use Behat\Mink\Element\NodeElement;
 use Drupal\media\MediaInterface;
 
 /**
@@ -40,6 +41,23 @@ trait MediaTestTrait {
     }
 
     return reset($media);
+  }
+
+  /**
+   * Returns the options of a select element as an associative array.
+   *
+   * @param \Behat\Mink\Element\NodeElement $select
+   *   The select element.
+   *
+   * @return array
+   *   An associative array of the select options, keyed by option value.
+   */
+  protected function getSelectOptions(NodeElement $select): array {
+    $options = [];
+    foreach ($select->findAll('css', 'option') as $option) {
+      $options[$option->getValue()] = $option->getText();
+    }
+    return $options;
   }
 
 }

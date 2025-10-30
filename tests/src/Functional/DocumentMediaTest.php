@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 
 /**
  * Provides tests methods for document media bundle.
  */
 class DocumentMediaTest extends BrowserTestBase {
+
+  use MediaTestTrait;
 
   /**
    * Modules to enable.
@@ -85,7 +88,7 @@ class DocumentMediaTest extends BrowserTestBase {
       '_none' => '- Select a value -',
       'remote' => 'Remote',
       'local' => 'Local',
-    ], $this->getOptions($select_field));
+    ], $this->getSelectOptions($select_field));
 
     // Assert fields validation.
     $this->submitForm([], 'Save');
