@@ -67,7 +67,16 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
     }
   }
 
-  \Drupal::service('oe_media_circabc.document_mapper')->mapDocumentMedia($document, $media);
+  // Wrap this process in a try catch to catch any Errors and throw regular
+  // exceptions so they can be caught by the entity storage save action that
+  // rolls back the transaction.
+  try {
+    \Drupal::service('oe_media_circabc.document_mapper')->mapDocumentMedia($document, $media);
+  }
+  catch (\Throwable $throwable) {
+    throw new \Exception($throwable->getMessage());
+  }
+
 }
 
 /**

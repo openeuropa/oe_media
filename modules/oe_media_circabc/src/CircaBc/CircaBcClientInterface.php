@@ -68,4 +68,37 @@ interface CircaBcClientInterface {
    */
   public function getInterestGroups(): array;
 
+  /**
+   * Loads the data about an interest group.
+   */
+  public function getInterestGroup(string $id): array;
+
+  /**
+   * Uploads a document to CircaBC.
+   *
+   * @param \Drupal\oe_media_circabc\CircaBc\CircaBcDocumentUpload $document
+   *   The document object.
+   * @param string $interest_group
+   *   The interest group directory to upload it to.
+   */
+  public function uploadDocument(CircaBcDocumentUpload $document, string $interest_group): string;
+
+  /**
+   * Uploads a document translation to CircaBC.
+   *
+   * @param \Drupal\oe_media_circabc\CircaBc\CircaBcDocumentUpload $document
+   *   The document object.
+   * @param string $pivot_id
+   *   The pivot ID of the document to attach the translation to.
+   */
+  public function uploadDocumentTranslation(CircaBcDocumentUpload $document, string $pivot_id): string;
+
+  /**
+   * Deletes a CircaBC content by reference.
+   *
+   * @param string $ref
+   *   The reference.
+   */
+  public function deleteContent(string $ref): void;
+
 }

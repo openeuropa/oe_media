@@ -6,6 +6,7 @@ namespace Drupal\Tests\oe_media_circabc\Kernel;
 
 use Drupal\Core\Site\Settings;
 use Drupal\oe_media_circabc\CircaBc\CircaBcClient;
+use Drupal\oe_media_circabc\CircaBc\CircaBcDocumentUpload;
 use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\field\Entity\FieldConfig;
@@ -469,6 +470,106 @@ class DocumentMediaTest extends MediaTestBase {
     $documents = $result->getDocuments();
     $this->assertCount(4, $documents);
     $this->assertEquals('8d634abd-fec1-452a-ae0b-62e4cf080506', $documents[0]->getUuid());
+  }
+
+  /**
+   * Tests the CircaBC client upload and delete methods.
+   */
+  public function testCircaBcClientUpload(): void {
+    $client = \Drupal::service('oe_media_circabc.client');
+
+    // Error: upload a non-pivot document via uploadDocument().
+    try {
+      $doc = new CircaBcDocumentUpload('/tmp/file.pdf', 'en', FALSE);
+      $client->uploadDocument($doc, 'any-library-id');
+      $this->fail('An exception was expected.');
+    }
+    catch (\Exception $e) {
+      $this->assertEquals('Wrong method used for uploading a non-pivot.', $e->getMessage());
+    }
+
+    // Error: upload a pivot document via uploadDocumentTranslation().
+    try {
+      $doc = new CircaBcDocumentUpload('/tmp/file.pdf', 'en', TRUE);
+      $client->uploadDocumentTranslation($doc, 'any-pivot-id');
+      $this->fail('An exception was expected.');
+    }
+    catch (\Exception $e) {
+      $this->assertEquals('Wrong method used for uploading a pivot.', $e->getMessage());
+    }
+
+    // Create a test file for upload.
+    $file = \Drupal::service('file.repository')->writeData('test content', 'public://test_upload.pdf');
+    $file_url = $file->getFileUri();
+
+    // Error: upload a pivot document to a non-existent library.
+    try {
+      $doc = new CircaBcDocumentUpload($file_url, 'en', TRUE);
+      $client->uploadDocument($doc, 'non-existent-library-uuid');
+      $this->fail('An exception was expected.');
+    }
+    catch (\Exception $e) {
+      // Expected: the mock returns 500 for unknown libraries.
+      $this->assertStringContainsString('The interest group is missing', $e->getMessage());
+    }
+
+    // Upload a pivot document to a valid library.
+    $fields = [
+      'title' => ['en' => 'Test Upload Title'],
+      'description' => ['en' => 'Test Upload Description'],
+    ];
+    $doc = new CircaBcDocumentUpload($file_url, 'en', TRUE, $fields);
+    $pivot_id = $client->uploadDocument($doc, 'de048a2c-b350-45eb-a8aa-c5e5d4ba8335');
+    $this->assertNotEmpty($pivot_id);
+
+    // Fetch the uploaded document back and assert its properties.
+    $document = $client->getDocumentByUuid($pivot_id);
+    $this->assertNotNull($document);
+    $this->assertEquals('en', $document->getLangcode());
+    $this->assertEquals('test_upload.pdf', $document->getFileName());
+
+    // Verify the upload request was logged in state.
+    $requests = \Drupal::state()->get('oe_media_circabc_mock_requests', []);
+    $this->assertNotEmpty($requests);
+
+    // Upload a translation of the pivot document.
+    $fr_file = \Drupal::service('file.repository')->writeData('test content fr', 'public://test_upload_fr.pdf');
+    $fr_fields = [
+      'title' => ['fr' => 'Test Upload Title FR'],
+      'description' => ['fr' => 'Test Upload Description FR'],
+    ];
+    $translation = new CircaBcDocumentUpload($fr_file->getFileUri(), 'fr', FALSE, $fr_fields);
+    $translation_id = $client->uploadDocumentTranslation($translation, $pivot_id);
+    $this->assertNotEmpty($translation_id);
+
+    // Fetch translations and assert the French one is present.
+    $client->fillTranslations($document);
+    $translations = $document->getTranslations();
+    $this->assertArrayHasKey('fr', $translations);
+
+    // Error: upload a translation to a non-existent pivot.
+    try {
+      $non_pivot_doc = new CircaBcDocumentUpload($fr_file->getFileUri(), 'fr', FALSE);
+      $client->uploadDocumentTranslation($non_pivot_doc, 'non-existent-pivot-uuid');
+      $this->fail('An exception was expected.');
+    }
+    catch (\Exception $e) {
+      // Expected: the mock returns 500 for unknown pivots.
+    }
+
+    // Delete the pivot document.
+    $client->deleteContent($pivot_id);
+    $uploaded_docs = \Drupal::state()->get('oe_media_circabc_mock_uploaded_documents', []);
+    $this->assertArrayNotHasKey($pivot_id, $uploaded_docs);
+
+    // Delete a non-existent document.
+    try {
+      $client->deleteContent('non-existent-uuid');
+      $this->fail('An exception was expected.');
+    }
+    catch (\Exception $e) {
+      // Expected: the mock returns 500 for unknown documents.
+    }
   }
 
   /**
