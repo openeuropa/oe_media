@@ -257,6 +257,177 @@ class CircaBcClient implements CircaBcClientInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getInterestGroup(string $id): array {
+    $url = $this->config['url'] . '/service/circabc/groups/' . $id;
+
+    try {
+      $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+      $response = $this->httpClient->request('GET', $url, [
+        'headers' => [
+          'Authorization' => $auth,
+        ],
+      ]);
+      if ($response->getStatusCode() !== 200) {
+        $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+
+        return [];
+      }
+    }
+    catch (\Exception $exception) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($exception->getMessage());
+
+      return [];
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    if (!$content) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+      return [];
+    }
+
+    return $content;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function uploadDocument(CircaBcDocumentUpload $document, string $interest_group): string {
+    if (!$document->isPivot()) {
+      throw new \Exception('Wrong method used for uploading a non-pivot.');
+    }
+
+    $endpoint = $this->config['url'] . '/service/circabc/nodes/' . $interest_group . '/upload';
+    $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+    $multipart = [
+      [
+        'name' => 'fileName',
+        'contents' => $document->getFileStream(),
+        'filename' => $document->getFileName(),
+      ],
+      [
+        'name' => 'name',
+        'contents' => $document->getFileName(),
+      ],
+      [
+        'name' => 'isPivot',
+        'contents' => 'true',
+      ],
+      [
+        'name' => 'lang',
+        'contents' => _oe_media_circabc_get_circabc_langcode($document->getLanguage()),
+      ],
+    ];
+
+    foreach ($document->getFields() as $name => $value) {
+      $multipart[] = [
+        'name' => $name,
+        'contents' => is_array($value) ? json_encode($value) : $value,
+      ];
+    }
+
+    $post = [
+      'headers' => [
+        'Authorization' => $auth,
+      ],
+      'multipart' => $multipart,
+    ];
+    $response = $this->httpClient->request('POST', $endpoint, $post);
+    $contents = $response->getBody()->getContents();
+    if ($response->getStatusCode() !== 200) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    $decoded = json_decode($contents);
+    if (!$decoded || !isset($decoded->nodeRef)) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    return $decoded->nodeRef;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function uploadDocumentTranslation(CircaBcDocumentUpload $document, string $pivot_id): string {
+    if ($document->isPivot()) {
+      throw new \Exception('Wrong method used for uploading a pivot.');
+    }
+
+    $endpoint = $this->config['url'] . '/service/circabc/content/' . $pivot_id . '/translations/enhanced';
+    $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+    $multipart = [
+      [
+        'name' => 'file',
+        'contents' => $document->getFileStream(),
+        'filename' => $document->getFileName(),
+      ],
+      [
+        'name' => 'name',
+        'contents' => $document->getFileName(),
+      ],
+      [
+        'name' => 'lang',
+        'contents' => _oe_media_circabc_get_circabc_langcode($document->getLanguage()),
+      ],
+    ];
+
+    foreach ($document->getFields() as $name => $value) {
+      $multipart[] = [
+        'name' => $name,
+        'contents' => is_array($value) ? json_encode($value) : $value,
+      ];
+    }
+
+    $post = [
+      'headers' => [
+        'Authorization' => $auth,
+      ],
+      'multipart' => $multipart,
+    ];
+    $response = $this->httpClient->request('POST', $endpoint, $post);
+    $contents = $response->getBody()->getContents();
+    if ($response->getStatusCode() !== 200) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    $decoded = json_decode($contents);
+    if (!$decoded || !isset($decoded->nodeRef)) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    return $decoded->nodeRef;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function deleteContent(string $ref): void {
+    $endpoint = $this->config['url'] . '/service/circabc/content/' . $ref;
+    $auth = 'Basic ' . base64_encode($this->config['username'] . ':' . $this->config['password']);
+    $delete = [
+      'headers' => [
+        'Authorization' => $auth,
+      ],
+    ];
+    $response = $this->httpClient->request('DELETE', $endpoint, $delete);
+    $contents = $response->getBody()->getContents();
+    if ($response->getStatusCode() !== 200) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    $decoded = json_decode($contents);
+    if (!$decoded || !isset($decoded->data)) {
+      throw new \Exception($contents, $response->getStatusCode());
+    }
+
+    if ($decoded->data !== 'deleted') {
+      throw new \Exception('The delete action for %s did not return the expected data: %s', $ref, $contents);
+    }
+  }
+
+  /**
    * Extracts the UUID from the URL.
    *
    * @param string $url
