@@ -15,8 +15,8 @@
         "drupal/media_avportal": "^2.0@RC"
     },
     "require-dev": {
-        "cweagans/composer-patches": "^1.7 | ^2.0",
-        "composer/installers": "~1.5",
+        "cweagans/composer-patches": "^1.7 || ^2.0",
+        "composer/installers": "^2.3",
         "drupal/composite_reference": "^2.2",
         "drupal/config_devel": "^1.9",
         "drupal/core-composer-scaffold": "^10.3 || ^11",
@@ -41,14 +41,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/openeuropa/DrupalDriver.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/openeuropa/code-review-drupal.git"
         }
     ],
     "autoload": {
