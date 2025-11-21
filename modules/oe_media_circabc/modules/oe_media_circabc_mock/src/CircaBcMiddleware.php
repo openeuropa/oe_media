@@ -52,6 +52,7 @@ class CircaBcMiddleware {
 
         if (str_starts_with($path, '/circabc-ewpp/service/circabc/nodes/')) {
           $uuid = str_replace('/circabc-ewpp/service/circabc/nodes/', '', $path);
+          $uuid = basename($uuid, '.json');
           $filename = $test_module_path . '/fixtures/nodes/' . $uuid . '.json';
           if (file_exists($filename)) {
             $response = new Response(200, [], file_get_contents($filename));
@@ -63,6 +64,7 @@ class CircaBcMiddleware {
         if (str_starts_with($path, '/circabc-ewpp/service/circabc/content/') && str_ends_with($path, '/translations')) {
           $uuid = str_replace('/circabc-ewpp/service/circabc/content/', '', $path);
           $uuid = str_replace('/translations', '', $uuid);
+          $uuid = basename($uuid, '.json');
           $filename = $test_module_path . '/fixtures/translations/' . $uuid . '.json';
           if (file_exists($filename)) {
             $response = new Response(200, [], file_get_contents($filename));
