@@ -4,6 +4,7 @@ dependencies:
   module:
     - entity_browser
     - oe_media_circabc
+    - user
 id: circabc_entity_browser
 label: 'CircaBC Entity Browser'
 module: views
@@ -149,8 +150,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: none
         options: {  }
@@ -349,6 +351,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
   entity_browser_1:
     id: entity_browser_1
@@ -356,6 +359,10 @@ display:
     display_plugin: entity_browser
     position: 1
     display_options:
+      access:
+        type: perm
+        options:
+          perm: 'access content'
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -363,4 +370,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
