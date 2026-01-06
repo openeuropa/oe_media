@@ -9,8 +9,8 @@ Feature: Reusable Behat context
     Given am on homepage
     And the following AV Portal photos:
       | url                                                         |
-      | https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15  |
-      | https://audiovisual.ec.europa.eu/en/photo/P-039321~2F00-04  |
+      | https://audiovisual.ec.europa.eu/media/photo/P-038924/00-15 |
+      | https://audiovisual.ec.europa.eu/media/photo/P-039321/00-04 |
     And the following documents:
       | name       | file       |
       | Document 1 | sample.pdf |
@@ -30,7 +30,7 @@ Feature: Reusable Behat context
     And I should see "Image 2"
 
     When I click Edit in the "Euro with miniature figurines" row
-    Then the "Media AV Portal Photo" field should contain "https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15"
+    Then the "Media AV Portal Photo" field should contain "https://audiovisual.ec.europa.eu/media/photo/P-038924/00-15"
 
     Given I go to "the media overview page"
     When I click Edit in the "Document 1" row
