@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.36.0](https://github.com/openeuropa/oe_media/tree/1.36.0) (2026-01-09)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.35.0...1.36.0)
+
+**Merged pull requests:**
+
+- EWPP-6339: Fix test after media_avportal release. [\#291](https://github.com/openeuropa/oe_media/pull/291) ([nagyad](https://github.com/nagyad))
+- EWPP-6265: Set permission 'access content' to view av_portal and circabc entity browsers. [\#290](https://github.com/openeuropa/oe_media/pull/290) ([fmmribeiro](https://github.com/fmmribeiro))
+- EWPP-6266: Fix mock path traversal. [\#289](https://github.com/openeuropa/oe_media/pull/289) ([nagyad](https://github.com/nagyad))
+- EWPP-6261: Bump composer/installers to 2.x. [\#288](https://github.com/openeuropa/oe_media/pull/288) ([nagyad](https://github.com/nagyad))
+- EWPP-6067: Upgrade to Drupal 11.2. [\#286](https://github.com/openeuropa/oe_media/pull/286) ([sergepavle](https://github.com/sergepavle))
+
 ## [1.35.0](https://github.com/openeuropa/oe_media/tree/1.35.0) (2025-10-21)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.34.0...1.35.0)
 
