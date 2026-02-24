@@ -77,8 +77,10 @@ Feature: Document media entities.
     When I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     And I press the "Select entities" button
+    And I wait for AJAX to finish
     Then I should see entity browser modal window
     When I click "Add File"
+    And I wait for AJAX to finish
     And I fill in "Name" with "Media document"
     And I should not see the text "One file only."
     And I should not see the text "URL"
@@ -92,8 +94,9 @@ Feature: Document media entities.
     And I should not see the text "URL"
     And I attach the file "sample.pdf" to "File"
     And I press the "Save entity" button
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I press the "Save" button
+    And I should not see the text "Error message"
     Then I should see the link "sample.pdf"
 
     When I visit "the demo content creation page"
@@ -104,6 +107,6 @@ Feature: Document media entities.
     When I click "View"
     And I select the "Media document" media entity in the entity browser modal window
     And I press the "Select entities" button
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I press the "Save" button
     Then I should see the link "sample.pdf"

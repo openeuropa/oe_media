@@ -68,6 +68,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // bundles can be created, as the iframe media cannot be referenced by the
     // field.
     $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->assertSession()->assertNoElementAfterWait('css', '#edit-media-bundle');
     $this->assertSession()->fieldNotExists('Bundle');
     $this->assertSession()->pageTextContains('You cannot create any of the media bundles referenceable by the current field.');
 
@@ -173,6 +174,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->fieldExists('Name');
     $this->assertSession()->fieldExists('Image');
     $this->getSession()->getPage()->clickLink('Add Image');
+    $this->assertSession()->assertNoElementAfterWait('css', '#edit-media-bundle');
     $this->assertSession()->fieldNotExists('Bundle');
     $this->getSession()->getPage()->clickLink('Media creation form');
     $this->assertSession()->fieldValueEquals('Bundle', 'Image');

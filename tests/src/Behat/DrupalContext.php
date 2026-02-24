@@ -57,6 +57,61 @@ class DrupalContext extends RawDrupalContext {
   }
 
   /**
+   * Waits for the entity browser to close.
+   *
+   * @Then I wait for the entity browser modal window to close
+   */
+  public function iWaitForEntityBrowserToClose(): void {
+    // Ensure we are in the main document before checking modal visibility.
+    $this->getSession()->switchToIFrame(NULL);
+
+    $page = $this->getSession()->getPage();
+    $timeout = $this->getMinkParameter('ajax_timeout');
+
+    $closed = $page->waitFor($timeout, function () use ($page): bool {
+      return $page->find('css', '.entity-browser-modal-iframe') === NULL;
+    });
+
+    if (!$closed) {
+      // Try to collect validation errors displayed inside
+      // the entity browser iframe, so timeout exceptions are actionable.
+      $error_details = '';
+      $error_messages = [];
+
+      try {
+        $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+        $iframe_page = $this->getSession()->getPage();
+
+        $items = $iframe_page->findAll('css', '.messages-list .messages-list__item');
+        foreach ($items as $item) {
+          $content = $item->find('css', 'div.messages__content');
+          $text = $content ? trim($content->getText()) : trim($item->getText());
+          if ($text !== '') {
+            $error_messages[] = preg_replace('/\s+/', ' ', $text);
+          }
+        }
+      }
+      catch (\Throwable $e) {
+        $error_details = sprintf(' Could not inspect iframe errors: %s.', $e->getMessage());
+      }
+      finally {
+        // Always return to the main document.
+        $this->getSession()->switchToIFrame(NULL);
+      }
+
+      if (!empty($error_messages)) {
+        $error_details .= ' Reported iframe errors: ' . implode(' | ', $error_messages) . '.';
+      }
+
+      throw new \Exception(sprintf(
+        'The entity browser modal window did not close after %d ms.%s',
+        $timeout,
+        $error_details,
+      ));
+    }
+  }
+
+  /**
    * Selects required media entity from entity browser.
    *
    * @param string $name

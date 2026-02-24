@@ -43,8 +43,7 @@ Feature: Remote video media entities.
     And I wait for AJAX to finish
     And I fill in "Remote video URL" with "<url>"
     And I press "Save entity"
-    And I wait for AJAX to finish
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I wait for the text "<title>"
     Then I should see the text "<title>"
     And I should see the button "Remove"
@@ -63,8 +62,7 @@ Feature: Remote video media entities.
 
     When I select the "<title>" media in the entity browser modal window
     And I press "Select entities"
-    And I wait for AJAX to finish
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I wait for the text "<title>"
     Then I should see the text "<title>"
     And I should see the button "Remove"

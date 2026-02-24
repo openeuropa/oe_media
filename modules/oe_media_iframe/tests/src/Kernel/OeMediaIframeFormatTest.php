@@ -24,6 +24,7 @@ class OeMediaIframeFormatTest extends KernelTestBase {
     'media',
     'options',
     'system',
+    'user',
     'oe_media',
     'oe_media_iframe',
   ];

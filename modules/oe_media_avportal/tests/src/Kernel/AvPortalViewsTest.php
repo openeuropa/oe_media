@@ -21,6 +21,7 @@ class AvPortalViewsTest extends KernelTestBase {
   protected static $modules = [
     'media',
     'user',
+    'file',
     'image',
     'views',
     'entity_browser',
