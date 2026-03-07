@@ -18,6 +18,7 @@ function oe_media_circabc_views_data(): array {
     'title' => t('CircaBC'),
     'help' => t('CircaBC Endpoint API Query.'),
     'query_id' => 'circabc',
+    'field' => 'uuid',
   ];
 
   $data['circabc']['uuid'] = [
@@ -50,6 +51,9 @@ function oe_media_circabc_views_data(): array {
     'filter' => [
       'id' => 'circabc_language',
     ],
+    'field' => [
+      'id' => 'circabc_language',
+    ],
   ];
 
   $data['circabc']['interest_group'] = [
@@ -65,6 +69,44 @@ function oe_media_circabc_views_data(): array {
     'help' => t('Content owner'),
     'filter' => [
       'id' => 'circabc_content_owner',
+    ],
+    'field' => [
+      'id' => 'circabc_content_owner',
+    ],
+  ];
+
+  $data['circabc']['resource_type'] = [
+    'title' => t('Resource type'),
+    'help' => t('Resource type'),
+    'filter' => [
+      'id' => 'circabc_resource_type',
+    ],
+    'field' => [
+      'id' => 'circabc_resource_type',
+    ],
+  ];
+
+  $data['circabc']['publication_date'] = [
+    'title' => t('Publication date'),
+    'help' => t('Publication date'),
+    'field' => [
+      'id' => 'circabc_publication_date',
+    ],
+  ];
+
+  $data['circabc']['created'] = [
+    'title' => t('Created date'),
+    'help' => t('Created date'),
+    'field' => [
+      'id' => 'circabc_created',
+    ],
+  ];
+
+  $data['circabc']['changed'] = [
+    'title' => t('Modification date'),
+    'help' => t('Modification date'),
+    'field' => [
+      'id' => 'circabc_changed',
     ],
   ];
 
