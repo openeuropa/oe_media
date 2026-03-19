@@ -69,7 +69,6 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
     $this->getSession()->getPage()->fillField('Title', 'Test internal media links');
     $this->getSession()->getPage()->fillField('Administrative title', 'List 1');
     $this->getSession()->getPage()->selectFieldOption('Link display', 'Title');
-    $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->getPage()->selectFieldOption('No results behaviour', 'Hide');
     $this->assertSession()->assertWaitOnAjaxRequest();
 
