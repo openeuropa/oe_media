@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * The module file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function oe_media_circabc_mock_entity_presave(EntityInterface $entity): void {
+  if ($entity->getEntityTypeId() === 'media' && \Drupal::state()->get('oe_media_circabc_mock_fail_media_save')) {
+    throw new \Exception('Simulated media save failure for testing.');
+  }
+}
