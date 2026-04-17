@@ -149,9 +149,10 @@ class CircaBcQuery extends QueryPluginBase {
     $query_string = NULL;
     $filters = [];
     $langcode = NULL;
+    $ids_to_query = [];
 
     // Filter by full text search.
-    foreach ($this->where as $where) {
+    foreach ((array) $this->where as $where) {
       foreach ($where['conditions'] as $condition) {
         if ($condition['field'] == 'search') {
           $query_string = $condition['value'];
@@ -174,10 +175,29 @@ class CircaBcQuery extends QueryPluginBase {
           $is_url = preg_match('/http:\/\/publications.europa.eu\/resource\/authority\/corporate-body\/([A-Z0-9_-]+)/', $condition['value'], $matches);
           $filters[CircaBcClient::FILTER_CONTENT_OWNERS] = [$is_url ? $matches[1] : $condition['value']];
         }
+
+        if ($condition['field'] == 'uuid') {
+          $ids_to_query = array_merge($ids_to_query, is_array($condition['value']) ? $condition['value'] : [$condition['value']]);
+        }
       }
     }
 
-    $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $filters, $page, $limit);
+    // If the query is about specific document IDs, we have to use a different
+    // endpoint. In this case, the ViewsBulkOperationsActionProcessor strips
+    // all other filters and paging params, so we can safely ignore them.
+    if (!empty($ids_to_query)) {
+      $documents = [];
+      foreach ($ids_to_query as $id) {
+        if ($document = $this->circaBcClient->getDocumentByUuid($id)) {
+          $documents[] = $document;
+        }
+      }
+      $results = new CircaBcDocumentResult($documents, count($documents));
+    }
+    else {
+      $results = $this->circaBcClient->query($uuid, $langcode, $query_string, $filters, $page, $limit);
+    }
+
     if ($results->getTotal() === 0) {
       return;
     }
@@ -209,6 +229,13 @@ class CircaBcQuery extends QueryPluginBase {
       }
       $row['title'] = $title;
       $row['index'] = $index;
+      $row['langcode'] = _oe_media_circabc_get_drupal_langcode($document->getLangcode());
+      $row['subject'] = $document->getProperty('subject');
+      $row['resource_type'] = $document->getProperty('resourceType');
+      $row['content_owner'] = $document->getProperty('contentOwner');
+      $row['publication_date'] = $document->getProperty('issue_date');
+      $row['created'] = $document->getProperty('created');
+      $row['changed'] = $document->getProperty('modified');
       $view->result[] = new ResultRow($row);
       $index++;
     }
