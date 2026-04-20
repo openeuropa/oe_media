@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.37.0](https://github.com/openeuropa/oe_media/tree/1.37.0) (2026-04-20)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.36.0...1.37.0)
+
+**Merged pull requests:**
+
+- EWPP-6671: Unlock drupal-extension. [\#299](https://github.com/openeuropa/oe_media/pull/299) ([intelektron](https://github.com/intelektron))
+- EWPP-6638: New CircaBC views fields. [\#295](https://github.com/openeuropa/oe_media/pull/295) ([upchuk](https://github.com/upchuk))
+- EWPP-6250: Document upload handling. [\#287](https://github.com/openeuropa/oe_media/pull/287) ([upchuk](https://github.com/upchuk))
+- EWPP-0001: Locking drupal extension. [\#298](https://github.com/openeuropa/oe_media/pull/298) ([upchuk](https://github.com/upchuk))
+
 ## [1.36.0](https://github.com/openeuropa/oe_media/tree/1.36.0) (2026-01-09)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.35.0...1.36.0)
 
