@@ -87,7 +87,7 @@ class MediaContext extends RawDrupalContext {
    * @beforeScenario @media-enable-standalone-url
    */
   public function enableMediaStandaloneUrl(BeforeScenarioScope $scope): void {
-    $this->getConfigContext()->setConfig('media.settings', 'standalone_url', TRUE);
+    $this->getConfigContext()->setBasicConfig('media.settings', 'standalone_url', '1');
     \Drupal::service('router.builder')->rebuild();
   }
 
