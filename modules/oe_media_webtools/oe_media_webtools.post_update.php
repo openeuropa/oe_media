@@ -171,3 +171,49 @@ function oe_media_webtools_post_update_00007(): void {
   }
   $media_type->save();
 }
+
+/**
+ * Update Webtools media fields description regarding acceptance snippet usage.
+ */
+function oe_media_webtools_post_update_00008() {
+  $original_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://webtools.europa.eu/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://webtools.europa.eu/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.';
+  $chart_original_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://webtools.europa.eu/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://europa.eu/webtools/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.';
+  $new_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://webtools.europa.eu/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://webtools.europa.eu/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.<br> Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network.';
+  $fields = [
+    'media.webtools_chart.oe_media_webtools',
+    'media.webtools_countdown.oe_media_webtools',
+    'media.webtools_generic.oe_media_webtools',
+    'media.webtools_map.oe_media_webtools',
+  ];
+  $modified = [];
+
+  foreach ($fields as $field) {
+    $field_config = FieldConfig::load($field);
+    // If the field doesn't exist anymore, skip it.
+    if (!$field_config) {
+      continue;
+    }
+    // The Webtools Chart media has a wrong link for the WCLOUD, so the
+    // original description is different from the other fields.
+    if ($field === 'media.webtools_chart.oe_media_webtools') {
+      if ($chart_original_description !== $field_config->get('description')) {
+        $modified[] = $field;
+        continue;
+      }
+      $field_config->setDescription($new_description);
+      $field_config->save();
+      continue;
+    }
+    // If the description has been customised by users, we don’t change it.
+    if ($original_description !== $field_config->get('description')) {
+      $modified[] = $field;
+      continue;
+    }
+    $field_config->setDescription($new_description);
+    $field_config->save();
+  }
+
+  if (!empty($modified)) {
+    return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
+  }
+}
