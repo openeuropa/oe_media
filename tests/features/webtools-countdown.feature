@@ -8,7 +8,7 @@ Feature: Webtools countdown.
   Scenario: Create and reference a Webtools countdown.
     Given I am logged in as a user with the "create oe_media_demo content, create webtools_countdown media" permission
     When I visit "the Webtools countdown creation page"
-    Then I should see the text "Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard."
+    Then I should see the text "Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard. Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network."
     When I press "Save"
     Then I should see the following error messages:
       | error messages                               |
