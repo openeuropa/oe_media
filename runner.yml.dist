@@ -61,15 +61,3 @@ toolkit:
   test:
     phpstan:
       config: phpstan.neon.dist
-  ci:
-    PHP:
-      - 8.3
-    DRUPAL:
-      - ~10.6.0
-      - ~11.3.0
-    PUBLISH: false
-    BEHAT: true
-    PHPUNIT: true
-    SELENIUM: true
-    SELENIUM_VERSION: 4.30.0
-    SPARQL: false
