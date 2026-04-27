@@ -26,11 +26,13 @@ Feature: AV Portal video.
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     And I press the "Select entities" button
+    And I wait for AJAX to finish
     Then I should see entity browser modal window
     When I click "Add AV Portal Video"
+    And I wait for AJAX to finish
     And I fill in "Media AV Portal Video" with "https://audiovisual.ec.europa.eu/en/video/I-162747"
     And I press the "Save entity" button
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I press the "Save" button
     Then I should see the AV Portal video "Midday press briefing from 25/10/2018"
 
@@ -38,11 +40,12 @@ Feature: AV Portal video.
     And I fill in "Title" with "Media demo"
     And I click the fieldset "Media browser field"
     When I press the "Select entities" button
+    And I wait for AJAX to finish
     Then I should see entity browser modal window
     When I click "View"
     And I select the "Economic and Financial Affairs Council - Arrivals" media entity in the entity browser modal window
     And I press the "Select entities" button
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I press the "Save" button
     Then I should see the AV Portal video " Economic and Financial Affairs Council - Arrivals"
 
@@ -63,9 +66,10 @@ Feature: AV Portal video.
     When I press the "Select entities" button
     Then I should see entity browser modal window
     When I click "Search videos in AV Portal"
+    And I wait for AJAX to finish
     Then I should see " LIVE \"Subsidiarity - as a building principle of the European Union\" Conference in Bregenz, Austria - Welcome, keynote speech and interviews"
     When I select the avportal item with the title ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'
     And I press the "Select entities" button
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I press the "Save" button
     Then I should see the AV Portal video ' LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews'

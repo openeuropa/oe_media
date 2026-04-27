@@ -33,9 +33,8 @@ Feature: Image media entities.
     Given I fill in "Title" with "OpenEuropa at SymfonyCon Lisbon"
     And I click the fieldset "Media browser field"
     When I press "Select entities"
-    Then I should see entity browser modal window
     And I wait for AJAX to finish
-
+    Then I should see entity browser modal window
     When I click "Add Image"
     And I wait for AJAX to finish
     And I fill in "Name" with "OpenEuropa team members at Symfonycon Lisbon"
@@ -43,8 +42,7 @@ Feature: Image media entities.
     And I wait for AJAX to finish
     And I fill in "Alternative text" with "Symfonycon Lisbon"
     And I press "Save entity"
-    And I wait for AJAX to finish
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I wait for the text "OpenEuropa team members at Symfonycon Lisbon"
     Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
     And I should see the button "Remove"
@@ -63,8 +61,7 @@ Feature: Image media entities.
 
     When I select the "OpenEuropa team members at Symfonycon Lisbon" media in the entity browser modal window
     And I press "Select entities"
-    And I wait for AJAX to finish
-    And I switch to main window
+    And I wait for the entity browser modal window to close
     And I wait for the text "OpenEuropa team members at Symfonycon Lisbon"
     Then I should see the text "OpenEuropa team members at Symfonycon Lisbon"
     And I should see the button "Remove"
