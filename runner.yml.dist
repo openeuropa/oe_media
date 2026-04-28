@@ -71,5 +71,4 @@ toolkit:
     BEHAT: true
     PHPUNIT: true
     SELENIUM: true
-    SELENIUM_VERSION: 4.30.0
     SPARQL: false
