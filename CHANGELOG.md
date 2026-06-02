@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.38.0](https://github.com/openeuropa/oe_media/tree/1.38.0) (2026-06-02)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.37.0...1.38.0)
+
+**Merged pull requests:**
+
+- EWPP-6514: Remove selenium override from the gitlab-ci. [\#304](https://github.com/openeuropa/oe_media/pull/304) ([nagyad](https://github.com/nagyad))
+- EWPP-6514: Update components to Drupal 11.3. [\#303](https://github.com/openeuropa/oe_media/pull/303) ([nagyad](https://github.com/nagyad))
+- EWPP-4247: Update webtools media field's descrption. [\#302](https://github.com/openeuropa/oe_media/pull/302) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.37.0](https://github.com/openeuropa/oe_media/tree/1.37.0) (2026-04-20)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.36.0...1.37.0)
 
