@@ -161,8 +161,9 @@ class Iframe extends MediaSourceBase {
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $text_formats = [];
+    $filter_formats = $this->entityTypeManager->getStorage('filter_format')->loadByProperties(['status' => TRUE]);
     /** @var \Drupal\filter\FilterFormatInterface $filter_format */
-    foreach (filter_formats() as $filter_format) {
+    foreach ($filter_formats as $filter_format) {
       $text_formats[$filter_format->get('format')] = $filter_format->get('name');
     }
 

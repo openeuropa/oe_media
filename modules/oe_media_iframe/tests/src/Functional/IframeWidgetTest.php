@@ -50,8 +50,9 @@ class IframeWidgetTest extends MediaFunctionalTestBase {
   public function testWidgetElements(): void {
     $this->drupalGet('/media/add/test_iframe');
 
-    // Verify that the filter tips are present just after the iframe field.
-    $tips = $this->getSession()->getPage()->findAll('css', '.form-item-field-media-oe-media-iframe-0-value + ul > li');
+    // Verify that the filter guidelines are present just after the iframe
+    // field.
+    $tips = $this->getSession()->getPage()->findAll('css', '.form-item-field-media-oe-media-iframe-0-value + div ul > li');
     $this->assertCount(3, $tips);
     $this->assertEquals('No HTML tags allowed.', $tips[0]->getText());
     $this->assertEquals('Lines and paragraphs break automatically.', $tips[1]->getText());
