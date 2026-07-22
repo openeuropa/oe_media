@@ -383,6 +383,14 @@ class DocumentMediaTest extends MediaTestBase {
     $document = $client->getDocumentByUuid('non-existing-uuid');
     $this->assertNull($document);
 
+    // Test fetching the group of a document.
+    $group = $client->getDocumentInterestGroup('e74e3bc0-a639-4e04-a839-3bbd60ed5688');
+    $this->assertEquals('85a095a8-aacb-4ae2-9f67-c90a789e353e', $group['id']);
+
+    // Test fetching the group of a non-existing document.
+    $group = $client->getDocumentInterestGroup('non-existing-uuid');
+    $this->assertNull($group);
+
     // Test fetching a document by URL.
     $document = $client->getDocumentByUrl('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/664e3bc0-a639-4e04-a839-3bbd60ed5600/details');
     $this->assertNotNull($document);

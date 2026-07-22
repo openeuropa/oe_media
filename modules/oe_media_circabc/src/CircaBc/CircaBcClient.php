@@ -134,6 +134,43 @@ class CircaBcClient implements CircaBcClientInterface {
   /**
    * {@inheritdoc}
    */
+  public function getDocumentInterestGroup(string $uuid): ?array {
+    if (!isset($this->config['url'])) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error('The CircaBC URL is not configured');
+      return NULL;
+    }
+
+    $endpoint = $this->config['url'] . '/service/circabc/nodes/' . $uuid . '/group';
+    $url = Url::fromUri($endpoint, [
+      'query' => [
+        'guest' => "true",
+      ],
+    ])->toString();
+    try {
+      $response = $this->httpClient->request('GET', $url);
+      if ($response->getStatusCode() !== 200) {
+        $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+
+        return NULL;
+      }
+    }
+    catch (\Exception $exception) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($exception->getMessage());
+      return NULL;
+    }
+
+    $content = json_decode($response->getBody()->getContents(), TRUE);
+    if (!$content || !isset($content['id'])) {
+      $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
+      return NULL;
+    }
+
+    return $content;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function fillTranslations(CircaBcDocument $document): void {
     $endpoint = $this->config['url'] . '/service/circabc/content/' . $document->getUuid() . '/translations';
     $url = Url::fromUri($endpoint, [

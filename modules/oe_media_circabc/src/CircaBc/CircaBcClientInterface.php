@@ -32,6 +32,17 @@ interface CircaBcClientInterface {
   public function getDocumentByUuid(string $uuid): ?CircaBcDocument;
 
   /**
+   * Returns the properties of the interest group a document belongs to.
+   *
+   * @param string $uuid
+   *   The document UUID.
+   *
+   * @return array|null
+   *   The group definition, or NULL if it could not be retrieved.
+   */
+  public function getDocumentInterestGroup(string $uuid): ?array;
+
+  /**
    * Fills a document with translations.
    *
    * @param \Drupal\oe_media_circabc\CircaBc\CircaBcDocument $document
