@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\oe_media_iframe\Plugin\media\Source;
 
+use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -162,6 +163,9 @@ class Iframe extends MediaSourceBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $text_formats = [];
     $filter_formats = $this->entityTypeManager->getStorage('filter_format')->loadByProperties(['status' => TRUE]);
+    // Sort by weight to keep the same order the deprecated filter_formats()
+    // helper provided.
+    uasort($filter_formats, [ConfigEntityBase::class, 'sort']);
     /** @var \Drupal\filter\FilterFormatInterface $filter_format */
     foreach ($filter_formats as $filter_format) {
       $text_formats[$filter_format->get('format')] = $filter_format->get('name');
