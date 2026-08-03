@@ -42,26 +42,35 @@ class IframeSourceTest extends MediaSourceTestBase {
     $assert_session->pageTextContains('The media type Iframe source test has been added.');
 
     // Verify that the source field and the thumbnail field are placed in the
-    // form.
-    $this->drupalGet('/admin/structure/media/manage/iframe_source_test/form-display');
-    $this->assertEquals('content', $assert_session->fieldExists('fields[field_media_oe_media_iframe][region]')->getValue());
-    $this->assertEquals('string_textfield', $assert_session->fieldExists('fields[oe_media_iframe_title][type]')->getValue());
-    $this->assertEquals('oe_media_iframe_textarea', $assert_session->fieldExists('fields[field_media_oe_media_iframe][type]')->getValue());
-    $this->assertEquals('content', $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][region]')->getValue());
-    $this->assertEquals('image_image', $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][type]')->getValue());
+    // form display, with the expected widgets and ordering. The placement is
+    // done by the source plugin's prepareFormDisplay(), so we assert the saved
+    // form display configuration directly (loadUnchanged() avoids any stale
+    // cache in the test runner process).
+    $form_display = $this->container->get('entity_type.manager')
+      ->getStorage('entity_form_display')
+      ->loadUnchanged('media.iframe_source_test.default');
+    $source_component = $form_display->getComponent('field_media_oe_media_iframe');
+    $this->assertNotNull($source_component);
+    $this->assertEquals('oe_media_iframe_textarea', $source_component['type']);
+    $title_component = $form_display->getComponent('oe_media_iframe_title');
+    $this->assertNotNull($title_component);
+    $this->assertEquals('string_textfield', $title_component['type']);
+    $thumbnail_component = $form_display->getComponent('oe_media_iframe_thumbnail');
+    $this->assertNotNull($thumbnail_component);
+    $this->assertEquals('image_image', $thumbnail_component['type']);
     // Iframe title field should be placed after the name field.
-    $name_field_weight = $assert_session->fieldExists('fields[name][weight]')->getValue();
-    $iframe_title_field_weight = $assert_session->fieldExists('fields[oe_media_iframe_title][weight]')->getValue();
-    $this->assertEquals((int) $iframe_title_field_weight, (int) $name_field_weight + 1);
+    $name_component = $form_display->getComponent('name');
+    $this->assertEquals((int) $name_component['weight'] + 1, (int) $title_component['weight']);
     // The thumbnail field should be placed after the source field.
-    $source_field_weight = $assert_session->fieldExists('fields[field_media_oe_media_iframe][weight]')->getValue();
-    $thumbnail_field_weight = $assert_session->fieldExists('fields[oe_media_iframe_thumbnail][weight]')->getValue();
-    $this->assertEquals((int) $thumbnail_field_weight, (int) $source_field_weight + 1);
+    $this->assertEquals((int) $source_component['weight'] + 1, (int) $thumbnail_component['weight']);
 
     // The correct formatter should be used in the view display.
-    $this->drupalGet('/admin/structure/media/manage/iframe_source_test/display');
-    $this->assertEquals('content', $assert_session->fieldExists('fields[field_media_oe_media_iframe][region]')->getValue());
-    $this->assertEquals('oe_media_iframe', $assert_session->fieldExists('fields[field_media_oe_media_iframe][type]')->getValue());
+    $view_display = $this->container->get('entity_type.manager')
+      ->getStorage('entity_view_display')
+      ->loadUnchanged('media.iframe_source_test.default');
+    $source_view_component = $view_display->getComponent('field_media_oe_media_iframe');
+    $this->assertNotNull($source_view_component);
+    $this->assertEquals('oe_media_iframe', $source_view_component['type']);
   }
 
 }

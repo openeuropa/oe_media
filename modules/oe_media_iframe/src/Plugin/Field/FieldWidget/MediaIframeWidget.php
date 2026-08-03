@@ -99,8 +99,8 @@ class MediaIframeWidget extends StringTextareaWidget {
     if ($format_id) {
       $format = $this->entityTypeManager->getStorage('filter_format')->load($format_id);
       $element['format']['guidelines'][$format->id()] = [
-        '#theme' => 'filter_tips',
-        '#tips' => _filter_tips($format->id(), FALSE),
+        '#theme' => 'filter_guidelines',
+        '#format' => $format,
       ];
     }
 
