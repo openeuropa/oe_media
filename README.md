@@ -189,3 +189,4 @@ and the process for submitting pull requests to us.
 
 We use [SemVer](http://semver.org/) for versioning. For the available versions,
 see the [tags on this repository](https://github.com/openeuropa/oe_media/tags).
+
