@@ -31,6 +31,7 @@ config_devel:
     - field.field.node.oe_media_demo.field_oe_demo_webtools_generic
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_shorthand
     - field.storage.node.field_oe_demo_av_portal_photo
     - field.storage.node.field_oe_demo_av_portal_video
     - field.storage.node.field_oe_demo_document_media
@@ -45,6 +46,7 @@ config_devel:
     - field.storage.node.field_oe_demo_webtools_generic
     - field.storage.node.field_oe_demo_webtools_map
     - field.storage.node.field_oe_demo_webtools_sfeed
+    - field.storage.node.field_oe_demo_webtools_shorthand
     - node.type.oe_media_demo
     - views.view.av_portal_entity_browser
     - views.view.media_entity_browser

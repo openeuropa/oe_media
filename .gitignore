@@ -15,3 +15,5 @@ phpunit.xml
 docker-compose.*.yml
 /.gitattributes
 /recipes/
+patches.lock.json
+config/sync

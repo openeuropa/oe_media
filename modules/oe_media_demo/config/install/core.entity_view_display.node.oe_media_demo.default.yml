@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_op
     - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_shorthand
     - node.type.oe_media_demo
   module:
     - user
@@ -170,6 +171,15 @@ content:
       link: true
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_oe_demo_webtools_shorthand:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 17
     region: content
   links:
     settings: {  }
