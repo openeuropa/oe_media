@@ -244,7 +244,7 @@ class CircaBcQuery extends QueryPluginBase {
   /**
    * This is called by the filter plugins to set the query conditions.
    *
-   * @param int $group
+   * @param string|int $group
    *   The where group.
    * @param string|null $field
    *   The condition field.
@@ -253,7 +253,7 @@ class CircaBcQuery extends QueryPluginBase {
    * @param string|null $operator
    *   The condition operator.
    */
-  public function addWhere(int $group = 0, ?string $field = NULL, $value = NULL, ?string $operator = NULL): void {
+  public function addWhere(string|int $group = 0, ?string $field = NULL, $value = NULL, ?string $operator = NULL): void {
     if (empty($group)) {
       $group = 0;
     }
