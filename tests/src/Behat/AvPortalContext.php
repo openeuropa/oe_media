@@ -124,7 +124,9 @@ class AvPortalContext extends RawDrupalContext {
     $xpath = "//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-view-grid__item ')]";
     $xpath .= "[.//div[@class and contains(concat(' ', normalize-space(@class), ' '), ' views-field-title ')][contains(string(.), '$title')]]";
     $xpath .= "//input[@type='checkbox']";
-    $this->assertSession()->elementExists('xpath', $xpath)->check();
+    $element = $this->assertSession()->elementExists('xpath', $xpath);
+    $this->getSession()->executeScript("document.querySelector('.entity-browser-form > .form-actions').style.position = 'static';");
+    $element->check();
   }
 
 }
