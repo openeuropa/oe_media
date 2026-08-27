@@ -10,6 +10,7 @@ use Drupal\KernelTests\KernelTestBase;
  * Tests the oe_media_iframe filter format.
  *
  * @group oe_media_iframe
+ * @group batch3
  */
 class OeMediaIframeFormatTest extends KernelTestBase {
 

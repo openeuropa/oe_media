@@ -6,12 +6,16 @@ namespace Drupal\Tests\oe_media\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Provides tests methods for document media bundle.
+ *
+ * @group batch3
  */
 class DocumentMediaTest extends BrowserTestBase {
 
+  use CachedDatabaseInstallTrait;
   use MediaTestTrait;
 
   /**
@@ -39,6 +43,7 @@ class DocumentMediaTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
     $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
   }

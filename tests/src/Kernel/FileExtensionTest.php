@@ -8,6 +8,8 @@ use Drupal\field\Entity\FieldConfig;
 
 /**
  * Tests that media types that allow file uploads use the correct extensions.
+ *
+ * @group batch2
  */
 class FileExtensionTest extends MediaTestBase {
 

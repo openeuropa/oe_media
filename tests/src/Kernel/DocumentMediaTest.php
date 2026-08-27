@@ -9,6 +9,8 @@ use Drupal\media\MediaInterface;
 
 /**
  * Tests the document media type.
+ *
+ * @group batch1
  */
 class DocumentMediaTest extends MediaTestBase {
 

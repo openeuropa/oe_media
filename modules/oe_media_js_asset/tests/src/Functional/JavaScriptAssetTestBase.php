@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media_js_asset\Functional;
 
 use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * JavaScript asset media test base class.
@@ -12,6 +13,8 @@ use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
  * @group oe_media_js_asset
  */
 class JavaScriptAssetTestBase extends MediaFunctionalTestBase {
+
+  use CachedDatabaseInstallTrait;
 
   /**
    * {@inheritdoc}
@@ -29,6 +32,7 @@ class JavaScriptAssetTestBase extends MediaFunctionalTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
 
     // Configure values for the environments config.

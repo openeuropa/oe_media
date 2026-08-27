@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\oe_media_avportal\FunctionalJavascript;
 
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\oe_media\FunctionalJavascript\MediaFeatureTestBase;
 
 /**
- * Tests the AV Portal Entity Browser widget.
+ * Tests the AV Portal Entity Browser widgets.
+ *
+ * @group batch1
  */
-class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
+class AvPortalEntityBrowserWidgetTest extends MediaFeatureTestBase {
 
   /**
-   * {@inheritdoc}
+   * The source of the "Euro with miniature figurines" AV Portal photo.
    */
-  protected static $modules = [
-    'node',
-    'views',
-    'oe_media_avportal',
-    'media_avportal_mock',
-    'options',
-  ];
+  protected const EURO_PHOTO_SOURCE = '//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/4/P038924-352937.jpg';
 
   /**
-   * {@inheritdoc}
+   * The source of the "Visit by Federica Mogherini" AV Portal photo.
    */
-  protected $defaultTheme = 'stark';
+  protected const MOGHERINI_PHOTO_SOURCE = '//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-615406.jpg';
 
   /**
    * {@inheritdoc}
@@ -33,57 +29,117 @@ class AvPortalEntityBrowserWidgetTest extends WebDriverTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->container->get('module_installer')->install(['oe_media_avportal_test']);
+    $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
+  }
 
-    $user = $this->drupalCreateUser([
-      'access av_portal_entity_browser_test entity browser pages',
+  /**
+   * Tests the AV Portal photo widgets of the media entity browser.
+   */
+  public function testAvPortalPhotoWidgets(): void {
+    $assert_session = $this->assertSession();
+
+    // A new AV Portal photo can be created from within the entity browser.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Add AV Portal Photo');
+    $this->getSession()->getPage()->fillField('Media AV Portal Photo', 'https://audiovisual.ec.europa.eu/en/photo/P-038924~2F00-15');
+    $this->getSession()->getPage()->pressButton('Save entity');
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalPhotoRendered('Euro with miniature figurines', self::EURO_PHOTO_SOURCE);
+
+    // The photo created above can be reused through the View widget, which is
+    // the default one of the browser.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    $this->selectMediaInEntityBrowser('Euro with miniature figurines');
+    $this->getSession()->getPage()->pressButton('Select entities');
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalPhotoRendered('Euro with miniature figurines', self::EURO_PHOTO_SOURCE);
+
+    // Photos can also be searched directly in AV Portal.
+    $title = 'Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania';
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Search photos in AV Portal');
+    $assert_session->pageTextContains($title);
+    $this->selectEntityBrowserRow('P-039321/00-04');
+    $this->getSession()->getPage()->pressButton('Select entities');
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalPhotoRendered($title, self::MOGHERINI_PHOTO_SOURCE);
+  }
+
+  /**
+   * Tests the AV Portal video widgets of the media entity browser.
+   */
+  public function testAvPortalVideoWidgets(): void {
+    $assert_session = $this->assertSession();
+
+    \Drupal::service('module_installer')->install(['oe_media_avportal_test']);
+
+    // An existing video, used below to assert that media can be reused.
+    /** @var \Drupal\media_avportal\Plugin\media\Source\MediaAvPortalSourceInterface $source */
+    $source = \Drupal::entityTypeManager()->getStorage('media_type')->load('av_portal_video')->getSource();
+    $existing = \Drupal::entityTypeManager()->getStorage('media')->create([
+      'bundle' => 'av_portal_video',
+      'oe_media_avportal_video' => $source->transformUrlToReference('https://audiovisual.ec.europa.eu/en/video/I-163162'),
+      'status' => 1,
     ]);
+    $existing->save();
 
-    $this->drupalLogin($user);
-  }
+    // A new AV Portal video can be created from within the entity browser.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Add AV Portal Video');
+    $this->getSession()->getPage()->fillField('Media AV Portal Video', 'https://audiovisual.ec.europa.eu/en/video/I-162747');
+    $this->getSession()->getPage()->pressButton('Save entity');
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalVideoRendered('Midday press briefing from 25/10/2018');
 
-  /**
-   * Tests AV Portal Entity Browser widget that is based on Views.
-   */
-  public function testWidget(): void {
-    // Visit the iframe of the Entity Browser.
-    $this->drupalGet('/entity-browser/iframe/av_portal_entity_browser_test');
-
-    // Assert the search field.
-    $this->assertSession()->fieldExists('search');
-
-    // Assert the pager.
-    $elements = $this->xpath('//ul[contains(@class, :class)]/li', [':class' => 'pager__items']);
-    $this->assertCount(4, $elements);
-
-    $entity_type_manager = $this->container->get('entity_type.manager');
-    $media_title = 'LIVE "Subsidiarity - as a building principle of the European Union" Conference in Bregenz, Austria - Welcome, keynote speech and interviews';
-
-    // Make a selection and make sure the entity gets created.
-    $this->assertEmpty($entity_type_manager->getStorage('media')->loadMultiple());
-    $this->getSession()->getPage()->checkField('entity_browser_select[I-163308]');
+    // The pre-existing video can be reused through the View widget.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    // The label of this AV Portal resource starts with a space, so select it
+    // by ID rather than looking it up by name.
+    $this->selectEntityBrowserRow('media:' . $existing->id());
     $this->getSession()->getPage()->pressButton('Select entities');
-    $this->assertSingleMediaEntity($media_title);
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalVideoReferenceRendered($existing->get('oe_media_avportal_video')->value);
 
-    // Make the same selection again and make sure the entity gets reused.
-    $this->drupalGet('/entity-browser/iframe/av_portal_entity_browser_test');
-    $this->getSession()->getPage()->checkField('entity_browser_select[I-163308]');
+    // The upload widget points editors to the AV Portal service.
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Register AV Portal video');
+    $assert_session->linkExists('external link');
+    $this->leaveEntityBrowser();
+
+    // Videos can also be searched directly in AV Portal.
+    $title = 'LIVE "Subsidiarity - as a building principle of the European Union"';
+    $this->drupalGet('node/add/oe_media_demo');
+    $this->getSession()->getPage()->fillField('Title', 'Media demo');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Search videos in AV Portal');
+    $assert_session->pageTextContains($title);
+    $this->selectEntityBrowserRow('I-163308');
     $this->getSession()->getPage()->pressButton('Select entities');
-    $this->assertSingleMediaEntity($media_title);
-  }
-
-  /**
-   * Asserts that only a single Media entity with the given title was created.
-   *
-   * @param string $title
-   *   The media title.
-   */
-  protected function assertSingleMediaEntity(string $title): void {
-    $entity_type_manager = $this->container->get('entity_type.manager');
-    $entities = $entity_type_manager->getStorage('media')->loadMultiple();
-    $this->assertCount(1, $entities);
-    $media = reset($entities);
-    $this->assertEquals($title, trim($media->label()));
+    $this->waitForEntityBrowserToClose();
+    $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->pageTextContains('has been created');
+    $this->assertAvPortalVideoReferenceRendered('I-163308');
   }
 
 }

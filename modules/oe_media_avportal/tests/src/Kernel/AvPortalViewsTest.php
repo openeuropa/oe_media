@@ -12,6 +12,8 @@ use Drupal\views\Views;
 
 /**
  * Tests a view created for the AV Portal data.
+ *
+ * @group batch2
  */
 class AvPortalViewsTest extends KernelTestBase {
 

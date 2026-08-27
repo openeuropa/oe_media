@@ -11,6 +11,8 @@ use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests the field iframe formatter.
+ *
+ * @group batch3
  */
 class IframeFormatterTest extends KernelTestBase {
 
