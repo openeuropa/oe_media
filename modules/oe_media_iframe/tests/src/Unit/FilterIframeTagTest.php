@@ -11,6 +11,7 @@ use Drupal\oe_media_iframe\Plugin\Filter\FilterIframeTag;
  * Tests the filter_iframe_tag filter plugin.
  *
  * @group oe_media_iframe
+ * @group batch3
  * @coversDefaultClass \Drupal\oe_media_iframe\Plugin\Filter\FilterIframeTag
  */
 class FilterIframeTagTest extends UnitTestCase {

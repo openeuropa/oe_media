@@ -17,6 +17,8 @@ use Drupal\views\Views;
 
 /**
  * Tests the document media type.
+ *
+ * @group batch3
  */
 class DocumentMediaTest extends MediaTestBase {
 

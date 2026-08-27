@@ -10,6 +10,8 @@ use Drupal\media\Entity\Media;
 
 /**
  * Tests image media.
+ *
+ * @group batch1
  */
 class MediaImageTest extends MediaKernelTestBase {
 

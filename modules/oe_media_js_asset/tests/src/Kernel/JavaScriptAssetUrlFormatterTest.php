@@ -11,6 +11,8 @@ use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests the field JS asset URL formatter.
+ *
+ * @group batch2
  */
 class JavaScriptAssetUrlFormatterTest extends KernelTestBase {
 

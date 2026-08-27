@@ -10,6 +10,8 @@ use Drupal\media\Entity\MediaType;
 
 /**
  * Tests iframe media source.
+ *
+ * @group batch3
  */
 class IframeSourceTest extends MediaKernelTestBase {
 

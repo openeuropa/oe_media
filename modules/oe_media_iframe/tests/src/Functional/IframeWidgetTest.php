@@ -6,14 +6,17 @@ namespace Drupal\Tests\oe_media_iframe\Functional;
 
 use Drupal\Tests\media\Functional\MediaFunctionalTestBase;
 use Drupal\Tests\oe_media\Traits\MediaTypeCreationTrait;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Tests the iframe widget.
  *
  * @group oe_media_iframe
+ * @group batch3
  */
 class IframeWidgetTest extends MediaFunctionalTestBase {
 
+  use CachedDatabaseInstallTrait;
   use MediaTypeCreationTrait;
 
   /**
@@ -32,6 +35,7 @@ class IframeWidgetTest extends MediaFunctionalTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
 
     $this->createMediaType('oe_media_iframe', [

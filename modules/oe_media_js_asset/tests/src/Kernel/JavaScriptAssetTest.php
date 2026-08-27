@@ -8,6 +8,8 @@ use Drupal\Tests\media\Kernel\MediaKernelTestBase;
 
 /**
  * Tests JavaScript asset media.
+ *
+ * @group batch2
  */
 class JavaScriptAssetTest extends MediaKernelTestBase {
 
