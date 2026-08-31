@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\oe_media\Traits\EntityBrowserTrait;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 use Drupal\Tests\TestFileCreationTrait;
 use Drupal\user\Entity\Role;
@@ -18,6 +19,7 @@ use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
   use CachedDatabaseInstallTrait;
+  use EntityBrowserTrait;
   use MediaTestTrait;
   use TestFileCreationTrait;
 
@@ -59,11 +61,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
     $this->drupalGet('node/add/oe_media_demo');
 
-    $this->getSession()->getPage()->pressButton('Media browser field');
-    $media_browser_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-media-browser');
-    $media_browser_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->openEntityBrowser();
     // The user doesn't have access to create any of the media bundles so the
     // tab should not be available.
     $this->assertSession()->linkNotExists('Media creation form');
@@ -72,14 +70,11 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $role = Role::load('authenticated');
     $this->grantPermissions($role, ['create iframe media']);
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->pressButton('Media browser field');
-    $media_browser_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
+    $this->openEntityBrowser();
     // The user has access to create Iframe media so the tab is visible but no
     // bundles can be created, as the iframe media cannot be referenced by the
     // field.
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->clickEntityBrowserTab('Media creation form');
     $this->assertSession()->assertNoElementAfterWait('css', '#edit-media-bundle');
     $this->assertSession()->fieldNotExists('Bundle');
     $this->assertSession()->pageTextContains('You cannot create any of the media bundles referenceable by the current field.');
@@ -87,11 +82,8 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // Grant authenticated role permission to create image media.
     $this->grantPermissions($role, ['create image media']);
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->pressButton('Media browser field');
-    $media_browser_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Media creation form');
     // Assert that the bundle select doesn't exist since the user would be able
     // to create only image media entities, so the image media form is instead
     // presented.
@@ -110,11 +102,8 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     ];
     $this->grantPermissions($role, $permissions);
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->pressButton('Media browser field');
-    $media_browser_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Media creation form');
     // Assert that the bundle select field exists and contains only the allowed
     // target bundles (Note: Document and Iframe should not be available as the
     // user is missing the create permission for these two bundles).
@@ -132,11 +121,8 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // contains all the allowed target bundles.
     $this->grantPermissions($role, ['create document media']);
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->pressButton('Media browser field');
-    $media_browser_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->openEntityBrowser();
+    $this->clickEntityBrowserTab('Media creation form');
     $this->assertEquals([
       'av_portal_photo' => 'AV Portal Photo',
       'av_portal_video' => 'AV Portal Video',
@@ -152,12 +138,8 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     // Assert that only the allowed target bundles are present on a different
     // field.
     $this->drupalGet('node/add/oe_media_demo');
-    $this->getSession()->getPage()->pressButton('Images browser field');
-    $image_field = $this->getSession()->getPage()->find('css', 'div.field--name-field-oe-demo-images-browser');
-    $image_field->pressButton('Select entities');
-    $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->switchToIFrame('entity_browser_iframe_media_entity_browser');
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->openEntityBrowser('Images browser field', 'field--name-field-oe-demo-images-browser');
+    $this->clickEntityBrowserTab('Media creation form');
     $select_field = $this->getSession()->getPage()->findField('Bundle');
     $this->assertEquals([
       '_none' => '- Select -',
@@ -185,10 +167,10 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('Name');
     $this->assertSession()->fieldExists('Image');
-    $this->getSession()->getPage()->clickLink('Add Image');
+    $this->clickEntityBrowserTab('Add Image');
     $this->assertSession()->assertNoElementAfterWait('css', '#edit-media-bundle');
     $this->assertSession()->fieldNotExists('Bundle');
-    $this->getSession()->getPage()->clickLink('Media creation form');
+    $this->clickEntityBrowserTab('Media creation form');
     $this->assertSession()->fieldValueEquals('Bundle', 'Image');
 
     // Create a file for image media.
@@ -199,7 +181,7 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
     $this->assertSession()->waitForField('Alternative text');
     $this->getSession()->getPage()->fillField('Alternative text', 'img alt');
     $this->getSession()->getPage()->pressButton('Save media');
-    $this->getSession()->switchToWindow($this->getSession()->getWindowName());
+    $this->leaveEntityBrowser();
     $this->assertSession()->waitForText('Test image');
     $this->assertSession()->buttonExists('Remove');
     $this->assertSession()->buttonExists('Edit');
