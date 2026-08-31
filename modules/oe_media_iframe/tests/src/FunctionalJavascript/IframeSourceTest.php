@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media_iframe\FunctionalJavascript;
 
 use Drupal\Tests\media\FunctionalJavascript\MediaSourceTestBase;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Tests the iframe source UI.
+ *
+ * @group batch3
  */
 class IframeSourceTest extends MediaSourceTestBase {
+
+  use CachedDatabaseInstallTrait;
 
   /**
    * {@inheritdoc}
@@ -22,6 +27,14 @@ class IframeSourceTest extends MediaSourceTestBase {
    * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
+    parent::setUp();
+  }
 
   /**
    * Tests the media type creation using the iframe source.

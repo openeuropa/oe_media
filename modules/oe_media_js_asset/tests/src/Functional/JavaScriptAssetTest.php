@@ -6,6 +6,8 @@ namespace Drupal\Tests\oe_media_js_asset\Functional;
 
 /**
  * Test javascript asset media.
+ *
+ * @group batch3
  */
 class JavaScriptAssetTest extends JavaScriptAssetTestBase {
 

@@ -12,12 +12,16 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\file\Entity\File;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\views\Entity\View;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Provides tests methods for document media bundle.
+ *
+ * @group batch2
  */
 class DocumentMediaTest extends WebDriverTestBase {
 
+  use CachedDatabaseInstallTrait;
   use MediaTestTrait;
 
   /**
@@ -51,6 +55,7 @@ class DocumentMediaTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
     $this->drupalLogin($this->drupalCreateUser([], '', TRUE));
 
