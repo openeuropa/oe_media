@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.oe_media_demo.field_oe_demo_webtools_map
     - field.field.node.oe_media_demo.field_oe_demo_webtools_op
     - field.field.node.oe_media_demo.field_oe_demo_webtools_sfeed
+    - field.field.node.oe_media_demo.field_oe_demo_webtools_shorthand
     - node.type.oe_media_demo
   module:
     - entity_browser
@@ -214,6 +215,16 @@ content:
   field_oe_demo_webtools_sfeed:
     type: entity_reference_autocomplete
     weight: 15
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_oe_demo_webtools_shorthand:
+    type: entity_reference_autocomplete
+    weight: 27
     region: content
     settings:
       match_operator: CONTAINS

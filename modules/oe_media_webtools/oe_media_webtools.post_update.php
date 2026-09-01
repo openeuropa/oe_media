@@ -217,3 +217,19 @@ function oe_media_webtools_post_update_00008() {
     return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
   }
 }
+
+/**
+ * Add Webtools shorthand media type.
+ */
+function oe_media_webtools_post_update_00009(): void {
+  $storage = new FileStorage(\Drupal::service('extension.list.module')->getPath('oe_media_webtools') . '/config/post_updates/00008_webtools_shorthand');
+  $config_names = [
+    'media.type.webtools_shorthand',
+    'field.field.media.webtools_shorthand.oe_media_webtools',
+    'core.entity_form_display.media.webtools_shorthand.default',
+    'core.entity_view_display.media.webtools_shorthand.default',
+  ];
+  foreach ($config_names as $name) {
+    _oe_media_import_config_from_file($name, $storage);
+  }
+}

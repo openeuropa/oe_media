@@ -72,6 +72,20 @@ class WebtoolsContext extends RawDrupalContext {
   }
 
   /**
+   * Fills in the Demo content Webtools shorthand reference field.
+   *
+   * Fills the field with a reference to a webtools shorthand media.
+   *
+   * @param string $title
+   *   The webtools shorthand title.
+   *
+   * @Given I reference the Webtools shorthand :title
+   */
+  public function assertReferenceWebtoolsShorthand(string $title): void {
+    $this->getSession()->getPage()->fillField('field_oe_demo_webtools_shorthand[0][target_id]', $title);
+  }
+
+  /**
    * Fills in the Demo content Webtools social feed reference field.
    *
    * Fills the field with a reference to a webtools social feed media.
@@ -109,13 +123,14 @@ class WebtoolsContext extends RawDrupalContext {
    * @param string $title
    *   The webtools media title.
    *
-   * @Then /^I should see the Webtools (map|chart|countdown|social feed|op publication list|generic) "([^"]*)" on the page$/
+   * @Then /^I should see the Webtools (map|chart|countdown|shorthand|social feed|op publication list|generic) "([^"]*)" on the page$/
    */
   public function assertWebtoolsJsonExists(string $widget_type, string $title): void {
     $bundles = [
       'map' => 'webtools_map',
       'chart' => 'webtools_chart',
       'countdown' => 'webtools_countdown',
+      'shorthand' => 'webtools_shorthand',
       'social feed' => 'webtools_social_feed',
       'op publication list' => 'webtools_op_publication_list',
       'generic' => 'webtools_generic',

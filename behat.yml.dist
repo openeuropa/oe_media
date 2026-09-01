@@ -28,6 +28,7 @@ default:
               Webtools countdown creation: 'media/add/webtools_countdown'
               Webtools generic creation: 'media/add/webtools_generic'
               Webtools map creation: 'media/add/webtools_map'
+              Webtools shorthand creation: 'media/add/webtools_shorthand'
               Webtools social feed creation: 'media/add/webtools_social_feed'
               Webtools OP publication list creation: 'media/add/webtools_op_publication_list'
               Video iframe creation: 'media/add/video_iframe'
