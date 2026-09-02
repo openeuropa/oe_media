@@ -169,6 +169,11 @@ class DocumentMediaTest extends WebDriverTestBase {
     foreach ($disabled as $name) {
       $this->assertTrue($page->findField($name)->hasAttribute('disabled'));
     }
+    // The reference field description links to the CircaBC source file.
+    $reference_field = $page->findField('oe_media_circabc_reference[0][uuid]');
+    $source_link = $reference_field->getParent()->findLink('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $this->assertNotNull($source_link);
+    $this->assertEquals('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details', $source_link->getAttribute('href'));
     // We also cannot see the other document type fields.
     $this->assertFalse($page->findField('URL')->isVisible());
     $this->assertFalse($page->findField('Link text')->isVisible());
@@ -269,6 +274,11 @@ class DocumentMediaTest extends WebDriverTestBase {
     foreach ($disabled as $name) {
       $this->assertTrue($page->findField($name)->hasAttribute('disabled'));
     }
+    // The reference field description links to the CircaBC source file.
+    $reference_field = $page->findField('field_ief_document_media[form][inline_entity_form][entities][0][form][oe_media_circabc_reference][0][uuid]');
+    $source_link = $reference_field->getParent()->findLink('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $this->assertNotNull($source_link);
+    $this->assertEquals('https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details', $source_link->getAttribute('href'));
     // We also cannot see the other document type fields.
     $this->assertSession()->fieldNotExists('The CircaBC URL');
     $this->assertFalse($page->findField('URL')->isVisible());

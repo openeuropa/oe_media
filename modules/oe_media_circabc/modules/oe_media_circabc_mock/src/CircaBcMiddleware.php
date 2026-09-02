@@ -17,6 +17,19 @@ use Psr\Http\Message\RequestInterface;
 class CircaBcMiddleware {
 
   /**
+   * Maps document UUIDs to the UUID of their interest group.
+   */
+  const DOCUMENT_GROUPS = [
+    'e74e3bc0-a639-4e04-a839-3bbd60ed5688' => '85a095a8-aacb-4ae2-9f67-c90a789e353e',
+    '664e3bc0-a639-4e04-a839-3bbd60ed5600' => '85a095a8-aacb-4ae2-9f67-c90a789e353e',
+    '5d634abd-fec1-452a-ae0b-62e4cf080506' => '85a095a8-aacb-4ae2-9f67-c90a789e353e',
+    '6d634abd-fec1-452a-ae0b-62e4cf080506' => '85a095a8-aacb-4ae2-9f67-c90a789e353e',
+    '004e3bc0-a639-4e04-a839-3bbd60ed5600' => '9f2e8cb7-0306-4d52-b34a-1befc6647746',
+    '075cbd2b-b3c6-4e2f-a195-292af8980222' => 'c67d6b08-2cc4-4fe4-a5a4-80ec44eacb1a',
+    '8d634abd-fec1-452a-ae0b-62e4cf080506' => 'c67d6b08-2cc4-4fe4-a5a4-80ec44eacb1a',
+  ];
+
+  /**
    * The extension path resolver.
    *
    * @var \Drupal\Core\Extension\ExtensionPathResolver
@@ -153,6 +166,22 @@ class CircaBcMiddleware {
             'data' => 'deleted',
           ]));
 
+          return new FulfilledPromise($response);
+        }
+
+        // The document group endpoint.
+        if (str_starts_with($path, '/circabc-ewpp/service/circabc/nodes/') && str_ends_with($path, '/group')) {
+          $uuid = str_replace('/circabc-ewpp/service/circabc/nodes/', '', $path);
+          $uuid = str_replace('/group', '', $uuid);
+          if (isset(self::DOCUMENT_GROUPS[$uuid])) {
+            $filename = $test_module_path . '/fixtures/interest_groups/' . self::DOCUMENT_GROUPS[$uuid] . '.json';
+            if (file_exists($filename)) {
+              $response = new Response(200, [], file_get_contents($filename));
+              return new FulfilledPromise($response);
+            }
+          }
+
+          $response = new Response(404, [], 'The group is missing');
           return new FulfilledPromise($response);
         }
 
