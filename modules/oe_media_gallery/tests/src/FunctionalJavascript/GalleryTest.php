@@ -8,12 +8,16 @@ use Behat\Mink\Element\NodeElement;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\oe_link_lists\Traits\LinkListTestTrait;
 use Drupal\media\Entity\Media;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Tests the Gallery link list bundle.
+ *
+ * @group batch2
  */
 class GalleryTest extends WebDriverTestBase {
 
+  use CachedDatabaseInstallTrait;
   use LinkListTestTrait;
 
   /**
@@ -54,6 +58,7 @@ class GalleryTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
 
     // Create an image and a remote video media.

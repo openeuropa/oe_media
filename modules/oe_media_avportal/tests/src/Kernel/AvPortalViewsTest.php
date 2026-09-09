@@ -12,6 +12,8 @@ use Drupal\views\Views;
 
 /**
  * Tests a view created for the AV Portal data.
+ *
+ * @group batch2
  */
 class AvPortalViewsTest extends KernelTestBase {
 
@@ -108,13 +110,13 @@ class AvPortalViewsTest extends KernelTestBase {
     $row = $view->result[0];
     $this->assertEquals('P-039321/00-04', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertEquals('https://ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-225309.jpg', $row->thumbnail);
+    $this->assertEquals('https://ec.europa.eu/avservices/repository/photo/03/93/21/P-039321_00-04_03-MED-214391.jpg', $row->thumbnail);
 
     // Assert the second result from the mock.
     $row = $view->result[1];
     $this->assertEquals('P-039321/00-05', $row->ref);
     $this->assertEquals('Visit by Federica Mogherini, Vice-President of the EC, and Johannes Hahn, Member of the EC, to Romania', $row->title);
-    $this->assertStringContainsString('//ec.europa.eu/avservices/avs/files/video6/repository/prod/photo/store/store2/1/P039321-937559.jpg', $row->thumbnail);
+    $this->assertStringContainsString('//ec.europa.eu/avservices/repository/photo/03/93/21/P-039321_00-05_03-MED-242519.jpg', $row->thumbnail);
 
     // Assert that it works correctly with the pager.
     $view = Views::getView('av_portal_test');

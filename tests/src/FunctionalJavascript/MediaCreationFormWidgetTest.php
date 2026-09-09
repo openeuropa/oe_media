@@ -8,14 +8,18 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\oe_media\Traits\MediaTestTrait;
 use Drupal\Tests\TestFileCreationTrait;
 use Drupal\user\Entity\Role;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Tests the media creation form entity browser widget.
+ *
+ * @group batch2
  */
 class MediaCreationFormWidgetTest extends WebDriverTestBase {
 
-  use TestFileCreationTrait;
+  use CachedDatabaseInstallTrait;
   use MediaTestTrait;
+  use TestFileCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -32,6 +36,14 @@ class MediaCreationFormWidgetTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
+    parent::setUp();
+  }
 
   /**
    * Tests the media creation form entity browser widget.

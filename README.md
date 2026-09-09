@@ -73,7 +73,7 @@ changing relevant values, like your database credentials.
 This will also:
 - Symlink the theme in  `./build/modules/custom/oe_media` so that it's available for the test site
 - Setup Drush and Drupal's settings using values from `./runner.yml.dist`.
-- Setup PHPUnit and Behat configuration files using values from `./runner.yml.dist`
+- Setup the PHPUnit configuration file using values from `./runner.yml.dist`
 
 **Please note:** project files and directories are symlinked within the test site by using the
 [OpenEuropa Task Runner's Drupal project symlink](https://github.com/openeuropa/task-runner-drupal-project-symlink)
@@ -156,12 +156,6 @@ To run the phpunit tests:
 
 ```bash
 docker-compose exec web ./vendor/bin/phpunit
-```
-
-To run the behat tests:
-
-```bash
-docker-compose exec web ./vendor/bin/behat
 ```
 
 #### Step debugging

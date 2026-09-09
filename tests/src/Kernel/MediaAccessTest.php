@@ -13,6 +13,8 @@ use Drupal\views\Views;
 
 /**
  * Tests custom media access.
+ *
+ * @group batch1
  */
 class MediaAccessTest extends MediaKernelTestBase {
 

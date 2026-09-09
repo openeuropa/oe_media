@@ -9,6 +9,8 @@ use Drupal\oe_media_webtools\Plugin\Field\FieldWidget\OpPublicationListIdWidget;
 
 /**
  * Tests the 'OP Publication List ID' field widget.
+ *
+ * @group batch3
  */
 class OpPublicationListIdWidgetTest extends MediaTestBase {
 

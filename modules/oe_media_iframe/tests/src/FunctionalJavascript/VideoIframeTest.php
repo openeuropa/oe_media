@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace Drupal\Tests\oe_media_iframe\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Test video iframe media.
+ *
+ * @group batch3
  */
 class VideoIframeTest extends WebDriverTestBase {
+
+  use CachedDatabaseInstallTrait;
 
   /**
    * {@inheritdoc}
@@ -22,6 +27,14 @@ class VideoIframeTest extends WebDriverTestBase {
    * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
+    parent::setUp();
+  }
 
   /**
    * Tests the video iframe uses the attached thumbnail.

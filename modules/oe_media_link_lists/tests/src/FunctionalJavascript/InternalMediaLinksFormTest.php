@@ -9,11 +9,16 @@ use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
 use Drupal\media\MediaInterface;
 use Drupal\oe_link_lists\DefaultLink;
+use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
 
 /**
  * Tests the manual internal media links.
+ *
+ * @group batch3
  */
 class InternalMediaLinksFormTest extends ManualLinkListTestBase {
+
+  use CachedDatabaseInstallTrait;
 
   /**
    * {@inheritdoc}
@@ -38,6 +43,7 @@ class InternalMediaLinksFormTest extends ManualLinkListTestBase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $this->cacheDbInstall = TRUE;
     parent::setUp();
 
     // Create a pdf file.

@@ -14,6 +14,8 @@ use Drupal\oe_link_lists\EntityAwareLinkInterface;
  * Tests the Gallery link list type.
  *
  * @covers \Drupal\oe_media_gallery\Plugin\LinkSource\DefaultSource
+ *
+ * @group batch3
  */
 class GalleryTest extends MediaTestBase {
 
