@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.39.0](https://github.com/openeuropa/oe_media/tree/1.39.0) (2026-09-09)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.38.0...1.39.0)
+
+**Merged pull requests:**
+
+- EWPP-7255: Behat to phpunit. [\#311](https://github.com/openeuropa/oe_media/pull/311) ([upchuk](https://github.com/upchuk))
+- EWPP-7231: Fix type hint in views query plugins. [\#310](https://github.com/openeuropa/oe_media/pull/310) ([bircher](https://github.com/bircher))
+- EWPP-7205: Add Webtools Shorthand media type. [\#309](https://github.com/openeuropa/oe_media/pull/309) ([22Alexandra](https://github.com/22Alexandra))
+- EWPP-6842: Show CircaBC file URL in edit form. [\#307](https://github.com/openeuropa/oe_media/pull/307) ([intelektron](https://github.com/intelektron))
+- EWPP-6988: Trigger pipeline. [\#306](https://github.com/openeuropa/oe_media/pull/306) ([nagyad](https://github.com/nagyad))
+
 ## [1.38.0](https://github.com/openeuropa/oe_media/tree/1.38.0) (2026-06-02)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.37.0...1.38.0)
 
