@@ -233,3 +233,64 @@ function oe_media_webtools_post_update_00009(): void {
     _oe_media_import_config_from_file($name, $storage);
   }
 }
+
+/**
+ * Update Webtools media fields description to include the WCLOUD wizard link.
+ */
+function oe_media_webtools_post_update_00010() {
+  $original_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://webtools.europa.eu/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://webtools.europa.eu/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.<br> Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network.';
+  $shorthand_original_description = 'Enter the snippet without the script tag. Snippets can be generated in <a href="https://webtools.europa.eu/tools/#/wizards" target="_blank">Webtools wizard</a> or in the newer <a href="https://webtools.europa.eu/tools/#/wcloud/" target="_blank">WCLOUD wizard</a>.';
+  $description_parts[] = 'Enter the widget embed code without the script tags. The widget can be created in <a href="https://webtools.europa.eu/tools/#/wcloud/snippets/" target="_blank">WeCloud</a> where the embed code can be retrieved.';
+  $description_parts[] = '<br>Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network.';
+  $description = implode('', $description_parts);
+
+  $modified = [];
+  $fields = [
+    'media.webtools_chart.oe_media_webtools',
+    'media.webtools_countdown.oe_media_webtools',
+    'media.webtools_generic.oe_media_webtools',
+    'media.webtools_map.oe_media_webtools',
+    'media.webtools_shorthand.oe_media_webtools',
+  ];
+
+  foreach ($fields as $field) {
+    $field_config = FieldConfig::load($field);
+    if (!$field_config instanceof FieldConfig) {
+      continue;
+    }
+
+    // Webtools_shorthand has different description.
+    if ($field === 'media.webtools_shorthand.oe_media_webtools') {
+      if ($shorthand_original_description !== $field_config->get('description')) {
+        $modified[] = $field;
+        continue;
+      }
+      $field_config->setDescription($description_parts[0]);
+      $field_config->save();
+      continue;
+    }
+
+    // If the description has been customised by users, we don’t change it.
+    if ($original_description !== $field_config->get('description')) {
+      $modified[] = $field;
+      continue;
+    }
+
+    $field_config->setDescription($description)->save();
+  }
+
+  // Set accessible description.
+  $webtools_generic_field_config = 'media.webtools_generic.oe_media_webtools';
+  $description .= "<br>After embedding scripts/components, please test the page to ensure the content remains accessible for everyone. If required, update the website's accessibility statement accordingly.";
+  if (!in_array($webtools_generic_field_config, $modified)) {
+    $field_config = FieldConfig::load($webtools_generic_field_config);
+    if ($field_config instanceof FieldConfig) {
+      $field_config->setDescription($description)->save();
+    }
+  }
+
+  // Provide report about skipped fields.
+  if (!empty($modified)) {
+    return sprintf('The field description update for the following fields was skipped as their description was changed: %s.', implode(', ', $modified));
+  }
+}
