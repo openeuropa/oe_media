@@ -63,6 +63,13 @@ class CircaBcClient implements CircaBcClientInterface {
   protected $cache = [];
 
   /**
+   * Static cache of interest group calls, keyed by document UUID.
+   *
+   * @var array
+   */
+  protected $interestGroupCache = [];
+
+  /**
    * Constructs a CircaBcClient.
    *
    * @param \GuzzleHttp\ClientInterface $http_client
@@ -135,6 +142,10 @@ class CircaBcClient implements CircaBcClientInterface {
    * {@inheritdoc}
    */
   public function getDocumentInterestGroup(string $uuid): ?array {
+    if (isset($this->interestGroupCache[$uuid])) {
+      return $this->interestGroupCache[$uuid];
+    }
+
     if (!isset($this->config['url'])) {
       $this->loggerChannelFactory->get('oe_media_circabc')->error('The CircaBC URL is not configured');
       return NULL;
@@ -164,6 +175,8 @@ class CircaBcClient implements CircaBcClientInterface {
       $this->loggerChannelFactory->get('oe_media_circabc')->error($response->getBody()->getContents());
       return NULL;
     }
+
+    $this->interestGroupCache[$uuid] = $content;
 
     return $content;
   }
