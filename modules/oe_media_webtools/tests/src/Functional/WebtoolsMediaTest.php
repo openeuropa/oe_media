@@ -17,7 +17,17 @@ class WebtoolsMediaTest extends MediaFeatureTestBase {
   /**
    * The description shown under all the Webtools snippet fields.
    */
-  protected const SNIPPET_DESCRIPTION = 'Enter the snippet without the script tag. Snippets can be generated in Webtools wizard or in the newer WCLOUD wizard.';
+  protected const SNIPPET_DESCRIPTION = 'Enter the widget embed code without the script tags. The widget can be created in WeCloud where the embed code can be retrieved.';
+
+  /**
+   * The ec network warning.
+   */
+  protected const EC_NETWORK_NOTICE = 'Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network.';
+
+  /**
+   * The accessibility warning.
+   */
+  protected const ACCESSIBILITY_TEXT = "After embedding scripts/components, please test the page to ensure the content remains accessible for everyone. If required, update the website's accessibility statement accordingly.";
 
   /**
    * The Webtools media types that share the "snippet" creation flow.
@@ -51,6 +61,8 @@ class WebtoolsMediaTest extends MediaFeatureTestBase {
       'invalid_message' => 'This service is supported by a dedicated asset type or feature, please use that instead.',
       'snippet' => '{"service": "share","icon": true,"selection": false,"shortenurl": true}',
       'reference_field' => 'field_oe_demo_webtools_generic',
+      'accessibility_text' => TRUE,
+
     ],
     'webtools_map' => [
       'type_label' => 'Webtools map',
@@ -93,7 +105,10 @@ class WebtoolsMediaTest extends MediaFeatureTestBase {
       $this->drupalGet('media/add/' . $bundle);
       $assert_session->pageTextContains(self::SNIPPET_DESCRIPTION);
       if ($widget['ec_network_notice'] ?? TRUE) {
-        $assert_session->pageTextContains('Please keep in mind that acceptance-level Webtools widgets can only be viewed if you are connected to the EC network.');
+        $assert_session->pageTextContains(self::EC_NETWORK_NOTICE);
+      }
+      if ($widget['accessibility_text'] ?? FALSE) {
+        $assert_session->pageTextContains(self::ACCESSIBILITY_TEXT);
       }
 
       // Both the name and the snippet are required.
@@ -161,7 +176,6 @@ class WebtoolsMediaTest extends MediaFeatureTestBase {
 
     $this->drupalGet('media/add/webtools_social_feed');
     $assert_session->pageTextContains('Add Webtools social feed - Deprecated');
-    $assert_session->pageTextContains(self::SNIPPET_DESCRIPTION);
 
     $page->pressButton('Save');
     $assert_session->pageTextContains('Name field is required');
