@@ -87,7 +87,7 @@ class GalleryTest extends MediaTestBase {
   /**
    * Tests the getLinks() method.
    *
-   * @covers ::getLinks
+   * @covers \Drupal\oe_media_gallery\Plugin\LinkSource\DefaultSource::getLinks
    */
   public function testGetLinks(): void {
     /** @var \Drupal\oe_link_lists\Entity\LinkListInterface $list */

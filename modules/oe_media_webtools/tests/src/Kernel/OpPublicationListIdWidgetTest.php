@@ -39,7 +39,7 @@ class OpPublicationListIdWidgetTest extends MediaTestBase {
   }
 
   /**
-   * @covers ::isApplicable
+   * @covers \Drupal\oe_media_webtools\Plugin\Field\FieldWidget\OpPublicationListIdWidget::isApplicable
    */
   public function testIsApplicable() {
     $fields = $this->container->get('entity_field.manager')->getFieldDefinitions('media', 'webtools_op_publication_list');

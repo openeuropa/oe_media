@@ -12,7 +12,7 @@ use OpenEuropa\TestingUtilities\Traits\CachedDatabaseInstallTrait;
  *
  * @group oe_media_js_asset
  */
-class JavaScriptAssetTestBase extends MediaFunctionalTestBase {
+abstract class JavaScriptAssetTestBase extends MediaFunctionalTestBase {
 
   use CachedDatabaseInstallTrait;
 
