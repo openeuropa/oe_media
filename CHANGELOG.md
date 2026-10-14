@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.40.0](https://github.com/openeuropa/oe_media/tree/1.40.0) (2026-10-14)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.39.0...1.40.0)
+
+**Merged pull requests:**
+
+- EWPP-7263: Static cache on the interest group call. [\#314](https://github.com/openeuropa/oe_media/pull/314) ([upchuk](https://github.com/upchuk))
+- EWPP-7156: Helper text regarding accessibility and update following s… [\#313](https://github.com/openeuropa/oe_media/pull/313) ([fmmribeiro](https://github.com/fmmribeiro))
+
 ## [1.39.0](https://github.com/openeuropa/oe_media/tree/1.39.0) (2026-09-09)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.38.0...1.39.0)
 
