@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Drupa\Tests\oe_media_gallery\Kernel;
 
+use Drupal\Core\Url;
 use Drupal\Tests\oe_media\Kernel\MediaTestBase;
 use Drupal\media\Entity\Media;
 use Drupal\media\MediaInterface;
+use Drupal\oe_link_lists\DefaultLink;
 use Drupal\oe_link_lists\Entity\LinkList;
 use Drupal\oe_link_lists\EntityAwareLinkInterface;
+use Drupal\oe_link_lists\LinkCollection;
 
 /**
  * Tests the Gallery link list type.
@@ -147,6 +150,36 @@ class GalleryTest extends MediaTestBase {
     $links = $plugin->getLinks(1, 1);
     $this->assertCount(1, $links);
     $this->assertEquals('remote_video', $links[0]->getEntity()->bundle());
+  }
+
+  /**
+   * Tests the default display plugin definition and build.
+   *
+   * @covers \Drupal\oe_media_gallery\Plugin\LinkDisplay\DefaultDisplay
+   */
+  public function testDefaultDisplay(): void {
+    $display_manager = $this->container->get('plugin.manager.oe_link_lists.link_display');
+
+    // The display is restricted to the gallery's own source so the form does
+    // not offer it for incompatible sources.
+    $definition = $display_manager->getDefinition('oe_media_gallery_default');
+    $this->assertEquals(['oe_media_gallery_default'], $definition['link_sources']);
+
+    // Build a collection mixing an entity-aware link with a plain external one.
+    $source = $this->container->get('plugin.manager.oe_link_lists.link_source')
+      ->createInstance('oe_media_gallery_default', [
+        'media' => [$this->imageMedia->id()],
+      ]);
+    $entity_aware_link = $source->getLinks()[0];
+    $this->assertInstanceOf(EntityAwareLinkInterface::class, $entity_aware_link);
+    $external_link = new DefaultLink(Url::fromUri('http://example.com'), 'External', ['#markup' => '']);
+
+    /** @var \Drupal\oe_media_gallery\Plugin\LinkDisplay\DefaultDisplay $display */
+    $display = $display_manager->createInstance('oe_media_gallery_default');
+    $build = $display->build(new LinkCollection([$entity_aware_link, $external_link]));
+
+    // The plain external link is skipped; only the media entity is rendered.
+    $this->assertCount(1, $build['#items']);
   }
 
 }

@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\oe_link_lists\EntityAwareLinkInterface;
 use Drupal\oe_link_lists\LinkCollectionInterface;
 use Drupal\oe_link_lists\LinkDisplayPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "oe_media_gallery_default",
  *   label = @Translation("Default"),
  *   description = @Translation("Default display plugin for gallery media."),
+ *   link_sources = { "oe_media_gallery_default" },
  * )
  */
 class DefaultDisplay extends LinkDisplayPluginBase implements ContainerFactoryPluginInterface {
@@ -97,8 +99,12 @@ class DefaultDisplay extends LinkDisplayPluginBase implements ContainerFactoryPl
    */
   public function build(LinkCollectionInterface $links): array {
     $items = [];
-    /** @var \Drupal\oe_link_lists\EntityAwareLinkInterface $link */
     foreach ($links as $link) {
+      // Skip non-entity-aware links (e.g. external manual links) that have no
+      // media entity to render.
+      if (!$link instanceof EntityAwareLinkInterface) {
+        continue;
+      }
       $media = $link->getEntity();
       $items[] = $this->entityTypeManager->getViewBuilder('media')->view($media, $this->configuration['view_mode']);
     }
