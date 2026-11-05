@@ -82,8 +82,6 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
 /**
  * Returns the Drupal langcode from a CircaBC langcode.
  *
- * In CircaBC, we only have the EU languages so the only exception is PT.
- *
  * @param string $langcode
  *   The CircaBC langcode.
  *
@@ -91,17 +89,16 @@ function oe_media_circabc_media_presave(MediaInterface $media) {
  *   The Drupal langcode.
  */
 function _oe_media_circabc_get_drupal_langcode(string $langcode): string {
-  if ($langcode === 'pt') {
-    return 'pt-pt';
-  }
-
-  return $langcode;
+  $overriden_langcodes = [
+    'pt' => 'pt-pt',
+    'nb' => 'no',
+    'zh' => 'zh-hans',
+  ];
+  return $overriden_langcodes[$langcode] ?? $langcode;
 }
 
 /**
  * Returns the CircaBC langcode from a Drupal langcode.
- *
- * In CircaBC, we only have the EU languages so the only exception is PT.
  *
  * @param string $langcode
  *   The Drupal langcode.
@@ -110,9 +107,10 @@ function _oe_media_circabc_get_drupal_langcode(string $langcode): string {
  *   The CircaBC langcode.
  */
 function _oe_media_circabc_get_circabc_langcode(string $langcode): string {
-  if ($langcode === 'pt-pt') {
-    return 'pt';
-  }
-
-  return $langcode;
+  $overriden_langcodes = [
+    'pt-pt' => 'pt',
+    'no' => 'nb',
+    'zh-hans' => 'zh',
+  ];
+  return $overriden_langcodes[$langcode] ?? $langcode;
 }
