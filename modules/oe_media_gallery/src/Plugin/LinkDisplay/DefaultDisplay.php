@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\media\MediaInterface;
 use Drupal\oe_link_lists\EntityAwareLinkInterface;
 use Drupal\oe_link_lists\LinkCollectionInterface;
 use Drupal\oe_link_lists\LinkDisplayPluginBase;
@@ -100,12 +101,15 @@ class DefaultDisplay extends LinkDisplayPluginBase implements ContainerFactoryPl
   public function build(LinkCollectionInterface $links): array {
     $items = [];
     foreach ($links as $link) {
-      // Skip non-entity-aware links (e.g. external manual links) that have no
-      // media entity to render.
+      // Skip external links, which have no entity.
       if (!$link instanceof EntityAwareLinkInterface) {
         continue;
       }
       $media = $link->getEntity();
+      // Skip links to non-media entities; only media can be rendered here.
+      if (!$media instanceof MediaInterface) {
+        continue;
+      }
       $items[] = $this->entityTypeManager->getViewBuilder('media')->view($media, $this->configuration['view_mode']);
     }
 
