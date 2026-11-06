@@ -109,10 +109,9 @@ class GalleryTest extends WebDriverTestBase {
       'test_no_bundle_restriction_source',
     ]);
 
-    // Assert we can only see the display plugins that work with the Gallery
-    // bundle (or that don't have bundle restrictions).
+    // Before a source is selected, the gallery Default display (which declares
+    // link_sources) is not offered; unrestricted displays always are.
     $this->assertFieldSelectOptions('Link display', [
-      'oe_media_gallery_default',
       'test_no_bundle_restriction_display',
     ]);
 
@@ -124,6 +123,12 @@ class GalleryTest extends WebDriverTestBase {
     // Select the link source and display.
     $this->getSession()->getPage()->selectFieldOption('Link source', 'Media');
     $this->assertSession()->assertWaitOnAjaxRequest();
+    // Once the gallery Media source is selected, its compatible Default display
+    // becomes available.
+    $this->assertFieldSelectOptions('Link display', [
+      'oe_media_gallery_default',
+      'test_no_bundle_restriction_display',
+    ]);
     $this->getSession()->getPage()->selectFieldOption('Link display', 'Default');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->assertSession()->fieldExists('View mode');
