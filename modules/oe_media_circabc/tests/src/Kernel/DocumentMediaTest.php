@@ -61,6 +61,8 @@ class DocumentMediaTest extends MediaTestBase {
 
     ConfigurableLanguage::createFromLangcode('fr')->save();
     ConfigurableLanguage::createFromLangcode('pt-pt')->save();
+    ConfigurableLanguage::createFromLangcode('zh-hans')->save();
+    ConfigurableLanguage::createFromLangcode('no')->save();
   }
 
   /**
@@ -348,24 +350,40 @@ class DocumentMediaTest extends MediaTestBase {
    * Tests that CircaBC langcodes are transformed to Drupal format.
    */
   public function testCircaBcLangcodeTransformation(): void {
-    // Load a Portuguese document with "pt" langcode on CircaBC side.
-    $media_storage = $this->container->get('entity_type.manager')->getStorage('media');
-    $media = $media_storage->create([
-      'name' => 'a PT document media',
-      'bundle' => 'document',
-      'oe_media_file_type' => 'circabc',
-      'oe_media_circabc_reference' => [
-        // UUID is enough to start, it will pull all the rest of the data.
+    $languages = [
+      'pt' => [
+        'code' => 'pt-pt',
         'uuid' => '6d634abd-fec1-452a-ae0b-62e4cf080506',
       ],
-    ]);
-    $media->save();
+      'nb' => [
+        'code' => 'no',
+        'uuid' => 'a82f31c7-9e46-4b20-b583-7d0a6f92c145',
+      ],
+      'zh' => [
+        'code' => 'zh-hans',
+        'uuid' => '7f2a9c81-b463-4e15-9d72-a8c6f0315be4',
+      ],
+    ];
 
-    // Expect the langcode to be "pt-pt" in Drupal.
-    $media_storage->resetCache();
-    /** @var \Drupal\media\MediaInterface $media */
-    $media = $media_storage->load($media->id());
-    $this->assertEquals('pt-pt', $media->language()->getId());
+    $media_storage = $this->container->get('entity_type.manager')->getStorage('media');
+    foreach ($languages as $code => $definition) {
+      $media = $media_storage->create([
+        'name' => strtoupper($code) . ' document media',
+        'bundle' => 'document',
+        'oe_media_file_type' => 'circabc',
+        'oe_media_circabc_reference' => [
+          // UUID is enough to start, it will pull all the rest of the data.
+          'uuid' => $definition['uuid'],
+        ],
+      ]);
+      $media->save();
+
+      // Expect the extended language code in Drupal.
+      $media_storage->resetCache();
+      /** @var \Drupal\media\MediaInterface $media */
+      $media = $media_storage->load($media->id());
+      $this->assertEquals($definition['code'], $media->language()->getId());
+    }
   }
 
   /**
