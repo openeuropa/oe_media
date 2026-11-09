@@ -143,6 +143,13 @@ class DocumentMediaTest extends WebDriverTestBase {
     // The media name was taken from the remote document.
     $assert_session->pageTextContains('Document Test sample file has been created.');
 
+    // The same document can't be created twice.
+    $this->drupalGet('media/add/document');
+    $page->selectFieldOption('File Type', 'CircaBC');
+    $page->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $page->pressButton('Save');
+    $assert_session->pageTextContains('The CircaBC document already exists.');
+
     // Reference the document in a node and assert we render a default link.
     $this->drupalGet('node/add/oe_media_demo');
     $this->getSession()->getPage()->fillField('Title', 'Node with remote file');
@@ -423,7 +430,7 @@ class DocumentMediaTest extends WebDriverTestBase {
 
     $this->drupalGet($remote_media->toUrl('edit-form'));
     $this->getSession()->getPage()->selectFieldOption('File Type', 'CircaBC');
-    $this->getSession()->getPage()->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
+    $this->getSession()->getPage()->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/664e3bc0-a639-4e04-a839-3bbd60ed5600/details');
     $this->getSession()->getPage()->pressButton('Save');
     $media_storage->resetCache();
     $remote_media = $media_storage->load($remote_media->id());
