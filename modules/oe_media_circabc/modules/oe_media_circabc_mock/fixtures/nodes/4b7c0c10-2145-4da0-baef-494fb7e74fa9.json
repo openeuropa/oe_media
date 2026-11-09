@@ -1,0 +1,57 @@
+{
+    "id": "4b7c0c10-2145-4da0-baef-494fb7e74fa9",
+    "name": "doc-no.pdf",
+    "type": "{http://www.alfresco.org/model/content/1.0}content",
+    "service": "library",
+    "parentId": "de048a2c-b350-45eb-a8aa-c5e5d4ba8335",
+    "properties": {
+        "modifier": "test_user",
+        "initialVersion": "true",
+        "description": "",
+        "title": "",
+        "locale": "no",
+        "content": "contentUrl=store://2026/11/6/13/33/ab25a8f6-71fe-4bcb-950b-d078e398ffac.bin|mimetype=application/pdf|size=378502|encoding=UTF-8|locale=en_US_|id=56011",
+        "issue_date": "2026-11-06T12:33Z",
+        "security_ranking": "NORMAL",
+        "translations": "1",
+        "modified": "2026-11-06T12:33Z",
+        "keyword": "[]",
+        "locked": "false",
+        "store-identifier": "SpacesStore",
+        "multilingual": "true",
+        "owner": "test_user",
+        "creator": "test_user",
+        "autoVersion": "true",
+        "node-uuid": "4b7c0c10-2145-4da0-baef-494fb7e74fa9",
+        "created": "2026-11-06T12:33Z",
+        "author": "",
+        "autoVersionOnUpdateProps": "false",
+        "isVersion": "false",
+        "workingCopy": "false",
+        "encoding": "UTF-8",
+        "store-protocol": "workspace",
+        "currentUserHasAccess": "true",
+        "versionLabel": "1.0",
+        "originalContainerId": "de048a2c-b350-45eb-a8aa-c5e5d4ba8335",
+        "size": "378502",
+        "name": "doc-no.pdf",
+        "mimetype": "application/pdf",
+        "mimetypeName": "Adobe PDF Document",
+        "resourceType": "http://publications.europa.eu/resource/authority/resource-type/INFO_GEN",
+        "status": "FINAL",
+        "node-dbid": "128152"
+    },
+    "title": {
+        "en": "doc"
+    },
+    "description": {
+        "en": "doc-no"
+    },
+    "permissions": {
+        "LibAccess": "ALLOWED"
+    },
+    "notifications": "inherit",
+    "favourite": false,
+    "hasSubFolders": false,
+    "hasGuestAccess": true
+}

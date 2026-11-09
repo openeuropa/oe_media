@@ -1,0 +1,57 @@
+{
+    "id": "52150ba2-0822-4b19-b817-538e9014e014",
+    "name": "testdoc(6).pdf",
+    "type": "{http://www.alfresco.org/model/content/1.0}content",
+    "service": "library",
+    "parentId": "de048a2c-b350-45eb-a8aa-c5e5d4ba8335",
+    "properties": {
+        "modifier": "test_user",
+        "initialVersion": "true",
+        "description": "",
+        "title": "",
+        "locale": "zh",
+        "content": "contentUrl=store://2026/11/6/13/26/471a7bb8-95ac-4ecc-bf46-cbc509ce1f18.bin|mimetype=application/pdf|size=311958|encoding=UTF-8|locale=en_US_|id=56006",
+        "issue_date": "2026-11-06T12:25Z",
+        "security_ranking": "NORMAL",
+        "translations": "1",
+        "modified": "2026-11-06T12:26Z",
+        "keyword": "[]",
+        "locked": "false",
+        "store-identifier": "SpacesStore",
+        "multilingual": "true",
+        "owner": "test_user",
+        "creator": "test_user",
+        "autoVersion": "true",
+        "node-uuid": "52150ba2-0822-4b19-b817-538e9014e014",
+        "created": "2026-11-06T12:26Z",
+        "author": "",
+        "autoVersionOnUpdateProps": "false",
+        "isVersion": "false",
+        "workingCopy": "false",
+        "encoding": "UTF-8",
+        "store-protocol": "workspace",
+        "currentUserHasAccess": "true",
+        "versionLabel": "1.0",
+        "originalContainerId": "de048a2c-b350-45eb-a8aa-c5e5d4ba8335",
+        "size": "311958",
+        "name": "testdoc(6).pdf",
+        "mimetype": "application/pdf",
+        "mimetypeName": "Adobe PDF Document",
+        "resourceType": "http://publications.europa.eu/resource/authority/resource-type/INFO_GEN",
+        "status": "FINAL",
+        "node-dbid": "128140"
+    },
+    "title": {
+        "en": "MDR - release notes"
+    },
+    "description": {
+        "en": "Release notes MDR NAL publication20241211-0"
+    },
+    "permissions": {
+        "LibAccess": "ALLOWED"
+    },
+    "notifications": "inherit",
+    "favourite": false,
+    "hasSubFolders": false,
+    "hasGuestAccess": true
+}

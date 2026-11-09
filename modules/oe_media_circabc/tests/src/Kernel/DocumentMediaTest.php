@@ -357,11 +357,11 @@ class DocumentMediaTest extends MediaTestBase {
       ],
       'nb' => [
         'code' => 'no',
-        'uuid' => 'a82f31c7-9e46-4b20-b583-7d0a6f92c145',
+        'uuid' => '4b7c0c10-2145-4da0-baef-494fb7e74fa9',
       ],
       'zh' => [
         'code' => 'zh-hans',
-        'uuid' => '7f2a9c81-b463-4e15-9d72-a8c6f0315be4',
+        'uuid' => '52150ba2-0822-4b19-b817-538e9014e014',
       ],
     ];
 
