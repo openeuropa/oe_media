@@ -17,6 +17,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\media\MediaInterface;
+use Drupal\media\OEmbed\Provider;
 use Drupal\media\Plugin\media\Source\Image;
 use Drupal\oe_media\Status;
 use Drupal\views\ViewExecutable;
@@ -194,6 +195,20 @@ function oe_media_media_presave(MediaInterface $media) {
       $media->set($clear_map[$type], NULL);
     }
   }
+}
+
+/**
+ * Implements hook_oembed_resource_url_alter().
+ *
+ * Requests a larger thumbnail from Vimeo.
+ */
+function oe_media_oembed_resource_url_alter(array &$parsed_url, Provider $provider): void {
+  if (strtolower($provider->getName()) !== 'vimeo') {
+    return;
+  }
+
+  // Vimeo supports thumbnail_width values including 640, 960, and 1280.
+  $parsed_url['query']['width'] = 640;
 }
 
 /**
