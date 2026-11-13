@@ -13,6 +13,7 @@ use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -52,32 +53,68 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
   $cache = new CacheableMetadata();
   $cache->addCacheTags(['node_list']);
 
-  // Getting fields which could have references to 'document' media type.
+  // Get fields that directly reference document media on nodes and paragraphs.
   $fields = $entity_type_manager->getStorage('field_config')->loadByProperties([
-    'entity_type' => 'node',
     'field_type' => 'entity_reference',
   ]);
 
-  $field_referenced_to_media = [];
+  $node_fields = [];
+  $paragraph_fields = [];
   /** @var \Drupal\field\Entity\FieldConfig $field */
   foreach ($fields as $field) {
     $field_settings = $field->getSettings();
-    if ($field_settings['handler'] === 'default:media' && in_array('document', $field_settings['handler_settings']['target_bundles'])) {
-      $field_referenced_to_media[] = $field->getName();
+    if (
+      $field_settings['handler'] === 'default:media'
+      && in_array('document', $field_settings['handler_settings']['target_bundles'])
+    ) {
+      if ($field->getTargetEntityTypeId() === 'node') {
+        $node_fields[] = $field->getName();
+      }
+      elseif ($field->getTargetEntityTypeId() === 'paragraph') {
+        $paragraph_fields[] = $field->getName();
+      }
     }
   }
 
-  // Get all the nodes which use this media entity.
-  $query = $entity_type_manager->getStorage('node')->getQuery('OR');
-  foreach ($field_referenced_to_media as $field_name) {
-    $query->condition($field_name, $entity->id());
+  $ids = [];
+  if ($node_fields) {
+    $query = $entity_type_manager->getStorage('node')->getQuery('OR');
+    foreach ($node_fields as $field_name) {
+      $query->condition($field_name, $entity->id());
+    }
+    $ids = $query->accessCheck(FALSE)->execute();
   }
-  $ids = $query->accessCheck()->execute();
+
+  if ($paragraph_fields) {
+    $query = $entity_type_manager->getStorage('paragraph')->getQuery('OR');
+    foreach ($paragraph_fields as $field_name) {
+      $query->condition($field_name, $entity->id());
+    }
+    $paragraph_ids = $query->accessCheck(FALSE)->execute();
+    /** @var \Drupal\paragraphs\ParagraphInterface[] $paragraphs */
+    $paragraphs = $entity_type_manager->getStorage('paragraph')->loadMultiple($paragraph_ids);
+    foreach ($paragraphs as $paragraph) {
+      $parent = $paragraph->getParentEntity();
+      $visited_paragraphs = [];
+      while ($parent instanceof ContentEntityInterface && $parent->getEntityTypeId() === 'paragraph') {
+        if (isset($visited_paragraphs[$parent->id()])) {
+          $parent = NULL;
+          break;
+        }
+        $visited_paragraphs[$parent->id()] = TRUE;
+        $parent = $parent->getParentEntity();
+      }
+      if ($parent instanceof ContentEntityInterface && $parent->getEntityTypeId() === 'node') {
+        $ids[] = $parent->id();
+      }
+    }
+  }
 
   if (!$ids) {
     return AccessResult::neutral()->addCacheableDependency($cache);
   }
 
+  $ids = array_unique($ids);
   $referencing_node_entities = $entity_type_manager->getStorage('node')->loadMultiple($ids);
 
   // Check access on the referencing nodes. If at least one of these returns
