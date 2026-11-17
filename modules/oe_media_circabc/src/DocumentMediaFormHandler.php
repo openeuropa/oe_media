@@ -208,7 +208,11 @@ class DocumentMediaFormHandler extends OriginalDocumentMediaFormHandler {
         'oe_media_circabc_reference.uuid' => $uuid,
       ]);
       if ($existing) {
-        $form_state->setError($element, t('The CircaBC document already exists.'));
+        $media = reset($existing);
+        $form_state->setError($element, t('Document with this CircaBC ID already exists on this site: <a href=":url">@title</a>', [
+          ':url' => $media->toUrl()->toString(),
+          '@title' => $media->label(),
+        ]));
         return;
       }
       $parents = $element['#array_parents'];

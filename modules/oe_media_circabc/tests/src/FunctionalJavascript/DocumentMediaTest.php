@@ -148,7 +148,8 @@ class DocumentMediaTest extends WebDriverTestBase {
     $page->selectFieldOption('File Type', 'CircaBC');
     $page->fillField('CircaBC URL', 'https://example.com/circabc-ewpp/ui/group/85a095a8-aacb-4ae2-9f67-c90a789e353e/library/e74e3bc0-a639-4e04-a839-3bbd60ed5688/details');
     $page->pressButton('Save');
-    $assert_session->pageTextContains('The CircaBC document already exists.');
+    $assert_session->pageTextContains('Document with this CircaBC ID already exists on this site: Test sample file');
+    $assert_session->linkByHrefExists($this->getMediaByName('Test sample file')->toUrl()->toString());
 
     // Reference the document in a node and assert we render a default link.
     $this->drupalGet('node/add/oe_media_demo');
