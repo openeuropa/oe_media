@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.0](https://github.com/openeuropa/oe_media/tree/1.41.0) (2026-11-23)
+[Full Changelog](https://github.com/openeuropa/oe_media/compare/1.40.0...1.41.0)
+
+**Merged pull requests:**
+
+- EWPP-7513: Don't allow to add CircaBC media with the same id. [\#320](https://github.com/openeuropa/oe_media/pull/320) ([intelektron](https://github.com/intelektron))
+
 ## [1.40.0](https://github.com/openeuropa/oe_media/tree/1.40.0) (2026-10-14)
 [Full Changelog](https://github.com/openeuropa/oe_media/compare/1.39.0...1.40.0)
 
