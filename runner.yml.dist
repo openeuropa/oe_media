@@ -66,10 +66,13 @@ toolkit:
         - batch3
       commands:
         before:
-          # Wait until the shared MySQL server is up AND the "drupal" database is
-          # queryable before launching the parallel batches. This is to ensure that Kernel tests have
-          # a database if they are first in the batch.
-          - { task: "exec", command: "for i in $(seq 1 30); do mysql -h mysql -P 3306 -u root -e 'USE drupal; SELECT 1' >/dev/null 2>&1 && break; echo \"waiting for drupal database ($i/30)\"; sleep 2; done; mysql -h mysql -P 3306 -u root -e 'USE drupal; SELECT 1'" }
+          # Wait until the MySQL server accepts connections, then create the
+          # "drupal" database if it doesn't exist yet. The batches can run before
+          # the site is installed, and while the Drupal installer used by
+          # functional tests creates the database automatically, Kernel tests
+          # connect to it directly and fail if they run before any functional
+          # test has done so.
+          - { task: "exec", command: "for i in $(seq 1 30); do mysql -h mysql -P 3306 -u root -e 'SELECT 1' >/dev/null 2>&1 && break; echo \"waiting for mysql server ($i/30)\"; sleep 2; done; mysql -h mysql -P 3306 -u root -e 'CREATE DATABASE IF NOT EXISTS drupal'" }
   ci:
     PHP:
       - 8.3

@@ -203,6 +203,18 @@ class DocumentMediaFormHandler extends OriginalDocumentMediaFormHandler {
         return;
       }
       $uuid = $document->getUuid();
+      $existing = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties([
+        'bundle' => 'document',
+        'oe_media_circabc_reference.uuid' => $uuid,
+      ]);
+      if ($existing) {
+        $media = reset($existing);
+        $form_state->setError($element, t('Document with this CircaBC ID already exists on this site: <a href=":url">@title</a>', [
+          ':url' => $media->toUrl()->toString(),
+          '@title' => $media->label(),
+        ]));
+        return;
+      }
       $parents = $element['#array_parents'];
       array_pop($parents);
       $uuid_parents = array_merge($parents, ['oe_media_circabc_reference', 'widget', 0, 'uuid']);
