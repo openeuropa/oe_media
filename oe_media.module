@@ -67,6 +67,10 @@ function oe_media_media_access(EntityInterface $entity, string $operation, Accou
     }
   }
 
+  if (empty($field_referenced_to_media)) {
+    return AccessResult::neutral()->addCacheableDependency($cache);
+  }
+
   // Get all the nodes which use this media entity.
   $query = $entity_type_manager->getStorage('node')->getQuery('OR');
   foreach ($field_referenced_to_media as $field_name) {
