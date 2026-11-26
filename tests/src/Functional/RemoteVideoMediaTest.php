@@ -58,4 +58,15 @@ class RemoteVideoMediaTest extends MediaFeatureTestBase {
     }
   }
 
+  /**
+   * Tests customised video thumbnails width.
+   */
+  public function testRemoteVideoVimeoResourceUrlAlter() {
+    $this->container = \Drupal::getContainer();
+    $resource_url = $this->container->get('media.oembed.url_resolver')
+      ->getResourceUrl('https://vimeo.com/7073899');
+
+    $this->assertStringContainsString('width=640', parse_url($resource_url, PHP_URL_QUERY));
+  }
+
 }
